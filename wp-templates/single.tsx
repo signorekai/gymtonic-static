@@ -2,9 +2,7 @@ import React from 'react';
 import { useGeneralSettings } from '@wpengine/headless/react';
 import { usePost } from '@wpengine/headless/next';
 import type { GetServerSidePropsContext, GetStaticPropsContext } from 'next';
-import {
-  getApolloClient,
-} from '@wpengine/headless';
+import {getApolloClient} from '@wpengine/headless';
 import { gql } from '@apollo/client';
 import { CTA, Footer, Header, Hero } from '../components';
 
@@ -14,18 +12,18 @@ export default function Single(): JSX.Element {
 
   return (
     <>
-      <Header title={ settings?.title } description={ settings?.description } />
+      <Header title={settings?.title} description={settings?.description} />
       <main className="content content-single">
-        { post?.title && <Hero title={ post?.title } /> }
+        {post?.title && <Hero title={post?.title} />}
         <div className="wrap">
-          { post && (
+          {post && (
             <div>
               <div>
-                {/* eslint-disable-next-line react/no-danger */ }
-                <div dangerouslySetInnerHTML={ { __html: post.content ?? '' } } />
+                {/* eslint-disable-next-line react/no-danger */}
+                <div dangerouslySetInnerHTML={{ __html: post.content ?? '' }} />
               </div>
             </div>
-          ) }
+          )}
         </div>
         <CTA
           title="Start your headless journey today"
@@ -33,7 +31,7 @@ export default function Single(): JSX.Element {
           buttonURL="https://github.com/wpengine/headless-framework/"
           headingLevel="h2">
           <p>
-            Learn more in the{ ' ' }
+            Learn more in the{' '}
             <a href="https://github.com/wpengine/headless-framework">
               Headless Framework GitHub repository
             </a>
@@ -41,7 +39,7 @@ export default function Single(): JSX.Element {
           </p>
         </CTA>
       </main>
-      <Footer copyrightHolder={ settings?.title } />
+      <Footer copyrightHolder={settings?.title} />
     </>
   );
 }
@@ -52,24 +50,25 @@ async function getProps(
   const apollo = getApolloClient(context);
   await apollo.query({
     query: gql`
-    {
-      menus {
-        edges {
-          node {
-            menuItems {
-              edges {
-                node {
-                  url
-                  title
-                  label
+      {
+        menus {
+          edges {
+            node {
+              menuItems {
+                edges {
+                  node {
+                    url
+                    title
+                    label
+                  }
                 }
               }
             }
           }
         }
       }
-    }
-  `});
+    `,
+  });
 }
 
 export const getStaticProps = getProps;

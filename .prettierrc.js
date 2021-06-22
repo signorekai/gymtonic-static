@@ -7,4 +7,5 @@ module.exports = {
   trailingComma: 'all',
   endOfLine: 'lf',
   useTabs: false,
+  'react/jsx-one-expression-per-line': [0, { allow: 'literal' }],
 };
