@@ -1,5 +1,6 @@
 import React from 'react';
 import { WPHead } from '@wpengine/headless/next';
+import { gql, useQuery } from '@apollo/client';
 import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -9,21 +10,45 @@ interface Props {
   description?: string;
 }
 
+interface MenuData {
+  node: {
+    cssClasses: string[];
+    order: number;
+    url: string;
+    label: string;
+    path: string;
+    id: string;
+  }
+}
+
+const menuQuery = gql`
+  {
+    menu(id: "dGVybToy") {
+      id
+      menuItems {
+        edges {
+          cursor
+          node {
+            cssClasses
+            order
+            url
+            label
+            path
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 function Header({
   title = 'Headless by WP Engine',
   description,
 }: Props): JSX.Element {
-  // TODO: accept a `menuItems` prop to receive menu items from WordPress.
-  const menuItems = [
-    { title: 'Home', href: '/' },
-    { title: 'About', href: '/about' },
-    { title: 'Posts', href: '/category/uncategorized' },
-    {
-      title: 'GitHub',
-      href: 'https://github.com/wpengine/headless-framework',
-      class: 'button',
-    },
-  ];
+  const menu = useQuery(menuQuery);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+  const menuItems: MenuData = menu.data?.menu.menuItems.edges;
 
   return (
     <>
@@ -61,10 +86,10 @@ function Header({
           <div className={styles.menu}>
             <ul>
               {menuItems &&
-                menuItems.map((item) => (
-                  <li key={`${item.title}$-menu`}>
-                    <Link href={item.href}>
-                      <a className={item?.class}>{item.title}</a>
+                menuItems.map(({ node }) => (
+                  <li key={`${node?.id}`}>
+                    <Link href={node?.path}>
+                      <a className={node?.cssClasses}>{node?.label}</a>
                     </Link>
                   </li>
                 ))}
