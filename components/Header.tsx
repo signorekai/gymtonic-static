@@ -73,23 +73,23 @@ function Header({
         />
       </Head>
       <WPHead />
-      <header>
-        <div className={styles.wrap}>
-          <div className={styles['title-wrap']}>
+      <header className="fixed top-0 l-0 w-full z-50 text-white">
+        <div className="flex flex-col md:flex-row justify-center md:justify-between items-center mx-auto">
+          <div className="p-8">
             <p className={styles['site-title']}>
               <Link href="/">
                 <a>{title}</a>
               </Link>
             </p>
-            {description && <p className={styles.description}>{description}</p>}
+            {/* {description && <p className={styles.description}>{description}</p>} */}
           </div>
-          <div className={styles.menu}>
+          <div className="text-center">
             <ul>
               {menuItems &&
                 menuItems.map(({ node }) => (
-                  <li key={`${node?.id}`}>
+                  <li key={`${node?.id}`} className="inline-block px-4">
                     <Link href={node?.path}>
-                      <a className={node?.cssClasses}>{node?.label}</a>
+                      <a className={`${node?.cssClasses} text-black font-bold`}>{node?.label}</a>
                     </Link>
                   </li>
                 ))}

@@ -2,7 +2,7 @@ import React from 'react';
 import { usePosts, useGeneralSettings } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import { getApolloClient, getPosts } from '@wpengine/headless';
-import { CTA, Header, Footer, Hero, Posts } from '../components';
+import { CTA, Layout, Header, Footer, Hero, Posts } from '../components';
 import styles from '../scss/wp-templates/front-page.module.scss';
 
 /**
@@ -21,8 +21,7 @@ export default function FrontPage(props: any): JSX.Element {
   const settings = useGeneralSettings();
 
   return (
-    <>
-      <Header title={settings?.title} description={settings?.description} />
+    <Layout>
       <main className="content">
         <Hero
           title="Get Started with Headless"
@@ -33,7 +32,8 @@ export default function FrontPage(props: any): JSX.Element {
           bgImage="/images/headless_hero_background.jpg"
           id={styles.home_hero}>
           <p>
-            WP&nbsp;Engine’s Headless WordPress Framework includes this example project, the{' '}
+            WP&nbsp;Engine’s Headless WordPress Framework includes this example
+            project, the{' '}
             <a href="https://github.com/wpengine/headless-framework#plugin-features">
               headless WordPress plugin
             </a>
@@ -140,8 +140,7 @@ export default function FrontPage(props: any): JSX.Element {
           </p>
         </CTA>
       </main>
-      <Footer copyrightHolder={settings?.title} />
-    </>
+    </Layout>
   );
 }
 
