@@ -1,9 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 
-export default function VideoScroller(): JSX.Element {
-  const [scrollAmount, setScrollAmount] = useState(0);
+interface Props {
+  totalFrames: number;
+  ext?: string;
+  path: string;
+}
 
+export default function VideoScroller({
+  ext = 'jpg',
+  totalFrames,
+  path,
+}: Props): JSX.Element {
   const scrollerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const [frame, setFrame] = useState(0);
+
+  const frames: Array<string> = useMemo(() => {
+    const iFrames = [];
+    // eslint-disable-next-line no-plusplus
+    for (let x = 0; x <= totalFrames; x++) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      iFrames.push(`${path}/frame-${x}.${ext}`);
+    }
+    return iFrames;
+  }, [ext, path, totalFrames]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,25 +34,34 @@ export default function VideoScroller(): JSX.Element {
           document.documentElement.clientHeight * 1.1;
         const currentAmount =
           window.pageYOffset - scrollerRef.current?.offsetTop;
-        if (currentAmount < maxAmount) {
-          setScrollAmount(
-            Math.floor(currentAmount < maxAmount ? currentAmount : maxAmount)
-          );
-        }
+
+        const scrollPercentage = currentAmount / maxAmount;
+        setFrame(
+          currentAmount < maxAmount
+            ? Math.round(scrollPercentage * totalFrames)
+            : totalFrames,
+        );
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-    setScrollAmount(window.pageYOffset);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [ext, path, totalFrames]);
 
   return (
-    <section className="h-[500vh]" ref={scrollerRef}>
+    <section className="h-[200vh]" ref={scrollerRef}>
       <div className="sticky top-0 l-0 w-full h-screen flex flex-col justify-center items-center border-60 border-red">
-        {scrollAmount}
+        {frames.map((url, index) => (
+          <Image
+            src={url}
+            alt=""
+            layout="fill"
+            priority
+            className={index === frame ? 'absolute z-30' : 'relative'}
+          />
+        ))}
       </div>
     </section>
   );
