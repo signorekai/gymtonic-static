@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { WPHead } from '@wpengine/headless/next';
 import { gql, useQuery } from '@apollo/client';
 import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
 import Head from 'next/head';
+import Image from 'next/image';
+
+// import image assets
+import logo from '../assets/images/logo.png';
 
 interface Props {
   title?: string;
@@ -11,14 +15,16 @@ interface Props {
 }
 
 interface MenuData {
+  [x: string]: number;
+  map(arg0: ({ node }: { node: any }) => JSX.Element): React.ReactNode;
   node: {
-    cssClasses: string[];
+    cssClasses: string;
     order: number;
     url: string;
     label: string;
     path: string;
     id: string;
-  }
+  };
 }
 
 const menuQuery = gql`
@@ -41,7 +47,6 @@ const menuQuery = gql`
     }
   }
 `;
-
 function Header({
   title = 'Headless by WP Engine',
   description,
@@ -49,6 +54,35 @@ function Header({
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
+
+  // IntersectionObserver
+  const headerRef = useRef(null);
+  const options = useMemo(
+    () => ({
+      root: null,
+      rootMargin: '0px 0px -10% 0px',
+      threshold: [0],
+    }),
+    [],
+  );
+
+  const [scrolled, setScrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (scrolled === false && entry.intersectionRatio === 0) {
+        setScrolled(true);
+      }
+    }, options);
+
+    if (headerRef.current) observer.observe(headerRef.current);
+
+    return () => {
+      if (headerRef.current) observer.observe(headerRef.current);
+    };
+
+  }, [headerRef, options]);
 
   return (
     <>
@@ -73,26 +107,65 @@ function Header({
         />
       </Head>
       <WPHead />
-      <header className="fixed top-0 l-0 w-full z-50 text-white">
-        <div className="flex flex-col md:flex-row justify-center md:justify-between items-center mx-auto">
-          <div className="p-8">
-            <p className={styles['site-title']}>
-              <Link href="/">
-                <a>{title}</a>
-              </Link>
-            </p>
-            {/* {description && <p className={styles.description}>{description}</p>} */}
-          </div>
+      <header
+        className={
+          scrolled
+            ? 'fixed animate-menu-drop-down top-0 l-0 w-full z-40 text-white'
+            : 'absolute top-0 l-0 w-full z-40 text-white'
+        }
+        ref={headerRef}>
+        <div
+          className={
+            scrolled
+              ? 'flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6'
+              : 'flex flex-col md:flex-row justify-center md:justify-center items-center mx-auto p-6'
+          }>
+          {scrolled ? (
+            <Link href="/">
+              <Image
+                src={logo}
+                alt=""
+                width={105}
+                height={105}
+                placeholder="blur"
+              />
+            </Link>
+          ) : (
+            <></>
+          )}
           <div className="text-center">
-            <ul>
-              {menuItems &&
-                menuItems.map(({ node }) => (
-                  <li key={`${node?.id}`} className="inline-block px-4">
-                    <Link href={node?.path}>
-                      <a className={`${node?.cssClasses} text-black font-bold`}>{node?.label}</a>
-                    </Link>
-                  </li>
-                ))}
+            <ul className="flex flex-row items-center">
+              {menuItems?.map(({ node }: MenuData, index: number) => {
+                return (
+                  <>
+                    {Math.floor(menuItems.length / 2) === index &&
+                    scrolled === false ? (
+                      <Link href="/">
+                        <a>
+                          <Image
+                            src={logo}
+                            alt=""
+                            width={105}
+                            height={105}
+                            quality={100}
+                            placeholder="blur"
+                            />
+                        </a>
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                    <li key={`${node.id}`} className="px-4 font-black">
+                      <Link href={node.path}>{node.label}</Link>
+                    </li>
+                  </>
+                );
+              })}
+              {menuItems.length % 2 === 0 ? (
+                ''
+              ) : (
+                <li className="inline-block pl-4" />
+              )}
             </ul>
           </div>
         </div>
