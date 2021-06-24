@@ -2,6 +2,8 @@ import React from 'react';
 import { usePosts, useGeneralSettings } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import { getApolloClient, getPosts } from '@wpengine/headless';
+import VideoScroll from 'components/VideoScroll';
+
 import { CTA, Layout, Header, Footer, Hero, Posts } from '../components';
 import styles from '../scss/wp-templates/front-page.module.scss';
 
@@ -22,6 +24,7 @@ export default function FrontPage(props: any): JSX.Element {
 
   return (
     <Layout>
+      <VideoScroll />
       <main className="content">
         <Hero
           title="Get Started with Headless"
