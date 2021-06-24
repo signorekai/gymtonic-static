@@ -17,9 +17,19 @@ module.exports = {
       red: {
         DEFAULT: '#E62D2D',
       },
+      pink: '#F4D3CD',
       white: '#ffffff',
     },
     extend: {
+      animation: {
+        'menu-drop-down': 'drop-down 0.3s ease-out forwards',
+      },
+      keyframes: {
+        'drop-down': {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(0%)' },
+        },
+      },
       fontFamily: {
         sans: ['Gotham HTF'],
       },
