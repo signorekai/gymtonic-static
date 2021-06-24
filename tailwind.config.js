@@ -22,6 +22,10 @@ module.exports = {
       white: '#ffffff',
     },
     extend: {
+      borderWidth: {
+        10: '10px',
+        60: '60px',
+      },
       animation: {
         'menu-drop-down': 'drop-down 0.3s ease-out forwards',
       },
