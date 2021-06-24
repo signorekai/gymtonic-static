@@ -19,7 +19,11 @@ module.exports = {
       },
       white: '#ffffff',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Gotham HTF'],
+      },
+    },
   },
   variants: {
     extend: {},
