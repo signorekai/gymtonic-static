@@ -10,7 +10,7 @@ export default function Layout(props: any): JSX.Element {
   return (
     <>
       <Header title={settings?.title} description={settings?.description} />
-      <div className="font-sans">{children}</div>
+      <div className="font-sans antialiased">{children}</div>
       <Footer copyrightHolder={settings?.title} />
     </>
   );
