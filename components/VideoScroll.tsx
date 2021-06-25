@@ -61,7 +61,7 @@ export default function VideoScroller({
 }: Props): JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { setShowLoader } = useLoaderContext();
+  const { showLoader, setShowLoader } = useLoaderContext();
 
   useEffect(() => {
     const videoFrames: Array<HTMLImageElement> = [];
@@ -73,25 +73,27 @@ export default function VideoScroller({
       videoFrames.push(imageObj);
     }
 
-    if (videoFrames.filter((img) => !img.complete).length > 0)
-      setShowLoader(true);
-
-    void Promise.all(
-      videoFrames
-        .filter((img) => !img.complete)
-        .map(
-          (img) =>
-            new Promise((resolve) => {
-              // eslint-disable-next-line no-param-reassign,no-multi-assign
-              img.addEventListener('load', resolve);
-              img.addEventListener('error', resolve);
-            }),
-        ),
-    ).then(() => {
-      setTimeout(() => {
+    console.log('checking length of unloaded frames');
+    if (videoFrames.filter((img) => !img.complete).length > 0) {
+      console.log('length of unloaded frames > 0');
+      void Promise.all(
+        videoFrames
+          .filter((img) => !img.complete)
+          .map(
+            (img) =>
+              new Promise((resolve) => {
+                // eslint-disable-next-line no-param-reassign,no-multi-assign
+                img.addEventListener('load', resolve);
+                img.addEventListener('error', resolve);
+              }),
+          ),
+      ).then(() => {
+        console.log('frames all loaded');
         setShowLoader(false);
-      }, 1000);
-    });
+      });
+    } else {
+      setShowLoader(false);
+    }
 
     const handleScroll = () => {
       if (scrollerRef.current) {
@@ -144,7 +146,11 @@ export default function VideoScroller({
   return (
     <section className="h-[250vh]" ref={scrollerRef}>
       <div className="sticky top-0 l-0 w-full h-screen flex flex-col justify-center items-center border-60 border-red">
-        <canvas ref={canvasRef} className="w-full h-full" />
+        <canvas
+          ref={canvasRef}
+          className="w-full h-full absolute top-0 left-0"
+        />
+        <img src={`${path}/frame-0.${ext}`} alt="" />
       </div>
     </section>
   );
