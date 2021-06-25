@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { LoaderContext, LoaderContextType } from '../pages/_app';
 
@@ -51,6 +51,7 @@ const fitImageOn = (canvas: HTMLCanvasElement, imageObj: HTMLImageElement) => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 const useLoaderContext = (): LoaderContextType => useContext(LoaderContext);
 
 export default function VideoScroller({
@@ -63,17 +64,20 @@ export default function VideoScroller({
   const { setShowLoader } = useLoaderContext();
 
   useEffect(() => {
-    const iFrames: Array<HTMLImageElement> = [];
+    const videoFrames: Array<HTMLImageElement> = [];
     // eslint-disable-next-line no-plusplus
     for (let x = 0; x <= totalFrames; x++) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const imageObj = document.createElement('img');
       imageObj.setAttribute('src', `${path}/frame-${x}.${ext}`);
-      iFrames.push(imageObj);
+      videoFrames.push(imageObj);
     }
 
+    if (videoFrames.filter((img) => !img.complete).length > 0)
+      setShowLoader(true);
+
     void Promise.all(
-      iFrames
+      videoFrames
         .filter((img) => !img.complete)
         .map(
           (img) =>
@@ -84,7 +88,9 @@ export default function VideoScroller({
             }),
         ),
     ).then(() => {
-      setShowLoader(false);
+      setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
     });
 
     const handleScroll = () => {
@@ -101,14 +107,14 @@ export default function VideoScroller({
             : totalFrames;
 
         if (canvasRef.current) {
-          if (iFrames[currentFrame] && iFrames[currentFrame].complete) {
-            fitImageOn(canvasRef.current, iFrames[currentFrame]);
-          } else if (iFrames[currentFrame]) {
+          if (videoFrames[currentFrame] && videoFrames[currentFrame].complete) {
+            fitImageOn(canvasRef.current, videoFrames[currentFrame]);
+          } else if (videoFrames[currentFrame]) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-            iFrames[currentFrame].addEventListener('load', () => {
+            videoFrames[currentFrame].addEventListener('load', () => {
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               if (canvasRef.current) {
-                fitImageOn(canvasRef.current, iFrames[currentFrame]);
+                fitImageOn(canvasRef.current, videoFrames[currentFrame]);
               }
             });
           }

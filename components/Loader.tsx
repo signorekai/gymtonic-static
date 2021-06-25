@@ -7,13 +7,14 @@ import { LoaderContext, LoaderContextType } from 'pages/_app';
 import loading from '../assets/images/loading2.gif';
 
 const transition = { duration: 0.5, ease: [0.175, 0.85, 0.42, 0.96] };
-const useLoaderContext = (): LoaderContextType => useContext(LoaderContext);
 
 export default function Loader(): JSX.Element {
   const router = useRouter();
   const animControls = useAnimation();
-  const [active, setActive] = useState(false);
-  const { showLoader } = useLoaderContext();
+  const [active, setActive] = useState(true);
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { showLoader }: LoaderContextType = useContext(LoaderContext);
 
   useEffect(() => {
     setActive(showLoader);
@@ -25,8 +26,8 @@ export default function Loader(): JSX.Element {
     }
   };
 
-  const handleComplete = () => {
-    setActive(false);
+  const handleComplete = (url: string) => {
+    if (url !== '/') setActive(false);
   };
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function Loader(): JSX.Element {
       <motion.div
         animate={animControls}
         className="fixed z-50 top-0 left-0 w-full h-full pointer-events-none bg-pink flex flex-col justify-center items-center"
-        initial={{ opacity: 0 }}>
+        initial={{ opacity: 1 }}>
         <Image src={loading} alt="" width={126} height={222} />
       </motion.div>
     </AnimatePresence>
