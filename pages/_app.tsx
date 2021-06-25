@@ -4,6 +4,7 @@ import React, {
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from 'react';
 import { AppContext, AppInitialProps } from 'next/app';
 import { HeadlessProvider } from '@wpengine/headless/react';
@@ -19,7 +20,7 @@ export interface LoaderContextType {
   setShowLoader: Dispatch<SetStateAction<boolean>>;
 }
 
-export const LoaderContext = createContext<any>(false);
+export const LoaderContext = createContext<any>(null);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App({
