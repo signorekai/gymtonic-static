@@ -18,13 +18,12 @@ const firstSixInCategory = {
   },
 };
 
-export default function FrontPage(props: any): JSX.Element {
+export default function FrontPage(): JSX.Element {
   const posts = usePosts(firstSixInCategory);
-  const settings = useGeneralSettings();
 
   return (
     <Layout>
-      <VideoScroll />
+      <VideoScroll totalFrames={69} path="/images/home-video-frames" />
       <main className="content">
         <Hero
           title="Get Started with Headless"
