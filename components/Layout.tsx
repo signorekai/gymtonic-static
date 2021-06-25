@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState, MutableRefObject } from 'react';
 import { Header, Footer } from 'components';
 import { useGeneralSettings } from '@wpengine/headless/react';
 
-export default function Layout(props: any): JSX.Element {
+interface Props {
+  children: Array<JSX.Element>;
+}
+
+export default function Layout({ children }: Props): JSX.Element {
   const settings = useGeneralSettings();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { children }: { children: JSX.Element } = props;
+
+  const [headerRef, setHeaderRef] =
+    useState<MutableRefObject<HTMLElement> | null>(null);
+
+  const childrenWithExtraProp = React.Children.map(children, (child) =>
+    React.cloneElement(child, { setHeaderRef }),
+  );
 
   return (
     <>
-      <Header title={settings?.title} description={settings?.description} />
-      <div className="font-sans antialiased">{children}</div>
+      <Header headerRef={headerRef} />
+      <div className="font-sans antialiased">{childrenWithExtraProp}</div>
       <Footer copyrightHolder={settings?.title} />
     </>
   );

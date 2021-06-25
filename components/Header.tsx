@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { WPHead } from '@wpengine/headless/next';
 import { gql, useQuery } from '@apollo/client';
 import styles from 'scss/components/Header.module.scss';
@@ -8,11 +8,6 @@ import Image from 'next/image';
 
 // import image assets
 import logo from '../assets/images/logo.png';
-
-interface Props {
-  title?: string;
-  description?: string;
-}
 
 interface MenuData {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -60,47 +55,76 @@ const menuQuery = gql`
     }
   }
 `;
+
+const Logo = () => (
+  <Link href="/">
+    <Image
+      src={logo}
+      alt=""
+      width={105}
+      height={105}
+      quality={100}
+      placeholder="blur"
+    />
+  </Link>
+);
+
+interface Props {
+  headerRef?: MutableRefObject<HTMLElement> | null;
+  intersectionRatio?: number;
+  rootMargin?: string;
+}
+
 function Header({
-  title = 'Headless by WP Engine',
-  description,
+  headerRef = null,
+  intersectionRatio = 0,
+  rootMargin = '0px 0px -10% 0px',
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
+  const selfRef = useRef<HTMLElement>(null);
 
   // IntersectionObserver
-  const headerRef = useRef<HTMLElement>(null);
-  const options = useMemo(
-    () => ({
-      root: null,
-      rootMargin: '0px 0px -10% 0px',
-      threshold: [0],
-    }),
-    [],
-  );
-
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (headerRef.current) {
-      const observer = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (scrolled === false && entry.intersectionRatio === 0) {
-          setScrolled(true);
-        }
-      }, options);
+    let ref: HTMLElement | null = null;
 
-      observer.observe(headerRef.current);
+    if (headerRef !== null) {
+      if (headerRef?.current) ref = headerRef.current;
+    } else if (selfRef.current) {
+      ref = selfRef.current;
+    }
 
-      const headerElem: HTMLElement = headerRef.current;
+    if (ref !== null) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (
+            scrolled === false &&
+            entry.intersectionRatio === intersectionRatio
+          ) {
+            setScrolled(true);
+          }
+        },
+        {
+          root: null,
+          rootMargin,
+          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        },
+      );
+
+      observer.observe(ref);
+
       return () => {
-        observer.unobserve(headerElem);
+        observer.unobserve(ref!);
       };
     }
 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerRef, options]);
+  }, [headerRef, selfRef]);
 
   return (
     <>
@@ -131,27 +155,14 @@ function Header({
             ? 'fixed animate-menu-drop-down top-0 l-0 w-full z-40 text-white'
             : 'absolute top-0 l-0 w-full z-40 text-white'
         }
-        ref={headerRef}>
+        ref={selfRef}>
         <div
           className={
             scrolled
               ? 'flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6'
               : 'flex flex-col md:flex-row justify-center md:justify-center items-center mx-auto p-6'
           }>
-          {scrolled ? (
-            <Link href="/">
-              <Image
-                src={logo}
-                alt=""
-                width={105}
-                height={105}
-                quality={100}
-                placeholder="blur"
-              />
-            </Link>
-          ) : (
-            <></>
-          )}
+          {scrolled ? <Logo /> : <></>}
           <div className="text-center">
             <ul className="flex flex-row items-center antialiased">
               {menuItems.map(({ node }: MenuData, index: number) => {
@@ -159,20 +170,9 @@ function Header({
                   <>
                     {Math.floor(menuItems.length / 2) === index &&
                     scrolled === false ? (
-                      <Link href="/">
-                        <a>
-                          <Image
-                            src={logo}
-                            alt=""
-                            width={105}
-                            height={105}
-                            quality={100}
-                            placeholder="blur"
-                          />
-                        </a>
-                      </Link>
+                      <Logo />
                     ) : (
-                      ''
+                      <></>
                     )}
                     <li key={`${node.id}`} className="px-4 font-black">
                       <Link href={node.path}>{node.label}</Link>
