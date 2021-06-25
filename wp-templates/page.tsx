@@ -1,11 +1,20 @@
-import React from 'react';
-import { useGeneralSettings } from '@wpengine/headless/react';
+import React, { useContext, useEffect } from 'react';
 import { usePost } from '@wpengine/headless/next';
-import { Header, Hero, Footer, Layout } from '../components';
+
+import { LoaderContext, LoaderContextType } from 'pages/_app';
+import { Hero, Layout } from '../components';
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+const useLoaderContext = (): LoaderContextType => useContext(LoaderContext);
 
 export default function Page(): JSX.Element {
   const post = usePost();
-  const settings = useGeneralSettings();
+  const { setShowLoader } = useLoaderContext();
+
+  useEffect(() => {
+    setShowLoader(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Layout>
