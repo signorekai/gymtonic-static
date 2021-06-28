@@ -38,7 +38,6 @@ export default function Page() {
   return <NextTemplateLoader templates={WPTemplates} />;
 }
 
-
 export async function getStaticProps(context: GetStaticPropsContext) {
   const client = getApolloClient(context);
   await client.query({

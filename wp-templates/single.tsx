@@ -9,7 +9,7 @@ export default function Single(): JSX.Element {
 
   return (
     <>
-      <Header title={settings?.title} description={settings?.description} />
+      <Header />
       <main className="content content-single">
         {post?.title && <Hero title={post?.title} />}
         <div className="wrap">
