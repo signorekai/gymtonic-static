@@ -1,26 +1,56 @@
-import React, { useState, MutableRefObject } from 'react';
-import { Header, Footer } from 'components';
-import { useGeneralSettings } from '@wpengine/headless/react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { MutableRefObject, RefObject } from 'react';
+import { Header } from 'components';
 
-interface Props {
-  children: Array<JSX.Element>;
+interface LayoutState {
+  headerRef: RefObject<HTMLElement> | null;
+  showLoader: boolean;
 }
 
-export default function Layout({ children }: Props): JSX.Element {
-  const settings = useGeneralSettings();
+export interface WithLayoutProps {
+  setHeaderRef: (ref: RefObject<HTMLElement>) => void;
+  showLoader: boolean;
+  setShowLoader: (arg0: boolean) => void;
+}
 
-  const [headerRef, setHeaderRef] =
-    useState<MutableRefObject<HTMLElement> | null>(null);
+export default function withLayout(
+  Component: React.ComponentType<WithLayoutProps>,
+): React.ComponentClass<WithLayoutProps> {
+  return class extends React.Component<WithLayoutProps, LayoutState> {
+    constructor(props: WithLayoutProps) {
+      super(props);
+      this.setHeaderRef = this.setHeaderRef.bind(this);
+      this.setShowLoader = this.setShowLoader.bind(this);
+      this.state = {
+        headerRef: null,
+        showLoader: true,
+      };
+    }
 
-  const childrenWithExtraProp = React.Children.map(children, (child) =>
-    React.cloneElement(child, { setHeaderRef }),
-  );
+    setHeaderRef(ref: RefObject<HTMLElement>) {
+      this.setState({ headerRef: ref });
+    }
 
-  return (
-    <>
-      <Header headerRef={headerRef} />
-      <div className="font-sans antialiased">{childrenWithExtraProp}</div>
-      <Footer copyrightHolder={settings?.title} />
-    </>
-  );
+    setShowLoader(showLoader: boolean) {
+      this.setState({ showLoader });
+    }
+
+    // const [headerRef, setHeaderRef] =
+    //   useState<MutableRefObject<HTMLElement> | null>(null);
+    render() {
+      const { headerRef, showLoader } = this.state;
+
+      return (
+        <div className="font-sans antialiased">
+          <Header headerRef={headerRef} />
+          <Component
+            {...this.props}
+            setHeaderRef={this.setHeaderRef}
+            showLoader={showLoader}
+            setShowLoader={this.setShowLoader}
+          />
+        </div>
+      );
+    }
+  };
 }
