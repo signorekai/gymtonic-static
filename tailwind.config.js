@@ -22,6 +22,10 @@ module.exports = {
       white: '#ffffff',
     },
     extend: {
+      fontSize: {
+        '3xl': '2rem',
+        '8xl': '5.625rem',
+      },
       borderWidth: {
         10: '10px',
         60: '60px',
@@ -43,5 +47,10 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-pseudo-elements')({
+      contentUtilities: false,
+      emptyContent: true,
+    }),
+  ],
 };
