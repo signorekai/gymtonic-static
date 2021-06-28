@@ -1,10 +1,10 @@
-import React, { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { WPHead } from '@wpengine/headless/next';
 import { gql, useQuery } from '@apollo/client';
-import styles from 'scss/components/Header.module.scss';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // import image assets
 import logo from '../assets/images/logo.png';
@@ -56,21 +56,25 @@ const menuQuery = gql`
   }
 `;
 
-const Logo = () => (
+const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
-    <Image
-      src={logo}
-      alt=""
-      width={105}
-      height={105}
-      quality={100}
-      placeholder="blur"
-    />
+    <div
+      className={`hover:cursor-pointer ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
+      <Image
+        src={logo}
+        alt=""
+        quality={90}
+        layout="fill"
+        sizes="(min-width: 768px) 105px, 80px"
+        objectFit="contain"
+        objectPosition="center center"
+      />
+    </div>
   </Link>
 );
 
 interface Props {
-  headerRef?: MutableRefObject<HTMLElement> | null;
+  headerRef?: RefObject<HTMLElement> | null;
   intersectionRatio?: number;
   rootMargin?: string;
 }
@@ -78,14 +82,12 @@ interface Props {
 function Header({
   headerRef = null,
   intersectionRatio = 0,
-  rootMargin = '0px 0px -10% 0px',
+  rootMargin = '0px 0px 0px 0px',
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
   const selfRef = useRef<HTMLElement>(null);
-
-  // IntersectionObserver
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -117,6 +119,16 @@ function Header({
 
       observer.observe(ref);
 
+      console.log('checking for scroll amount now');
+      if (typeof window !== undefined) {
+        console.log(window.scrollY, ref.clientHeight);
+        if (window.scrollY >= ref.clientHeight) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
+      }
+
       return () => {
         observer.unobserve(ref!);
       };
@@ -131,51 +143,26 @@ function Header({
       <Head>
         <title>{/* Title is required here but replaced by WPHead. */}</title>
         {/* Add extra elements to <head> here. */}
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public%20Sans%3Aital%2Cwght%400%2C100..900%3B1%2C100..900&amp;subset=latin%2Clatin-ext"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?display=swap&amp;family=Public%20Sans%3Aital%2Cwght%400%2C100..900%3B1%2C100..900&amp;subset=latin%2Clatin-ext"
-          type="text/css"
-          media="all"
-        />
       </Head>
       <WPHead />
-      <header
-        className={
-          scrolled
-            ? 'fixed animate-menu-drop-down top-0 l-0 w-full z-40 text-white'
-            : 'absolute top-0 l-0 w-full z-40 text-white'
-        }
-        ref={selfRef}>
-        <div
-          className={
-            scrolled
-              ? 'flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6'
-              : 'flex flex-col md:flex-row justify-center md:justify-center items-center mx-auto p-6'
-          }>
-          {scrolled ? <Logo /> : <></>}
-          <div className="text-center">
-            <ul className="flex flex-row items-center antialiased">
+      {!scrolled && (
+        <header
+          className="absolute top-0 l-0 w-full z-40 text-white"
+          ref={selfRef}>
+          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6">
+            <ul className="flex flex-row text-center items-center antialiased">
               {menuItems.map(({ node }: MenuData, index: number) => {
                 return (
                   <>
-                    {Math.floor(menuItems.length / 2) === index &&
-                    scrolled === false ? (
-                      <Logo />
-                    ) : (
-                      <></>
+                    {Math.floor(menuItems.length / 2) === index && (
+                      <Logo className="mx-3" />
                     )}
-                    <li key={`${node.id}`} className="px-4 font-black">
-                      <Link href={node.path}>{node.label}</Link>
+                    <li
+                      key={`${node.id}`}
+                      className="px-4 font-black hidden xl:list-item menu-item">
+                      <Link href={node.path} scroll={false}>
+                        {node.label}
+                      </Link>
                     </li>
                   </>
                 );
@@ -187,8 +174,39 @@ function Header({
               )}
             </ul>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
+      <AnimatePresence>
+        {scrolled && (
+          <motion.header
+            initial={{ translateY: '-100%' }}
+            animate={{ translateY: 0 }}
+            transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
+            className="fixed top-0 l-0 w-full z-40 text-white">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start mx-auto p-6">
+              <Logo />
+              <ul className="flex flex-row text-center items-center antialiased">
+                {menuItems.map(({ node }: MenuData) => {
+                  return (
+                    <li
+                      key={`${node.id}`}
+                      className="px-4 font-black menu-item">
+                      <Link href={node.path} scroll={false}>
+                        {node.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+                {menuItems.length % 2 === 0 ? (
+                  ''
+                ) : (
+                  <li className="inline-block pl-4" />
+                )}
+              </ul>
+            </div>
+          </motion.header>
+        )}
+      </AnimatePresence>
     </>
   );
 }
