@@ -62,6 +62,7 @@ export default function VideoScroller({
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { showLoader, setShowLoader } = useLoaderContext();
+  const borderWidth = window.innerWidth >= 768 ? 60 : 10;
 
   useEffect(() => {
     const videoFrames: Array<HTMLImageElement> = [];
@@ -123,13 +124,19 @@ export default function VideoScroller({
         }
       }
     };
-    const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
 
-        handleScroll();
+    const handleResize = () => {
+      if (
+        canvasRef.current &&
+        (canvasRef.current.width !== window.innerWidth - borderWidth * 2 ||
+          canvasRef.current.height !== window.innerHeight - borderWidth * 2)
+      ) {
+        canvasRef.current.width =
+          (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
+        canvasRef.current.height =
+          (window.innerHeight - borderWidth * 2) * window.devicePixelRatio;
       }
+      handleScroll();
     };
 
     handleResize();
