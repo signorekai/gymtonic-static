@@ -6,4 +6,9 @@ function withWPEHeadless(nextConfig = {}) {
   return withTM(nextConfig);
 }
 
-module.exports = withWPEHeadless();
+module.exports = withWPEHeadless({
+  images: {
+    deviceSizes: [200, 768, 1024, 1366, 1600],
+    imageSizes: [32, 48, 64, 96, 128],
+  },
+});
