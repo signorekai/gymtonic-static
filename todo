@@ -1,1 +1,3 @@
-[] need to change Layout into a HOC so that we can set headerRef
+[x] need to change Layout into a HOC so that we can set headerRef
+[x] figure out how to not rerender <VideoScroll /> so that the loader screen wouldn't get auto cancelled
+		- maybe add a state in Layout to state it's getting updated?
