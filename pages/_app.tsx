@@ -11,6 +11,7 @@ import { HeadlessProvider } from '@wpengine/headless/react';
 import 'normalize.css/normalize.css';
 import 'scss/main.scss';
 import Loader from 'components/Loader';
+import { useRouter } from 'next/router';
 
 export interface LoaderContextType {
   // assetsToLoad: Array<HTMLElement>;
@@ -28,12 +29,36 @@ export default function App({
   pageProps,
 }: AppContext & AppInitialProps) {
   const [showLoader, setShowLoader] = useState(true);
+  const router = useRouter();
+
+  const handleStart = (url: string) => {
+    console.log('>>> start routechange', url);
+    setShowLoader(true);
+  };
+
+  const handleComplete = (url: string) => {
+    console.log('>>> complete routechange', url);
+    setShowLoader(false);
+  };
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
       <LoaderContext.Provider value={{ showLoader, setShowLoader }}>
-        <Loader />
+        <Loader showLoader={showLoader} />
         <Component {...pageProps} />
       </LoaderContext.Provider>
     </HeadlessProvider>
