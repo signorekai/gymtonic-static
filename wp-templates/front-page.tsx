@@ -1,10 +1,12 @@
 import React from 'react';
-import { usePosts, useGeneralSettings } from '@wpengine/headless/react';
+import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import { getApolloClient, getPosts } from '@wpengine/headless';
 import VideoScroll from 'components/VideoScroll';
+import withLayout, { WithLayoutProps } from 'components/Layout';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import { CTA, Layout, Header, Footer, Hero, Posts } from '../components';
+import { CTA, Hero, Posts } from '../components';
 import styles from '../scss/wp-templates/front-page.module.scss';
 
 /**
@@ -18,12 +20,33 @@ const firstSixInCategory = {
   },
 };
 
-export default function FrontPage(): JSX.Element {
+const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
+  setHeaderRef,
+}: WithLayoutProps) => {
   const posts = usePosts(firstSixInCategory);
 
   return (
-    <Layout>
-      <VideoScroll totalFrames={69} path="/images/home-video-frames" />
+    <>
+      <VideoScroll
+        totalFrames={69}
+        path="/images/home-video-frames"
+        setHeaderRef={setHeaderRef}>
+        <AnimatePresence exitBeforeEnter>
+          <motion.div
+            initial={{ opacity: 0, translateY: 40 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: 30 }}
+            transition={{ duration: 0.3, ease: [0.175, 0.85, 0.42, 0.96] }}
+            className="relative z-40 text-center text-red mx-8">
+            <h1 className="text-6xl md:text-8xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-4 md:mb-0">
+              Gym Tonic
+            </h1>
+            <h4 className="text-2xl md:text-3xl font-black leading-none">
+              Exercise as Medicine
+            </h4>
+          </motion.div>
+        </AnimatePresence>
+      </VideoScroll>
       <main className="content">
         <Hero
           title="Get Started with Headless"
@@ -142,9 +165,11 @@ export default function FrontPage(): JSX.Element {
           </p>
         </CTA>
       </main>
-    </Layout>
+    </>
   );
-}
+};
+
+export default withLayout(FrontPage);
 
 /**
  * Get additional data from WordPress that is specific to this template.
