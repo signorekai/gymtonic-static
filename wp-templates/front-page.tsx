@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
@@ -69,15 +69,17 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   const rightParallax = useRef<HTMLDivElement>(null);
   const rightParallaxControl = useAnimation();
 
+  const [parallaxIndex, setParallaxIndex] = useState<number>(0);
+
   const parallaxEffectRef = useRef<{
-    currentIndex: number;
+    previousIndex: number;
     maxCount: number;
     locked: boolean;
     leftParallaxPosition: number;
     rightParallaxPosition: number;
     direction: 'up' | 'down';
   }>({
-    currentIndex: 0,
+    previousIndex: 0,
     maxCount: 6,
     locked: false,
     leftParallaxPosition: 0,
@@ -87,17 +89,12 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
 
   function handleScroll() {
     console.log('handleScroll');
-    const {
-      currentIndex: previousIndex,
-      locked,
-      maxCount,
-      leftParallaxPosition,
-      direction,
-    } = parallaxEffectRef.current;
+    const { previousIndex, locked, maxCount, leftParallaxPosition, direction } =
+      parallaxEffectRef.current;
     if (locked) return;
     // if (parallaxScrollValues.scrollYProgress >= 1) return;
 
-    parallaxEffectRef.current.locked = true;
+    // parallaxEffectRef.current.locked = true;
 
     let newIndex = Math.floor(
       parallaxScrollValues.scrollYProgress / (1 / maxCount),
@@ -106,53 +103,26 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
     if (newIndex > maxCount - 1) {
       newIndex = maxCount - 1;
     }
-    parallaxEffectRef.current.currentIndex = newIndex;
+
+    console.log(parallaxEffectRef.current.previousIndex, parallaxIndex);
+    
+    if (parallaxEffectRef.current.previousIndex !== parallaxIndex) {
+      parallaxEffectRef.current.previousIndex = parallaxIndex;
+    }
+    // parallaxEffectRef.current.currentIndex = newIndex;
+    setParallaxIndex(newIndex);
+
     parallaxEffectRef.current.direction =
       leftParallaxPosition > parallaxScrollValues.scrollYProgress * -100
         ? 'down'
         : 'up';
-
-    async function asyncLeftHandle() {
-      const newYPosition = -newIndex * (1 / maxCount) * 100;
-      if (parallaxEffectRef.current.leftParallaxPosition !== newYPosition) {
-        await leftParallaxControl.start({
-          y: `${newYPosition}%`,
-          transition: {
-            type: 'spring',
-            duration: Math.abs(previousIndex - newIndex) * 0.3,
-            // duration: 0,
-          },
-        });
-        parallaxEffectRef.current.leftParallaxPosition = newYPosition;
-        parallaxEffectRef.current.locked = false;
-      } else {
-        parallaxEffectRef.current.locked = false;
-      }
-    }
-
-    async function asyncRightHandle() {
-      const newYPosition = -(maxCount - newIndex - 1) * (1 / maxCount) * 100;
-      if (parallaxEffectRef.current.rightParallaxPosition !== newYPosition) {
-        await rightParallaxControl.start({
-          y: `${newYPosition}%`,
-          transition: {
-            type: 'spring',
-            duration: Math.abs(previousIndex - newIndex) * 0.3,
-            // duration: 0,
-          },
-        });
-        parallaxEffectRef.current.rightParallaxPosition = newYPosition;
-        parallaxEffectRef.current.locked = false;
-      } else {
-        parallaxEffectRef.current.locked = false;
-      }
-    }
-    void asyncLeftHandle();
-    void asyncRightHandle();
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedHandler = useMemo(() => debounce(handleScroll, 150), []);
+  const debouncedHandler = useCallback(debounce(handleScroll, 100), [
+    parallaxIndex,
+    parallaxEffectRef,
+  ]);
 
   useEffect(() => {
     window.addEventListener('scroll', debouncedHandler, { passive: true });
@@ -193,7 +163,22 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
               <h1 className="h1 relative z-40 text-red">Gym</h1>
               <motion.div
                 ref={leftParallax}
-                animate={leftParallaxControl}
+                initial={{ y: 0 }}
+                animate={{
+                  y: `${
+                    parallaxIndex *
+                    (1 / parallaxEffectRef.current.maxCount) *
+                    -100
+                  }%`,
+                  transition: {
+                    type: 'spring',
+                    duration:
+                      Math.abs(
+                        parallaxEffectRef.current.previousIndex - parallaxIndex,
+                      ) * 0.3,
+                    // duration: 0,
+                  },
+                }}
                 className="flex flex-col w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
                 <LeftCard src={Gym1} />
                 <LeftCard src={Gym2} />
@@ -209,7 +194,21 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 initial={{
                   y: `${(1 / parallaxEffectRef.current.maxCount) * 100 - 100}%`,
                 }}
-                animate={rightParallaxControl}
+                animate={{
+                  y: `${
+                    (parallaxEffectRef.current.maxCount - parallaxIndex - 1) *
+                    (1 / parallaxEffectRef.current.maxCount) *
+                    -100
+                  }%`,
+                  transition: {
+                    type: 'spring',
+                    duration:
+                      Math.abs(
+                        parallaxEffectRef.current.previousIndex - parallaxIndex,
+                      ) * 0.3,
+                    // duration: 0,
+                  },
+                }}
                 className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
                 <RightCard className="bg-red">
                   <h1 className="h1 text-white">1</h1>
