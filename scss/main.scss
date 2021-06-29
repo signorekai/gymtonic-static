@@ -35,3 +35,13 @@
   @apply after:duration-200;
   @apply after:origin-left;
 }
+
+.h1 {
+  @apply text-6xl;
+  @apply md:text-8xl;
+  @apply word-spacing-0;
+  @apply md:word-spacing-8;
+  @apply font-black;
+  @apply leading-none;
+  @apply mb-0;
+}
