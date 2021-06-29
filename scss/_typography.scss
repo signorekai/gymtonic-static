@@ -1,50 +1,41 @@
-@import "variables";
-
-body {
-	font-family: $font-family;
-	font-weight: $font-weight-normal;
+@font-face {
+  font-family: 'Gotham HTF';
+  src: url('../assets/fonts//GothamHTF-Black.woff2') format('woff2'),
+    url('../assets/fonts//GothamHTF-Black.woff') format('woff'),
+    url('../assets/fonts//GothamHTF-Black.svg#GothamHTF-Black') format('svg');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: $font-family;
-	font-weight: $font-weight-bold;
-	line-height: 1.2;
-	margin-bottom: 0.5em;
+@font-face {
+  font-family: 'Gotham HTF';
+  src: url('../assets/fonts//GothamHTF-Bold.woff2') format('woff2'),
+    url('../assets/fonts//GothamHTF-Bold.woff') format('woff'),
+    url('../assets/fonts//GothamHTF-Bold.svg#GothamHTF-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
-h1 {
-	font-size: 3.5em;
+@font-face {
+  font-family: 'Gotham HTF';
+  src: url('../assets/fonts//GothamHTF-BlackItalic.woff2') format('woff2'),
+    url('../assets/fonts//GothamHTF-BlackItalic.woff') format('woff'),
+    url('../assets/fonts//GothamHTF-BlackItalic.svg#GothamHTF-BlackItalic')
+      format('svg');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
 }
 
-h2 {
-	font-size: 2.5em;
-}
-
-h3 {
-	font-size: 1.4em;
-}
-
-h4 {
-	font-size: 1.2em;
-}
-
-h5 {
-	font-size: 1.1em;
-}
-
-h6 {
-	font-size: 1em;
-}
-
-p {
-	margin-bottom: 1.2em;
-}
-
-a {
-	color: $color-primary;
-}
-
-a:focus,
-a:hover {
-	color: lighten($color-primary, 15);
+@font-face {
+  font-family: 'Gotham HTF';
+  src: url('../assets/fonts//GothamHTF-BoldItalic.woff2') format('woff2'),
+    url('../assets/fonts//GothamHTF-BoldItalic.woff') format('woff'),
+    url('../assets/fonts//GothamHTF-BoldItalic.svg#GothamHTF-BoldItalic')
+      format('svg');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
 }
