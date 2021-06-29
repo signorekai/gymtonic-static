@@ -98,7 +98,8 @@ export default function VideoScroller({
   const frame0Ref = useRef<HTMLImageElement>(null);
   const intervalAnimationRef = useRef<boolean>(false);
   const intervalAnimationDirection = useRef<'forward' | 'reverse'>('forward');
-  const timerRef = useRef<any>(null);
+
+  const thenRef = useRef(window.performance.now());
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
@@ -176,32 +177,65 @@ export default function VideoScroller({
         if (intervalAnimationRef.current === false) {
           intervalAnimationRef.current = true;
 
-          setTimeout(function nextFrame() {
-            console.log('interval frame');
-            if (
-              (currentFrameRef.current === totalFrames &&
-                intervalAnimationDirection.current === 'forward') ||
-              (currentFrameRef.current === 0 &&
-                intervalAnimationDirection.current === 'reverse')
-            ) {
-              intervalAnimationDirection.current =
-                intervalAnimationDirection.current === 'forward'
-                  ? 'reverse'
-                  : 'forward';
+          const nextFrame = (newTime?: number) => {
+            if (intervalAnimationRef.current === false) {
+              return;
             }
 
-            if (intervalAnimationDirection.current === 'forward') {
-              currentFrameRef.current += 1;
-            } else {
-              currentFrameRef.current -= 1;
-            }
+            if (newTime && newTime - thenRef.current > frameDuration) {
+              if (
+                (currentFrameRef.current === totalFrames &&
+                  intervalAnimationDirection.current === 'forward') ||
+                (currentFrameRef.current === 0 &&
+                  intervalAnimationDirection.current === 'reverse')
+              ) {
+                intervalAnimationDirection.current =
+                  intervalAnimationDirection.current === 'forward'
+                    ? 'reverse'
+                    : 'forward';
+              }
 
-            tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
-            if (window.innerWidth < breakpoint) {
-              console.log('paint next frame');
-              setTimeout(nextFrame, frameDuration);
+              if (intervalAnimationDirection.current === 'forward') {
+                currentFrameRef.current += 1;
+              } else {
+                currentFrameRef.current -= 1;
+              }
+
+              tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
+              thenRef.current =
+                newTime - ((newTime - thenRef.current) % frameDuration);
             }
-          }, frameDuration);
+            requestAnimationFrame(nextFrame);
+          };
+
+          nextFrame();
+
+          // setTimeout(function nextFrame() {
+          //   console.log('interval frame');
+          //   if (
+          //     (currentFrameRef.current === totalFrames &&
+          //       intervalAnimationDirection.current === 'forward') ||
+          //     (currentFrameRef.current === 0 &&
+          //       intervalAnimationDirection.current === 'reverse')
+          //   ) {
+          //     intervalAnimationDirection.current =
+          //       intervalAnimationDirection.current === 'forward'
+          //         ? 'reverse'
+          //         : 'forward';
+          //   }
+
+          //   if (intervalAnimationDirection.current === 'forward') {
+          //     currentFrameRef.current += 1;
+          //   } else {
+          //     currentFrameRef.current -= 1;
+          //   }
+
+          //   tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
+          //   if (window.innerWidth < breakpoint) {
+          //     console.log('paint next frame');
+          //     setTimeout(nextFrame, frameDuration);
+          //   }
+          // }, frameDuration);
         }
       }
     };
