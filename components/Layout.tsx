@@ -27,6 +27,15 @@ export default function withLayout(
       };
     }
 
+    componentDidMount() {
+      function handleResize() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+      window.addEventListener('resize', handleResize);
+      handleResize();
+    }
+
     setHeaderRef(ref: RefObject<HTMLElement>) {
       this.setState({ headerRef: ref });
     }

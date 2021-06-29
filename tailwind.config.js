@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -21,6 +23,30 @@ module.exports = {
       pink: '#F4D3CD',
       white: '#ffffff',
     },
+    height: (theme) => ({
+      auto: 'auto',
+      ...theme('spacing'),
+      full: '100%',
+      screen: 'calc(var(--vh) * 100)',
+      'screen-1/2': 'calc(var(--vh) * 50)',
+      'screen-2': 'calc(var(--vh) * 200)',
+      'screen-3': 'calc(var(--vh) * 300)',
+      'screen-4': 'calc(var(--vh) * 400)',
+      'screen-5': 'calc(var(--vh) * 500)',
+      'screen-6': 'calc(var(--vh) * 600)',
+    }),
+    minHeight: (theme) => ({
+      0: '0',
+      ...theme('spacing'),
+      full: '100%',
+      screen: 'calc(var(--vh) * 100)',
+      'screen-1/2': 'calc(var(--vh) * 50)',
+      'screen-2': 'calc(var(--vh) * 200)',
+      'screen-3': 'calc(var(--vh) * 300)',
+      'screen-4': 'calc(var(--vh) * 400)',
+      'screen-5': 'calc(var(--vh) * 500)',
+      'screen-6': 'calc(var(--vh) * 600)',
+    }),
     extend: {
       fontSize: {
         '3xl': '2rem',
@@ -40,7 +66,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Gotham HTF'],
+        sans: ['Gotham HTF', ...defaultTheme.fontFamily.sans],
       },
     },
   },
