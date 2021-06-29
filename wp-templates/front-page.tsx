@@ -33,7 +33,13 @@ const firstSixInCategory = {
 
 const LeftCard = ({ src }: { src: StaticImageData }) => (
   <div className="bg-white flex-1 w-full h-screen-1/2 lg:h-screen relative">
-    <Image src={src} alt="" layout="fill" objectFit="cover" placeholder="blur" />
+    <Image
+      src={src}
+      alt=""
+      layout="fill"
+      objectFit="cover"
+      placeholder="blur"
+    />
   </div>
 );
 
@@ -81,42 +87,27 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
 
   function handleScroll() {
     console.log('handleScroll');
-    async function asyncHandle() {
-      const {
-        currentIndex: previousIndex,
-        locked,
-        maxCount,
-      } = parallaxEffectRef.current;
+    const {
+      currentIndex: previousIndex,
+      locked,
+      maxCount,
+    } = parallaxEffectRef.current;
+    if (locked) return;
+    // if (parallaxScrollValues.scrollYProgress >= 1) return;
 
-      if (locked) return;
-      // if (parallaxScrollValues.scrollYProgress >= 1) return;
+    parallaxEffectRef.current.locked = true;
 
-      parallaxEffectRef.current.locked = true;
+    let newIndex = Math.floor(
+      parallaxScrollValues.scrollYProgress / (1 / maxCount),
+    );
 
-      let newIndex = Math.floor(
-        parallaxScrollValues.scrollYProgress / (1 / maxCount),
-      );
+    if (newIndex > maxCount - 1) {
+      newIndex = maxCount - 1;
+    }
+    parallaxEffectRef.current.currentIndex = newIndex;
 
-      if (newIndex > maxCount - 1) {
-        newIndex = maxCount - 1;
-      }
-
-      // if (newIndex > currentIndex && newIndex - currentIndex > 1) {
-      //   newIndex = currentIndex + 1;
-      // } else if (currentIndex > newIndex && currentIndex - newIndex > 1) {
-      //   newIndex = currentIndex - 1;
-      // }
-
-      // const newYPosition =
-      //   -newIndex *
-      //   (window.innerWidth >= breakpoint
-      //     ? window.innerHeight
-      //     : window.innerHeight / 2);
-
+    async function asyncLeftHandle() {
       const newYPosition = -newIndex * (1 / maxCount) * 100;
-
-      parallaxEffectRef.current.currentIndex = newIndex;
-
       if (parallaxEffectRef.current.leftParallaxPosition !== newYPosition) {
         await leftParallaxControl.start({
           y: `${newYPosition}%`,
@@ -132,20 +123,40 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
         parallaxEffectRef.current.locked = false;
       }
     }
-    void asyncHandle();
+
+    async function asyncRightHandle() {
+      const newYPosition = -(maxCount - newIndex - 1) * (1 / maxCount) * 100;
+      if (parallaxEffectRef.current.rightParallaxPosition !== newYPosition) {
+        await rightParallaxControl.start({
+          y: `${newYPosition}%`,
+          transition: {
+            type: 'spring',
+            duration: Math.abs(previousIndex - newIndex) * 0.3,
+            // duration: 0,
+          },
+        });
+        parallaxEffectRef.current.rightParallaxPosition = newYPosition;
+        parallaxEffectRef.current.locked = false;
+      } else {
+        parallaxEffectRef.current.locked = false;
+      }
+    }
+    void asyncLeftHandle();
+    void asyncRightHandle();
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedHandler = useMemo(() => debounce(handleScroll, 200), []);
+  const debouncedHandler = useMemo(() => debounce(handleScroll, 150), []);
 
   useEffect(() => {
     window.addEventListener('scroll', debouncedHandler, { passive: true });
-    window.addEventListener('resize', debouncedHandler);
+    window.addEventListener('resize', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', debouncedHandler);
-      window.removeEventListener('resize', debouncedHandler);
+      window.removeEventListener('resize', handleScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedHandler, leftParallaxControl, parallaxScrollValues]);
 
   return (
@@ -189,8 +200,11 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             <div className="flex-1 bg-red text-white flex flex-col justify-center items-center relative overflow-hidden">
               <motion.div
                 ref={rightParallax}
+                initial={{
+                  y: `${(1 / parallaxEffectRef.current.maxCount) * 100 - 100}%`,
+                }}
                 animate={rightParallaxControl}
-                className="flex flex-col-reverse w-1/2 h-screen-3 lg:h-screen-6 absolute z-30 top-0">
+                className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
                 <RightCard className="bg-red">
                   <h1 className="h1 text-white">1</h1>
                 </RightCard>
