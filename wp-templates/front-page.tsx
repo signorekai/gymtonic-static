@@ -1,13 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
+import Image from 'next/image';
 import { getApolloClient, getPosts } from '@wpengine/headless';
-import VideoScroll from 'components/VideoScroll';
-import withLayout, { WithLayoutProps } from 'components/Layout';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 
+import debounce from 'lodash/debounce';
+
 import { useScroll } from 'lib/hooks';
+import VideoScroll from 'components/VideoScroll';
+import withLayout, { WithLayoutProps } from 'components/Layout';
 import { CTA, Posts } from 'components';
+
+import Gym1 from 'assets/images/gym1.jpg';
+import Gym2 from 'assets/images/gym2.jpg';
+import Gym3 from 'assets/images/gym3.jpg';
+import Gym4 from 'assets/images/gym4.jpg';
+import Gym5 from 'assets/images/gym5.jpg';
+import Gym6 from 'assets/images/gym6.jpg';
+
 import styles from '../scss/wp-templates/front-page.module.scss';
 /**
  * Example of post variables to query the first six posts in a named category.
@@ -20,163 +31,122 @@ const firstSixInCategory = {
   },
 };
 
+const LeftCard = ({ src }: { src: StaticImageData }) => (
+  <div className="bg-white flex-1 w-full h-screen-1/2 lg:h-screen relative">
+    <Image src={src} alt="" layout="fill" objectFit="cover" placeholder="blur" />
+  </div>
+);
+
+const RightCard = ({
+  children,
+  className = 'bg-white',
+}: React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>) => (
+  <div
+    className={`flex flex-col justify-center items-center w-full h-screen-1/2 lg:h-screen relative ${className}`}>
+    {children}
+  </div>
+);
+
 const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   setHeaderRef,
 }: WithLayoutProps) => {
   const posts = usePosts(firstSixInCategory);
   const parallaxRef = useRef<HTMLDivElement>(null);
-  const parallaxControls = useAnimation();
   const parallaxScrollValues = useScroll(parallaxRef);
+
+  const leftParallax = useRef<HTMLDivElement>(null);
+  const leftParallaxControl = useAnimation();
+
+  const rightParallax = useRef<HTMLDivElement>(null);
+  const rightParallaxControl = useAnimation();
 
   const parallaxEffectRef = useRef<{
     currentIndex: number;
     maxCount: number;
     locked: boolean;
+    leftParallaxPosition: number;
+    rightParallaxPosition: number;
   }>({
     currentIndex: 0,
     maxCount: 6,
     locked: false,
+    leftParallaxPosition: 0,
+    rightParallaxPosition: 0,
   });
 
-  const THRESHOLD = 0.3;
+  const breakpoint = 1024;
 
-  useEffect(() => {
-    function nextIndex() {
-      const index = Math.min(
-        parallaxEffectRef.current.currentIndex + 1,
-        parallaxEffectRef.current.maxCount - 1,
-      );
-      parallaxEffectRef.current.currentIndex = index;
+  function handleScroll() {
+    console.log('handleScroll');
+    async function asyncHandle() {
+      const {
+        currentIndex: previousIndex,
+        locked,
+        maxCount,
+      } = parallaxEffectRef.current;
 
-      if (parallaxRef.current) {
-        console.log(
-          'scrolling forward to',
-          parallaxRef.current.offsetTop +
-            (parallaxRef.current.clientHeight /
-              parallaxEffectRef.current.maxCount) *
-              parallaxEffectRef.current.currentIndex,
-          index,
-        );
-        window.scrollTo({
-          top:
-            parallaxRef.current.offsetTop +
-            (parallaxRef.current.clientHeight /
-              parallaxEffectRef.current.maxCount) *
-              parallaxEffectRef.current.currentIndex,
-          behavior: 'smooth',
-        });
-      }
+      if (locked) return;
+      // if (parallaxScrollValues.scrollYProgress >= 1) return;
 
-      setTimeout(() => {
-        console.log('unlocked!', window.pageYOffset);
-        parallaxEffectRef.current.locked = false;
-      }, 1000);
-    }
-
-    function previousIndex() {
-      const index = Math.max(0, parallaxEffectRef.current.currentIndex - 1);
-      parallaxEffectRef.current.currentIndex = index;
-
-      if (parallaxRef.current) {
-        console.log(
-          'scrolling back to',
-          parallaxRef.current.offsetTop +
-            (parallaxRef.current.clientHeight /
-              parallaxEffectRef.current.maxCount) *
-              parallaxEffectRef.current.currentIndex,
-          index,
-        );
-        window.scrollTo({
-          top:
-            parallaxRef.current.offsetTop +
-            (parallaxRef.current.clientHeight /
-              parallaxEffectRef.current.maxCount) *
-              parallaxEffectRef.current.currentIndex,
-          behavior: 'smooth',
-        });
-      }
-
-      setTimeout(() => {
-        console.log('unlocked!', window.pageYOffset);
-        parallaxEffectRef.current.locked = false;
-      }, 1000);
-    }
-
-    function handleWheelEvent() {
-      if (parallaxEffectRef.current.locked) return;
-      if (
-        parallaxScrollValues.scrollYProgress === 0 ||
-        parallaxScrollValues.scrollYProgress === 1
-      )
-        return;
-
-      console.log('attempting to snap!');
       parallaxEffectRef.current.locked = true;
 
-      if (parallaxRef.current) {
-        const actualThreshold =
-          (parallaxRef.current.clientHeight /
-            parallaxEffectRef.current.maxCount) *
-          THRESHOLD;
+      let newIndex = Math.floor(
+        parallaxScrollValues.scrollYProgress / (1 / maxCount),
+      );
 
-        const currentIndexOffset =
-          parallaxRef.current.offsetTop +
-          (parallaxRef.current.clientHeight /
-            parallaxEffectRef.current.maxCount) *
-            parallaxEffectRef.current.currentIndex;
-
-        // check distance to next threshold
-        const previousThreshold =
-          parallaxRef.current.offsetTop +
-          (parallaxRef.current.clientHeight /
-            parallaxEffectRef.current.maxCount) *
-            (parallaxEffectRef.current.currentIndex - 1);
-        const distanceToPreviousThreshold =
-          window.pageYOffset - previousThreshold;
-
-        // check distance to next threshold
-        const nextThreshold =
-          parallaxRef.current.offsetTop +
-          (parallaxRef.current.clientHeight /
-            parallaxEffectRef.current.maxCount) *
-            (parallaxEffectRef.current.currentIndex + 1);
-
-        const distanceToNextThreshold = nextThreshold - window.pageYOffset;
-
-        if (
-          window.pageYOffset < currentIndexOffset &&
-          distanceToPreviousThreshold > actualThreshold
-        ) {
-          previousIndex();
-        } else if (
-          window.pageYOffset > currentIndexOffset &&
-          distanceToNextThreshold > actualThreshold
-        ) {
-          nextIndex();
-        } else {
-          parallaxEffectRef.current.locked = false;
-        }
+      if (newIndex > maxCount - 1) {
+        newIndex = maxCount - 1;
       }
 
-      // if (evt.deltaY > WHEEL_THRESHOLD) {
-      //   nextIndex();
-      // } else if (evt.deltaY < -WHEEL_THRESHOLD) {
-      //   previousIndex();
-      // } else {
-      //   parallaxEffectRef.current.locked = false;
+      // if (newIndex > currentIndex && newIndex - currentIndex > 1) {
+      //   newIndex = currentIndex + 1;
+      // } else if (currentIndex > newIndex && currentIndex - newIndex > 1) {
+      //   newIndex = currentIndex - 1;
       // }
-    }
 
-    // function handleResize(evt: UIEvent) {
-    // }
-    window.addEventListener('scroll', handleWheelEvent);
-    // window.addEventListener('resize', handleResize);
+      // const newYPosition =
+      //   -newIndex *
+      //   (window.innerWidth >= breakpoint
+      //     ? window.innerHeight
+      //     : window.innerHeight / 2);
+
+      const newYPosition = -newIndex * (1 / maxCount) * 100;
+
+      parallaxEffectRef.current.currentIndex = newIndex;
+
+      if (parallaxEffectRef.current.leftParallaxPosition !== newYPosition) {
+        await leftParallaxControl.start({
+          y: `${newYPosition}%`,
+          transition: {
+            type: 'spring',
+            duration: Math.abs(previousIndex - newIndex) * 0.3,
+            // duration: 0,
+          },
+        });
+        parallaxEffectRef.current.leftParallaxPosition = newYPosition;
+        parallaxEffectRef.current.locked = false;
+      } else {
+        parallaxEffectRef.current.locked = false;
+      }
+    }
+    void asyncHandle();
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedHandler = useMemo(() => debounce(handleScroll, 200), []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', debouncedHandler, { passive: true });
+    window.addEventListener('resize', debouncedHandler);
 
     return () => {
-      window.removeEventListener('scroll', handleWheelEvent);
-      // window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', debouncedHandler);
+      window.removeEventListener('resize', debouncedHandler);
     };
-  }, [parallaxScrollValues]);
+  }, [debouncedHandler, leftParallaxControl, parallaxScrollValues]);
 
   return (
     <>
@@ -192,9 +162,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             exit={{ opacity: 0, translateY: 30 }}
             transition={{ duration: 0.3, ease: [0.175, 0.85, 0.42, 0.96] }}
             className="relative z-40 text-center text-red mx-8 pointer-events-none">
-            <h1 className="text-6xl md:text-8xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-4 md:mb-0">
-              Gym Tonic
-            </h1>
+            <h1 className="h1 text-red">Gym Tonic</h1>
             <h4 className="text-2xl md:text-3xl font-black leading-none">
               Exercise as Medicine
             </h4>
@@ -202,15 +170,49 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
         </AnimatePresence>
       </VideoScroll>
       <main className="">
-        <motion.section
-          animate={parallaxControls}
-          ref={parallaxRef}
-          className="h-[600vh]">
-          <div className="sticky top-0 left-0 bg-white w-screen h-screen flex flex-col lg:flex-row">
-            <div className="flex-1">hi</div>
-            <div className="flex-1 bg-red text-white">hi2</div>
+        <section ref={parallaxRef} className="h-screen-3">
+          <div className="sticky top-0 left-0 bg-white w-full h-screen flex flex-col lg:flex-row">
+            <div className="flex-1 flex flex-col justify-center items-center relative overflow-hidden">
+              <h1 className="h1 relative z-40 text-red">Gym</h1>
+              <motion.div
+                ref={leftParallax}
+                animate={leftParallaxControl}
+                className="flex flex-col w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
+                <LeftCard src={Gym1} />
+                <LeftCard src={Gym2} />
+                <LeftCard src={Gym3} />
+                <LeftCard src={Gym4} />
+                <LeftCard src={Gym5} />
+                <LeftCard src={Gym6} />
+              </motion.div>
+            </div>
+            <div className="flex-1 bg-red text-white flex flex-col justify-center items-center relative overflow-hidden">
+              <motion.div
+                ref={rightParallax}
+                animate={rightParallaxControl}
+                className="flex flex-col-reverse w-1/2 h-screen-3 lg:h-screen-6 absolute z-30 top-0">
+                <RightCard className="bg-red">
+                  <h1 className="h1 text-white">1</h1>
+                </RightCard>
+                <RightCard>
+                  <h1 className="h1 text-red">2</h1>
+                </RightCard>
+                <RightCard className="bg-red">
+                  <h1 className="h1 text-white">3</h1>
+                </RightCard>
+                <RightCard>
+                  <h1 className="h1 text-red">4</h1>
+                </RightCard>
+                <RightCard className="bg-red">
+                  <h1 className="h1 text-white">5</h1>
+                </RightCard>
+                <RightCard>
+                  <h1 className="h1 text-red">6</h1>
+                </RightCard>
+              </motion.div>
+            </div>
           </div>
-        </motion.section>
+        </section>
       </main>
       <main className="">
         <section className={styles.explore}>
