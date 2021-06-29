@@ -3,7 +3,7 @@ import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 export function useScroll(
   ref: RefObject<HTMLDivElement>,
   opts?: {
-    canGoNegative: boolean;
+    canGoBeyondBoundary: boolean;
   },
 ): {
   scrollX: number;
@@ -19,7 +19,7 @@ export function useScroll(
   });
 
   const defaultOptions = {
-    canGoNegative: false,
+    canGoBeyondBoundary: false,
   };
 
   const options = { ...defaultOptions, ...opts };
@@ -31,7 +31,7 @@ export function useScroll(
         values.current.scrollX = window.pageXOffset - element?.offsetLeft;
         values.current.scrollY = window.pageYOffset - element?.offsetTop;
 
-        if (options.canGoNegative === false) {
+        if (options.canGoBeyondBoundary === false) {
           if (values.current.scrollX < 0) values.current.scrollX = 0;
           if (values.current.scrollY < 0) values.current.scrollY = 0;
         }
@@ -40,6 +40,17 @@ export function useScroll(
           values.current.scrollX / (element.scrollWidth - window.innerWidth);
         values.current.scrollYProgress =
           values.current.scrollY / (element.scrollHeight - window.innerHeight);
+
+        if (options.canGoBeyondBoundary === false) {
+          if (values.current.scrollXProgress < 0)
+            values.current.scrollXProgress = 0;
+          if (values.current.scrollXProgress > 1)
+            values.current.scrollXProgress = 1;
+          if (values.current.scrollYProgress < 0)
+            values.current.scrollYProgress = 0;
+          if (values.current.scrollYProgress > 1)
+            values.current.scrollYProgress = 1;
+        }
       }
     }
     if (element) {
