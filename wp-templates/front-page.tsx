@@ -75,15 +75,15 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
     locked: boolean;
     leftParallaxPosition: number;
     rightParallaxPosition: number;
+    direction: 'up' | 'down';
   }>({
     currentIndex: 0,
     maxCount: 6,
     locked: false,
     leftParallaxPosition: 0,
     rightParallaxPosition: 0,
+    direction: 'down',
   });
-
-  const breakpoint = 1024;
 
   function handleScroll() {
     console.log('handleScroll');
@@ -91,6 +91,8 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
       currentIndex: previousIndex,
       locked,
       maxCount,
+      leftParallaxPosition,
+      direction,
     } = parallaxEffectRef.current;
     if (locked) return;
     // if (parallaxScrollValues.scrollYProgress >= 1) return;
@@ -105,6 +107,10 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
       newIndex = maxCount - 1;
     }
     parallaxEffectRef.current.currentIndex = newIndex;
+    parallaxEffectRef.current.direction =
+      leftParallaxPosition > parallaxScrollValues.scrollYProgress * -100
+        ? 'down'
+        : 'up';
 
     async function asyncLeftHandle() {
       const newYPosition = -newIndex * (1 / maxCount) * 100;
