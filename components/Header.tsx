@@ -183,7 +183,7 @@ function Header({
             animate={{ translateY: 0 }}
             transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
             className="fixed top-0 l-0 w-full z-40 text-white">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-start mx-auto p-6">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">
                 {menuItems.map(({ node }: MenuData) => {
