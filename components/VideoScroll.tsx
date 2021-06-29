@@ -1,5 +1,3 @@
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
 import React, {
   RefObject,
   useContext,
@@ -7,6 +5,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';
 
@@ -68,14 +68,14 @@ const tryToFitImageOn = (
 ) => {
   if (canvasRef.current) {
     if (actualCurrentFrame && actualCurrentFrame.complete) {
-      console.log(`rendering frame to canvasRef`);
+      // console.log(`rendering frame to canvasRef`);
       fitImageOn(canvasRef.current, actualCurrentFrame);
     } else if (actualCurrentFrame) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
       actualCurrentFrame.addEventListener('load', () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (canvasRef.current) {
-          console.log(`[onload] rendering frame to canvasRef`);
+          // console.log(`[onload] rendering frame to canvasRef`);
           fitImageOn(canvasRef.current, actualCurrentFrame);
         }
       });
@@ -123,7 +123,7 @@ export default function VideoScroller({
     }
     if (canvasRef.current) fitImageOn(canvasRef.current, videoFrames[0]);
 
-    console.log('checking length of unloaded frames');
+    // console.log('checking length of unloaded frames');
     if (videoFrames.filter((img) => !img.complete).length > 0) {
       void Promise.all(
         videoFrames
@@ -137,23 +137,24 @@ export default function VideoScroller({
               }),
           ),
       ).then(() => {
-        console.log('frames all loaded');
+        // console.log('frames all loaded');
 
         setShowLoader(false);
       });
     } else {
-      console.log('length of unloaded frames = 0');
+      // console.log('length of unloaded frames = 0');
     }
 
     const handleScroll = () => {
-      console.log('handling scroll and rendering');
+      // console.log('handling scroll and rendering');
 
       if (window.pageYOffset > 1) {
         setShowReminder(false);
       }
 
       if (window.innerWidth >= breakpoint && scrollerRef.current) {
-        console.log('desktop');
+        // @todo eventually use framer-motion 's useElementScroll
+        // console.log('desktop');
 
         intervalAnimationRef.current = false;
         // desktop
@@ -171,7 +172,7 @@ export default function VideoScroller({
         currentFrameRef.current = currentFrame;
         tryToFitImageOn(videoFrames[currentFrame], canvasRef);
       } else if (canvasRef.current) {
-        console.log('mobile');
+        // console.log('mobile');
         // mobile - auto loop through frames
         const frameDuration = (videoDuration / totalFrames) * 1000; // get duration in milliseconds
         if (intervalAnimationRef.current === false) {
@@ -241,7 +242,7 @@ export default function VideoScroller({
     };
 
     const handleResize = () => {
-      console.log('handling resize');
+      // console.log('handling resize');
       let canvasWidth =
         (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
 
@@ -320,7 +321,7 @@ export default function VideoScroller({
       ref={scrollerRef}>
       <div
         ref={canvasContainerRef}
-        className="sticky border-box bg-pink overflow-hidden top-0 l-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red">
+        className="sticky border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red">
         {children}
         <AnimatePresence>
           {showReminder && (
@@ -352,6 +353,7 @@ export default function VideoScroller({
           animate={canvasAnimateControls}
           drag={isDragable ? 'x' : false}
           dragConstraints={scrollerRef}
+          dragMomentum={false}
           dragElastic={0}
           ref={canvasRef}
           width={window.innerWidth - borderWidth * 2}
