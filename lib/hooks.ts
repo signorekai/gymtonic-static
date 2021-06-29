@@ -2,7 +2,9 @@ import { RefObject, useContext, useEffect, useRef, useState } from 'react';
 
 export function useScroll(
   ref: RefObject<HTMLDivElement>,
-  _goNegative = false,
+  opts?: {
+    canGoNegative: boolean;
+  },
 ): {
   scrollX: number;
   scrollY: number;
@@ -16,6 +18,12 @@ export function useScroll(
     scrollYProgress: 0,
   });
 
+  const defaultOptions = {
+    canGoNegative: false,
+  };
+
+  const options = { ...defaultOptions, ...opts };
+
   useEffect(() => {
     const element = ref.current;
     function handleScroll() {
@@ -23,15 +31,15 @@ export function useScroll(
         values.current.scrollX = window.pageXOffset - element?.offsetLeft;
         values.current.scrollY = window.pageYOffset - element?.offsetTop;
 
-        if (_goNegative === false) {
+        if (options.canGoNegative === false) {
           if (values.current.scrollX < 0) values.current.scrollX = 0;
           if (values.current.scrollY < 0) values.current.scrollY = 0;
         }
 
         values.current.scrollXProgress =
-          values.current.scrollX / element.scrollHeight;
+          values.current.scrollX / (element.scrollWidth - window.innerWidth);
         values.current.scrollYProgress =
-          values.current.scrollY / element.scrollHeight;
+          values.current.scrollY / (element.scrollHeight - window.innerHeight);
       }
     }
     if (element) {
