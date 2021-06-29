@@ -10,7 +10,7 @@ import DownArrow from '../assets/images/downarrow.svg';
 
 interface Props {
   totalFrames: number;
-  ext?: string;
+  ext?: 'jpg' | 'jpeg' | 'gif' | 'png' | 'JPG' | 'JPEG' | 'GIF' | 'PNG';
   path: string;
   children?: JSX.Element;
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
