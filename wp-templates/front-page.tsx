@@ -29,6 +29,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
     <>
       <VideoScroll
         totalFrames={69}
+        videoDuration={2}
         path="/images/home-video-frames"
         setHeaderRef={setHeaderRef}>
         <AnimatePresence exitBeforeEnter>

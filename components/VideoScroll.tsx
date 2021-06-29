@@ -1,15 +1,18 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
-import React, { RefObject, useContext, useEffect, useRef, useState } from 'react';
-
-import Image from 'next/image';
+import React, {
+  RefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';
 
-import DownArrow from '../assets/images/downarrow.svg';
-
 interface Props {
   totalFrames: number;
+  videoDuration: number;
   ext?: 'jpg' | 'jpeg' | 'gif' | 'png' | 'JPG' | 'JPEG' | 'GIF' | 'PNG';
   path: string;
   children?: JSX.Element;
@@ -59,7 +62,26 @@ const fitImageOn = (canvas: HTMLCanvasElement, imageObj: HTMLImageElement) => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+const tryToFitImageOn = (
+  actualCurrentFrame: HTMLImageElement,
+  canvasRef: RefObject<HTMLCanvasElement>,
+) => {
+  if (canvasRef.current) {
+    if (actualCurrentFrame && actualCurrentFrame.complete) {
+      console.log(`rendering frame to canvasRef`);
+      fitImageOn(canvasRef.current, actualCurrentFrame);
+    } else if (actualCurrentFrame) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+      actualCurrentFrame.addEventListener('load', () => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (canvasRef.current) {
+          console.log(`[onload] rendering frame to canvasRef`);
+          fitImageOn(canvasRef.current, actualCurrentFrame);
+        }
+      });
+    }
+  }
+};
 
 export default function VideoScroller({
   ext = 'jpg',
@@ -67,15 +89,26 @@ export default function VideoScroller({
   path,
   setHeaderRef,
   children,
+  videoDuration,
 }: Props): JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const currentFrameRef = useRef(0);
+  const frame0Ref = useRef<HTMLImageElement>(null);
+  const intervalAnimationRef = useRef<boolean>(false);
+  const intervalAnimationDirection = useRef<'forward' | 'reverse'>('forward');
+  const timerRef = useRef<any>(null);
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
-  const refCurrentFrame = useRef(0);
-  const [ showReminder, setShowReminder ] = useState(true);
 
+  const [showReminder, setShowReminder] = useState(true);
+  const [isDragable, setIsDragable] = useState(false);
+
+  const canvasAnimateControls = useAnimation();
+
+  const breakpoint = 1024;
   const borderWidth = window.innerWidth >= 768 ? 60 : 10;
 
   useEffect(() => {
@@ -114,13 +147,15 @@ export default function VideoScroller({
     const handleScroll = () => {
       console.log('handling scroll and rendering');
 
-      if (scrollerRef.current) {
-        console.log('scrollerRef exists');
+      if (window.pageYOffset > 1) {
+        setShowReminder(false);
+      }
 
-        if (window.pageYOffset > 1) {
-          setShowReminder(false);
-        }
+      if (window.innerWidth >= breakpoint && scrollerRef.current) {
+        console.log('desktop');
 
+        intervalAnimationRef.current = false;
+        // desktop
         const maxAmount =
           scrollerRef.current?.scrollHeight -
           document.documentElement.clientHeight * 1.1;
@@ -132,49 +167,112 @@ export default function VideoScroller({
             ? Math.round(scrollPercentage * totalFrames)
             : totalFrames;
 
-        refCurrentFrame.current = currentFrame;
+        currentFrameRef.current = currentFrame;
+        tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+      } else if (canvasRef.current) {
+        console.log('mobile');
+        // mobile - auto loop through frames
+        const frameDuration = (videoDuration / totalFrames) * 1000; // get duration in milliseconds
+        if (intervalAnimationRef.current === false) {
+          intervalAnimationRef.current = true;
 
-        if (canvasRef.current) {
-          console.log('rendering to canvasRef');
-          if (videoFrames[currentFrame] && videoFrames[currentFrame].complete) {
-            fitImageOn(canvasRef.current, videoFrames[currentFrame]);
-          } else if (videoFrames[currentFrame]) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-            videoFrames[currentFrame].addEventListener('load', () => {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              if (canvasRef.current) {
-                fitImageOn(canvasRef.current, videoFrames[currentFrame]);
-              }
-            });
-          }
+          setTimeout(function nextFrame() {
+            console.log('interval frame');
+            if (
+              (currentFrameRef.current === totalFrames &&
+                intervalAnimationDirection.current === 'forward') ||
+              (currentFrameRef.current === 0 &&
+                intervalAnimationDirection.current === 'reverse')
+            ) {
+              intervalAnimationDirection.current =
+                intervalAnimationDirection.current === 'forward'
+                  ? 'reverse'
+                  : 'forward';
+            }
+
+            if (intervalAnimationDirection.current === 'forward') {
+              currentFrameRef.current += 1;
+            } else {
+              currentFrameRef.current -= 1;
+            }
+
+            tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
+            if (window.innerWidth < breakpoint) {
+              console.log('paint next frame');
+              setTimeout(nextFrame, frameDuration);
+            }
+          }, frameDuration);
         }
       }
     };
 
     const handleResize = () => {
+      console.log('handling resize');
+      let canvasWidth =
+        (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
+
+      if (window.innerWidth < breakpoint) {
+        setIsDragable(true);
+      } else {
+        setIsDragable(false);
+      }
+
+      if (frame0Ref.current && window.innerWidth < breakpoint) {
+        const imageRatio =
+          frame0Ref.current.naturalWidth / frame0Ref.current.naturalHeight;
+        // window is vertically scrollable
+        canvasWidth =
+          (window.innerHeight - borderWidth * 2) *
+          imageRatio *
+          window.devicePixelRatio;
+      }
+
       if (
         canvasRef.current &&
-        (canvasRef.current.width !== window.innerWidth - borderWidth * 2 ||
+        (canvasRef.current.width !== canvasWidth ||
           canvasRef.current.height !== window.innerHeight - borderWidth * 2)
       ) {
-        canvasRef.current.width =
-          (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
         canvasRef.current.height =
           (window.innerHeight - borderWidth * 2) * window.devicePixelRatio;
+        canvasRef.current.width = canvasWidth;
+
+        void canvasAnimateControls.start({
+          x:
+            window.innerWidth < breakpoint
+              ? (window.innerWidth -
+                  borderWidth * 2 -
+                  canvasWidth / window.devicePixelRatio) /
+                2
+              : 0,
+          transition: {
+            duration: 0,
+          },
+        });
       }
       handleScroll();
     };
 
     handleResize();
 
-    window.addEventListener('scroll', handleScroll);
+    if (window.innerWidth >= breakpoint) {
+      window.addEventListener('scroll', handleScroll);
+    }
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ext, path, totalFrames]);
+  }, [
+    borderWidth,
+    ext,
+    path,
+    setShowLoader,
+    totalFrames,
+    frame0Ref,
+    canvasAnimateControls,
+    videoDuration,
+    isDragable,
+  ]);
 
   useEffect(() => {
     if (scrollerRef) {
@@ -183,7 +281,9 @@ export default function VideoScroller({
   }, [scrollerRef, setHeaderRef]);
 
   return (
-    <section className="h-[250vh]" ref={scrollerRef}>
+    <section
+      className={window.innerWidth < breakpoint ? 'h-screen' : 'h-[250vh]'}
+      ref={scrollerRef}>
       <div
         ref={canvasContainerRef}
         className="sticky border-box bg-pink overflow-hidden top-0 l-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red">
@@ -203,10 +303,10 @@ export default function VideoScroller({
               <motion.div
                 className="w-full flex flex-col items-center"
                 initial={{ translateY: 0 }}
-                animate={{ translateY: [0, -6, 0] }}
+                animate={{ translateY: [0, -5, 0] }}
                 transition={{
                   repeat: Infinity,
-                  duration: 1,
+                  duration: 1.2,
                 }}>
                 Scroll
                 <img src="images/down-arrow.svg" alt="" />
@@ -214,14 +314,19 @@ export default function VideoScroller({
             </motion.div>
           )}
         </AnimatePresence>
-        <canvas
+        <motion.canvas
+          animate={canvasAnimateControls}
+          drag={isDragable ? 'x' : false}
+          dragConstraints={scrollerRef}
+          dragElastic={0}
           ref={canvasRef}
           width={window.innerWidth - borderWidth * 2}
           height={window.innerHeight - borderWidth * 2}
-          className="w-full h-full absolute top-0 left-0 z-30"
+          className="h-full absolute top-0 left-0 z-30"
         />
         <img
-          className="object-cover w-full h-full origin-center absolute z-20"
+          ref={frame0Ref}
+          className="object-cover w-full h-full origin-center absolute z-20 top-0"
           src={`${path}/frame-0.${ext}`}
           alt=""
         />
