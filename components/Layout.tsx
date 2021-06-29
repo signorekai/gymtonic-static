@@ -15,7 +15,7 @@ export interface WithLayoutProps {
 
 export default function withLayout(
   Component: React.ComponentType<WithLayoutProps>,
-): React.ComponentClass<WithLayoutProps> {
+): React.ComponentClass<any & WithLayoutProps> {
   return class extends React.Component<WithLayoutProps, LayoutState> {
     constructor(props: WithLayoutProps) {
       super(props);

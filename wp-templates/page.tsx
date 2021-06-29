@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { usePost } from '@wpengine/headless/next';
 import withLayout from 'components/Layout';
-import { Hero } from 'components';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -16,7 +15,6 @@ function Page(): JSX.Element {
 
   return (
     <main className="content content-page">
-      {post?.title && <Hero title={post?.title} />}
       <div className="wrap">
         {post && (
           <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGeneralSettings } from '@wpengine/headless/react';
 import { usePost } from '@wpengine/headless/next';
-import { CTA, Footer, Header, Hero } from '../components';
+import { CTA, Footer, Header } from '../components';
 
 export default function Single(): JSX.Element {
   const post = usePost();
@@ -11,7 +11,6 @@ export default function Single(): JSX.Element {
     <>
       <Header />
       <main className="content content-single">
-        {post?.title && <Hero title={post?.title} />}
         <div className="wrap">
           {post && (
             <div>

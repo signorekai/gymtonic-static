@@ -8,7 +8,7 @@ export default function Index(): JSX.Element {
 
   return (
     <>
-      <Header title={settings?.title} description={settings?.description} />
+      <Header />
       <main className="content content-index">
         <Posts posts={posts?.nodes} />
       </main>
