@@ -18,6 +18,8 @@
 
 .menu-item a {
   @apply relative;
+  @apply hidden;
+  @apply lg:block;
   @apply after:empty-content;
   @apply after:absolute;
   @apply after:h-[2px];
