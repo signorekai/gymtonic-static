@@ -41,7 +41,7 @@ export default function withLayout(
       const { headerRef, showLoader } = this.state;
 
       return (
-        <div className="font-sans antialiased">
+        <div className="font-sans antialiased border-box">
           <Header headerRef={headerRef} />
           <Component
             {...this.props}
