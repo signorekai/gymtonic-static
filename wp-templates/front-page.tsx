@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
@@ -140,6 +141,10 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   };
 
   useEffect(() => {
+    console.log('>>>>>>>>>>>>>> RENDERING <<<<<<<<<<<<<<<<<');
+  }, []);
+
+  useEffect(() => {
     window.addEventListener('scroll', debouncedHandler, { passive: true });
     window.addEventListener('resize', handleScroll);
 
@@ -171,9 +176,11 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
           </motion.div>
         </AnimatePresence>
       </VideoScroll>
-      <main className="">
-        <section ref={parallaxRef} className="h-screen-3">
-          <div className="sticky top-0 left-0 bg-white w-full h-screen flex flex-col lg:flex-row">
+      <main className="mb-screen">
+        <section
+          ref={parallaxRef}
+          className="h-screen-5 lg:h-screen-4 relative z-30">
+          <div className="sticky top-0 left-0 bg-red w-full h-screen flex flex-col lg:flex-row">
             <div className="flex-1 flex flex-col justify-center items-center relative overflow-hidden">
               <h1 className="h1 relative z-40 text-red">Gym</h1>
               <motion.div
@@ -189,7 +196,8 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                     duration:
                       Math.abs(
                         parallaxEffectRef.current.previousIndex - parallaxIndex,
-                      ) * 0.3,
+                      ) * 0.25,
+                    damping: 15,
                     // duration: 0,
                   },
                 }}
@@ -224,6 +232,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   videoSrc="/videos/Thematic-2-KaChing.mp4"
                   videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                   paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
+                  href="/about"
                   link="What is Gym Tonic?"
                 />
                 <RightParallaxCard
@@ -236,6 +245,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={1}
                   parallaxIndex={parallaxIndex}
                   paragraph="Help Pa and Ma make new friends."
+                  href="/locations"
                   link="Find a gym near you"
                 />
                 <RightParallaxCard
@@ -248,6 +258,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={2}
                   parallaxIndex={parallaxIndex}
                   paragraph="To continue doing the things you love, you have to stay physically strong."
+                  href="/about"
                   link="Why Strength Training matters even more when you are old."
                 />
                 <RightParallaxCard
@@ -260,6 +271,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={3}
                   parallaxIndex={parallaxIndex}
                   paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
+                  href="/stories"
                   link="Read their stories"
                 />
                 <RightParallaxCard
@@ -272,6 +284,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={4}
                   parallaxIndex={parallaxIndex}
                   paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
+                  href="/about"
                   link="Understand the process"
                 />
                 <RightParallaxCard
@@ -284,6 +297,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={5}
                   parallaxIndex={parallaxIndex}
                   paragraph="Exercise trainers who will guide you every step of the way."
+                  href="/about"
                   link="Meet the professionals"
                 />
               </motion.div>
