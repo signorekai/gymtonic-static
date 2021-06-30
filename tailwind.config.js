@@ -56,14 +56,10 @@ module.exports = {
         10: '10px',
         60: '60px',
       },
-      animation: {
-        'menu-drop-down': 'drop-down 0.3s ease-out forwards',
-      },
-      keyframes: {
-        'drop-down': {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(0%)' },
-        },
+      maxWidth: {
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
       },
       fontFamily: {
         sans: ['Gotham HTF', ...defaultTheme.fontFamily.sans],
