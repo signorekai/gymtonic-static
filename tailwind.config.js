@@ -48,10 +48,15 @@ module.exports = {
       'screen-6': 'calc(var(--vh) * 600)',
     }),
     extend: {
+      height: {
+        'screen-border-10': 'calc(calc(var(--vh) * 100) + 20px)',
+        'screen-border-60': 'calc(calc(var(--vh) * 100) + 120px)',
+      },
       fontSize: {
         sm: '.9375rem',
         '3xl': '2rem',
         '8xl': '5.625rem',
+        '11xl': '8.5rem',
       },
       borderWidth: {
         10: '10px',
@@ -72,6 +77,13 @@ module.exports = {
         '1/2': '50%',
         '3/5': '60%',
         '3/4': '75%',
+      },
+      margin: {
+        screen: 'calc(var(--vh) * 100)',
+        'screen-1/20': '5vh',
+        'screen-1/10': '10vh',
+        'screen-3/20': '15vh',
+        'screen-2/10': '20vh',
       },
       fontFamily: {
         sans: ['Gotham HTF', ...defaultTheme.fontFamily.sans],
