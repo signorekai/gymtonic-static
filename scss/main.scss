@@ -45,3 +45,11 @@
   @apply leading-none;
   @apply mb-0;
 }
+
+.snap-container {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-child {
+  scroll-snap-align: center;
+}
