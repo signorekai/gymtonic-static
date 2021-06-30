@@ -109,11 +109,11 @@ const RightParallaxCard = ({
                     createShowVariant(
                       {
                         opacity: 1,
-                        y: 0,
+                        x: 0,
                       },
                       { ...transitionProps, delay: 0.2 },
                     ),
-                  hidden: { opacity: 0, y: 30 },
+                  hidden: { opacity: 0, x: '100%' },
                 }}
                 className="absolute bottom-4 md:right-8 md:text-right text-xs md:text-base md:leading-tight max-w-3/4 md:max-w-1/2">
                 {link}
