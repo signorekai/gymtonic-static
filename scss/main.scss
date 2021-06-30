@@ -46,7 +46,17 @@
   @apply mb-0;
 }
 
+.h4 {
+  @apply text-2xl;
+  @apply md:text-4xl;
+  @apply leading-none;
+  @apply word-spacing-0;
+  @apply font-black;
+}
+
 .snap-container {
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(100vh);
   scroll-snap-type: y mandatory;
 }
 
