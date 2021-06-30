@@ -53,7 +53,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   const parallaxRef = useRef<HTMLDivElement>(null);
   const parallaxScrollValues = useScroll(parallaxRef);
 
-  const [parallaxIndex, setParallaxIndex] = useState<number>(-1);
+  const [parallaxIndex, setParallaxIndex] = useState<number>(0);
 
   const parallaxEffectRef = useRef<{
     previousIndex: number;
@@ -217,7 +217,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   headerTitle="Ka-Ching!"
                   ownIndex={0}
@@ -230,7 +229,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
                   videoSrc="/videos/Thematic-3-Kakis.mp4"
@@ -243,7 +241,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                   videoSrc="/videos/Thematic-4-Boleh.mp4"
@@ -256,7 +253,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                   videoSrc="/videos/Thematic-5-Huat.mp4"
@@ -269,7 +265,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
                   videoSrc="/videos/Thematic-6-Kilat.mp4"
@@ -282,7 +277,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                 <RightParallaxCard
                   custom={{
                     ...parallaxEffectRef.current,
-                    parallaxIndex,
                   }}
                   videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                   videoSrc="/videos/Thematic-7-Pro.mp4"
