@@ -210,33 +210,6 @@ export default function VideoScroller({
           };
 
           nextFrame();
-
-          // setTimeout(function nextFrame() {
-          //   console.log('interval frame');
-          //   if (
-          //     (currentFrameRef.current === totalFrames &&
-          //       intervalAnimationDirection.current === 'forward') ||
-          //     (currentFrameRef.current === 0 &&
-          //       intervalAnimationDirection.current === 'reverse')
-          //   ) {
-          //     intervalAnimationDirection.current =
-          //       intervalAnimationDirection.current === 'forward'
-          //         ? 'reverse'
-          //         : 'forward';
-          //   }
-
-          //   if (intervalAnimationDirection.current === 'forward') {
-          //     currentFrameRef.current += 1;
-          //   } else {
-          //     currentFrameRef.current -= 1;
-          //   }
-
-          //   tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
-          //   if (window.innerWidth < breakpoint) {
-          //     console.log('paint next frame');
-          //     setTimeout(nextFrame, frameDuration);
-          //   }
-          // }, frameDuration);
         }
       }
     };
