@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, Transition } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
+
+import LeftArrow from 'assets/images/left-arrow.png';
 
 interface TransitionProps {
   previousIndex: number;
@@ -16,6 +19,7 @@ const RightParallaxCard = ({
   videoClassName,
   paragraph,
   link,
+  href,
   custom,
 }: {
   className?: string;
@@ -26,26 +30,30 @@ const RightParallaxCard = ({
   videoClassName: string;
   paragraph: string;
   link: string;
+  href: string;
   custom: TransitionProps;
 }): JSX.Element => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     setShow(parallaxIndex === ownIndex);
-    if (parallaxIndex === ownIndex) {
-      console.log(ownIndex);
-    }
   }, [ownIndex, parallaxIndex]);
 
   const createShowVariant = (
     otherProperties: Record<string, unknown>,
-    { previousIndex, delay = 0 }: TransitionProps & { delay: number },
+    {
+      previousIndex,
+      delay = 0,
+      overWriteTransition = {},
+    }: TransitionProps & { delay: number; overWriteTransition?: Transition },
   ) => ({
     ...otherProperties,
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     transition: {
       type: 'spring',
       delay: Math.abs(previousIndex - parallaxIndex) * 0.3 + delay,
-    }
+      ...overWriteTransition,
+    },
   });
 
   return (
@@ -77,6 +85,9 @@ const RightParallaxCard = ({
                 {headerTitle}
               </motion.h1>
               <video
+                disablePictureInPicture
+                controlsList="nodownload"
+                playsInline
                 autoPlay
                 muted
                 loop
@@ -98,27 +109,56 @@ const RightParallaxCard = ({
                   ),
                 hidden: { opacity: 0, y: 30 },
               }}
-              className="px-4 md:px-0 md:w-2/3 mt-2 md:mt-4 text-sm md:text-lg md:leading-tight font-bold pb-4">
+              className="px-4 md:px-0 md:w-7/12 mt-2 md:mt-4 text-sm md:text-lg md:leading-tight font-bold pb-4">
               {paragraph}
             </motion.p>
-            <Link href="/">
-              <motion.a
-                custom={custom}
-                variants={{
-                  show: (transitionProps) =>
-                    createShowVariant(
-                      {
-                        opacity: 1,
-                        x: 0,
-                      },
-                      { ...transitionProps, delay: 0.2 },
-                    ),
-                  hidden: { opacity: 0, x: '100%' },
-                }}
-                className="absolute bottom-4 md:right-8 md:text-right text-xs md:text-base md:leading-tight max-w-3/4 md:max-w-1/2">
-                {link}
-              </motion.a>
-            </Link>
+            <div className="absolute flex flex-row items-start bottom-6 md:right-8 max-w-3/4 md:max-w-1/2 -translate-x-2 md:translate-x-0 md:text-right">
+              <Link href={href} scroll={false} passHref>
+                <motion.a
+                  custom={custom}
+                  variants={{
+                    show: (transitionProps) =>
+                      createShowVariant(
+                        {
+                          opacity: 1,
+                          x: 0,
+                        },
+                        {
+                          ...transitionProps,
+                          delay: 0.2,
+                          overWriteTransition: {
+                            when: 'beforeChildren',
+                            duration: 0.7,
+                          },
+                        },
+                      ),
+                    hidden: { opacity: 0, x: '40%' },
+                  }}
+                  className="text-xs md:text-base md:leading-none group hover:cursor-pointer hover:mr-[-1px]">
+                  <motion.div
+                    custom={custom}
+                    variants={{
+                      show: (transitionProps) =>
+                        createShowVariant(
+                          {
+                            opacity: 1,
+                            x: 0,
+                          },
+                          {
+                            ...transitionProps,
+                            overWriteTransition: { delay: 0, duration: 0.2 },
+                          },
+                        ),
+                      hidden: { opacity: 0, x: '-100%' },
+                      hover: { x: '-0.5rem' },
+                    }}
+                    className="mx-2 w-4 inline-block align-middle group-hover:!-translate-x-2 duration-100">
+                    <Image src={LeftArrow} width={8} height={14} />
+                  </motion.div>
+                  {link}
+                </motion.a>
+              </Link>
+            </div>
           </>
         )}
       </AnimatePresence>
