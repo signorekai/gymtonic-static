@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { getApolloClient, getPosts } from '@wpengine/headless';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { AnimatePresence, motion, useAnimation, Variants } from 'framer-motion';
 
 import debounce from 'lodash/debounce';
 
 import { useScroll } from 'lib/hooks';
 import VideoScroll from 'components/VideoScroll';
 import withLayout, { WithLayoutProps } from 'components/Layout';
+import RightParallaxCard from 'components/RightParallaxCard';
 import { CTA, Posts } from 'components';
 
 import Gym1 from 'assets/images/gym1.jpg';
@@ -37,22 +38,11 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
       src={src}
       alt=""
       layout="fill"
+      sizes="(min-width: 1366px) 800px, (min-width: 1024px) 600px, 400px"
+      quality="100"
       objectFit="cover"
       placeholder="blur"
     />
-  </div>
-);
-
-const RightCard = ({
-  children,
-  className = 'bg-white',
-}: React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->) => (
-  <div
-    className={`flex flex-col justify-center items-center w-full h-screen-1/2 lg:h-screen relative ${className}`}>
-    {children}
   </div>
 );
 
@@ -63,13 +53,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   const parallaxRef = useRef<HTMLDivElement>(null);
   const parallaxScrollValues = useScroll(parallaxRef);
 
-  const leftParallax = useRef<HTMLDivElement>(null);
-  const leftParallaxControl = useAnimation();
-
-  const rightParallax = useRef<HTMLDivElement>(null);
-  const rightParallaxControl = useAnimation();
-
-  const [parallaxIndex, setParallaxIndex] = useState<number>(0);
+  const [parallaxIndex, setParallaxIndex] = useState<number>(-1);
 
   const parallaxEffectRef = useRef<{
     previousIndex: number;
@@ -87,9 +71,18 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
     direction: 'down',
   });
 
+  useEffect(() => {
+    console.log(
+      'index changed to',
+      parallaxIndex,
+      'from',
+      parallaxEffectRef.current.previousIndex,
+    );
+  }, [parallaxIndex]);
+
   function handleScroll() {
     console.log('handleScroll');
-    const { previousIndex, locked, maxCount, leftParallaxPosition, direction } =
+    const { previousIndex, locked, maxCount, leftParallaxPosition } =
       parallaxEffectRef.current;
     if (locked) return;
     // if (parallaxScrollValues.scrollYProgress >= 1) return;
@@ -104,9 +97,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
       newIndex = maxCount - 1;
     }
 
-    console.log(parallaxEffectRef.current.previousIndex, parallaxIndex);
-    
-    if (parallaxEffectRef.current.previousIndex !== parallaxIndex) {
+    if (previousIndex !== parallaxIndex) {
       parallaxEffectRef.current.previousIndex = parallaxIndex;
     }
     // parallaxEffectRef.current.currentIndex = newIndex;
@@ -124,6 +115,30 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
     parallaxEffectRef,
   ]);
 
+  const rightParallaxVariants: Variants = {
+    hidden: { opacity: 1 },
+    show: (custom: {
+      maxCount: number;
+      parallaxIndex: number;
+      previousIndex: number;
+    }) => ({
+      y: `${
+        (custom.maxCount - custom.parallaxIndex - 1) *
+        (1 / custom.maxCount) *
+        -100
+      }%`,
+      transition: {
+        type: 'spring',
+        staggerChildren: 0.1,
+        // delayChildren:
+        //   Math.abs(parallaxEffectRef.current.previousIndex - parallaxIndex) *
+        //   0.3,
+        duration: Math.abs(custom.previousIndex - custom.parallaxIndex) * 0.3,
+        // duration: 0,
+      },
+    }),
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', debouncedHandler, { passive: true });
     window.addEventListener('resize', handleScroll);
@@ -133,7 +148,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
       window.removeEventListener('resize', handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedHandler, leftParallaxControl, parallaxScrollValues]);
+  }, [debouncedHandler, parallaxScrollValues]);
 
   return (
     <>
@@ -162,7 +177,6 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             <div className="flex-1 flex flex-col justify-center items-center relative overflow-hidden">
               <h1 className="h1 relative z-40 text-red">Gym</h1>
               <motion.div
-                ref={leftParallax}
                 initial={{ y: 0 }}
                 animate={{
                   y: `${
@@ -190,44 +204,94 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             </div>
             <div className="flex-1 bg-red text-white flex flex-col justify-center items-center relative overflow-hidden">
               <motion.div
-                ref={rightParallax}
-                initial={{
-                  y: `${(1 / parallaxEffectRef.current.maxCount) * 100 - 100}%`,
+                initial="hidden"
+                animate="show"
+                exit="hidden"
+                custom={{
+                  maxCount: parallaxEffectRef.current.maxCount,
+                  parallaxIndex,
+                  previousIndex: parallaxEffectRef.current.previousIndex,
                 }}
-                animate={{
-                  y: `${
-                    (parallaxEffectRef.current.maxCount - parallaxIndex - 1) *
-                    (1 / parallaxEffectRef.current.maxCount) *
-                    -100
-                  }%`,
-                  transition: {
-                    type: 'spring',
-                    duration:
-                      Math.abs(
-                        parallaxEffectRef.current.previousIndex - parallaxIndex,
-                      ) * 0.3,
-                    // duration: 0,
-                  },
-                }}
+                variants={rightParallaxVariants}
                 className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
-                <RightCard className="bg-red">
-                  <h1 className="h1 text-white">1</h1>
-                </RightCard>
-                <RightCard>
-                  <h1 className="h1 text-red">2</h1>
-                </RightCard>
-                <RightCard className="bg-red">
-                  <h1 className="h1 text-white">3</h1>
-                </RightCard>
-                <RightCard>
-                  <h1 className="h1 text-red">4</h1>
-                </RightCard>
-                <RightCard className="bg-red">
-                  <h1 className="h1 text-white">5</h1>
-                </RightCard>
-                <RightCard>
-                  <h1 className="h1 text-red">6</h1>
-                </RightCard>
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  headerTitle="Ka-Ching!"
+                  ownIndex={0}
+                  parallaxIndex={parallaxIndex}
+                  videoSrc="/videos/Thematic-2-KaChing.mp4"
+                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
+                  link="What is Gym Tonic?"
+                />
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
+                  videoSrc="/videos/Thematic-3-Kakis.mp4"
+                  headerTitle="Kakis"
+                  ownIndex={1}
+                  parallaxIndex={parallaxIndex}
+                  paragraph="Help Pa and Ma make new friends."
+                  link="Find a gym near you"
+                />
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  videoSrc="/videos/Thematic-4-Boleh.mp4"
+                  headerTitle="Boleh"
+                  ownIndex={2}
+                  parallaxIndex={parallaxIndex}
+                  paragraph="To continue doing the things you love, you have to stay physically strong."
+                  link="Why Strength Training matters even more when you are old."
+                />
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  videoSrc="/videos/Thematic-5-Huat.mp4"
+                  headerTitle="Huat!"
+                  ownIndex={3}
+                  parallaxIndex={parallaxIndex}
+                  paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
+                  link="Read their stories"
+                />
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
+                  videoSrc="/videos/Thematic-6-Kilat.mp4"
+                  headerTitle="Kilat!"
+                  ownIndex={4}
+                  parallaxIndex={parallaxIndex}
+                  paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
+                  link="Understand the process"
+                />
+                <RightParallaxCard
+                  custom={{
+                    ...parallaxEffectRef.current,
+                    parallaxIndex,
+                  }}
+                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  videoSrc="/videos/Thematic-7-Pro.mp4"
+                  headerTitle="Pro"
+                  ownIndex={5}
+                  parallaxIndex={parallaxIndex}
+                  paragraph="Exercise trainers who will guide you every step of the way."
+                  link="Meet the professionals"
+                />
               </motion.div>
             </div>
           </div>
