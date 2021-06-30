@@ -290,7 +290,11 @@ export default function VideoScroller({
 
   return (
     <section
-      className={window.innerWidth < breakpoint ? 'h-screen' : 'h-[250vh]'}
+      className={
+        window.innerWidth < breakpoint
+          ? 'h-screen relative z-30'
+          : 'h-[250vh] relative z-30'
+      }
       ref={scrollerRef}>
       <div
         ref={canvasContainerRef}
