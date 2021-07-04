@@ -5,6 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useRef,
 } from 'react';
 import { AppContext, AppInitialProps } from 'next/app';
 import { HeadlessProvider } from '@wpengine/headless/react';
@@ -28,17 +29,27 @@ export default function App({
   Component,
   pageProps,
 }: AppContext & AppInitialProps) {
+  const isTransitioning = useRef(false);
   const [showLoader, setShowLoader] = useState(true);
   const router = useRouter();
 
   const handleStart = (url: string) => {
     console.log('>>> start routechange', url);
+    isTransitioning.current = true;
     setShowLoader(true);
   };
 
   const handleComplete = (url: string) => {
     console.log('>>> complete routechange', url);
-    setShowLoader(false);
+    isTransitioning.current = false;
+    if (url !== '/') setShowLoader(false);
+  };
+
+  const handleSetShowLoader = (state: boolean) => {
+    console.log('calling', state, isTransitioning.current);
+    if (isTransitioning.current === false) {
+      setShowLoader(state);
+    }
   };
 
   useEffect(() => {
@@ -57,7 +68,7 @@ export default function App({
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
-      <LoaderContext.Provider value={{ showLoader, setShowLoader }}>
+      <LoaderContext.Provider value={{ showLoader, setShowLoader: handleSetShowLoader }}>
         <Loader showLoader={showLoader} />
         <Component {...pageProps} />
       </LoaderContext.Provider>
