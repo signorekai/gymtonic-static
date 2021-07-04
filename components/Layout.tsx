@@ -5,10 +5,12 @@ import { Header } from 'components';
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
   showLoader: boolean;
+  scrolledHeader: boolean;
 }
 
 export interface WithLayoutProps {
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
+  setScrolledHeader: (arg0: boolean) => void;
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
 }
@@ -21,9 +23,11 @@ export default function withLayout(
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setShowLoader = this.setShowLoader.bind(this);
+      this.setScrolledHeader = this.setScrolledHeader.bind(this);
       this.state = {
         headerRef: null,
         showLoader: true,
+        scrolledHeader: false,
       };
     }
 
@@ -36,8 +40,12 @@ export default function withLayout(
       handleResize();
     }
 
-    setHeaderRef(ref: RefObject<HTMLElement>) {
-      this.setState({ headerRef: ref });
+    setScrolledHeader(scrolledHeader: boolean) {
+      this.setState({ scrolledHeader });
+    }
+
+    setHeaderRef(headerRef: RefObject<HTMLElement>) {
+      this.setState({ headerRef });
     }
 
     setShowLoader(showLoader: boolean) {
@@ -47,13 +55,14 @@ export default function withLayout(
     // const [headerRef, setHeaderRef] =
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
-      const { headerRef, showLoader } = this.state;
+      const { headerRef, showLoader, scrolledHeader } = this.state;
 
       return (
         <div className="font-sans antialiased border-box">
-          <Header headerRef={headerRef} />
+          <Header headerRef={headerRef} scrolledHeader={scrolledHeader} />
           <Component
             {...this.props}
+            setScrolledHeader={this.setScrolledHeader}
             setHeaderRef={this.setHeaderRef}
             showLoader={showLoader}
             setShowLoader={this.setShowLoader}
