@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { MutableRefObject, RefObject } from 'react';
-import { Header } from 'components';
+import Header from 'components/Header';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
