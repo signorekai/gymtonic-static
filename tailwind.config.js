@@ -21,6 +21,7 @@ module.exports = {
         DEFAULT: '#E62D2D',
       },
       pink: '#F4D3CD',
+      black: '#000000',
       white: '#ffffff',
     },
     height: (theme) => ({
@@ -48,7 +49,12 @@ module.exports = {
       'screen-6': 'calc(var(--vh) * 600)',
     }),
     extend: {
+      width: {
+        'screen-2/5': '40vw',
+        'screen-1/2': '50vw',
+      },
       height: {
+        'screen-w-2/5': '40vw',
         'screen-border-10': 'calc(calc(var(--vh) * 100) + 20px)',
         'screen-border-60': 'calc(calc(var(--vh) * 100) + 120px)',
       },
@@ -59,6 +65,7 @@ module.exports = {
         '11xl': '8.5rem',
       },
       borderWidth: {
+        4: '4px',
         10: '10px',
         60: '60px',
       },
