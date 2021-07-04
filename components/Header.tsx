@@ -97,7 +97,7 @@ function Header({
 
   useEffect(() => {
     setScrolled(scrolledHeader);
-  }, [scrolledHeader])
+  }, [scrolledHeader]);
 
   useEffect(() => {
     let ref: HTMLElement | null = null;

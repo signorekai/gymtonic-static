@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
+import { useRouter } from 'next/router';
 
 const AboutLink = ({
   href,
@@ -9,7 +9,7 @@ const AboutLink = ({
   href: string;
   children: React.ReactNode;
 }) => {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const checkCurrent = (route: string): boolean => {
     return route === router.asPath;
@@ -24,8 +24,8 @@ const AboutLink = ({
         {children}
       </a>
     </Link>
-  )
-}
+  );
+};
 
 const MobileAboutCard = (): JSX.Element => {
   return (
