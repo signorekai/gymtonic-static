@@ -68,7 +68,8 @@ export default function App({
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
-      <LoaderContext.Provider value={{ showLoader, setShowLoader: handleSetShowLoader }}>
+      <LoaderContext.Provider
+        value={{ showLoader, setShowLoader: handleSetShowLoader }}>
         <Loader showLoader={showLoader} />
         <Component {...pageProps} />
       </LoaderContext.Provider>
