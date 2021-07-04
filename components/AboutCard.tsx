@@ -5,7 +5,7 @@ interface Props {
   hideOnMobile?: boolean;
 }
 
-export default ({ hideOnMobile = false }: Props): JSX.Element => {
+const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
   return (
     <section
       className={`order-2 lg:order-1 w-full lg:w-1/2 py-8 md:py-16 lg:py-28 ${
@@ -40,3 +40,5 @@ export default ({ hideOnMobile = false }: Props): JSX.Element => {
     </section>
   );
 };
+
+export default AboutCard;
