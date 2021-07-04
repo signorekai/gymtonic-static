@@ -1,13 +1,13 @@
 import React from 'react';
 import { useGeneralSettings } from '@wpengine/headless/react';
-import { Header, Footer } from '../components';
+import Header from 'components/Header';
+import Footer from 'components/Footer';
 
 export default function Page(): JSX.Element {
   const settings = useGeneralSettings();
 
   return (
     <>
-      <Header />
       <main className="content content-page">
         <div className="wrap">
           <div>

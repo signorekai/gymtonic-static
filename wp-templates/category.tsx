@@ -4,7 +4,9 @@ import { Pagination } from '@wpengine/headless/next';
 import { getApolloClient, getPosts, categoryOptions } from '@wpengine/headless';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next';
-import { Footer, Header, Posts } from '../components';
+import Footer from 'components/Footer';
+import Header from 'components/Header';
+import Posts from 'components/Posts';
 
 const POSTS_PER_PAGE = 10;
 
@@ -19,7 +21,6 @@ export default function Category(): JSX.Element {
 
   return (
     <>
-      <Header />
       <main className="content content-index">
         <Posts posts={posts?.nodes} />
         {posts?.pageInfo && (

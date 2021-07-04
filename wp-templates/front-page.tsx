@@ -4,7 +4,7 @@ import { usePosts } from '@wpengine/headless/react';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { getApolloClient, getPosts } from '@wpengine/headless';
-import { AnimatePresence, motion, useAnimation, Variants } from 'framer-motion';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 import debounce from 'lodash/debounce';
 
@@ -12,7 +12,6 @@ import { useScroll } from 'lib/hooks';
 import VideoScroll from 'components/VideoScroll';
 import withLayout, { WithLayoutProps } from 'components/Layout';
 import RightParallaxCard from 'components/RightParallaxCard';
-import { CTA, Posts } from 'components';
 
 import Gym1 from 'assets/images/gym1.jpg';
 import Gym2 from 'assets/images/gym2.jpg';
@@ -308,7 +307,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             Mai tu liao!
           </h1>
           <h4 className="h4 text-red relative z-10">
-            Don't delay! Limited slots available.
+            Don&apos;t delay! Limited slots available.
           </h4>
           <video
             disablePictureInPicture

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { usePost } from '@wpengine/headless/next';
 import withLayout from 'components/Layout';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
