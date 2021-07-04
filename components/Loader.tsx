@@ -40,6 +40,12 @@ export default function Loader({ showLoader = true }: Props): JSX.Element {
           opacity: showLoader ? 1 : 0,
           transition,
         });
+        await animControls.start({
+          pointerEvents: showLoader ? 'all' : 'none',
+          transition: {
+            duration: 0,
+          },
+        });
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         console.log(`animated loader to ${showLoader === true}`);
         // update state after this is done
