@@ -29,7 +29,6 @@
   @apply after:left-0;
   @apply after:bg-white;
   @apply after:w-full;
-  @apply after:scale-x-0;
   @apply hover:after:scale-x-100;
   @apply after:transition-transform;
   @apply after:duration-200;
@@ -54,11 +53,10 @@
   @apply font-black;
 }
 
-.pageTitle {
+.page-title {
   @apply text-3xl;
   @apply md:text-5xl;
   @apply leading-none;
-  @apply text-red;
   @apply font-black;
 }
 
