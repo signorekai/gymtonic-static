@@ -13,6 +13,7 @@ import 'normalize.css/normalize.css';
 import 'scss/main.scss';
 import Loader from 'components/Loader';
 import { useRouter } from 'next/router';
+import { AnimateSharedLayout } from 'framer-motion';
 
 export interface LoaderContextType {
   // assetsToLoad: Array<HTMLElement>;
@@ -34,9 +35,11 @@ export default function App({
   const router = useRouter();
 
   const handleStart = (url: string) => {
-    console.log('>>> start routechange', url);
-    isTransitioning.current = true;
-    setShowLoader(true);
+    // if (url.match(/about/).length === 0) {
+      console.log('>>> start routechange', url);
+      isTransitioning.current = true;
+      setShowLoader(true);
+    // }
   };
 
   const handleComplete = (url: string) => {
