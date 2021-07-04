@@ -9,7 +9,7 @@ function withWPEHeadless(nextConfig = {}) {
 module.exports = withWPEHeadless({
   images: {
     domains: ['gymtonic.local'],
-    deviceSizes: [200, 768, 1024, 1366, 1600],
+    deviceSizes: [200, 400, 768, 1024, 1366, 1600],
     imageSizes: [32, 48, 64, 96, 128],
   },
 });
