@@ -74,6 +74,13 @@
   text-shadow: 3px 3px white, 3px -3px white, -3px 3px white, -3px -3px white;
 }
 
+.about-link--mobile {
+  @apply inline-block;
+  @apply px-[6px];
+  @apply first:pl-0;
+  @apply last:pr-0;
+}
+
 .snap-container {
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
