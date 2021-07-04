@@ -7,6 +7,7 @@ import { LoaderContext, LoaderContextType } from 'pages/_app';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
+import MobileAboutCard from 'components/MobileAboutCard';
 
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
@@ -23,9 +24,10 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
   return (
     <motion.main className="flex flex-col lg:flex-row relative items-start">
       <AboutCard hideOnMobile />
+      <MobileAboutCard />
       <motion.section
         layoutId="about"
-        className="lg:order-1 w-full lg:w-1/2 bg-red text-white min-h-screen lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-22">
+        className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white min-h-screen relative lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-22">
         <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
           <Image
             src={ArmOnRed}
