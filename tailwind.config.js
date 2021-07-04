@@ -49,7 +49,12 @@ module.exports = {
       'screen-6': 'calc(var(--vh) * 600)',
     }),
     extend: {
+      lineHeight: {
+        tighter: '1.1',
+      },
       width: {
+        '3/10': '30%',
+        '7/10': '70%',
         'screen-2/5': '40vw',
         'screen-1/2': '50vw',
       },
@@ -85,7 +90,11 @@ module.exports = {
         '3/5': '60%',
         '3/4': '75%',
       },
+      padding: {
+        34: '8.5rem',
+      },
       margin: {
+        34: '8.5rem',
         screen: 'calc(var(--vh) * 100)',
         'screen-1/20': '5vh',
         'screen-1/10': '10vh',
