@@ -77,18 +77,24 @@ interface Props {
   headerRef?: RefObject<HTMLElement> | null;
   intersectionRatio?: number;
   rootMargin?: string;
+  scrolledHeader: boolean;
 }
 
 function Header({
   headerRef = null,
   intersectionRatio = 0,
   rootMargin = '0px 0px 0px 0px',
+  scrolledHeader,
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
   const selfRef = useRef<HTMLElement>(null);
-  const [scrolled, setScrolled] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState<boolean>(scrolledHeader);
+
+  useEffect(() => {
+    setScrolled(scrolledHeader);
+  }, [scrolledHeader])
 
   useEffect(() => {
     let ref: HTMLElement | null = null;
@@ -118,14 +124,12 @@ function Header({
       );
 
       observer.observe(ref);
-
       console.log('checking for scroll amount now');
+
       if (typeof window !== undefined) {
         console.log(window.scrollY, ref.clientHeight);
         if (window.scrollY >= ref.clientHeight) {
           setScrolled(true);
-        } else {
-          setScrolled(false);
         }
       }
 
