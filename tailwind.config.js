@@ -65,6 +65,7 @@ module.exports = {
       },
       fontSize: {
         sm: '.9375rem',
+        '2xl': '1.625rem',
         '3xl': '2rem',
         '8xl': '5.625rem',
         '11xl': '8.5rem',
@@ -91,6 +92,8 @@ module.exports = {
         '3/4': '75%',
       },
       padding: {
+        18: '4.5rem',
+        22: '5.5rem',
         34: '8.5rem',
       },
       margin: {
