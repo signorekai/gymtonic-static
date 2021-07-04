@@ -60,6 +60,20 @@
   @apply font-black;
 }
 
+.about-link {
+  @apply text-red;
+  @apply border-b-2;
+  @apply md:border-b-4;
+  @apply border-red;
+  @apply inline-block;
+  @apply hover:opacity-80;
+  @apply transition-opacity;
+  @apply duration-200;
+
+  line-height: 0.8;
+  text-shadow: 3px 3px white, 3px -3px white, -3px 3px white, -3px -3px white;
+}
+
 .snap-container {
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
