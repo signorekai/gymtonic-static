@@ -228,7 +228,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={0}
                   parallaxIndex={parallaxIndex}
                   videoSrc="/videos/Thematic-2-KaChing.mp4"
-                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
                   paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
                   href="/about"
                   link="What is Gym Tonic?"
@@ -250,7 +250,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   custom={{
                     ...parallaxEffectRef.current,
                   }}
-                  videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+                  videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
                   videoSrc="/videos/Thematic-4-Boleh.mp4"
                   headerTitle="Boleh"
                   ownIndex={2}
@@ -303,10 +303,10 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
           </div>
         </section>
         <section className="fixed top-0 w-full h-screen border-red border-10 md:border-60 z-20 flex flex-col justify-center items-center">
-          <h1 className="!text-11xl h1 text-red italic relative z-10 mt-screen-2/10">
+          <h1 className="text-7xl md:text-9xl lg:text-11xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
             Mai tu liao!
           </h1>
-          <h4 className="h4 text-red relative z-10">
+          <h4 className="h4 text-red relative z-10 text-center max-w-5/6 md:max-w-2/3">
             Don&apos;t delay! Limited slots available.
           </h4>
           <video
