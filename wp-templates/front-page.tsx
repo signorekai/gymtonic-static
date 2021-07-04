@@ -21,7 +21,6 @@ import Gym4 from 'assets/images/gym4.jpg';
 import Gym5 from 'assets/images/gym5.jpg';
 import Gym6 from 'assets/images/gym6.jpg';
 
-import styles from '../scss/wp-templates/front-page.module.scss';
 /**
  * Example of post variables to query the first six posts in a named category.
  * @see https://github.com/wpengine/headless-framework/tree/canary/docs/queries
