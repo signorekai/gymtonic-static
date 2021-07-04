@@ -1,8 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { StoryNode } from 'wp-templates/page-stories';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 export interface Thumbnail {
