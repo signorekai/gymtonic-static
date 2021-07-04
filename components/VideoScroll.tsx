@@ -137,11 +137,10 @@ export default function VideoScroller({
               }),
           ),
       ).then(() => {
-        // console.log('frames all loaded');
-
         setShowLoader(false);
       });
     } else {
+      setShowLoader(false);
       // console.log('length of unloaded frames = 0');
     }
 
