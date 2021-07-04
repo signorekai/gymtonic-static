@@ -5,6 +5,7 @@ import React from 'react';
 const templates: Templates<NextTemplate> = {
   '404': import('./404'),
   'front-page': import('./front-page'),
+  'page-about': import('./page-about'),
   'page-stories': import('./page-stories'),
   'single-story': import('./page-stories'),
   index: import('./index'),
