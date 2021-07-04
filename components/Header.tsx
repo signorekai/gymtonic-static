@@ -1,10 +1,11 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { WPHead } from '@wpengine/headless/next';
 import { gql, useQuery } from '@apollo/client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
 
 // import image assets
 import logo from '../assets/images/logo.png';
@@ -59,7 +60,7 @@ const menuQuery = gql`
 const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
     <div
-      className={`hover:cursor-pointer ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
+      className={`hover:cursor-pointer pointer-events-auto ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
       <Image
         src={logo}
         alt=""
@@ -91,6 +92,8 @@ function Header({
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
   const selfRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState<boolean>(scrolledHeader);
+
+  const router = useRouter();
 
   useEffect(() => {
     setScrolled(scrolledHeader);
@@ -153,8 +156,8 @@ function Header({
         <header
           className="absolute top-0 l-0 w-full z-40 text-white"
           ref={selfRef}>
-          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6">
-            <ul className="flex flex-row text-center items-center antialiased">
+          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6 pointer-events-none">
+            <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
               {menuItems.map(({ node }: MenuData, index: number) => {
                 return (
                   <>
@@ -163,9 +166,9 @@ function Header({
                     )}
                     <li
                       key={`${node.id}`}
-                      className="px-4 font-black hidden xl:list-item menu-item">
+                      className="px-4 font-black hidden xl:list-item menu-item pointer-events-auto">
                       <Link href={node.path} scroll={false}>
-                        {node.label}
+                        <a className="after:scale-x-0">{node.label}</a>
                       </Link>
                     </li>
                   </>
@@ -186,7 +189,7 @@ function Header({
             initial={{ translateY: '-100%' }}
             animate={{ translateY: 0 }}
             transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="fixed top-0 l-0 w-full z-40 text-white">
+            className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
             <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">
@@ -196,7 +199,14 @@ function Header({
                       key={`${node.id}`}
                       className="px-4 font-black menu-item">
                       <Link href={node.path} scroll={false}>
-                        {node.label}
+                        <a
+                          className={`${
+                            node.path.slice(0, -1) === router.asPath
+                              ? 'after:scale-x-100'
+                              : 'after:scale-x-0'
+                          } pointer-events-auto`}>
+                          {node.label}
+                        </a>
                       </Link>
                     </li>
                   );
