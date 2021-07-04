@@ -5,7 +5,7 @@ import {
   getNextStaticProps,
 } from '@wpengine/headless/next';
 import { getApolloClient } from '@wpengine/headless';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { GetStaticPropsContext } from 'next';
 import WPTemplates from '../wp-templates/_loader';
 
