@@ -54,6 +54,14 @@
   @apply font-black;
 }
 
+.pageTitle {
+  @apply text-3xl;
+  @apply md:text-5xl;
+  @apply leading-none;
+  @apply text-red;
+  @apply font-black;
+}
+
 .snap-container {
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
