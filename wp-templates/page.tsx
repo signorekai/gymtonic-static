@@ -6,8 +6,6 @@ import { LoaderContext, LoaderContextType } from 'pages/_app';
 function Page(): JSX.Element {
   const post = usePost();
 
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
-
   return (
     <main className="content content-page">
       <div className="wrap">
@@ -24,4 +22,4 @@ function Page(): JSX.Element {
   );
 }
 
-export default withLayout(Page);
+export default Page;

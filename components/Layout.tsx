@@ -14,6 +14,7 @@ export interface WithLayoutProps {
   setScrolledHeader: (arg0: boolean) => void;
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
+  setShowMobileNav: (arg0: boolean) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -54,12 +55,13 @@ export default function withLayout<T extends React.Component>(
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
       const { headerRef, showLoader, scrolledHeader } = this.state;
-      const { setShowLoader } = this.props;
+      const { setShowLoader, setShowMobileNav } = this.props;
 
       return (
         <div className="font-sans antialiased border-box">
           <Header
             {...this.props}
+            setShowMobileNav={setShowMobileNav}
             headerRef={headerRef}
             scrolledHeader={scrolledHeader}
           />
