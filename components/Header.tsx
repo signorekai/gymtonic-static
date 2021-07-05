@@ -145,6 +145,15 @@ function Header({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerRef, selfRef]);
 
+  const aboutPages = ['/research', '/its-simple', '/coaches'];
+  const isCurrent = (currentPath: string): boolean => {
+    return (
+      currentPath === router.asPath ||
+      ((currentPath === '/about' || currentPath === '/gymtonic/about') &&
+        aboutPages.indexOf(router.asPath) > -1)
+    );
+  };
+
   return (
     <>
       <Head>
@@ -201,7 +210,7 @@ function Header({
                       <Link href={node.path} scroll={false}>
                         <a
                           className={`${
-                            node.path.slice(0, -1) === router.asPath
+                            isCurrent(node.path.slice(0, -1))
                               ? 'after:scale-x-100'
                               : 'after:scale-x-0'
                           } pointer-events-auto`}>
