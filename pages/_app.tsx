@@ -13,8 +13,6 @@ import 'normalize.css/normalize.css';
 import 'scss/main.scss';
 import Loader from 'components/Loader';
 import { useRouter } from 'next/router';
-import MobileNav, { SetMobileNavContext } from 'components/MobileNav';
-
 // export interface LoaderContextType {
 //   // assetsToLoad: Array<HTMLElement>;
 //   // setAssetsToLoad: (value: any) => void;
@@ -35,14 +33,12 @@ export default function App({
 }: AppContext & AppInitialProps) {
   const isTransitioning = useRef(false);
   const [showLoader, setShowLoader] = useState(true);
-  const [showMobileNav, setShowMobileNav] = useState(false);
   const router = useRouter();
 
   const handleStart = (url: string) => {
     // if (url.match(/about/).length === 0) {
     console.log('>>> start routechange', url);
     isTransitioning.current = true;
-    setShowMobileNav(false);
     setShowLoader(true);
     // }
   };
@@ -77,11 +73,8 @@ export default function App({
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
       <Loader showLoader={showLoader} />
-      <MobileNav />
       <LoaderContext.Provider value={handleSetShowLoader}>
-        <SetMobileNavContext.Provider value={setShowMobileNav}>
-          <Component {...pageProps} />
-        </SetMobileNavContext.Provider>
+        <Component {...pageProps} />
       </LoaderContext.Provider>
     </HeadlessProvider>
   );

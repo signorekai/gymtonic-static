@@ -10,7 +10,7 @@ import Image from 'next/image';
 // import image assets
 import logo from 'assets/images/logo.png';
 import { menuQuery, MenuData } from 'pages/[[...page]]';
-import MobileNavBtn from './MobileNavBtn';
+import MobileNavBtn from 'components/MobileNavBtn';
 
 const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
@@ -35,6 +35,7 @@ interface Props {
   intersectionRatio?: number;
   rootMargin?: string;
   scrolledHeader: boolean;
+  setShowMobileNav(arg0: boolean): void;
 }
 
 function Header({
@@ -42,6 +43,7 @@ function Header({
   intersectionRatio = 0,
   rootMargin = '0px 0px 0px 0px',
   scrolledHeader,
+  setShowMobileNav,
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
@@ -183,7 +185,10 @@ function Header({
                 )}
               </ul>
               <div className="absolute pointer-events-auto top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
-                <MobileNavBtn barStyle="text-white md:text-red" />
+                <MobileNavBtn
+                  setShowMobileNav={setShowMobileNav}
+                  barStyle="text-white md:text-red"
+                />
               </div>
             </div>
           </motion.header>

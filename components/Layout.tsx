@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { MutableRefObject, RefObject } from 'react';
 import Header from 'components/Header';
+import { WithMobileNavProps } from './MobileNav';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -16,10 +17,13 @@ export interface WithLayoutProps {
 }
 
 export default function withLayout(
-  Component: React.ComponentType<WithLayoutProps>,
-): React.ComponentClass<any & WithLayoutProps> {
-  return class extends React.Component<WithLayoutProps, LayoutState> {
-    constructor(props: WithLayoutProps) {
+  Component: React.ComponentType<any & WithLayoutProps & WithMobileNavProps>,
+): React.ComponentClass<any> {
+  return class extends React.Component<
+    WithLayoutProps & WithMobileNavProps,
+    LayoutState
+  > {
+    constructor(props: WithLayoutProps & WithMobileNavProps) {
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setShowLoader = this.setShowLoader.bind(this);
@@ -56,10 +60,15 @@ export default function withLayout(
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
       const { headerRef, showLoader, scrolledHeader } = this.state;
+      const { setShowMobileNav } = this.props;
 
       return (
         <div className="font-sans antialiased border-box">
-          <Header headerRef={headerRef} scrolledHeader={scrolledHeader} />
+          <Header
+            setShowMobileNav={setShowMobileNav}
+            headerRef={headerRef}
+            scrolledHeader={scrolledHeader}
+          />
           <Component
             {...this.props}
             setScrolledHeader={this.setScrolledHeader}

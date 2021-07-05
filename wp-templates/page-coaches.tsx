@@ -14,8 +14,9 @@ import Coach1 from 'assets/images/Coach-1.png';
 import Coach2 from 'assets/images/Coach-2.png';
 import Coach3 from 'assets/images/Coach-3.png';
 import Coach4 from 'assets/images/Coach-4.png';
+import withMobileNav from 'components/MobileNav';
 
-const About: React.FunctionComponent<WithLayoutProps> = ({
+const Page: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
   const setShowLoader = useContext<LoaderContextType>(LoaderContext);
@@ -196,4 +197,4 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
   );
 };
 
-export default withLayout(About);
+export default withMobileNav(withLayout(Page));

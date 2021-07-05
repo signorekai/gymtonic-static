@@ -20,6 +20,7 @@ import Gym3 from 'assets/images/gym3.jpg';
 import Gym4 from 'assets/images/gym4.jpg';
 import Gym5 from 'assets/images/gym5.jpg';
 import Gym6 from 'assets/images/gym6.jpg';
+import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
 
 /**
  * Example of post variables to query the first six posts in a named category.
@@ -46,10 +47,10 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
   </div>
 );
 
-const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
+const FrontPage: React.FunctionComponent<any> = ({
   setHeaderRef,
-}: WithLayoutProps) => {
-  const posts = usePosts(firstSixInCategory);
+  setShowMobileNav,
+}: WithMobileNavProps & WithLayoutProps) => {
   const parallaxRef = useRef<HTMLDivElement>(null);
   const parallaxScrollValues = useScroll(parallaxRef);
 
@@ -157,7 +158,10 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   return (
     <>
       <div className="absolute top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
-        <MobileNavBtn barStyle="text-white md:text-red" />
+        <MobileNavBtn
+          setShowMobileNav={setShowMobileNav}
+          barStyle="text-white md:text-red"
+        />
       </div>
       <VideoScroll
         totalFrames={69}
@@ -330,7 +334,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
   );
 };
 
-export default withLayout(FrontPage);
+export default withMobileNav(withLayout(FrontPage));
 
 /**
  * Get additional data from WordPress that is specific to this template.

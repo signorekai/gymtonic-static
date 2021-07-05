@@ -4,10 +4,12 @@ import withLayout, { WithLayoutProps } from 'components/Layout';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
+import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
 
-const About: React.FunctionComponent<WithLayoutProps> = ({
+const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
-}: WithLayoutProps) => {
+  setShowMobileNav,
+}: WithMobileNavProps & WithLayoutProps) => {
   const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   useEffect(() => {
@@ -49,4 +51,4 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
 />
 </div> */
 
-export default withLayout(About);
+export default withMobileNav(withLayout(Page));

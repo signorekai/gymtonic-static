@@ -9,6 +9,7 @@ import Bubble, { Thumbnail } from 'components/Bubble';
 import StoryCard from 'components/StoryCard';
 import { useRouter } from 'next/router';
 import { find } from 'lodash';
+import withMobileNav from 'components/MobileNav';
 
 const storiesQuery = gql`
   {
@@ -78,7 +79,7 @@ interface StoriesData {
   };
 }
 
-const Stories: React.FunctionComponent<WithLayoutProps> = ({
+const Page: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
@@ -194,4 +195,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context);
 }
 
-export default withLayout(Stories);
+export default withMobileNav(withLayout(Page));

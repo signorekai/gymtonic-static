@@ -1,19 +1,14 @@
-import {
-  SetMobileNavContext,
-  SetMobileNavContextType,
-} from 'components/MobileNav';
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
+import { WithMobileNavProps } from './MobileNav';
 
 interface Props {
   barStyle?: string;
 }
 
-const MobileNavBtn: React.FunctionComponent<Props> = ({
+const MobileNavBtn: React.FunctionComponent<Props & WithMobileNavProps> = ({
   barStyle = 'text-red',
-}: Props) => {
-  const setShowMobileNav =
-    useContext<SetMobileNavContextType>(SetMobileNavContext);
-
+  setShowMobileNav,
+}: Props & WithMobileNavProps) => {
   const bar = `bg-current h-[2px] w-full mb-2 last:mb-0 ${barStyle}`;
 
   return (

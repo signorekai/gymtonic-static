@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState, useContext, createContext } from 'react';
 import Link from 'next/link';
@@ -5,17 +6,14 @@ import Link from 'next/link';
 import { menuQuery, MenuData } from 'pages/[[...page]]';
 import { useQuery } from '@apollo/client';
 
-export type SetMobileNavContextType = React.Dispatch<
-  React.SetStateAction<boolean>
->;
-
-export const SetMobileNavContext = createContext<any>(null);
-
-const MobileNav: React.FunctionComponent = () => {
+const MobileNav: React.FunctionComponent<{ showMobileNav: boolean }> = ({
+  showMobileNav,
+}: {
+  showMobileNav: boolean;
+}) => {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const menuItems: MenuData = menu.data?.menu.menuItems.edges;
-  const [showMobileNav, setShowMobileNav] = useState(false);
 
   return (
     <>
@@ -59,4 +57,45 @@ const MobileNav: React.FunctionComponent = () => {
   );
 };
 
-export default MobileNav;
+export type SetMobileNavContextType = React.Dispatch<
+  React.SetStateAction<boolean>
+>;
+
+export const SetMobileNavContext = createContext<any>(null);
+
+export interface WithMobileNavProps {
+  setShowMobileNav: (arg0: boolean) => void;
+}
+interface MobileNavState {
+  showMobileNav: boolean;
+}
+
+export default function withMobileNav(
+  Component: React.ComponentType<WithMobileNavProps>,
+): React.ComponentClass<any & WithMobileNavProps> {
+  return class extends React.Component<WithMobileNavProps, MobileNavState> {
+    constructor(props: WithMobileNavProps) {
+      super(props);
+      this.setShowMobileNav = this.setShowMobileNav.bind(this);
+
+      this.state = {
+        showMobileNav: false,
+      };
+    }
+
+    setShowMobileNav(showMobileNav: boolean) {
+      this.setState({ showMobileNav });
+    }
+
+    render() {
+      const { showMobileNav } = this.state;
+      return (
+        <>
+          <MobileNav showMobileNav={showMobileNav} />
+          <Component {...this.props} setShowMobileNav={this.setShowMobileNav} />
+        </>
+      );
+    }
+  };
+}
+
