@@ -106,6 +106,7 @@ module.exports = {
         34: '8.5rem',
       },
       margin: {
+        22: '5.5rem',
         34: '8.5rem',
         screen: 'calc(var(--vh) * 100)',
         'screen-1/20': '5vh',
