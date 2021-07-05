@@ -31,6 +31,7 @@ module.exports = {
       screen: 'calc(var(--vh) * 100)',
       'screen-1/2': 'calc(var(--vh) * 50)',
       'screen-2': 'calc(var(--vh) * 200)',
+      'screen-2.5': 'calc(var(--vh) * 200)',
       'screen-3': 'calc(var(--vh) * 300)',
       'screen-4': 'calc(var(--vh) * 400)',
       'screen-5': 'calc(var(--vh) * 500)',
@@ -64,7 +65,9 @@ module.exports = {
         'screen-border-60': 'calc(calc(var(--vh) * 100) + 120px)',
       },
       fontSize: {
+        xxs: ['0.6rem', 1],
         sm: '.9375rem',
+        base: ['1rem', 1.1],
         '2xl': '1.625rem',
         '3xl': '2rem',
         '8xl': '5.625rem',
