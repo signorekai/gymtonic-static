@@ -41,6 +41,7 @@ export default function App({
     // if (url.match(/about/).length === 0) {
     console.log('>>> start routechange', url);
     isTransitioning.current = true;
+    setShowMobileNav(false);
     setShowLoader(true);
     // }
   };
@@ -82,6 +83,7 @@ export default function App({
           setShowMobileNav,
         }}>
         <Loader showLoader={showLoader} />
+        <MobileNav />
         <Component {...pageProps} />
       </ThemeContext.Provider>
     </HeadlessProvider>
