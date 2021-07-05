@@ -329,7 +329,7 @@ export default function VideoScroller({
           ref={canvasRef}
           width={window.innerWidth - borderWidth * 2}
           height={window.innerHeight - borderWidth * 2}
-          className="h-full absolute top-0 left-0 z-20"
+          className="h-full absolute top-0 left-0 z-30"
         />
         <img
           ref={frame0Ref}
