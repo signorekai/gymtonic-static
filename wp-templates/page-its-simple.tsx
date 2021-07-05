@@ -1,7 +1,7 @@
 import AboutCard from 'components/AboutCard';
 import withLayout, { WithLayoutProps } from 'components/Layout';
 import MobileAboutHeader from 'components/MobileAboutHeader';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
+import { ThemeContext, ThemeContextType } from 'pages/_app';
 import React, { useEffect, useContext } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -11,8 +11,8 @@ import ScreenOnRed from 'assets/images/screen-on-red.png';
 const Simple: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
+  const { setShowLoader }: ThemeContextType =
+    useContext<ThemeContextType>(ThemeContext);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);

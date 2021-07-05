@@ -1,112 +1,59 @@
 import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { getApolloClient } from '@wpengine/headless';
 
 import withLayout, { WithLayoutProps } from 'components/Layout';
 import AboutCard from 'components/AboutCard';
 import MobileAboutHeader from 'components/MobileAboutHeader';
-import { GetStaticPropsContext } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { LoaderContext, LoaderContextType } from 'pages/_app';
-import { getNextStaticProps } from '@wpengine/headless/next';
-
-import ArmOnRed from 'assets/images/arm-on-red.png';
-import DownloadBtn from 'assets/images/download.png';
 import Carousel, { CarouselCard } from 'components/Carousel';
 
-interface ResearchPaperFields {
-  typeOfLink: 'external_link' | 'pdf';
-  researchOrganisation: string;
-  url: string;
-  file: {
-    mediaItemUrl: string;
-  };
-}
+import Image from 'next/image';
 
-export interface ResearchPaperNode {
-  id: string;
-  title: string;
-  researchPaper: ResearchPaperFields;
-}
+import { ThemeContext, ThemeContextType } from 'pages/_app';
 
-interface ResearchPaperData {
-  researchPapers: {
-    edges: {
-      node: ResearchPaperNode;
-    }[];
-  };
-}
-
-interface ResearchPaperCardProps {
-  title: string;
-  organisation: string;
-  file: string | null;
-  url: string;
-  type: 'external_link' | 'pdf';
-  index: number;
-}
-
-const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
-  title,
-  organisation,
-  file,
-  type,
-  url,
-  index,
-}: ResearchPaperCardProps) => {
-  const link = type === 'external_link' ? url : file || '';
-  return (
-    <motion.article
-      custom={{ index }}
-      variants={{
-        exit: { x: -20, opacity: 0 },
-        enter: (custom: { index: number }) => ({
-          x: 0,
-          opacity: 1,
-          transition: { delay: custom.index * 0.08 + 0.3 },
-        }),
-      }}
-      initial="exit"
-      animate="enter"
-      className="w-full md:w-1/3 mb-3 group">
-      <Link href={link}>
-        <a target="_blank">
-          <h2 className="group-hover:opacity-90 transition-opacity font-bold uppercase text-xxs md:text-xs mt-3 md:max-w-5/6">
-            {organisation}
-          </h2>
-          <h1 className="group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base md:max-w-5/6">
-            {title}
-          </h1>
-          <div className="w-7 h-7 relative mt-3 duration-200 transition-transform group-hover:-translate-y-1">
-            <Image src={DownloadBtn} alt="" layout="fill" />
-          </div>
-        </a>
-      </Link>
-    </motion.article>
-  );
-};
+import Coach1 from 'assets/images/Coach-1.png';
+import Coach2 from 'assets/images/Coach-2.png';
+import Coach3 from 'assets/images/Coach-3.png';
+import Coach4 from 'assets/images/Coach-4.png';
 
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
+  const { setShowLoader }: ThemeContextType =
+    useContext<ThemeContextType>(ThemeContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const h4Classes = 'text-lg md:text-2xl mt-5';
+  const h4Classes = 'text-lg md:text-2xl leading-none md:leading-base mt-5';
+
+  const paraVariants = {
+    hide: { x: -20, opacity: 0 },
+    show: { x: 0, opacity: 1 },
+  };
+
+  const blockQuoteVariants = {
+    hide: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { delay: 0.3 } },
+  };
+
+  const coachNameVariants = {
+    hide: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { delay: 0.4 } },
+  };
+
+  const coachImageVariants = {
+    hide: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1, transition: { delay: 0.5 } },
+  };
 
   return (
-    <main className="flex flex-col lg:flex-row items-start relative">
+    <main className="flex flex-col lg:flex-row items-start relative min-h-screen">
       <AboutCard hideOnMobile />
-      <MobileAboutHeader />
-      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white lg:min-h-screen relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22">
+      <MobileAboutHeader isSticky />
+      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22 flex flex-col justify-end flex-1">
         <div className="px-4 md:px-16 ">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
@@ -115,31 +62,136 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
             Coaches
           </motion.h2>
           <motion.h4
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+            initial="hide"
+            animate="show"
+            exit="hide"
+            variants={paraVariants}
             className={h4Classes}>
             They’re exercise trainers, physiotherapists and occupational
             therapists and fitness instructors trained overseas.
           </motion.h4>
           <motion.h4
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+            initial="hide"
+            animate="show"
+            exit="hide"
+            variants={paraVariants}
             className={h4Classes}>
             While they are professionals, the uncles and aunties at our gyms
             treat them like their own children: Their training sessions are
             filled with encouragement and laughter.
           </motion.h4>
         </div>
-        <motion.h5
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
-          className="font-bold uppercase text-xs mt-8 text-center">
-          What they say
-        </motion.h5>
-        <Carousel>
-          <CarouselCard>test</CarouselCard>
-          <CarouselCard>test</CarouselCard>
-        </Carousel>
+        <div>
+          <motion.h5
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="font-bold uppercase text-xs mt-8 mb-4 text-center">
+            What they say
+          </motion.h5>
+          <Carousel>
+            <CarouselCard>
+              <motion.blockquote
+                variants={blockQuoteVariants}
+                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “One of my clients used to take 6 painkiller pills everyday for
+                body aches. Now, she takes just 1.”
+              </motion.blockquote>
+              <motion.h2
+                variants={coachNameVariants}
+                className="font-bold uppercase text-center text-xs mt-3">
+                Jason Tan,
+                <br />
+                Care corner at Woodsquare
+              </motion.h2>
+              <motion.div
+                variants={coachImageVariants}
+                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                <Image
+                  loading="eager"
+                  src={Coach1}
+                  alt="Coach Jason Tan"
+                  sizes="(min-width: 768px) 360px, 220px"
+                />
+              </motion.div>
+            </CarouselCard>
+            <CarouselCard>
+              <motion.blockquote
+                variants={blockQuoteVariants}
+                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “Many seniors worry about getting injured. That’s why we are
+                here to guide them on the correct techniques.”
+              </motion.blockquote>
+              <motion.h2
+                variants={coachNameVariants}
+                className="font-bold uppercase text-center text-xs mt-3">
+                Looi Yuan Hui,
+                <br />
+                Bishan Community Clubb
+              </motion.h2>
+              <motion.div
+                variants={coachImageVariants}
+                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                <Image
+                  loading="eager"
+                  src={Coach2}
+                  alt="Coach Looi Yuan Hui"
+                  sizes="(min-width: 768px) 360px, 220px"
+                />
+              </motion.div>
+            </CarouselCard>
+            <CarouselCard>
+              <motion.blockquote
+                variants={blockQuoteVariants}
+                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “Improved fitness created new possibilities for many seniors.
+                Some picked up a new sport or rekindled the love of a sport they
+                in their younger days, making new friends as a result.”
+              </motion.blockquote>
+              <motion.h2
+                variants={coachNameVariants}
+                className="font-bold uppercase text-center text-xs mt-3">
+                Andrew Yeo,
+                <br />
+                Peacehaven Bedok Arena
+              </motion.h2>
+              <motion.div
+                variants={coachImageVariants}
+                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                <Image
+                  loading="eager"
+                  src={Coach3}
+                  alt="Coach Andrew Yeo"
+                  sizes="(min-width: 768px) 360px, 220px"
+                />
+              </motion.div>
+            </CarouselCard>
+            <CarouselCard>
+              <motion.blockquote
+                variants={blockQuoteVariants}
+                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “Exercise helps reduce challenging behaviours from seniors with
+                dementia.”
+              </motion.blockquote>
+              <motion.h2
+                variants={coachNameVariants}
+                className="font-bold uppercase text-center text-xs mt-3">
+                Joseph Chan
+                <br />
+                Bishan Community Club
+              </motion.h2>
+              <motion.div
+                variants={coachImageVariants}
+                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                <Image
+                  loading="eager"
+                  src={Coach4}
+                  alt="Coach Joseph Chan"
+                  sizes="(min-width: 768px) 360px, 220px"
+                />
+              </motion.div>
+            </CarouselCard>
+          </Carousel>
+        </div>
       </section>
     </main>
   );

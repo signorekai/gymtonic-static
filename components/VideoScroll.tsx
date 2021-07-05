@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
+import { ThemeContext, ThemeContextType } from 'pages/_app';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';
 
@@ -101,8 +101,8 @@ export default function VideoScroller({
 
   const thenRef = useRef(window.performance.now());
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
+  const { setShowLoader }: ThemeContextType =
+    useContext<ThemeContextType>(ThemeContext);
 
   const [showReminder, setShowReminder] = useState(true);
   const [isDragable, setIsDragable] = useState(false);

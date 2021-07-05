@@ -13,16 +13,19 @@ import 'normalize.css/normalize.css';
 import 'scss/main.scss';
 import Loader from 'components/Loader';
 import { useRouter } from 'next/router';
+import MobileNav from 'components/MobileNav';
 
-export interface LoaderContextType {
+export interface ThemeContextType {
   // assetsToLoad: Array<HTMLElement>;
   // setAssetsToLoad: (value: any) => void;
   // addAssetsToLoad: (value: any) => void;
   showLoader: boolean;
   setShowLoader: Dispatch<SetStateAction<boolean>>;
+  showMobileNav: boolean;
+  setShowMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const LoaderContext = createContext<any>(null);
+export const ThemeContext = createContext<any>(null);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App({
@@ -31,6 +34,7 @@ export default function App({
 }: AppContext & AppInitialProps) {
   const isTransitioning = useRef(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const router = useRouter();
 
   const handleStart = (url: string) => {
@@ -70,11 +74,16 @@ export default function App({
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
-      <LoaderContext.Provider
-        value={{ showLoader, setShowLoader: handleSetShowLoader }}>
+      <ThemeContext.Provider
+        value={{
+          showLoader,
+          setShowLoader: handleSetShowLoader,
+          showMobileNav,
+          setShowMobileNav,
+        }}>
         <Loader showLoader={showLoader} />
         <Component {...pageProps} />
-      </LoaderContext.Provider>
+      </ThemeContext.Provider>
     </HeadlessProvider>
   );
 }

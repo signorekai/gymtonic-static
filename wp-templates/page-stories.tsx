@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { getNextStaticProps } from '@wpengine/headless/next';
 import withLayout, { WithLayoutProps } from 'components/Layout';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
+import { ThemeContext, ThemeContextType } from 'pages/_app';
 import { gql, useQuery } from '@apollo/client';
 import { GetStaticPropsContext } from 'next';
 import { getApolloClient } from '@wpengine/headless';
@@ -9,9 +9,6 @@ import Bubble, { Thumbnail } from 'components/Bubble';
 import StoryCard from 'components/StoryCard';
 import { useRouter } from 'next/router';
 import { find } from 'lodash';
-
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-// const useLoaderContext = (): LoaderContextType => useContext(LoaderContext);
 
 const storiesQuery = gql`
   {
@@ -87,8 +84,8 @@ const Stories: React.FunctionComponent<WithLayoutProps> = ({
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
+  const { setShowLoader }: ThemeContextType =
+    useContext<ThemeContextType>(ThemeContext);
   const router = useRouter();
   const path = useRef<string>(router.asPath);
 
