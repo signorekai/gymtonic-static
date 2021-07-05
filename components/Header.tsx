@@ -17,9 +17,10 @@ const Logo = ({ className = '' }: { className?: string }) => (
     <div
       className={`hover:cursor-pointer pointer-events-auto ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
       <Image
+        loading="eager"
         src={logo}
         alt=""
-        quality={90}
+        quality={100}
         layout="fill"
         sizes="(min-width: 768px) 105px, 80px"
         objectFit="contain"
