@@ -113,10 +113,10 @@ const Page: React.FunctionComponent<any> = ({
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedHandler = useCallback(debounce(handleScroll, 100), [
-    parallaxIndex,
-    parallaxEffectRef,
-  ]);
+  const debouncedHandler = useCallback(
+    debounce(handleScroll, 100, { leading: true, trailing: false }),
+    [parallaxIndex, parallaxEffectRef],
+  );
 
   const rightParallaxVariants: Variants = {
     hidden: { opacity: 1 },
@@ -136,7 +136,7 @@ const Page: React.FunctionComponent<any> = ({
         // delayChildren:
         //   Math.abs(parallaxEffectRef.current.previousIndex - parallaxIndex) *
         //   0.3,
-        duration: Math.abs(custom.previousIndex - custom.parallaxIndex) * 0.3,
+        duration: Math.abs(custom.previousIndex - custom.parallaxIndex) * 0.1,
         // duration: 0,
       },
     }),
@@ -205,9 +205,8 @@ const Page: React.FunctionComponent<any> = ({
                     duration:
                       Math.abs(
                         parallaxEffectRef.current.previousIndex - parallaxIndex,
-                      ) * 0.25,
+                      ) * 0.1,
                     damping: 15,
-                    // duration: 0,
                   },
                 }}
                 className="flex flex-col w-full h-screen-3 lg:h-screen-6 absolute z-20 top-0">
