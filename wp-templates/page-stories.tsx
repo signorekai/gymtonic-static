@@ -79,7 +79,7 @@ interface StoriesData {
   };
 }
 
-const Page: React.FunctionComponent<WithLayoutProps> = ({
+const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);

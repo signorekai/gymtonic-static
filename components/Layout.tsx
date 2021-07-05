@@ -16,14 +16,12 @@ export interface WithLayoutProps {
   setShowLoader: (arg0: boolean) => void;
 }
 
-export default function withLayout(
-  Component: React.ComponentType<any & WithLayoutProps & WithMobileNavProps>,
-): React.ComponentClass<any> {
-  return class extends React.Component<
-    WithLayoutProps & WithMobileNavProps,
-    LayoutState
-  > {
-    constructor(props: WithLayoutProps & WithMobileNavProps) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export default function withLayout<T extends React.Component>(
+  Component: React.ComponentType<T>,
+): React.ComponentClass<T & WithLayoutProps> {
+  return class extends React.Component<T & WithLayoutProps, LayoutState> {
+    constructor(props: WithLayoutProps & T) {
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setShowLoader = this.setShowLoader.bind(this);
@@ -60,12 +58,11 @@ export default function withLayout(
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
       const { headerRef, showLoader, scrolledHeader } = this.state;
-      const { setShowMobileNav } = this.props;
 
       return (
         <div className="font-sans antialiased border-box">
           <Header
-            setShowMobileNav={setShowMobileNav}
+            {...this.props}
             headerRef={headerRef}
             scrolledHeader={scrolledHeader}
           />

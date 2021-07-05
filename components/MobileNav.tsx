@@ -70,11 +70,11 @@ interface MobileNavState {
   showMobileNav: boolean;
 }
 
-export default function withMobileNav(
-  Component: React.ComponentType<WithMobileNavProps>,
-): React.ComponentClass<any & WithMobileNavProps> {
-  return class extends React.Component<WithMobileNavProps, MobileNavState> {
-    constructor(props: WithMobileNavProps) {
+export default function withMobileNav<T extends React.Component>(
+  Component: React.ComponentType<T>,
+): React.ComponentClass<T & WithMobileNavProps> {
+  return class extends React.Component<T & WithMobileNavProps, MobileNavState> {
+    constructor(props: T & WithMobileNavProps) {
       super(props);
       this.setShowMobileNav = this.setShowMobileNav.bind(this);
 
@@ -98,4 +98,3 @@ export default function withMobileNav(
     }
   };
 }
-

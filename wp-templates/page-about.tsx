@@ -8,7 +8,6 @@ import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
-  setShowMobileNav,
 }: WithMobileNavProps & WithLayoutProps) => {
   const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 

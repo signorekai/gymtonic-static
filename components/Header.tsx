@@ -35,7 +35,7 @@ interface Props {
   intersectionRatio?: number;
   rootMargin?: string;
   scrolledHeader: boolean;
-  setShowMobileNav(arg0: boolean): void;
+  setShowMobileNav?(arg0: boolean): void;
 }
 
 function Header({

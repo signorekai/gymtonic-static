@@ -110,7 +110,7 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
   );
 };
 
-const Page: React.FunctionComponent<WithLayoutProps> = ({
+const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
