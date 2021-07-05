@@ -3,8 +3,14 @@ import withLayout, { WithLayoutProps } from 'components/Layout';
 import MobileAboutHeader from 'components/MobileAboutHeader';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
 import React, { useEffect, useContext } from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-const Simple: React.FunctionComponent<WithLayoutProps> = ({ setScrolledHeader }: WithLayoutProps) => {
+import ScreenOnRed from 'assets/images/screen-on-red.png';
+
+const Simple: React.FunctionComponent<WithLayoutProps> = ({
+  setScrolledHeader,
+}: WithLayoutProps) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
   useEffect(() => {
@@ -18,9 +24,20 @@ const Simple: React.FunctionComponent<WithLayoutProps> = ({ setScrolledHeader }:
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky={false} />
       <section className="lg:flex lg:min-h-screen flex-col justify-center order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white flex-1 relative z-20 lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-0">
-        <h1 className="text-3xl md:text-5xl leading-none text-center font-black mt-10">
+        <motion.h1
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-3xl md:text-5xl leading-none text-center font-black mt-10 lg:mt-0 mb-32">
           It won’t be difficult, just trust us :)
-        </h1>
+        </motion.h1>
+        <div className="w-2/3 md:w-1/2 absolute bottom-0 left-0">
+          <Image
+            src={ScreenOnRed}
+            sizes="(min-width: 768px) 360px, 240px"
+            quality={100}
+            alt=""
+          />
+        </div>
       </section>
     </main>
   );

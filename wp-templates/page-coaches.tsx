@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
 
 import withLayout, { WithLayoutProps } from 'components/Layout';
@@ -15,27 +14,7 @@ import { getNextStaticProps } from '@wpengine/headless/next';
 
 import ArmOnRed from 'assets/images/arm-on-red.png';
 import DownloadBtn from 'assets/images/download.png';
-
-const query = gql`
-  {
-    researchPapers(where: { orderby: { field: MENU_ORDER, order: ASC } }) {
-      edges {
-        node {
-          id
-          title
-          researchPaper {
-            researchOrganisation
-            typeOfLink
-            url
-            file {
-              mediaItemUrl
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import Carousel, { CarouselCard } from 'components/Carousel';
 
 interface ResearchPaperFields {
   typeOfLink: 'external_link' | 'pdf';
@@ -112,8 +91,6 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
-  const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
-  const researchPapers = data?.researchPapers.edges;
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
@@ -123,67 +100,49 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const h4Classes = 'text-lg md:text-2xl mt-5';
+
   return (
     <main className="flex flex-col lg:flex-row items-start relative">
       <AboutCard hideOnMobile />
       <MobileAboutHeader />
-      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white lg:min-h-screen relative z-20 lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-22">
-        <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
-          <Image
-            src={ArmOnRed}
-            sizes="(min-width: 768px) 260px, 140px"
-            quality={100}
-            alt=""
-          />
+      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white lg:min-h-screen relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22">
+        <div className="px-4 md:px-16 ">
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
+            Coaches
+          </motion.h2>
+          <motion.h4
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+            className={h4Classes}>
+            They’re exercise trainers, physiotherapists and occupational
+            therapists and fitness instructors trained overseas.
+          </motion.h4>
+          <motion.h4
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+            className={h4Classes}>
+            While they are professionals, the uncles and aunties at our gyms
+            treat them like their own children: Their training sessions are
+            filled with encouragement and laughter.
+          </motion.h4>
         </div>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
-          As you get older, <br />
-          you <em>can</em> get stronger
-        </motion.h2>
-        <motion.h4
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-          className="text-lg md:text-2xl leading-tight mt-5 font-black pb-8 border-b-2 border-white">
-          Why bother? So you can continue to do the things you love – whether it
-          is working, hobbies, cooking, sports, taking care of your grandkids –
-          or simply living your life without relying on others.
-        </motion.h4>
         <motion.h5
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-          className="font-bold uppercase text-xs mt-3">
-          Research Papers
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
+          className="font-bold uppercase text-xs mt-8 text-center">
+          What they say
         </motion.h5>
-        <section className="flex flex-wrap flex-row mb-6">
-          {researchPapers?.map(({ node: researchPaper }, index: number) => (
-            <ResearchPaperCard
-              index={index}
-              key={researchPaper.id}
-              title={researchPaper.title}
-              type={researchPaper.researchPaper.typeOfLink}
-              organisation={researchPaper.researchPaper.researchOrganisation}
-              file={
-                researchPaper.researchPaper.file
-                  ? researchPaper.researchPaper.file.mediaItemUrl
-                  : null
-              }
-              url={researchPaper.researchPaper.url}
-            />
-          ))}
-        </section>
+        <Carousel>
+          <CarouselCard>test</CarouselCard>
+          <CarouselCard>test</CarouselCard>
+        </Carousel>
       </section>
     </main>
   );
 };
 
 export default withLayout(About);
-
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const client = getApolloClient(context);
-  await client.query({ query });
-  return getNextStaticProps(context);
-}

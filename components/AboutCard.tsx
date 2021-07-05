@@ -20,11 +20,11 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
       </h5>
       <h5 className="px-8 md:px-32 lg:px-20 xl:px-22 text-center text-2xl md:text-5xl leading-tight md:leading-none font-black">
         It is{' '}
-        <Link href="/about-proven" scroll={false}>
+        <Link href="/research" scroll={false}>
           <a className="about-link">proven</a>
         </Link>{' '}
         to help seniors get stronger even as they get older, through a{' '}
-        <Link href="/about-simple" scroll={false}>
+        <Link href="/its-simple" scroll={false}>
           <a className="about-link">simple</a>
         </Link>{' '}
         fitness plan,{' '}
@@ -32,7 +32,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           <a className="about-link">high-tech</a>
         </Link>{' '}
         gym equipment and coaches who{' '}
-        <Link href="/about-care" scroll={false}>
+        <Link href="/coaches" scroll={false}>
           <a className="about-link">care</a>
         </Link>
         .

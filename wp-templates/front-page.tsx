@@ -256,7 +256,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={2}
                   parallaxIndex={parallaxIndex}
                   paragraph="To continue doing the things you love, you have to stay physically strong."
-                  href="/about"
+                  href="/research"
                   link="Why Strength Training matters even more when you are old."
                 />
                 <RightParallaxCard
@@ -295,7 +295,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                   ownIndex={5}
                   parallaxIndex={parallaxIndex}
                   paragraph="Exercise trainers who will guide you every step of the way."
-                  href="/about"
+                  href="/coaches"
                   link="Meet the professionals"
                 />
               </motion.div>

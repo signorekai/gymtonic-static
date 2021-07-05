@@ -145,8 +145,8 @@ function Header({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerRef, selfRef]);
 
-  const aboutPages = ['/research', '/its-simple', '/coaches'];
   const isCurrent = (currentPath: string): boolean => {
+    const aboutPages = ['/research', '/its-simple', '/coaches'];
     return (
       currentPath === router.asPath ||
       ((currentPath === '/about' || currentPath === '/gymtonic/about') &&
