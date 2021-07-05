@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { getNextStaticProps } from '@wpengine/headless/next';
 import withLayout, { WithLayoutProps } from 'components/Layout';
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { gql, useQuery } from '@apollo/client';
 import { GetStaticPropsContext } from 'next';
 import { getApolloClient } from '@wpengine/headless';
@@ -84,8 +84,8 @@ const Stories: React.FunctionComponent<WithLayoutProps> = ({
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
 
-  const { setShowLoader }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
+
   const router = useRouter();
   const path = useRef<string>(router.asPath);
 

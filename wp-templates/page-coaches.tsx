@@ -8,7 +8,7 @@ import Carousel, { CarouselCard } from 'components/Carousel';
 
 import Image from 'next/image';
 
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 
 import Coach1 from 'assets/images/Coach-1.png';
 import Coach2 from 'assets/images/Coach-2.png';
@@ -18,8 +18,7 @@ import Coach4 from 'assets/images/Coach-4.png';
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
-  const { setShowLoader }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   useEffect(() => {
     setShowLoader(false);

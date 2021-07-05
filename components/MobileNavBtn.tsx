@@ -1,4 +1,7 @@
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import {
+  SetMobileNavContext,
+  SetMobileNavContextType,
+} from 'components/MobileNav';
 import React, { useContext, useEffect } from 'react';
 
 interface Props {
@@ -8,8 +11,8 @@ interface Props {
 const MobileNavBtn: React.FunctionComponent<Props> = ({
   barStyle = 'text-red',
 }: Props) => {
-  const { setShowMobileNav, showMobileNav }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowMobileNav =
+    useContext<SetMobileNavContextType>(SetMobileNavContext);
 
   const bar = `bg-current h-[2px] w-full mb-2 last:mb-0 ${barStyle}`;
 
@@ -18,7 +21,7 @@ const MobileNavBtn: React.FunctionComponent<Props> = ({
       type="button"
       className="w-7 lg:hidden"
       onClick={() => {
-        setShowMobileNav(!showMobileNav);
+        setShowMobileNav(true);
         console.log('hi');
       }}>
       <div className={bar} />

@@ -13,19 +13,20 @@ import 'normalize.css/normalize.css';
 import 'scss/main.scss';
 import Loader from 'components/Loader';
 import { useRouter } from 'next/router';
-import MobileNav from 'components/MobileNav';
+import MobileNav, { SetMobileNavContext } from 'components/MobileNav';
 
-export interface ThemeContextType {
-  // assetsToLoad: Array<HTMLElement>;
-  // setAssetsToLoad: (value: any) => void;
-  // addAssetsToLoad: (value: any) => void;
-  showLoader: boolean;
-  setShowLoader: Dispatch<SetStateAction<boolean>>;
-  showMobileNav: boolean;
-  setShowMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
-}
+// export interface LoaderContextType {
+//   // assetsToLoad: Array<HTMLElement>;
+//   // setAssetsToLoad: (value: any) => void;
+//   // addAssetsToLoad: (value: any) => void;
+//   showLoader: boolean;
+//   setShowLoader: React.Dispatch<React.SetStateAction<boolean>>;
+//   showMobileNav: boolean;
+//   setShowMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
+// }
 
-export const ThemeContext = createContext<any>(null);
+export type LoaderContextType = React.Dispatch<React.SetStateAction<boolean>>;
+export const LoaderContext = createContext<any>(null);
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function App({
@@ -75,17 +76,13 @@ export default function App({
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
-      <ThemeContext.Provider
-        value={{
-          showLoader,
-          setShowLoader: handleSetShowLoader,
-          showMobileNav,
-          setShowMobileNav,
-        }}>
-        <Loader showLoader={showLoader} />
-        <MobileNav />
-        <Component {...pageProps} />
-      </ThemeContext.Provider>
+      <Loader showLoader={showLoader} />
+      <MobileNav />
+      <LoaderContext.Provider value={handleSetShowLoader}>
+        <SetMobileNavContext.Provider value={setShowMobileNav}>
+          <Component {...pageProps} />
+        </SetMobileNavContext.Provider>
+      </LoaderContext.Provider>
     </HeadlessProvider>
   );
 }

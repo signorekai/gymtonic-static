@@ -36,7 +36,7 @@ const MobileAboutHeader = ({
 }): JSX.Element => {
   return (
     <section
-      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 py-8 mt-16 z-30 ${
+      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-16 pb-8 mt-8 z-10 ${
         isSticky ? 'sticky' : ''
       } top-0`}>
       <h1 className="text-2xl md:text-5xl leading-none text-red font-black text-center mb-6">

@@ -7,11 +7,12 @@ import { getApolloClient, getPosts } from '@wpengine/headless';
 import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 import debounce from 'lodash/debounce';
-
 import { useScroll } from 'lib/hooks';
+
 import VideoScroll from 'components/VideoScroll';
 import withLayout, { WithLayoutProps } from 'components/Layout';
 import RightParallaxCard from 'components/RightParallaxCard';
+import MobileNavBtn from 'components/MobileNavBtn';
 
 import Gym1 from 'assets/images/gym1.jpg';
 import Gym2 from 'assets/images/gym2.jpg';
@@ -155,6 +156,9 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
 
   return (
     <>
+      <div className="absolute top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
+        <MobileNavBtn barStyle="text-white md:text-red" />
+      </div>
       <VideoScroll
         totalFrames={69}
         videoDuration={3}
@@ -166,7 +170,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             animate={{ opacity: 1, translateY: 0 }}
             exit={{ opacity: 0, translateY: 30 }}
             transition={{ duration: 0.3, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="relative z-40 text-center text-red mx-8 pointer-events-none">
+            className="relative z-30 text-center text-red mx-8 pointer-events-none">
             <h1 className="h1 text-red">Gym Tonic</h1>
             <h4 className="text-2xl md:text-3xl font-black leading-none">
               Exercise as Medicine
@@ -177,10 +181,10 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
       <main className="mb-screen">
         <section
           ref={parallaxRef}
-          className="h-screen-5 lg:h-screen-4 relative z-30">
+          className="h-screen-5 lg:h-screen-4 relative z-20">
           <div className="sticky top-0 left-0 bg-red w-full h-screen flex flex-col lg:flex-row">
             <div className="flex-1 flex flex-col justify-center items-center relative overflow-hidden">
-              <h1 className="h1 relative z-40 text-red">Gym</h1>
+              <h1 className="h1 relative z-30 text-red">Gym</h1>
               <motion.div
                 initial={{ y: 0 }}
                 animate={{
@@ -199,7 +203,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
                     // duration: 0,
                   },
                 }}
-                className="flex flex-col w-full h-screen-3 lg:h-screen-6 absolute z-30 top-0">
+                className="flex flex-col w-full h-screen-3 lg:h-screen-6 absolute z-20 top-0">
                 <LeftCard src={Gym1} />
                 <LeftCard src={Gym2} />
                 <LeftCard src={Gym3} />
@@ -302,7 +306,7 @@ const FrontPage: React.FunctionComponent<WithLayoutProps> = ({
             </div>
           </div>
         </section>
-        <section className="fixed top-0 w-full h-screen border-red border-10 md:border-60 z-20 flex flex-col justify-center items-center">
+        <section className="fixed top-0 w-full h-screen border-red border-10 md:border-60 z-10 flex flex-col justify-center items-center">
           <h1 className="text-7xl md:text-9xl lg:text-11xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
             Mai tu liao!
           </h1>

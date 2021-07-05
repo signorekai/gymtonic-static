@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface CarouselProps {
   children: JSX.Element[];
@@ -17,8 +17,12 @@ export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
   currentIndex,
 }: CarouselCardProps) => {
   return (
-    <motion.article className="flex-1 h-full">
-      {index === currentIndex && children}
+    <motion.article
+      variants={{ show: { opacity: 1 }, hide: { opacity: 1 } }}
+      className="flex-1 h-full px-2 md:px-0">
+      <AnimatePresence exitBeforeEnter>
+        {index === currentIndex && children}
+      </AnimatePresence>
     </motion.article>
   );
 };
@@ -30,15 +34,12 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   const childrenWithProps = React.Children.map(children, (child, index) =>
     React.cloneElement(child, { index, currentIndex }),
   );
-
   const container = useRef<HTMLDivElement>(null);
 
   const goTo = (speed: number): void => {
     if (speed < 0) {
-      console.log(Math.max(currentIndex + speed, 0));
       setCurrentIndex(Math.max(currentIndex + speed, 0));
     } else {
-      console.log(Math.min(currentIndex + speed, children.length - 1));
       setCurrentIndex(Math.min(currentIndex + speed, children.length - 1));
     }
   };
@@ -48,7 +49,9 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
       <div className="flex flex-row items-start">
         <button
           type="button"
-          className="inline-block ml-9"
+          className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 ${
+            currentIndex === 0 ? 'opacity-50 hover:cursor-not-allowed' : ''
+          }`}
           onClick={() => {
             goTo(-1);
           }}>
@@ -80,21 +83,19 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
           <motion.div
             variants={{
               hide: {
-                opacity: 0,
-                x: container.current
-                  ? container.current.clientWidth * currentIndex * -1
-                  : 0,
+                x: `0%`,
               },
               show: {
-                opacity: 1,
-                x: container.current
-                  ? container.current.clientWidth * currentIndex * -1
-                  : 0,
+                x: `${(currentIndex * -100) / children.length}%`,
+                transition: {
+                  duration: 0.2,
+                },
               },
             }}
             initial="hide"
             animate="show"
-            className="flex flex-row flex-wrap"
+            exit="hide"
+            className="flex flex-row flex-wrap md:px-0"
             style={{
               width: `${children.length * 100}%`,
             }}>
@@ -103,7 +104,11 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         </div>
         <button
           type="button"
-          className="inline-block mr-9"
+          className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
+            currentIndex === children.length - 1
+              ? 'opacity-50 hover:cursor-not-allowed'
+              : ''
+          }`}
           onClick={() => {
             goTo(1);
           }}>

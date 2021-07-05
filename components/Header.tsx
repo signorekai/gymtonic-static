@@ -10,7 +10,7 @@ import Image from 'next/image';
 // import image assets
 import logo from 'assets/images/logo.png';
 import { menuQuery, MenuData } from 'pages/[[...page]]';
-import MobileNav from './MobileNav';
+import MobileNavBtn from './MobileNavBtn';
 
 const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
@@ -119,7 +119,7 @@ function Header({
       <WPHead />
       {!scrolled && (
         <header
-          className="absolute top-0 l-0 w-full z-40 text-white"
+          className="absolute top-0 l-0 w-full z-30 text-white"
           ref={selfRef}>
           <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6 pointer-events-none">
             <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
@@ -154,7 +154,7 @@ function Header({
             initial={{ translateY: '-100%' }}
             animate={{ translateY: 0 }}
             transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
+            className="fixed top-0 l-0 w-full z-30 text-white pointer-events-none">
             <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">
@@ -182,6 +182,9 @@ function Header({
                   <li className="inline-block pl-4" />
                 )}
               </ul>
+              <div className="absolute pointer-events-auto top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
+                <MobileNavBtn barStyle="text-white md:text-red" />
+              </div>
             </div>
           </motion.header>
         )}

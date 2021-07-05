@@ -6,7 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';
 
@@ -101,8 +101,7 @@ export default function VideoScroller({
 
   const thenRef = useRef(window.performance.now());
 
-  const { setShowLoader }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   const [showReminder, setShowReminder] = useState(true);
   const [isDragable, setIsDragable] = useState(false);
@@ -291,8 +290,8 @@ export default function VideoScroller({
     <section
       className={
         window.innerWidth < breakpoint
-          ? 'h-screen relative z-30'
-          : 'h-[250vh] relative z-30'
+          ? 'h-screen relative z-20'
+          : 'h-[250vh] relative z-20'
       }
       ref={scrollerRef}>
       <div
@@ -310,7 +309,7 @@ export default function VideoScroller({
                 ease: [0.175, 0.85, 0.42, 0.96],
                 when: 'beforeChildren',
               }}
-              className="xl:hidden text-sm absolute z-40 bottom-0 p-3 text-white">
+              className="xl:hidden text-sm absolute z-30 bottom-0 p-3 text-white">
               <motion.div
                 className="w-full flex flex-col items-center"
                 initial={{ translateY: 0 }}
@@ -334,7 +333,7 @@ export default function VideoScroller({
           ref={canvasRef}
           width={window.innerWidth - borderWidth * 2}
           height={window.innerHeight - borderWidth * 2}
-          className="h-full absolute top-0 left-0 z-30"
+          className="h-full absolute top-0 left-0 z-20"
         />
         <img
           ref={frame0Ref}

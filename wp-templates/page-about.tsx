@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import withLayout, { WithLayoutProps } from 'components/Layout';
 
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
 
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
-  const { setShowLoader }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   useEffect(() => {
     setShowLoader(false);

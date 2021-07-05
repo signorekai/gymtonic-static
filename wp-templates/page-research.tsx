@@ -10,7 +10,7 @@ import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { ThemeContext, ThemeContextType } from 'pages/_app';
+import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { getNextStaticProps } from '@wpengine/headless/next';
 
 import ArmOnRed from 'assets/images/arm-on-red.png';
@@ -115,8 +115,8 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
 
-  const { setShowLoader }: ThemeContextType =
-    useContext<ThemeContextType>(ThemeContext);
+  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
+
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);
