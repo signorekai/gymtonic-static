@@ -122,7 +122,6 @@ export default function VideoScroller({
     }
     if (canvasRef.current) fitImageOn(canvasRef.current, videoFrames[0]);
 
-    console.log('checking length of unloaded frames');
     if (videoFrames.filter((img) => !img.complete).length > 0) {
       void Promise.all(
         videoFrames
@@ -136,17 +135,13 @@ export default function VideoScroller({
               }),
           ),
       ).then(() => {
-        console.log('all loaded');
         setShowLoader(false);
       });
     } else {
-      console.log('length of unloaded frames = 0');
       setShowLoader(false);
     }
 
     const handleScroll = () => {
-      // console.log('handling scroll and rendering');
-
       if (window.pageYOffset > 1) {
         setShowReminder(false);
       }
