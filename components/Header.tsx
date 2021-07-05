@@ -1,6 +1,6 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { WPHead } from '@wpengine/headless/next';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -8,54 +8,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 // import image assets
-import logo from '../assets/images/logo.png';
-
-interface MenuData {
-  // eslint-disable-next-line react/no-unused-prop-types
-  map(
-    arg0: ({ node }: MenuData, index: number) => JSX.Element,
-  ):
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | React.ReactNodeArray
-    | React.ReactPortal
-    | null
-    | undefined;
-  // eslint-disable-next-line react/no-unused-prop-types
-  length: number;
-  // eslint-disable-next-line react/no-unused-prop-types
-  node: {
-    cssClasses: string;
-    order: number;
-    url: string;
-    label: string;
-    path: string;
-    id: string;
-  };
-}
-
-const menuQuery = gql`
-  {
-    menu(id: "dGVybToy") {
-      id
-      menuItems {
-        edges {
-          cursor
-          node {
-            cssClasses
-            order
-            url
-            label
-            path
-            id
-          }
-        }
-      }
-    }
-  }
-`;
+import logo from 'assets/images/logo.png';
+import { menuQuery, MenuData } from 'pages/[[...page]]';
+import MobileNav from './MobileNav';
 
 const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
