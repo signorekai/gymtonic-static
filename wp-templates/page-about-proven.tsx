@@ -82,18 +82,18 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
     <motion.article
       custom={{ index }}
       variants={{
-        exit: { y: -20, opacity: 0 },
+        exit: { x: -20, opacity: 0 },
         enter: (custom: { index: number }) => ({
-          y: 0,
+          x: 0,
           opacity: 1,
-          transition: { delay: custom.index * 0.05 },
+          transition: { delay: custom.index * 0.08 + 0.3 },
         }),
       }}
       initial="exit"
       animate="enter"
       className="w-full md:w-1/3 mb-3 group">
       <Link href={link}>
-        <a>
+        <a target="_blank">
           <h2 className="group-hover:opacity-90 transition-opacity font-bold uppercase text-xxs md:text-xs mt-3 md:max-w-5/6">
             {organisation}
           </h2>
@@ -137,16 +137,27 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
             alt=""
           />
         </div>
-        <h2 className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
           As you get older, <br />
           you <em>can</em> get stronger
-        </h2>
-        <h4 className="text-lg md:text-2xl leading-tight mt-5 font-black pb-8 border-b-2 border-white">
+        </motion.h2>
+        <motion.h4
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+          className="text-lg md:text-2xl leading-tight mt-5 font-black pb-8 border-b-2 border-white">
           Why bother? So you can continue to do the things you love – whether it
           is working, hobbies, cooking, sports, taking care of your grandkids –
           or simply living your life without relying on others.
-        </h4>
-        <h1 className="font-bold uppercase text-xs mt-3">Research Papers</h1>
+        </motion.h4>
+        <motion.h5
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
+          className="font-bold uppercase text-xs mt-3">
+          Research Papers
+        </motion.h5>
         <section className="flex flex-wrap flex-row mb-6">
           {researchPapers?.map(({ node: researchPaper }, index: number) => (
             <ResearchPaperCard
