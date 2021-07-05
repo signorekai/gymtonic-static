@@ -141,7 +141,7 @@ const Stories: React.FunctionComponent<WithLayoutProps> = ({
         <h1
           className={`page-title ${
             expanded ? 'text-white' : 'text-red'
-          } relative z-20 pt-24 md:pt-14 pb-2`}>
+          } relative z-20 pt-4 md:pt-4 pb-2`}>
           Stories
         </h1>
       </header>

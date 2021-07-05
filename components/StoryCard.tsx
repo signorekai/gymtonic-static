@@ -55,7 +55,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
     <article
       className={`w-full ${
         isExpanded ? 'lg:w-7/10 transition-all duration-200' : 'lg:w-1/2'
-      } order-1 lg:order-2 bg-red text-white lg:h-screen lg:sticky top-0 pt-34 lg:pt-24 px-4 md:px-14 z-20`}>
+      } order-1 lg:order-2 bg-red text-white lg:h-screen lg:sticky top-0 pt-36 lg:pt-24 px-4 md:px-14 z-20`}>
       <Head>
         <title>{title} - GymTonic</title>
       </Head>
