@@ -112,12 +112,11 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
 const About: React.FunctionComponent<WithLayoutProps> = ({
   setScrolledHeader,
 }: WithLayoutProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
-
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { setShowLoader }: LoaderContextType = useContext(LoaderContext);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);
@@ -125,7 +124,7 @@ const About: React.FunctionComponent<WithLayoutProps> = ({
   }, []);
 
   return (
-    <main className="flex flex-col lg:flex-row relative items-start relative">
+    <main className="flex flex-col lg:flex-row items-start relative">
       <AboutCard hideOnMobile />
       <MobileAboutHeader />
       <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white lg:min-h-screen relative z-20 lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-22">
