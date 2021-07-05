@@ -66,6 +66,7 @@ export const SetMobileNavContext = createContext<any>(null);
 export interface WithMobileNavProps {
   setShowMobileNav: (arg0: boolean) => void;
 }
+
 interface MobileNavState {
   showMobileNav: boolean;
 }
@@ -77,7 +78,6 @@ export default function withMobileNav<T extends React.Component>(
     constructor(props: T & WithMobileNavProps) {
       super(props);
       this.setShowMobileNav = this.setShowMobileNav.bind(this);
-
       this.state = {
         showMobileNav: false,
       };
@@ -91,7 +91,7 @@ export default function withMobileNav<T extends React.Component>(
       const { showMobileNav } = this.state;
       return (
         <>
-          <MobileNav showMobileNav={showMobileNav} />
+          <MobileNav {...this.props} showMobileNav={showMobileNav} />
           <Component {...this.props} setShowMobileNav={this.setShowMobileNav} />
         </>
       );

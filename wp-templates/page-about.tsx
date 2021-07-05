@@ -5,12 +5,12 @@ import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
 import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
+import withLoader from 'components/Loader';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
+  setShowLoader,
 }: WithMobileNavProps & WithLayoutProps) => {
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
-
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);
@@ -50,4 +50,4 @@ const Page: React.FunctionComponent<any> = ({
 />
 </div> */
 
-export default withMobileNav(withLayout(Page));
+export default withLoader(withMobileNav(withLayout(Page)));

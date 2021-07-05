@@ -8,11 +8,12 @@ import { motion } from 'framer-motion';
 
 import ScreenOnRed from 'assets/images/screen-on-red.png';
 import withMobileNav from 'components/MobileNav';
+import withLoader from 'components/Loader';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
+  setShowLoader,
 }: WithLayoutProps) => {
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true);
@@ -43,4 +44,4 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withMobileNav(withLayout(Page));
+export default withLoader(withMobileNav(withLayout(Page)));

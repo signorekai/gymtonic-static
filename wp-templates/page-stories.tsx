@@ -10,6 +10,7 @@ import StoryCard from 'components/StoryCard';
 import { useRouter } from 'next/router';
 import { find } from 'lodash';
 import withMobileNav from 'components/MobileNav';
+import withLoader from 'components/Loader';
 
 const storiesQuery = gql`
   {
@@ -81,11 +82,10 @@ interface StoriesData {
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
+  setShowLoader,
 }: WithLayoutProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
-
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   const router = useRouter();
   const path = useRef<string>(router.asPath);
@@ -195,4 +195,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context);
 }
 
-export default withMobileNav(withLayout(Page));
+export default withLoader(withMobileNav(withLayout(Page)));

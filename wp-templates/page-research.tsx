@@ -16,6 +16,7 @@ import { getNextStaticProps } from '@wpengine/headless/next';
 import ArmOnRed from 'assets/images/arm-on-red.png';
 import DownloadBtn from 'assets/images/download.png';
 import withMobileNav from 'components/MobileNav';
+import withLoader from 'components/Loader';
 
 const query = gql`
   {
@@ -112,11 +113,10 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
+  setShowLoader,
 }: WithLayoutProps) => {
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
-
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   useEffect(() => {
     setShowLoader(false);
@@ -180,7 +180,7 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withMobileNav(withLayout(Page));
+export default withLoader(withMobileNav(withLayout(Page)));
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getStaticProps(context: GetStaticPropsContext) {

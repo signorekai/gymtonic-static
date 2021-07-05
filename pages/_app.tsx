@@ -31,51 +31,10 @@ export default function App({
   Component,
   pageProps,
 }: AppContext & AppInitialProps) {
-  const isTransitioning = useRef(false);
-  const [showLoader, setShowLoader] = useState(true);
-  const router = useRouter();
-
-  const handleStart = (url: string) => {
-    // if (url.match(/about/).length === 0) {
-    console.log('>>> start routechange', url);
-    isTransitioning.current = true;
-    setShowLoader(true);
-    // }
-  };
-
-  const handleComplete = (url: string) => {
-    console.log('>>> complete routechange', url);
-    isTransitioning.current = false;
-    if (url !== '/') setShowLoader(false);
-  };
-
-  const handleSetShowLoader = (state: boolean) => {
-    console.log('calling', state, isTransitioning.current);
-    if (isTransitioning.current === false) {
-      setShowLoader(state);
-    }
-  };
-
-  useEffect(() => {
-    router.events.on('routeChangeStart', handleStart);
-    router.events.on('routeChangeComplete', handleComplete);
-    router.events.on('routeChangeError', handleComplete);
-
-    return () => {
-      router.events.off('routeChangeStart', handleStart);
-      router.events.off('routeChangeComplete', handleComplete);
-      router.events.off('routeChangeError', handleComplete);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <HeadlessProvider pageProps={pageProps}>
-      <Loader showLoader={showLoader} />
-      <LoaderContext.Provider value={handleSetShowLoader}>
-        <Component {...pageProps} />
-      </LoaderContext.Provider>
+      <Component {...pageProps} />
     </HeadlessProvider>
   );
 }

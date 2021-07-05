@@ -24,8 +24,8 @@ export default function withLayout<T extends React.Component>(
     constructor(props: WithLayoutProps & T) {
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
-      this.setShowLoader = this.setShowLoader.bind(this);
       this.setScrolledHeader = this.setScrolledHeader.bind(this);
+
       this.state = {
         headerRef: null,
         showLoader: true,
@@ -50,14 +50,11 @@ export default function withLayout<T extends React.Component>(
       this.setState({ headerRef });
     }
 
-    setShowLoader(showLoader: boolean) {
-      this.setState({ showLoader });
-    }
-
     // const [headerRef, setHeaderRef] =
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
       const { headerRef, showLoader, scrolledHeader } = this.state;
+      const { setShowLoader } = this.props;
 
       return (
         <div className="font-sans antialiased border-box">
@@ -71,7 +68,7 @@ export default function withLayout<T extends React.Component>(
             setScrolledHeader={this.setScrolledHeader}
             setHeaderRef={this.setHeaderRef}
             showLoader={showLoader}
-            setShowLoader={this.setShowLoader}
+            setShowLoader={setShowLoader}
           />
         </div>
       );

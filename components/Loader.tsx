@@ -1,30 +1,49 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useRouter, withRouter } from 'next/router';
 import Image from 'next/image';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { AnimationControls } from 'framer-motion/types/animation/types';
 
-import loading from '../assets/images/loading.gif';
+import loading from 'assets/images/loading.gif';
 
 const transition = { duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] };
 // export const LoaderContext = createContext<any>(null);
 
 interface Props {
   showLoader: boolean;
+  setShowLoader(arg0: boolean): void;
 }
 
-export default function Loader({ showLoader = true }: Props): JSX.Element {
+function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
   const router = useRouter();
   const animControls = useAnimation();
   const refShowLoader = useRef(false);
-  const [showLoaderState, setShowLoaderState] = useState(refShowLoader.current);
+
+  const handleStart = (url: string) => {
+    // if (url.match(/about/).length === 0) {
+    console.log('>>> start routechange', url);
+    setShowLoader(true);
+    // }
+  };
+
+  const handleComplete = (url: string) => {
+    console.log('>>> complete routechange', url);
+    if (url !== '/') setShowLoader(false);
+  };
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', handleStart);
+    router.events.on('routeChangeComplete', handleComplete);
+    router.events.on('routeChangeError', handleComplete);
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart);
+      router.events.off('routeChangeComplete', handleComplete);
+      router.events.off('routeChangeError', handleComplete);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     async function changeLoaderState() {
@@ -32,7 +51,7 @@ export default function Loader({ showLoader = true }: Props): JSX.Element {
         console.log('Show <motion.div>, initial opacity:', {
           opacity: refShowLoader.current ? 1 : 0,
         });
-        setShowLoaderState(showLoader);
+        setShowLoader(showLoader);
         refShowLoader.current = showLoader;
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         console.log(`animating loader to ${showLoader ? 1 : 0}`);
@@ -68,3 +87,47 @@ export default function Loader({ showLoader = true }: Props): JSX.Element {
     </AnimatePresence>
   );
 }
+
+export interface WithLoaderProps {
+  setShowLoader: (arg0: boolean) => void;
+  showLoader?: boolean;
+}
+interface LoaderState {
+  showLoader: boolean;
+}
+
+function withLoader<T extends React.Component>(
+  Component: React.ComponentType<T>,
+): React.ComponentClass<T & WithLoaderProps> {
+  return class extends React.Component<T & WithLoaderProps, LoaderState> {
+    constructor(props: T & WithLoaderProps) {
+      super(props);
+      this.setShowLoader = this.setShowLoader.bind(this);
+
+      this.state = {
+        showLoader: true,
+      };
+    }
+
+    setShowLoader(showLoader: boolean) {
+      console.log('CALLING', showLoader);
+      this.setState({ showLoader });
+    }
+
+    render() {
+      const { showLoader } = this.state;
+      return (
+        <>
+          <Loader showLoader={showLoader} setShowLoader={this.setShowLoader} />
+          <Component
+            {...this.props}
+            showLoader={showLoader}
+            setShowLoader={this.setShowLoader}
+          />
+        </>
+      );
+    }
+  };
+}
+
+export default withLoader;

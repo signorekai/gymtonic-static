@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { LoaderContext, LoaderContextType } from 'pages/_app';
+import { WithLoaderProps } from './Loader';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';
 
@@ -90,7 +91,8 @@ export default function VideoScroller({
   setHeaderRef,
   children,
   videoDuration,
-}: Props): JSX.Element {
+  setShowLoader,
+}: Props & WithLoaderProps): JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
@@ -100,8 +102,6 @@ export default function VideoScroller({
   const intervalAnimationDirection = useRef<'forward' | 'reverse'>('forward');
 
   const thenRef = useRef(window.performance.now());
-
-  const setShowLoader = useContext<LoaderContextType>(LoaderContext);
 
   const [showReminder, setShowReminder] = useState(true);
   const [isDragable, setIsDragable] = useState(false);
@@ -122,7 +122,7 @@ export default function VideoScroller({
     }
     if (canvasRef.current) fitImageOn(canvasRef.current, videoFrames[0]);
 
-    // console.log('checking length of unloaded frames');
+    console.log('checking length of unloaded frames');
     if (videoFrames.filter((img) => !img.complete).length > 0) {
       void Promise.all(
         videoFrames
@@ -136,11 +136,12 @@ export default function VideoScroller({
               }),
           ),
       ).then(() => {
+        console.log('all loaded');
         setShowLoader(false);
       });
     } else {
+      console.log('length of unloaded frames = 0');
       setShowLoader(false);
-      // console.log('length of unloaded frames = 0');
     }
 
     const handleScroll = () => {
