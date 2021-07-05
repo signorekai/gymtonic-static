@@ -14,19 +14,21 @@ import MobileNavBtn from 'components/MobileNavBtn';
 
 const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
-    <div
-      className={`hover:cursor-pointer pointer-events-auto ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
-      <Image
-        loading="eager"
-        src={logo}
-        alt=""
-        quality={100}
-        layout="fill"
-        sizes="(min-width: 768px) 105px, 80px"
-        objectFit="contain"
-        objectPosition="center center"
-      />
-    </div>
+    <a className="pointer-events-auto relative z-40">
+      <div
+        className={`hover:cursor-pointer pointer-events-auto ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
+        <Image
+          loading="eager"
+          src={logo}
+          alt=""
+          quality={100}
+          layout="fill"
+          sizes="(min-width: 768px) 105px, 80px"
+          objectFit="contain"
+          objectPosition="center center"
+        />
+      </div>
+    </a>
   </Link>
 );
 
@@ -121,7 +123,7 @@ function Header({
       <WPHead />
       {!scrolled && (
         <header
-          className="absolute top-0 l-0 w-full z-30 text-white"
+          className="absolute top-0 l-0 w-full z-40 text-white"
           ref={selfRef}>
           <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6 pointer-events-none">
             <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
@@ -156,7 +158,7 @@ function Header({
             initial={{ translateY: '-100%' }}
             animate={{ translateY: 0 }}
             transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="fixed top-0 l-0 w-full z-30 text-white pointer-events-none">
+            className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
             <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">

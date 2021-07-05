@@ -147,7 +147,7 @@ const Page: React.FunctionComponent<any> = ({
         className={`transition-all duration-200 order-2 lg:order-1 w-full lg:min-h-screen ${
           expanded ? 'lg:w-3/10' : 'lg:w-1/2'
         } pt-8 md:pt-14 lg:pt-14 text-center z-30`}>
-        <h1 className="page-title text-red relative hidden lg:block z-40 pt-24 md:pt-14">
+        <h1 className="page-title text-red relative hidden lg:block z-20 pt-24 md:pt-14">
           Stories
         </h1>
         <section
