@@ -4,6 +4,8 @@ import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { getApolloClient, getPosts } from '@wpengine/headless';
 import { AnimatePresence, motion } from 'framer-motion';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 
 import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
 import withLoader, { WithLoaderProps } from 'components/Loader';
@@ -163,39 +165,55 @@ const Page: React.FunctionComponent<any> = ({
   const [leftPosition, setLeftPosition] = useState('0%');
   const [rightPosition, setRightPosition] = useState('0%');
 
-  useEffect(() => {
-    const handleScroll = (evt?: Event) => {
-      let newLeftPosition = 0;
-      let newRightPosition = 0;
+  const handleScroll = () => {
+    let newLeftPosition = 0;
+    let newRightPosition = 0;
 
-      if (leftViewport.current && rightViewport.current) {
-        newLeftPosition = Math.min(
-          Math.max(
-            1 - scrollValues.scrollYProgress,
-            1 / leftViewport.current.children.length,
-          ),
-          1 - 1 / leftViewport.current.children.length,
-        );
+    if (leftViewport.current && rightViewport.current) {
+      newLeftPosition = Math.min(
+        Math.max(
+          1 - scrollValues.scrollYProgress,
+          1 / leftViewport.current.children.length,
+        ),
+        1 - 1 / leftViewport.current.children.length,
+      );
 
-        newRightPosition = Math.min(
-          Math.max(
-            scrollValues.scrollYProgress,
-            1 / rightViewport.current.children.length,
-          ),
-          1 - 1 / leftViewport.current.children.length,
-        );
-      }
-      setLeftPosition(`${newLeftPosition * -100}%`);
+      newRightPosition = Math.min(
+        Math.max(
+          scrollValues.scrollYProgress,
+          1 / rightViewport.current.children.length,
+        ),
+        1 - 1 / leftViewport.current.children.length,
+      );
+    }
+    setLeftPosition(`${newLeftPosition * -100}%`);
+    if (window?.innerWidth >= 1024) {
       setRightPosition(`${newRightPosition * -100}%`);
+    }
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedHandler = useCallback(
+    throttle(handleScroll, 100, { leading: false, trailing: true }),
+    [],
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) {
+        setRightPosition(`0%`);
+      }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    debouncedHandler();
+    window.addEventListener('scroll', debouncedHandler, { passive: true });
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', debouncedHandler);
     };
-  }, [scrollValues, setLeftPosition, setRightPosition]);
+  }, [debouncedHandler, setRightPosition]);
 
   return (
     <>
@@ -227,16 +245,20 @@ const Page: React.FunctionComponent<any> = ({
       </VideoScroll>
       <section
         ref={container}
-        className="w-full h-screen-6 relative z-20 mb-screen snap-container">
+        className="w-full lg:h-screen-6 lg:relative z-20 mb-screen">
         <div
           ref={viewport}
-          className="sticky top-0 left-0 w-full h-screen flex flex-col lg:flex-row">
-          <div className="flex-1 relative z-40 overflow-hidden bg-red">
+          className="lg:sticky top-0 left-0 w-full lg:h-screen flex flex-col lg:flex-row">
+          <div className="lg:flex-1 sticky top-0 md:relative z-40 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
             <motion.div
+              ref={leftViewport}
               variants={{
                 initial: { y: 0 },
                 animate: ({ position }: { position: string }) => ({
                   y: position,
+                  transition: {
+                    duration: 0,
+                  },
                 }),
                 exit: { opacity: 0 },
               }}
@@ -246,7 +268,6 @@ const Page: React.FunctionComponent<any> = ({
               custom={{
                 position: leftPosition,
               }}
-              ref={leftViewport}
               className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 relative">
               <LeftCard src={Gym1} />
               <LeftCard src={Gym2} />
@@ -256,12 +277,15 @@ const Page: React.FunctionComponent<any> = ({
               <LeftCard src={Gym6} />
             </motion.div>
           </div>
-          <div className="flex-1 relative z-30 overflow-hidden bg-red">
+          <div className="lg:flex-1 relative z-30 lg:overflow-hidden bg-red">
             <motion.div
               variants={{
                 initial: { y: 0 },
                 animate: ({ position }: { position: string }) => ({
                   y: position,
+                  transition: {
+                    duration: 0,
+                  },
                 }),
                 exit: { opacity: 0 },
               }}
@@ -324,12 +348,6 @@ const Page: React.FunctionComponent<any> = ({
             </motion.div>
           </div>
         </div>
-        <div className="h-screen snap-child" />
-        <div className="h-screen snap-child" />
-        <div className="h-screen snap-child" />
-        <div className="h-screen snap-child" />
-        <div className="h-screen snap-child" />
-        <div className="h-screen snap-child" />
       </section>
       <section className="fixed top-0 w-full h-screen border-red border-10 md:border-60 z-10 flex flex-col justify-center items-center">
         <h1 className="text-7xl md:text-9xl lg:text-11xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">

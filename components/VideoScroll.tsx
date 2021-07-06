@@ -286,8 +286,8 @@ export default function VideoScroller({
     <section
       className={
         window.innerWidth < breakpoint
-          ? 'h-screen relative z-20'
-          : 'h-[250vh] relative z-20'
+          ? 'h-screen relative z-20 snap-child'
+          : 'h-[250vh] relative z-20 snap-child'
       }
       ref={scrollerRef}>
       <div

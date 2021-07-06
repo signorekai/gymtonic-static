@@ -81,6 +81,10 @@
   @apply last:pr-0;
 }
 
+body {
+  scroll-snap-type: y proximity;
+}
+
 .snap-container {
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
@@ -88,5 +92,6 @@
 }
 
 .snap-child {
-  scroll-snap-align: start;
+  bottom: 0;
+  scroll-snap-align: end;
 }
