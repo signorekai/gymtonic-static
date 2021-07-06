@@ -58,6 +58,9 @@ module.exports = {
       'screen-6': 'calc(var(--vh) * 600)',
     }),
     extend: {
+      spacing: {
+        18: '4.5rem',
+      },
       zIndex: {
         60: '60',
         70: '70',
