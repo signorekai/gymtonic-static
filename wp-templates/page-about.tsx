@@ -50,4 +50,8 @@ const Page: React.FunctionComponent<any> = ({
 />
 </div> */
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withLoader(
+  withMobileNav(
+    withLayout(Page, { mobileNavBtnStyle: 'text-red md:text-white' }),
+  ),
+);

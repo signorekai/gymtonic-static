@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { find } from 'lodash';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
+import MobileNavBtn from 'components/MobileNavBtn';
 
 const storiesQuery = gql`
   {
@@ -83,6 +84,7 @@ interface StoriesData {
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
+  setShowMobileNav,
 }: WithLayoutProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
@@ -132,6 +134,12 @@ const Page: React.FunctionComponent<any> = ({
 
   return (
     <main className="flex flex-col lg:flex-row relative">
+      <div className="fixed pointer-events-auto top-6 md:top-12 leading-0 md:-translate-y-1/2 right-6 md:right-8 z-40">
+        <MobileNavBtn
+          setShowMobileNav={setShowMobileNav}
+          barStyle={expanded ? 'text-white' : 'text-red'}
+        />
+      </div>
       <header
         className={`fixed pointer-events-none top-0 w-full pt-18 text-center z-30 lg:hidden ${
           expanded ? 'bg-red' : 'bg-white'
@@ -195,4 +203,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context);
 }
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withLoader(
+  withMobileNav(withLayout(Page, { mobileNavBtnInHeader: false })),
+);
