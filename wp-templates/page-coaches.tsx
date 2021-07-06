@@ -8,8 +8,6 @@ import Carousel, { CarouselCard } from 'components/Carousel';
 
 import Image from 'next/image';
 
-import { LoaderContext, LoaderContextType } from 'pages/_app';
-
 import Coach1 from 'assets/images/Coach-1.png';
 import Coach2 from 'assets/images/Coach-2.png';
 import Coach3 from 'assets/images/Coach-3.png';
@@ -53,7 +51,7 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row items-start relative min-h-screen">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
-      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22 flex flex-col justify-end flex-1">
+      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22 flex flex-col justify-end flex-1 lg:min-h-screen">
         <div className="px-4 md:px-16 ">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
@@ -105,7 +103,7 @@ const Page: React.FunctionComponent<any> = ({
               </motion.h2>
               <motion.div
                 variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach1}
@@ -130,7 +128,7 @@ const Page: React.FunctionComponent<any> = ({
               </motion.h2>
               <motion.div
                 variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach2}
@@ -156,7 +154,7 @@ const Page: React.FunctionComponent<any> = ({
               </motion.h2>
               <motion.div
                 variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach3}
@@ -181,7 +179,7 @@ const Page: React.FunctionComponent<any> = ({
               </motion.h2>
               <motion.div
                 variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2">
+                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach4}
