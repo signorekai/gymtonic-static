@@ -42,14 +42,23 @@ export function useScroll(
           values.current.scrollY / (element.scrollHeight - window.innerHeight);
 
         if (options.canGoBeyondBoundary === false) {
-          if (values.current.scrollXProgress < 0)
-            values.current.scrollXProgress = 0;
-          if (values.current.scrollXProgress > 1)
-            values.current.scrollXProgress = 1;
-          if (values.current.scrollYProgress < 0)
-            values.current.scrollYProgress = 0;
-          if (values.current.scrollYProgress > 1)
-            values.current.scrollYProgress = 1;
+          values.current.scrollXProgress = Math.max(
+            0,
+            values.current.scrollXProgress,
+          );
+          values.current.scrollXProgress = Math.min(
+            1,
+            values.current.scrollXProgress,
+          );
+
+          values.current.scrollYProgress = Math.max(
+            0,
+            values.current.scrollYProgress,
+          );
+          values.current.scrollYProgress = Math.min(
+            1,
+            values.current.scrollYProgress,
+          );
         }
       }
     }
