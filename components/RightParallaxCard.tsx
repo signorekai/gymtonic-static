@@ -30,7 +30,7 @@ const RightParallaxCard = ({
       const observer = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          if (entry.intersectionRatio > 0.9) {
+          if (entry.intersectionRatio > 0.7) {
             setShow(true);
           }
         },
