@@ -1,64 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, Transition } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import LeftArrow from 'assets/images/left-arrow.png';
 
-interface TransitionProps {
-  previousIndex: number;
-  direction: 'up' | 'down';
-}
-
 const RightParallaxCard = ({
   className = 'bg-red text-white',
   headerTitle,
-  ownIndex,
-  parallaxIndex,
   videoSrc,
   videoClassName,
   paragraph,
   link,
   href,
-  custom,
 }: {
   className?: string;
   headerTitle: string;
-  ownIndex: number;
-  parallaxIndex: number;
   videoSrc: string;
   videoClassName: string;
   paragraph: string;
   link: string;
   href: string;
-  custom: TransitionProps;
 }): JSX.Element => {
   const [show, setShow] = useState(false);
+  const card = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setShow(parallaxIndex === ownIndex);
-  }, [ownIndex, parallaxIndex]);
+    if (card.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          if (entry.intersectionRatio > 0.9) {
+            setShow(true);
+          }
+        },
+        {
+          root: null,
+          threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+        },
+      );
 
-  const createShowVariant = (
-    otherProperties: Record<string, unknown>,
-    {
-      previousIndex,
-      delay = 0,
-      overWriteTransition = {},
-    }: TransitionProps & { delay: number; overWriteTransition?: Transition },
-  ) => ({
-    ...otherProperties,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    transition: {
-      type: 'spring',
-      delay: Math.abs(previousIndex - parallaxIndex) * 0.3 + delay,
-      ...overWriteTransition,
-    },
-  });
+      observer.observe(card.current);
+      const thisCard = card.current;
+      return () => {
+        observer.unobserve(thisCard);
+      };
+    }
+    return () => {};
+  }, [card]);
 
   return (
     <div
-      key={ownIndex}
+      ref={card}
       className={`text-center md:text-lg leading-tight md:leading-tight flex flex-col justify-center items-center w-full h-screen-1/2 lg:h-screen relative ${className}`}>
       <AnimatePresence exitBeforeEnter>
         {show && (
@@ -66,18 +59,17 @@ const RightParallaxCard = ({
             <div
               className={`relative flex flex-col justify-center items-center ${videoClassName}`}>
               <motion.h1
-                custom={custom}
                 variants={{
-                  show: (transitionProps) =>
-                    createShowVariant(
-                      {
-                        opacity: 1,
-                        y: '-50%',
-                      },
-                      transitionProps,
-                    ),
-                  hidden: {
+                  animate: {
+                    opacity: 1,
+                    y: '-50%',
+                  },
+                  exit: {
                     opacity: 0,
+                    y: '-20%',
+                  },
+                  initial: {
+                    opacity: 1,
                     y: '-20%',
                   },
                 }}
@@ -97,17 +89,16 @@ const RightParallaxCard = ({
               </video>
             </div>
             <motion.p
-              custom={custom}
               variants={{
-                show: (transitionProps) =>
-                  createShowVariant(
-                    {
-                      opacity: 1,
-                      y: 0,
-                    },
-                    { ...transitionProps, delay: 0.1 },
-                  ),
-                hidden: { opacity: 0, y: 30 },
+                animate: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    delay: 0.1,
+                  },
+                },
+                initial: { opacity: 0, y: 30 },
+                exit: { opacity: 0, y: 30 },
               }}
               className="px-4 md:px-0 md:w-7/12 mt-2 md:mt-4 text-sm md:text-lg md:leading-tight font-bold pb-4">
               {paragraph}
@@ -115,41 +106,29 @@ const RightParallaxCard = ({
             <div className="absolute flex flex-row items-start bottom-7 md:right-8 max-w-3/4 md:max-w-1/2 -translate-x-2 md:translate-x-0 md:text-right">
               <Link href={href} scroll={false} passHref>
                 <motion.a
-                  custom={custom}
                   variants={{
-                    show: (transitionProps) =>
-                      createShowVariant(
-                        {
-                          opacity: 1,
-                          x: 0,
-                        },
-                        {
-                          ...transitionProps,
-                          delay: 0.2,
-                          overWriteTransition: {
-                            when: 'beforeChildren',
-                            duration: 0.7,
-                          },
-                        },
-                      ),
-                    hidden: { opacity: 0, x: '40%' },
+                    animate: {
+                      opacity: 1,
+                      x: 0,
+                      transition: {
+                        delay: 0.2,
+                        when: 'beforeChildren',
+                        duration: 0.7,
+                      },
+                    },
+                    initial: { opacity: 0, x: '40%' },
+                    exit: { opacity: 0, x: '40%' },
                   }}
                   className="text-xs md:text-base leading-none group hover:cursor-pointer hover:mr-[-1px]">
                   <motion.div
-                    custom={custom}
                     variants={{
-                      show: (transitionProps) =>
-                        createShowVariant(
-                          {
-                            opacity: 1,
-                            x: 0,
-                          },
-                          {
-                            ...transitionProps,
-                            overWriteTransition: { delay: 0, duration: 0.2 },
-                          },
-                        ),
-                      hidden: { opacity: 0, x: '-100%' },
+                      animate: {
+                        opacity: 1,
+                        x: 0,
+                        transition: { delay: 0, duration: 0.2 },
+                      },
+                      initial: { opacity: 0, x: '-100%' },
+                      exit: { opacity: 0, x: '-100%' },
                       hover: { x: '-0.5rem' },
                     }}
                     className="mx-2 w-4 inline-block align-middle group-hover:!-translate-x-2 duration-100">
