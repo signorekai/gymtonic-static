@@ -37,6 +37,7 @@ interface Props {
   intersectionRatio?: number;
   rootMargin?: string;
   scrolledHeader: boolean;
+  noAnimation?: boolean;
   setShowMobileNav(arg0: boolean): void;
 }
 
@@ -45,6 +46,7 @@ function Header({
   intersectionRatio = 0,
   rootMargin = '0px 0px 0px 0px',
   scrolledHeader,
+  noAnimation = false,
   setShowMobileNav,
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
@@ -157,7 +159,10 @@ function Header({
           <motion.header
             initial={{ translateY: '-100%' }}
             animate={{ translateY: 0 }}
-            transition={{ duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] }}
+            transition={{
+              duration: noAnimation ? 0 : 0.35,
+              ease: [0.175, 0.85, 0.42, 0.96],
+            }}
             className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
             <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
               <Logo />
