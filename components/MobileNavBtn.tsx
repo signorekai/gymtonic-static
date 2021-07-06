@@ -17,7 +17,6 @@ const MobileNavBtn: React.FunctionComponent<Props & WithMobileNavProps> = ({
       className="w-7 lg:hidden"
       onClick={() => {
         setShowMobileNav(true);
-        console.log('hi');
       }}>
       <div className={bar} />
       <div className={bar} />
