@@ -16,6 +16,7 @@ export interface WithLayoutProps {
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
   setShowMobileNav: (arg0: boolean) => void;
+  appRef: React.RefObject<HTMLDivElement>;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,10 +34,13 @@ export default function withLayout<T extends React.Component>(
     ...options,
   };
   return class extends React.Component<T & WithLayoutProps, LayoutState> {
+    appRef: React.RefObject<HTMLDivElement>;
+
     constructor(props: WithLayoutProps & T) {
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setScrolledHeader = this.setScrolledHeader.bind(this);
+      this.appRef = React.createRef<HTMLDivElement>();
 
       this.state = {
         headerRef: null,
@@ -70,7 +74,10 @@ export default function withLayout<T extends React.Component>(
       const { setShowLoader, setShowMobileNav } = this.props;
 
       return (
-        <div className="font-sans antialiased border-box">
+        <div
+          id="appRef"
+          ref={this.appRef}
+          className="font-sans antialiased border-box">
           <Header
             {...this.props}
             mobileNavBtnInHeader={opts.mobileNavBtnInHeader}
@@ -82,6 +89,7 @@ export default function withLayout<T extends React.Component>(
           />
           <Component
             {...this.props}
+            appRef={this.appRef}
             setScrolledHeader={this.setScrolledHeader}
             setHeaderRef={this.setHeaderRef}
             showLoader={showLoader}
