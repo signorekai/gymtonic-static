@@ -16,7 +16,7 @@ const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
     <a className="pointer-events-auto relative z-40">
       <div
-        className={`hover:cursor-pointer pointer-events-auto ${className} relative w-20 h-20 md:w-[105px] md:h-[105px]`}>
+        className={`hover:cursor-pointer pointer-events-auto ${className} relative w-18 h-18 md:w-[105px] md:h-[105px]`}>
         <Image
           loading="eager"
           src={logo}
@@ -39,6 +39,8 @@ interface Props {
   scrolledHeader: boolean;
   noAnimation?: boolean;
   setShowMobileNav(arg0: boolean): void;
+  mobileNavBtnstyle: string;
+  mobileNavBtnInHeader: boolean;
 }
 
 function Header({
@@ -48,6 +50,8 @@ function Header({
   scrolledHeader,
   noAnimation = false,
   setShowMobileNav,
+  mobileNavBtnstyle,
+  mobileNavBtnInHeader,
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
@@ -191,12 +195,14 @@ function Header({
                   <li className="inline-block pl-4" />
                 )}
               </ul>
-              <div className="absolute pointer-events-auto top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
-                <MobileNavBtn
-                  setShowMobileNav={setShowMobileNav}
-                  barStyle="text-white md:text-red"
-                />
-              </div>
+              {mobileNavBtnInHeader && (
+                <div className="absolute pointer-events-auto top-6 leading-0 md:-translate-y-1/2 right-6 md:top-10 md:right-7 z-40">
+                  <MobileNavBtn
+                    setShowMobileNav={setShowMobileNav}
+                    barStyle={mobileNavBtnstyle}
+                  />
+                </div>
+              )}
             </div>
           </motion.header>
         )}

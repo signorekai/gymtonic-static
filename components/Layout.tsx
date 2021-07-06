@@ -21,7 +21,17 @@ export interface WithLayoutProps {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export default function withLayout<T extends React.Component>(
   Component: React.ComponentType<T>,
+  options?: {
+    mobileNavBtnStyle?: string;
+    mobileNavBtnInHeader?: boolean;
+  },
 ): React.ComponentClass<T & WithLayoutProps> {
+  // compiling opts
+  const opts = {
+    mobileNavBtnStyle: 'text-red',
+    mobileNavBtnInHeader: true,
+    ...options,
+  };
   return class extends React.Component<T & WithLayoutProps, LayoutState> {
     constructor(props: WithLayoutProps & T) {
       super(props);
@@ -63,6 +73,8 @@ export default function withLayout<T extends React.Component>(
         <div className="font-sans antialiased border-box">
           <Header
             {...this.props}
+            mobileNavBtnInHeader={opts.mobileNavBtnInHeader}
+            mobileNavBtnstyle={opts.mobileNavBtnStyle}
             noAnimation={noAnimation}
             setShowMobileNav={setShowMobileNav}
             headerRef={headerRef}
