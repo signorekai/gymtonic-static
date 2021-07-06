@@ -72,7 +72,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
-    }
+    };
   }, [slidesContainer]);
 
   const childrenWithProps = React.Children.map(children, (child, index) =>
