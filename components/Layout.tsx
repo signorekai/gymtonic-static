@@ -7,11 +7,12 @@ interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
   showLoader: boolean;
   scrolledHeader: boolean;
+  noAnimation: boolean;
 }
 
 export interface WithLayoutProps {
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
-  setScrolledHeader: (arg0: boolean) => void;
+  setScrolledHeader: (arg0: boolean, noAnimation?: boolean) => void;
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
   setShowMobileNav: (arg0: boolean) => void;
@@ -31,6 +32,7 @@ export default function withLayout<T extends React.Component>(
         headerRef: null,
         showLoader: true,
         scrolledHeader: false,
+        noAnimation: false,
       };
     }
 
@@ -43,8 +45,8 @@ export default function withLayout<T extends React.Component>(
       handleResize();
     }
 
-    setScrolledHeader(scrolledHeader: boolean) {
-      this.setState({ scrolledHeader });
+    setScrolledHeader(scrolledHeader: boolean, noAnimation = false) {
+      this.setState({ scrolledHeader, noAnimation });
     }
 
     setHeaderRef(headerRef: RefObject<HTMLElement>) {
@@ -54,13 +56,14 @@ export default function withLayout<T extends React.Component>(
     // const [headerRef, setHeaderRef] =
     //   useState<MutableRefObject<HTMLElement> | null>(null);
     render() {
-      const { headerRef, showLoader, scrolledHeader } = this.state;
+      const { headerRef, showLoader, scrolledHeader, noAnimation } = this.state;
       const { setShowLoader, setShowMobileNav } = this.props;
 
       return (
         <div className="font-sans antialiased border-box">
           <Header
             {...this.props}
+            noAnimation={noAnimation}
             setShowMobileNav={setShowMobileNav}
             headerRef={headerRef}
             scrolledHeader={scrolledHeader}
