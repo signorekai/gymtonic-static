@@ -293,7 +293,6 @@ export default function VideoScroller({
       <div
         ref={canvasContainerRef}
         className="sticky border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red">
-        {children}
         <AnimatePresence>
           {showReminder && (
             <motion.div
@@ -337,6 +336,7 @@ export default function VideoScroller({
           src={`${path}/frame-0.${ext}`}
           alt=""
         />
+        {children}
       </div>
     </section>
   );
