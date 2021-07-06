@@ -12,7 +12,6 @@ const AboutLink = ({
   const router = useRouter();
 
   const isCurrent = (linkHref: string): boolean => {
-    const aboutPages = ['research', 'its-simple', 'coaches'];
     const sanitizedCurrentPath =
       router.asPath.split('/')[router.asPath.split('/').length - 1];
     const sanitizedLinkHref =
@@ -36,8 +35,8 @@ const MobileAboutHeader = ({
 }): JSX.Element => {
   return (
     <section
-      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-16 pb-8 mt-8 z-10 ${
-        isSticky ? 'sticky' : ''
+      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-12 pb-4 mt-12 ${
+        isSticky ? 'sticky z-30' : 'z-10'
       } top-0`}>
       <h1 className="text-2xl md:text-5xl leading-none text-red font-black text-center mb-6">
         About
