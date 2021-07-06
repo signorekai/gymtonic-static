@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, PanInfo } from 'framer-motion';
+import { useScroll } from 'lib/hooks';
 
 interface CarouselProps {
   children: JSX.Element[];
+  isDraggable?: boolean;
 }
 
 interface CarouselCardProps {
@@ -29,21 +31,53 @@ export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
 
 const Carousel: React.FunctionComponent<CarouselProps> = ({
   children,
+  isDraggable = true,
 }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const childrenWithProps = React.Children.map(children, (child, index) =>
-    React.cloneElement(child, { index, currentIndex }),
-  );
+  const [slideWidth, setSlideWidth] = useState(0);
   const container = useRef<HTMLDivElement>(null);
+  const slidesContainer = useRef<HTMLDivElement>(null);
 
   const goTo = (speed: number): void => {
     if (speed < 0) {
       setCurrentIndex(Math.max(currentIndex + speed, 0));
-    } else {
+    } else if (speed > 0) {
       setCurrentIndex(Math.min(currentIndex + speed, children.length - 1));
     }
   };
 
+  const handleDrag = (
+    evt: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    // console.log(info);
+    // console.log(container.current?.clientWidth);
+    setTimeout(() => {
+      goTo(info.offset.x < 0 ? 1 : -1);
+    }, 200);
+  };
+
+  const handleResize = () => {
+    if (slidesContainer.current) {
+      setSlideWidth(slidesContainer.current.clientWidth);
+    }
+  };
+
+  useEffect(() => {
+    if (slidesContainer.current) {
+      setSlideWidth(slidesContainer.current.clientWidth);
+
+      window.addEventListener('resize', handleResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [slidesContainer]);
+
+  const childrenWithProps = React.Children.map(children, (child, index) =>
+    React.cloneElement(child, { index, currentIndex }),
+  );
   return (
     <div className="max-w-full h-auto overflow-hidden">
       <div className="flex flex-row items-start">
@@ -81,21 +115,35 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         </button>
         <div className="flex-1 overflow-hidden" ref={container}>
           <motion.div
+            ref={slidesContainer}
+            drag={isDraggable ? 'x' : false}
+            dragConstraints={container}
+            dragMomentum={false}
+            onDragEnd={handleDrag}
             variants={{
               hide: {
                 x: `0%`,
               },
-              show: {
-                x: `${(currentIndex * -100) / children.length}%`,
+              show: (custom: {
+                currentIndex: number;
+                childrenCount: number;
+                width: number;
+              }) => ({
+                x: (custom.currentIndex / custom.childrenCount) * -custom.width,
                 transition: {
                   duration: 0.2,
                 },
-              },
+              }),
+            }}
+            custom={{
+              currentIndex,
+              childrenCount: children.length,
+              width: slideWidth,
             }}
             initial="hide"
             animate="show"
             exit="hide"
-            className="flex flex-row flex-wrap md:px-0"
+            className="flex flex-row flex-wrap md:px-0 md:cursor-move"
             style={{
               width: `${children.length * 100}%`,
             }}>
