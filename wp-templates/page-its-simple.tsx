@@ -16,7 +16,7 @@ const Page: React.FunctionComponent<any> = ({
 }: WithLayoutProps) => {
   useEffect(() => {
     setShowLoader(false);
-    setScrolledHeader(true);
+    setScrolledHeader(true, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

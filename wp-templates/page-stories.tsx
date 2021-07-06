@@ -101,8 +101,8 @@ const Page: React.FunctionComponent<any> = ({
 
   useEffect(() => {
     setShowLoader(false);
-    setScrolledHeader(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setScrolledHeader(true, true);
+
     if (path.current !== '/stories') {
       const current = find(
         stories,
