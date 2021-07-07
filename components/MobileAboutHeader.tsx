@@ -44,7 +44,7 @@ const MobileAboutHeader = ({
       <h5 className="px-8 md:px-32 lg:px-20 xl:px-22 text-center text-lg md:text-2xl leading-tight md:leading-none font-black divide-solid divide-x-2">
         <AboutLink href="/research">proven</AboutLink>
         <AboutLink href="/its-simple">simple</AboutLink>
-        <AboutLink href="/about-high-tech">high-tech</AboutLink>
+        <AboutLink href="/technology">high-tech</AboutLink>
         <AboutLink href="/coaches">care</AboutLink>
       </h5>
     </section>

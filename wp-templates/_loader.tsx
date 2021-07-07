@@ -7,6 +7,7 @@ const templates: Templates<NextTemplate> = {
   'front-page': import('./front-page'),
   'page-about': import('./page-about'),
   'page-research': import('./page-research'),
+  'page-technology': import('./page-technology'),
   'page-its-simple': import('./page-its-simple'),
   'page-coaches': import('./page-coaches'),
   'page-stories': import('./page-stories'),

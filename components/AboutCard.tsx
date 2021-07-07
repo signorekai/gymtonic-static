@@ -28,7 +28,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           <a className="about-link">simple</a>
         </Link>{' '}
         fitness plan,{' '}
-        <Link href="/about-high-tech" scroll={false}>
+        <Link href="/technology" scroll={false}>
           <a className="about-link">high-tech</a>
         </Link>{' '}
         gym equipment and coaches who{' '}
