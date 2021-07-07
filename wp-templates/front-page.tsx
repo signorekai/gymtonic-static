@@ -263,11 +263,11 @@ const Page: React.FunctionComponent<any> = ({
       </VideoScroll>
       <section
         ref={container}
-        className="w-full h-screen-3 lg:h-screen-6 relative z-20 mb-screen">
+        className="w-full h-[300vh] lg:h-screen-6 relative z-20 mb-screen">
         <div
           ref={viewport}
-          className="sticky top-0 left-0 w-full h-screen flex flex-col lg:flex-row">
-          <div className="lg:flex-1 relative z-40 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
+          className="sticky top-0 left-0 w-full h-[100vh] flex flex-col lg:flex-row">
+          <div className="lg:flex-1 relative z-40 h-[50vh] lg:h-screen overflow-hidden bg-red">
             <motion.div
               id="left"
               ref={leftViewport}
@@ -290,9 +290,11 @@ const Page: React.FunctionComponent<any> = ({
               <LeftCard src={Gym5} />
               <LeftCard src={Gym6} />
             </motion.div>
-            <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-30 text-red text-center">Gym</h1>
+            <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-30 text-red text-center">
+              Gym
+            </h1>
           </div>
-          <div className="lg:flex-1 h-screen-1/2 lg:h-screen bottom-0 z-30 overflow-hidden bg-red">
+          <div className="lg:flex-1 h-[50vh] lg:h-screen bottom-0 z-30 overflow-hidden bg-red">
             <motion.div
               variants={{
                 initial: { opacity: 0 },
@@ -307,7 +309,7 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex-1 flex flex-col w-full h-screen-3 lg:h-screen-6 relative">
+              className="flex-1 flex flex-col w-full h-[300vh] lg:h-screen-6 relative">
               <RightParallaxCard
                 headerTitle="Ka-Ching!"
                 videoSrc="/videos/Thematic-2-KaChing.mp4"
