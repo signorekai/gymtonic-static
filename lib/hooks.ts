@@ -1,4 +1,4 @@
-import { RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 
 export function useScroll(
   ref: RefObject<HTMLDivElement>,

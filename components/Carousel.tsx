@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, PanInfo } from 'framer-motion';
-import { useScroll } from 'lib/hooks';
 
 interface CarouselProps {
   children: JSX.Element[];

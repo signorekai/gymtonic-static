@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { MutableRefObject, RefObject } from 'react';
+import React, { RefObject } from 'react';
 import Header from 'components/Header';
-import { WithMobileNavProps } from './MobileNav';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -64,7 +63,7 @@ export default function withLayout<T extends React.Component>(
     }
 
     // const [headerRef, setHeaderRef] =
-    //   useState<MutableRefObject<HTMLElement> | null>(null);
+    //   useState<RefObject<HTMLElement> | null>(null);
     render() {
       const { headerRef, showLoader, scrolledHeader, noAnimation } = this.state;
       const { setShowLoader, setShowMobileNav } = this.props;
