@@ -1,7 +1,7 @@
 import React from 'react';
 import { NextTemplateLoader } from '@wpengine/headless/next';
 
-import WPTemplates from '../../wp-templates/_loader';
+import WPTemplates from '../../wp-templates/_templates';
 
 /**
  * @todo make conditionalTags available

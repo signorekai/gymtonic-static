@@ -7,7 +7,7 @@ import {
 import { getApolloClient } from '@wpengine/headless';
 import { gql } from '@apollo/client';
 import { GetStaticPropsContext } from 'next';
-import WPTemplates from '../wp-templates/_loader';
+import WPTemplates from '../wp-templates/_templates';
 
 export const menuQuery = gql`
   {
