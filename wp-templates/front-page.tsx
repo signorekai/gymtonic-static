@@ -167,79 +167,71 @@ const Page: React.FunctionComponent<any> = ({
   const [leftPosition, setLeftPosition] = useState('0%');
   const [rightPosition, setRightPosition] = useState('0%');
 
-  const handleScroll = () => {
-    let newLeftPosition = 0;
-    let newRightPosition = 0;
-
-    if (leftViewport.current && rightViewport.current) {
-      // calculation for desktops
-      // if (window?.innerWidth >= breakpoint) {
-      //   newLeftPosition = Math.min(
-      //     Math.max(
-      //       1 - scrollValues.scrollYProgress,
-      //       1 / leftViewport.current.children.length,
-      //     ),
-      //     1 - 1 / leftViewport.current.children.length,
-      //   );
-      // } else {
-      //   console.log(scrollValues.scrollYProgress);
-      //   // calculation for mobile
-      //   newLeftPosition = Math.min(
-      //     Math.max(1 - scrollValues.scrollYProgress, 0),
-      //     1 - 1 / leftViewport.current.children.length,
-      //   );
-      // }
-      const leftValue =
-        scrollValues.scrollYProgress + 1 / leftViewport.current.children.length;
-
-      newLeftPosition = Math.min(
-        Math.max(1 - leftValue, 0),
-        1 - 1 / leftViewport.current.children.length,
-      );
-
-      newRightPosition = Math.min(
-        Math.max(scrollValues.scrollYProgress, 0),
-        1 - 1 / leftViewport.current.children.length,
-      );
-    }
-
-    if (leftViewport.current && rightViewport.current) {
-      leftViewport.current.style.transform = `translate3d(0, ${
-        newLeftPosition * -100
-      }%, 0)`;
-      rightViewport.current.style.transform = `translate3d(0, ${
-        newRightPosition * -100
-      }%, 0)`;
-    }
-
-    // setLeftPosition(`${newLeftPosition * -100}%`);
-    // setRightPosition(`${newRightPosition * -100}%`);
-    // if (window?.innerWidth >= breakpoint) {
-    // }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedHandler = useCallback(
-    throttle(handleScroll, 100, { leading: false, trailing: true }),
-    [],
-  );
-
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < breakpoint) {
-        setRightPosition(`0%`);
+      if (window.innerWidth < breakpoint && rightViewport.current) {
+        rightViewport.current.style.transform = `translate3d(0, 0, 0)`;
       }
     };
 
-    debouncedHandler();
-    window.addEventListener('scroll', debouncedHandler, { passive: true });
+    const handleScroll = () => {
+      let newLeftPosition = 0;
+      let newRightPosition = 0;
+
+      if (leftViewport.current && rightViewport.current) {
+        // calculation for desktops
+        // if (window?.innerWidth >= breakpoint) {
+        //   newLeftPosition = Math.min(
+        //     Math.max(
+        //       1 - scrollValues.scrollYProgress,
+        //       1 / leftViewport.current.children.length,
+        //     ),
+        //     1 - 1 / leftViewport.current.children.length,
+        //   );
+        // } else {
+        //   console.log(scrollValues.scrollYProgress);
+        //   // calculation for mobile
+        //   newLeftPosition = Math.min(
+        //     Math.max(1 - scrollValues.scrollYProgress, 0),
+        //     1 - 1 / leftViewport.current.children.length,
+        //   );
+        // }
+        const leftValue =
+          scrollValues.scrollYProgress +
+          1 / leftViewport.current.children.length;
+
+        newLeftPosition = Math.min(
+          Math.max(1 - leftValue, 0),
+          1 - 1 / leftViewport.current.children.length,
+        );
+
+        newRightPosition = Math.min(
+          Math.max(scrollValues.scrollYProgress, 0),
+          1 - 1 / leftViewport.current.children.length,
+        );
+      }
+
+      if (leftViewport.current && rightViewport.current) {
+        leftViewport.current.style.transform = `translate3d(0, ${
+          newLeftPosition * -100
+        }%, 0)`;
+        rightViewport.current.style.transform = `translate3d(0, ${
+          newRightPosition * -100
+        }%, 0)`;
+      }
+
+      requestAnimationFrame(handleScroll);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', debouncedHandler);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [debouncedHandler, setRightPosition]);
+  }, [scrollValues.scrollYProgress]);
 
   return (
     <>
