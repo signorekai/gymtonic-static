@@ -203,8 +203,17 @@ const Page: React.FunctionComponent<any> = ({
       );
     }
 
-    setLeftPosition(`${newLeftPosition * -100}%`);
-    setRightPosition(`${newRightPosition * -100}%`);
+    if (leftViewport.current && rightViewport.current) {
+      leftViewport.current.style.transform = `translate3d(0, ${
+        newLeftPosition * -100
+      }%, 0)`;
+      rightViewport.current.style.transform = `translate3d(0, ${
+        newRightPosition * -100
+      }%, 0)`;
+    }
+
+    // setLeftPosition(`${newLeftPosition * -100}%`);
+    // setRightPosition(`${newRightPosition * -100}%`);
     // if (window?.innerWidth >= breakpoint) {
     // }
   };
@@ -271,13 +280,8 @@ const Page: React.FunctionComponent<any> = ({
               id="left"
               ref={leftViewport}
               variants={{
-                initial: { y: 0 },
-                animate: ({ position }: { position: string }) => ({
-                  y: position,
-                  transition: {
-                    duration: 0,
-                  },
-                }),
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
                 exit: { opacity: 0 },
               }}
               initial="initial"
@@ -299,13 +303,8 @@ const Page: React.FunctionComponent<any> = ({
           <div className="lg:flex-1 h-screen-1/2 lg:h-screen bottom-0 z-30 overflow-hidden bg-red">
             <motion.div
               variants={{
-                initial: { y: 0 },
-                animate: ({ position }: { position: string }) => ({
-                  y: position,
-                  transition: {
-                    duration: 0,
-                  },
-                }),
+                initial: { opacity: 0 },
+                animate: { opacity: 1 },
                 exit: { opacity: 0 },
               }}
               custom={{
