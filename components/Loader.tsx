@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useEffect, useRef, useState } from 'react';
-import { useRouter, withRouter } from 'next/router';
+import React, { useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 
