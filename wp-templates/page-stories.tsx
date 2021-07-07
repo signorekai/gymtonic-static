@@ -168,7 +168,6 @@ const Page: React.FunctionComponent<any> = ({
               handler={clickHandler}
               isExpanded={expanded}
               isHighlighted={story.id === selectedStory?.id}
-              uri={story.uri}
               story={story}
             />
           ))}
@@ -199,7 +198,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const client = getApolloClient(context);
   await client.query({
     query: storiesQuery,
-  });
+});
   return getNextStaticProps(context);
 }
 
