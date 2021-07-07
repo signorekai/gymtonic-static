@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { StoryNode } from 'wp-templates/page-stories';
-import { useRouter } from 'next/router';
 
 export interface Thumbnail {
   id: string;
@@ -18,19 +17,16 @@ interface BubbleProps {
   isExpanded?: boolean;
   isHighlighted?: boolean;
   story: StoryNode;
-  uri: string;
   handler(story: StoryNode): any;
 }
 
 const Bubble: React.FunctionComponent<BubbleProps> = ({
   className = '',
   isHighlighted = false,
-  uri,
   story,
   isExpanded = false,
   handler,
 }: BubbleProps) => {
-  const router = useRouter();
   const clickHandler = (): void => {
     handler(story);
     if (window.innerWidth < 1024) {

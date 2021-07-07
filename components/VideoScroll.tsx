@@ -1,12 +1,5 @@
-import React, {
-  RefObject,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { WithLoaderProps } from './Loader';
 
 // import { LoaderContext, LoaderContextType } from '../pages/_app';

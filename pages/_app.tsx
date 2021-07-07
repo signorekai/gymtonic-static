@@ -1,18 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, {
-  createContext,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { createContext } from 'react';
 import { AppContext, AppInitialProps } from 'next/app';
 import { HeadlessProvider } from '@wpengine/headless/react';
 import 'normalize.css/normalize.css';
 import 'scss/main.scss';
-import Loader from 'components/Loader';
-import { useRouter } from 'next/router';
 // export interface LoaderContextType {
 //   // assetsToLoad: Array<HTMLElement>;
 //   // setAssetsToLoad: (value: any) => void;
