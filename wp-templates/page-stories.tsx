@@ -141,13 +141,13 @@ const Page: React.FunctionComponent<any> = ({
         />
       </div>
       <header
-        className={`fixed pointer-events-none top-0 w-full pt-18 text-center z-30 lg:hidden ${
+        className={`fixed pointer-events-none top-0 w-full pt-12 text-center z-30 lg:hidden ${
           expanded ? 'bg-red' : 'bg-white'
         }`}>
         <h1
           className={`page-title ${
             expanded ? 'text-white' : 'text-red'
-          } relative z-20 pt-4 md:pt-4 pb-2`}>
+          } relative z-20 pt-2 pb-4`}>
           Stories
         </h1>
       </header>
@@ -173,11 +173,6 @@ const Page: React.FunctionComponent<any> = ({
           ))}
         </section>
       </section>
-      {/* <section className="bg-red sticky top-0 z-30 w-full pt-28 lg:hidden">
-        <h2 className="page-title lg:hidden text-white relative z-40 text-center mb-6">
-          Stories
-        </h2>
-      </section> */}
       {selectedStory && (
         <StoryCard
           key={selectedStory.id}

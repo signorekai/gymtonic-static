@@ -24,7 +24,7 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row relative items-start min-h-screen">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky={false} />
-      <section className="lg:flex lg:min-h-screen flex-col justify-center order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white flex-1 relative z-20 lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-0">
+      <section className="content-container content-container-px justify-center flex-1 pt-10 md:pt-18 lg:pt-0">
         <motion.h1
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}

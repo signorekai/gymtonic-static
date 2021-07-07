@@ -35,13 +35,13 @@ const MobileAboutHeader = ({
 }): JSX.Element => {
   return (
     <section
-      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-12 pb-4 mt-12 ${
+      className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-14 pb-6 mt-10 ${
         isSticky ? 'sticky z-30' : 'z-10'
       } top-0`}>
       <h1 className="text-2xl md:text-5xl leading-none text-red font-black text-center mb-6">
         About
       </h1>
-      <h5 className="px-8 md:px-32 lg:px-20 xl:px-22 text-center text-lg md:text-2xl leading-tight md:leading-none font-black divide-solid divide-x-2">
+      <h5 className="px-5 md:px-32 lg:px-20 xl:px-22 text-lg md:text-2xl leading-tight md:leading-none font-black divide-solid divide-x-2">
         <AboutLink href="/research">proven</AboutLink>
         <AboutLink href="/its-simple">simple</AboutLink>
         <AboutLink href="/technology">high-tech</AboutLink>

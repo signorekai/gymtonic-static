@@ -4,6 +4,7 @@ import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 interface CarouselProps {
   children: JSX.Element[];
   isDraggable?: boolean;
+  navBtnPosition?: 'top' | 'center';
 }
 
 interface CarouselCardProps {
@@ -31,6 +32,7 @@ export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
 const Carousel: React.FunctionComponent<CarouselProps> = ({
   children,
   isDraggable = true,
+  navBtnPosition = 'top',
 }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slideWidth, setSlideWidth] = useState(0);
@@ -79,7 +81,10 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   );
   return (
     <div className="max-w-full h-auto overflow-hidden">
-      <div className="flex flex-row items-start">
+      <div
+        className={`flex flex-row ${
+          navBtnPosition === 'top' ? 'items-start' : 'items-center'
+        }`}>
         <button
           type="button"
           className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 ${

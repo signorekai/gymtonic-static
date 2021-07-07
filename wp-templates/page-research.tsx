@@ -128,7 +128,7 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row items-start relative">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
-      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white lg:min-h-screen relative z-20 lg:sticky top-0 px-4 md:px-16 pt-10 md:pt-18 lg:pt-22">
+      <section className="content-container content-container-px pt-10 md:pt-18 lg:pt-22">
         <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
           <Image
             src={ArmOnRed}

@@ -51,12 +51,12 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row items-start relative min-h-screen">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
-      <section className="order-2 lg:order-1 w-full lg:w-1/2 bg-red text-white relative z-20 lg:sticky top-0 pt-10 md:pt-18 lg:pt-22 flex flex-col justify-end flex-1 lg:min-h-screen">
-        <div className="px-4 md:px-16 ">
+      <section className="content-container pt-10 md:pt-18 lg:pt-22 justify-end flex-1">
+        <div className="content-container-px">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
+            className="page-title">
             Coaches
           </motion.h2>
           <motion.h4

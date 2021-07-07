@@ -168,7 +168,7 @@ function Header({
               ease: [0.175, 0.85, 0.42, 0.96],
             }}
             className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-6">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-4 md:p-6">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">
                 {menuItems.map(({ node }: MenuData) => {
@@ -196,7 +196,7 @@ function Header({
                 )}
               </ul>
               {mobileNavBtnInHeader && (
-                <div className="absolute pointer-events-auto top-6 leading-0 md:-translate-y-1/2 right-6 md:top-10 md:right-7 z-40">
+                <div className="absolute pointer-events-auto top-6 leading-0 md:-translate-y-1/2 right-4 md:top-10 md:right-7 z-40">
                   <MobileNavBtn
                     setShowMobileNav={setShowMobileNav}
                     barStyle={mobileNavBtnstyle}
