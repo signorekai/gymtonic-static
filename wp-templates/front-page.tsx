@@ -296,7 +296,7 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex-1 flex flex-col w-full h-screen-3 lg:h-screen-6 relative">
+              className="flex-1 flex flex-col w-full h-screen-6 lg:h-screen-6 relative">
               <RightParallaxCard
                 headerTitle="Ka-Ching!"
                 videoSrc="/videos/Thematic-2-KaChing.mp4"

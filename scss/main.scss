@@ -92,6 +92,5 @@ body {
 }
 
 .snap-child {
-  bottom: 0;
-  scroll-snap-align: end;
+  scroll-snap-align: start;
 }
