@@ -121,6 +121,7 @@ module.exports = {
         18: '4.5rem',
         22: '5.5rem',
         34: '8.5rem',
+        'screen-1/2': 'calc(var(--vh) * 50)',
       },
       margin: {
         22: '5.5rem',
