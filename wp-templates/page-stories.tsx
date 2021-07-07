@@ -198,7 +198,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const client = getApolloClient(context);
   await client.query({
     query: storiesQuery,
-});
+  });
   return getNextStaticProps(context);
 }
 
