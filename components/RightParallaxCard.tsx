@@ -52,7 +52,7 @@ const RightParallaxCard = ({
   return (
     <div
       ref={card}
-      className={`text-center md:text-lg leading-tight md:leading-tight flex flex-col justify-center items-center w-full h-screen pt-screen-1/2 lg:pt-0 relative snap-child ${className}`}>
+      className={`text-center md:text-lg leading-tight md:leading-tight flex flex-col justify-center items-center w-full h-screen-1/2 lg:h-screen relative snap-child ${className}`}>
       <AnimatePresence exitBeforeEnter>
         {show && (
           <>

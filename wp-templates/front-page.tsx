@@ -22,6 +22,8 @@ import Gym4 from 'assets/images/gym4.jpg';
 import Gym5 from 'assets/images/gym5.jpg';
 import Gym6 from 'assets/images/gym6.jpg';
 
+const breakpoint = 1024;
+
 /**
  * Example of post variables to query the first six posts in a named category.
  * @see https://github.com/wpengine/headless-framework/tree/canary/docs/queries
@@ -170,26 +172,41 @@ const Page: React.FunctionComponent<any> = ({
     let newRightPosition = 0;
 
     if (leftViewport.current && rightViewport.current) {
+      // calculation for desktops
+      // if (window?.innerWidth >= breakpoint) {
+      //   newLeftPosition = Math.min(
+      //     Math.max(
+      //       1 - scrollValues.scrollYProgress,
+      //       1 / leftViewport.current.children.length,
+      //     ),
+      //     1 - 1 / leftViewport.current.children.length,
+      //   );
+      // } else {
+      //   console.log(scrollValues.scrollYProgress);
+      //   // calculation for mobile
+      //   newLeftPosition = Math.min(
+      //     Math.max(1 - scrollValues.scrollYProgress, 0),
+      //     1 - 1 / leftViewport.current.children.length,
+      //   );
+      // }
+      const leftValue =
+        scrollValues.scrollYProgress + 1 / leftViewport.current.children.length;
+
       newLeftPosition = Math.min(
-        Math.max(
-          1 - scrollValues.scrollYProgress,
-          1 / leftViewport.current.children.length,
-        ),
+        Math.max(1 - leftValue, 0),
         1 - 1 / leftViewport.current.children.length,
       );
 
       newRightPosition = Math.min(
-        Math.max(
-          scrollValues.scrollYProgress,
-          1 / rightViewport.current.children.length,
-        ),
+        Math.max(scrollValues.scrollYProgress, 0),
         1 - 1 / leftViewport.current.children.length,
       );
     }
+
     setLeftPosition(`${newLeftPosition * -100}%`);
-    if (window?.innerWidth >= 1024) {
-      setRightPosition(`${newRightPosition * -100}%`);
-    }
+    setRightPosition(`${newRightPosition * -100}%`);
+    // if (window?.innerWidth >= breakpoint) {
+    // }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,7 +217,7 @@ const Page: React.FunctionComponent<any> = ({
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < breakpoint) {
         setRightPosition(`0%`);
       }
     };
@@ -245,12 +262,13 @@ const Page: React.FunctionComponent<any> = ({
       </VideoScroll>
       <section
         ref={container}
-        className="w-full lg:h-screen-6 lg:relative z-20 mb-screen">
+        className="w-full h-screen-3 lg:h-screen-6 relative z-20 mb-screen">
         <div
           ref={viewport}
-          className="lg:sticky top-0 left-0 w-full lg:h-screen flex flex-col lg:flex-row">
-          <div className="lg:flex-1 sticky top-0 md:relative z-40 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
+          className="sticky top-0 left-0 w-full h-screen flex flex-col lg:flex-row">
+          <div className="lg:flex-1 relative z-40 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
             <motion.div
+              id="left"
               ref={leftViewport}
               variants={{
                 initial: { y: 0 },
@@ -268,7 +286,7 @@ const Page: React.FunctionComponent<any> = ({
               custom={{
                 position: leftPosition,
               }}
-              className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 relative">
+              className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
               <LeftCard src={Gym1} />
               <LeftCard src={Gym2} />
               <LeftCard src={Gym3} />
@@ -276,8 +294,9 @@ const Page: React.FunctionComponent<any> = ({
               <LeftCard src={Gym5} />
               <LeftCard src={Gym6} />
             </motion.div>
+            <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-30 text-red text-center">Gym</h1>
           </div>
-          <div className="lg:flex-1 relative z-30 lg:overflow-hidden bg-red">
+          <div className="lg:flex-1 h-screen-1/2 lg:h-screen bottom-0 z-30 overflow-hidden bg-red">
             <motion.div
               variants={{
                 initial: { y: 0 },
@@ -292,11 +311,12 @@ const Page: React.FunctionComponent<any> = ({
               custom={{
                 position: rightPosition,
               }}
+              id="right"
               ref={rightViewport}
               initial="initial"
               animate="animate"
               exit="exit"
-              className="flex-1 flex flex-col w-full h-screen-6 lg:h-screen-6 relative">
+              className="flex-1 flex flex-col w-full h-screen-3 lg:h-screen-6 relative">
               <RightParallaxCard
                 headerTitle="Ka-Ching!"
                 videoSrc="/videos/Thematic-2-KaChing.mp4"
