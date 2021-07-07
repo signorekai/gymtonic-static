@@ -108,6 +108,7 @@ const Page: React.FunctionComponent<any> = ({
                   loading="eager"
                   src={Coach1}
                   alt="Coach Jason Tan"
+                  placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
               </motion.div>
@@ -133,6 +134,7 @@ const Page: React.FunctionComponent<any> = ({
                   loading="eager"
                   src={Coach2}
                   alt="Coach Looi Yuan Hui"
+                  placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
               </motion.div>
@@ -159,6 +161,7 @@ const Page: React.FunctionComponent<any> = ({
                   loading="eager"
                   src={Coach3}
                   alt="Coach Andrew Yeo"
+                  placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
               </motion.div>
@@ -184,6 +187,7 @@ const Page: React.FunctionComponent<any> = ({
                   loading="eager"
                   src={Coach4}
                   alt="Coach Joseph Chan"
+                  placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
               </motion.div>
