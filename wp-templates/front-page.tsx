@@ -164,8 +164,7 @@ const Page: React.FunctionComponent<any> = ({
   const rightViewport = useRef<HTMLDivElement>(null);
   const scrollValues = useScroll(container);
 
-  const [leftPosition, setLeftPosition] = useState('0%');
-  const [rightPosition, setRightPosition] = useState('0%');
+  const positions = useRef({ left: 0, right: 0 });
 
   useEffect(() => {
     const handleResize = () => {
@@ -177,25 +176,9 @@ const Page: React.FunctionComponent<any> = ({
     const handleScroll = () => {
       let newLeftPosition = 0;
       let newRightPosition = 0;
+      let isTicking = false;
 
       if (leftViewport.current && rightViewport.current) {
-        // calculation for desktops
-        // if (window?.innerWidth >= breakpoint) {
-        //   newLeftPosition = Math.min(
-        //     Math.max(
-        //       1 - scrollValues.scrollYProgress,
-        //       1 / leftViewport.current.children.length,
-        //     ),
-        //     1 - 1 / leftViewport.current.children.length,
-        //   );
-        // } else {
-        //   console.log(scrollValues.scrollYProgress);
-        //   // calculation for mobile
-        //   newLeftPosition = Math.min(
-        //     Math.max(1 - scrollValues.scrollYProgress, 0),
-        //     1 - 1 / leftViewport.current.children.length,
-        //   );
-        // }
         const leftValue =
           scrollValues.scrollYProgress +
           1 / leftViewport.current.children.length;
@@ -209,18 +192,30 @@ const Page: React.FunctionComponent<any> = ({
           Math.max(scrollValues.scrollYProgress, 0),
           1 - 1 / leftViewport.current.children.length,
         );
-      }
 
-      if (leftViewport.current && rightViewport.current) {
-        leftViewport.current.style.transform = `translate3d(0, ${
-          newLeftPosition * -100
-        }%, 0)`;
-        rightViewport.current.style.transform = `translate3d(0, ${
-          newRightPosition * -100
-        }%, 0)`;
-      }
+        if (
+          newLeftPosition !== positions.current.left &&
+          newRightPosition !== positions.current.right
+        ) {
+          leftViewport.current.style.transform = `translate3d(0, ${
+            newLeftPosition * -100
+          }%, 0)`;
+          rightViewport.current.style.transform = `translate3d(0, ${
+            newRightPosition * -100
+          }%, 0)`;
 
-      requestAnimationFrame(handleScroll);
+          positions.current.left = newLeftPosition;
+          positions.current.right = newRightPosition;
+
+          if (isTicking === false) {
+            requestAnimationFrame(() => {
+              handleScroll();
+              isTicking = false;
+            });
+          }
+          isTicking = true;
+        }
+      }
     };
 
     handleScroll();
@@ -279,9 +274,6 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="animate"
               exit="exit"
-              custom={{
-                position: leftPosition,
-              }}
               className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
               <LeftCard src={Gym1} />
               <LeftCard src={Gym2} />
@@ -300,9 +292,6 @@ const Page: React.FunctionComponent<any> = ({
                 initial: { opacity: 0 },
                 animate: { opacity: 1 },
                 exit: { opacity: 0 },
-              }}
-              custom={{
-                position: rightPosition,
               }}
               id="right"
               ref={rightViewport}
