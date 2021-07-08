@@ -94,6 +94,8 @@ export default function VideoScroller({
   const intervalAnimationRef = useRef<boolean>(false);
   const intervalAnimationDirection = useRef<'forward' | 'reverse'>('forward');
 
+  const isIntersecting = useRef(true);
+
   const thenRef = useRef(window.performance.now());
 
   const [showReminder, setShowReminder] = useState(true);
@@ -170,7 +172,11 @@ export default function VideoScroller({
               return;
             }
 
-            if (newTime && newTime - thenRef.current > frameDuration) {
+            if (
+              newTime &&
+              newTime - thenRef.current > frameDuration &&
+              isIntersecting.current
+            ) {
               if (
                 (currentFrameRef.current === totalFrames &&
                   intervalAnimationDirection.current === 'forward') ||
@@ -193,6 +199,7 @@ export default function VideoScroller({
               thenRef.current =
                 newTime - ((newTime - thenRef.current) % frameDuration);
             }
+
             requestAnimationFrame(nextFrame);
           };
 
@@ -247,13 +254,28 @@ export default function VideoScroller({
       handleScroll();
     };
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isIntersecting.current = entry.isIntersecting;
+      },
+      {
+        root: null,
+        threshold: [0, 0.5, 1],
+      },
+    );
+
+    if (canvasRef.current) observer.observe(canvasRef.current);
+
     handleResize();
+    const canvas = canvasRef.current;
 
     if (window.innerWidth >= breakpoint) {
       window.addEventListener('scroll', handleScroll);
     }
     window.addEventListener('resize', handleResize);
     return () => {
+      if (canvas) observer.unobserve(canvas);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
@@ -267,6 +289,7 @@ export default function VideoScroller({
     canvasAnimateControls,
     videoDuration,
     isDragable,
+    canvasRef,
   ]);
 
   useEffect(() => {
