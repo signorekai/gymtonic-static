@@ -54,10 +54,12 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     evt: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    console.log(info);
-    console.log(container.current?.clientWidth);
     if (container.current) {
-      if (Math.abs(info.offset.x) > container.current.clientWidth * 0.4) {
+      if (
+        info.point.x !== 0 &&
+        info.point.y !== 0 &&
+        Math.abs(info.offset.x) > container.current.clientWidth * 0.2
+      ) {
         setTimeout(() => {
           goTo(info.offset.x < 0 ? 1 : -1);
         }, 100);
@@ -80,8 +82,6 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   useEffect(() => {
     if (slidesContainer.current) {
       setSlideWidth(slidesContainer.current.clientWidth);
-      void carouselAnimationControls.start('show');
-
       window.addEventListener('resize', handleResize);
     }
 
