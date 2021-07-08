@@ -129,6 +129,11 @@ body {
   // scroll-snap-type: y proximity;
 }
 
+.flex-last-item-align-start {
+  @apply after:empty-content;
+  @apply after:flex-1;
+}
+
 .snap-container {
   scroll-snap-type: mandatory;
   scroll-snap-points-y: repeat(100vh);
