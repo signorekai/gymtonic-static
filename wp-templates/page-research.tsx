@@ -25,7 +25,7 @@ const query = gql`
         node {
           id
           title
-          moreInfo {
+          moreResearchInfo {
             researchOrganisation
             typeOfLink
             url
@@ -51,7 +51,7 @@ interface ResearchPaperFields {
 export interface ResearchPaperNode {
   id: string;
   title: string;
-  moreInfo: ResearchPaperFields;
+  moreResearchInfo: ResearchPaperFields;
 }
 
 interface ResearchPaperData {
@@ -99,11 +99,43 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
           <h2 className="group-hover:opacity-90 transition-opacity font-bold uppercase text-xxs md:text-xs mt-3 md:max-w-5/6">
             {organisation}
           </h2>
-          <h1 className="group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base md:max-w-5/6">
+          <h1 className="group-hover:opacity-90 mt-1 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
             {title}
           </h1>
-          <div className="w-7 h-7 relative mt-3 duration-200 transition-transform group-hover:-translate-y-1">
-            <Image src={DownloadBtn} alt="" layout="fill" />
+          <div className="w-7 h-7 relative mt-2 duration-200 transition-transform group-hover:-translate-y-1 text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              className="w-full"
+              viewBox="0 0 28 28">
+              <g transform="translate(-2601 1674)">
+                <g transform="translate(5858 -5932) rotate(90)">
+                  <g
+                    className="stroke-current"
+                    transform="translate(4258 3229)"
+                    fill="none"
+                    strokeWidth="1.5">
+                    <circle cx="14" cy="14" r="14" stroke="none" />
+                    <circle cx="14" cy="14" r="13.25" fill="none" />
+                  </g>
+                </g>
+                <path
+                  d="M4315.6,3241.3l6.374,5.975-6.355,6.018"
+                  transform="translate(5862.298 -5975.927) rotate(90)"
+                  className="stroke-current"
+                  fill="none"
+                  strokeWidth="1.5"
+                />
+                <line
+                  y2="11.719"
+                  transform="translate(2615.004 -1666.047)"
+                  fill="none"
+                  className="stroke-current"
+                  strokeWidth="1.5"
+                />
+              </g>
+            </svg>
           </div>
         </a>
       </Link>
@@ -164,14 +196,14 @@ const Page: React.FunctionComponent<any> = ({
               index={index}
               key={researchPaper.id}
               title={researchPaper.title}
-              type={researchPaper.moreInfo.typeOfLink}
-              organisation={researchPaper.moreInfo.researchOrganisation}
+              type={researchPaper.moreResearchInfo.typeOfLink}
+              organisation={researchPaper.moreResearchInfo.researchOrganisation}
               file={
-                researchPaper.moreInfo.file
-                  ? researchPaper.moreInfo.file.mediaItemUrl
+                researchPaper.moreResearchInfo.file
+                  ? researchPaper.moreResearchInfo.file.mediaItemUrl
                   : null
               }
-              url={researchPaper.moreInfo.url}
+              url={researchPaper.moreResearchInfo.url}
             />
           ))}
         </section>
