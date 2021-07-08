@@ -119,9 +119,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             </g>
           </svg>
         </button>
-        <div
-          className="flex-1 h-full"
-          ref={container}>
+        <div className="flex-1 h-full" ref={container}>
           <motion.div
             ref={slidesContainer}
             drag={isDraggable ? 'x' : false}
