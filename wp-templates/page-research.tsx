@@ -147,7 +147,7 @@ const Page: React.FunctionComponent<any> = ({
         <motion.h4
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-          className="text-lg md:text-2xl mt-5 pb-8 border-b-2 border-white">
+          className="text-lg md:text-2xl leading-none mt:leading-base mt-5 pb-8 border-b-2 border-white">
           Why bother? So you can continue to do the things you love – whether it
           is working, hobbies, cooking, sports, taking care of your grandkids –
           or simply living your life without relying on others.
