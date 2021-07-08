@@ -25,7 +25,7 @@ interface BubbleProps {
     initial?: Variant;
     exit?: Variant;
     enter?: Variant;
-  }
+  };
 }
 
 const Bubble: React.FunctionComponent<BubbleProps> = ({

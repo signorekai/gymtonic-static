@@ -101,7 +101,20 @@ interface QueryData {
     | undefined;
 }
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
@@ -275,9 +288,7 @@ const Page: React.FunctionComponent<any> = ({
           })}
         </motion.section>
       </section>
-      <section className="content-container">
-        Hi
-      </section>
+      <section className="content-container">Hi</section>
     </motion.main>
   );
 };
