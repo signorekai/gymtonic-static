@@ -3,6 +3,7 @@ import { AnimatePresence, motion, PanInfo } from 'framer-motion';
 
 interface CarouselProps {
   children: JSX.Element[];
+  className?: string;
   isDraggable?: boolean;
   navBtnPosition?: 'top' | 'center';
 }
@@ -31,6 +32,7 @@ export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
 
 const Carousel: React.FunctionComponent<CarouselProps> = ({
   children,
+  className = '',
   isDraggable = true,
   navBtnPosition = 'top',
 }: CarouselProps) => {
@@ -55,7 +57,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     // console.log(container.current?.clientWidth);
     setTimeout(() => {
       goTo(info.offset.x < 0 ? 1 : -1);
-    }, 200);
+    }, 100);
   };
 
   const handleResize = () => {
@@ -80,9 +82,9 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     React.cloneElement(child, { index, currentIndex }),
   );
   return (
-    <div className="max-w-full h-auto overflow-hidden">
+    <div className={`max-w-full h-auto overflow-hidden ${className}`}>
       <div
-        className={`flex flex-row ${
+        className={`flex flex-row h-full ${
           navBtnPosition === 'top' ? 'items-start' : 'items-center'
         }`}>
         <button
@@ -117,7 +119,9 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             </g>
           </svg>
         </button>
-        <div className="flex-1 overflow-hidden" ref={container}>
+        <div
+          className="flex-1 h-full"
+          ref={container}>
           <motion.div
             ref={slidesContainer}
             drag={isDraggable ? 'x' : false}
