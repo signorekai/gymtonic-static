@@ -88,7 +88,7 @@ const TechCard = ({
       }}
       initial="hide"
       animate="show"
-      className="min-h-48 relative flex flex-col justify-center items-center">
+      className="min-h-80 relative flex flex-col justify-center items-center pt-6 overflow-hidden">
       <motion.div
         variants={{
           hide: { opacity: 0, y: 30 },
@@ -272,9 +272,7 @@ const Page: React.FunctionComponent<any> = ({
             Equipment that can help you
           </motion.h2>
         </div>
-        <Carousel
-          navBtnPosition="center"
-          className="py-5 md:py-16 lg:py-10 flex-1">
+        <Carousel navBtnPosition="center" className="mb-6">
           <CarouselCard>
             <TechCard
               headerSrc={TechHeader1}
