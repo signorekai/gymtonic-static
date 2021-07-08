@@ -41,12 +41,12 @@ const MobileAboutHeader = ({
       <h1 className="text-2xl md:text-5xl leading-none text-red font-black text-center mb-6">
         About
       </h1>
-      <h5 className="px-5 md:px-32 lg:px-20 xl:px-22 text-lg md:text-2xl leading-tight md:leading-none font-black divide-solid divide-x-2">
+      <nav className="flex flex-row justify-center px-5 md:px-32 lg:px-20 xl:px-22 text-lg md:text-2xl leading-tight md:leading-none font-black divide-solid divide-x-2">
         <AboutLink href="/research">proven</AboutLink>
         <AboutLink href="/its-simple">simple</AboutLink>
         <AboutLink href="/technology">high-tech</AboutLink>
         <AboutLink href="/coaches">care</AboutLink>
-      </h5>
+      </nav>
     </section>
   );
 };
