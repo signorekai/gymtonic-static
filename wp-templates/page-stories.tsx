@@ -12,6 +12,7 @@ import { find } from 'lodash';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 import MobileNavBtn from 'components/MobileNavBtn';
+import { motion } from 'framer-motion';
 
 const storiesQuery = gql`
   {
@@ -158,20 +159,39 @@ const Page: React.FunctionComponent<any> = ({
         <h1 className="page-title text-red relative hidden lg:block z-20 pt-24 md:pt-14">
           Stories
         </h1>
-        <section
+        <motion.section
+          variants={{
+            initial: { opacity: 0 },
+            exit: { opacity: 0 },
+            enter: { opacity: 1, transition: { staggerChildren: 0.1 } },
+          }}
+          initial="initial"
+          exit="exit"
+          animate="enter"
           className={`relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start ${
             expanded ? 'mt-4 lg:mt-8' : 'mt-34 lg:mt-4'
-          } lg:pt-0 after:empty-content after:flex-1`}>
+          } lg:pt-0 flex-last-item-align-start`}>
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
           {stories?.map(({ node: story }) => (
             <Bubble
-              handler={clickHandler}
-              isExpanded={expanded}
-              isHighlighted={story.id === selectedStory?.id}
-              story={story}
+              handler={() => {
+                setSelectedStory(story);
+                setExpanded(true);
+                path.current = story.uri;
+              }}
+              className={
+                expanded ? 'md:w-1/3 lg:w-full' : 'md:w-1/3 lg:w-1/2 xl:w-1/3'
+              }
+              imageWrapperClassName={
+                story.id === selectedStory?.id ? 'border-4' : 'border-0'
+              }
+              titleClassName={expanded ? 'md:max-w-1/2' : ''}
+              title={story.storyFields.videoTitle}
+              subtitle={story.title}
+              thumbnail={story.thumbnail.thumbnail}
             />
           ))}
-        </section>
+        </motion.section>
       </section>
       {selectedStory && (
         <StoryCard
