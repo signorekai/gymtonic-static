@@ -167,7 +167,7 @@ const TechCard = ({
               hide: {
                 opacity: 0,
                 y: 30,
-                scale: 0.3,
+                scale: 0,
                 transformOrigin: 'bottom center',
               },
               show: {
@@ -262,13 +262,13 @@ const Page: React.FunctionComponent<any> = ({
   return (
     <main className="flex flex-col lg:flex-row relative items-start min-h-screen">
       <AboutCard hideOnMobile />
-      <MobileAboutHeader />
+      <MobileAboutHeader isSticky />
       <section className="content-container pt-10 md:pt-18 lg:pt-32 flex-1">
         <div className="content-container-px">
           <motion.h2
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="page-title text-white xl: max-w-lg">
+            className="page-title text-white max-w-xs xl:max-w-lg">
             Equipment that can help you
           </motion.h2>
         </div>
