@@ -44,6 +44,7 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
       sizes="(min-width: 1366px) 800px, (min-width: 1024px) 600px, 400px"
       quality="100"
       objectFit="cover"
+      priority
       placeholder="blur"
     />
   </div>
@@ -336,7 +337,7 @@ const Page: React.FunctionComponent<any> = ({
                 videoSrc="/videos/Thematic-6-Kilat.mp4"
                 headerTitle="Kilat!"
                 paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
-                href="/about"
+                href="/technology"
                 link="Understand the process"
               />
               <RightParallaxCard
