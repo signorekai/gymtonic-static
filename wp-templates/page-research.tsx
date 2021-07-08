@@ -25,7 +25,7 @@ const query = gql`
         node {
           id
           title
-          researchPaper {
+          moreInfo {
             researchOrganisation
             typeOfLink
             url
@@ -51,7 +51,7 @@ interface ResearchPaperFields {
 export interface ResearchPaperNode {
   id: string;
   title: string;
-  researchPaper: ResearchPaperFields;
+  moreInfo: ResearchPaperFields;
 }
 
 interface ResearchPaperData {
@@ -164,14 +164,14 @@ const Page: React.FunctionComponent<any> = ({
               index={index}
               key={researchPaper.id}
               title={researchPaper.title}
-              type={researchPaper.researchPaper.typeOfLink}
-              organisation={researchPaper.researchPaper.researchOrganisation}
+              type={researchPaper.moreInfo.typeOfLink}
+              organisation={researchPaper.moreInfo.researchOrganisation}
               file={
-                researchPaper.researchPaper.file
-                  ? researchPaper.researchPaper.file.mediaItemUrl
+                researchPaper.moreInfo.file
+                  ? researchPaper.moreInfo.file.mediaItemUrl
                   : null
               }
-              url={researchPaper.researchPaper.url}
+              url={researchPaper.moreInfo.url}
             />
           ))}
         </section>
