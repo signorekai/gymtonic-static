@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { StoryNode } from 'wp-templates/page-stories';
+import { motion, Variant } from 'framer-motion';
 
 export interface Thumbnail {
   id: string;
@@ -13,58 +13,70 @@ export interface Thumbnail {
 }
 
 interface BubbleProps {
+  thumbnail: Thumbnail;
+  handler(): void;
+  subtitle: string;
+  title: string;
   className?: string;
-  isExpanded?: boolean;
-  isHighlighted?: boolean;
-  story: StoryNode;
-  handler(story: StoryNode): any;
+  imageWrapperClassName?: string;
+  titleClassName?: string;
+  subTitleClassName?: string;
+  variants?: {
+    initial?: Variant;
+    exit?: Variant;
+    enter?: Variant;
+  }
 }
 
 const Bubble: React.FunctionComponent<BubbleProps> = ({
-  className = '',
-  isHighlighted = false,
-  story,
-  isExpanded = false,
+  thumbnail,
   handler,
+  subtitle,
+  title,
+  className = '',
+  imageWrapperClassName = '',
+  titleClassName = '',
+  subTitleClassName = '',
+  variants = {},
 }: BubbleProps) => {
   const clickHandler = (): void => {
-    handler(story);
+    handler();
     if (window.innerWidth < 1024) {
       window.scrollTo({ left: 0, top: 0 });
     }
   };
 
-  const { title } = story;
-  const { thumbnail } = story?.thumbnail;
-  const { videoTitle, youtubeVideo } = story?.storyFields;
+  const articleVariants = {
+    initial: { y: -20, opacity: 0 },
+    exit: { y: -20, opacity: 0 },
+    enter: { y: 0, opacity: 1 },
+    ...variants,
+  };
 
   return (
-    <article
-      className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group w-1/2 ${
-        isExpanded ? 'md:w-1/3 lg:w-full' : 'md:w-1/3 lg:w-1/2 xl:w-1/3'
-      } z-20`}>
-      <a
-        role="button"
-        tabIndex={-1}
-        onClick={clickHandler}
-        onKeyDown={clickHandler}>
+    <motion.article
+      variants={articleVariants}
+      className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group w-1/2 z-20 ${className}`}>
+      <button type="button" onClick={clickHandler}>
         <div
-          className={`${className} overflow-hidden border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto ${
-            isHighlighted ? 'border-4' : 'border-0'
-          } border-red group-hover:border-4 transition-all`}>
-          <Image src={thumbnail.sourceUrl} layout="fill" alt="" />
+          className={`overflow-hidden border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto border-red group-hover:border-4 transition-all ${imageWrapperClassName}`}>
+          <Image
+            src={thumbnail.sourceUrl}
+            layout="fill"
+            objectFit="cover"
+            alt=""
+          />
         </div>
-        <h6 className="text-xs text-red uppercase leading-none group-hover:opacity-80 mb-2">
-          {title}
+        <h6
+          className={`text-xs text-red uppercase leading-none group-hover:opacity-80 mb-2 ${subTitleClassName}`}>
+          {subtitle}
         </h6>
         <h1
-          className={`text-base leading-none transition-all duration-200 ${
-            isExpanded ? 'md:max-w-1/2' : ''
-          } mx-auto mx-au text-black font-black group-hover:opacity-80`}>
-          {videoTitle}
+          className={`text-base leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 ${titleClassName}`}>
+          {title}
         </h1>
-      </a>
-    </article>
+      </button>
+    </motion.article>
   );
 };
 
