@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, PanInfo } from 'framer-motion';
+import { AnimatePresence, motion, PanInfo, useAnimation } from 'framer-motion';
 
 interface CarouselProps {
   children: JSX.Element[];
@@ -40,6 +40,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   const [slideWidth, setSlideWidth] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
+  const carouselAnimationControls = useAnimation();
 
   const goTo = (speed: number): void => {
     if (speed < 0) {
@@ -53,11 +54,17 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     evt: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
-    // console.log(info);
-    // console.log(container.current?.clientWidth);
-    setTimeout(() => {
-      goTo(info.offset.x < 0 ? 1 : -1);
-    }, 100);
+    console.log(info);
+    console.log(container.current?.clientWidth);
+    if (container.current) {
+      if (Math.abs(info.offset.x) > container.current.clientWidth * 0.4) {
+        setTimeout(() => {
+          goTo(info.offset.x < 0 ? 1 : -1);
+        }, 100);
+      } else {
+        void carouselAnimationControls.start('show');
+      }
+    }
   };
 
   const handleResize = () => {
@@ -67,8 +74,13 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   };
 
   useEffect(() => {
+    void carouselAnimationControls.start('show');
+  }, [carouselAnimationControls, currentIndex]);
+
+  useEffect(() => {
     if (slidesContainer.current) {
       setSlideWidth(slidesContainer.current.clientWidth);
+      void carouselAnimationControls.start('show');
 
       window.addEventListener('resize', handleResize);
     }
@@ -76,7 +88,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [slidesContainer]);
+  }, [slidesContainer, carouselAnimationControls]);
 
   const childrenWithProps = React.Children.map(children, (child, index) =>
     React.cloneElement(child, { index, currentIndex }),
@@ -119,7 +131,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             </g>
           </svg>
         </button>
-        <div className="flex-1 h-full" ref={container}>
+        <div className="flex-1 h-full overflow-x-hidden" ref={container}>
           <motion.div
             ref={slidesContainer}
             drag={isDraggable ? 'x' : false}
@@ -147,7 +159,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
               width: slideWidth,
             }}
             initial="hide"
-            animate="show"
+            animate={carouselAnimationControls}
             exit="hide"
             className="flex flex-row flex-wrap md:px-0 md:cursor-move"
             style={{
