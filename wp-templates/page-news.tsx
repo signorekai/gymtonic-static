@@ -372,7 +372,7 @@ const Page: React.FunctionComponent<any> = ({
                 show: {
                   opacity: 1,
                   y: 0,
-                  transition: { delay: 0.2 },
+                  transition: { delay: 0.3 },
                 },
                 exit: { opacity: 0 },
               }}
