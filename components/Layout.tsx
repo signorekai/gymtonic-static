@@ -7,11 +7,13 @@ interface LayoutState {
   showLoader: boolean;
   scrolledHeader: boolean;
   noAnimation: boolean;
+  mobileNavBtnStyle: string;
 }
 
 export interface WithLayoutProps {
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
   setScrolledHeader: (arg0: boolean, noAnimation?: boolean) => void;
+  setMobileNavBtnStyle: (arg0: string) => void;
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
   setShowMobileNav: (arg0: boolean) => void;
@@ -22,13 +24,11 @@ export interface WithLayoutProps {
 export default function withLayout<T extends React.Component>(
   Component: React.ComponentType<T>,
   options?: {
-    mobileNavBtnStyle?: string;
     mobileNavBtnInHeader?: boolean;
   },
 ): React.ComponentClass<T & WithLayoutProps> {
   // compiling opts
   const opts = {
-    mobileNavBtnStyle: 'text-red',
     mobileNavBtnInHeader: true,
     ...options,
   };
@@ -39,12 +39,14 @@ export default function withLayout<T extends React.Component>(
       super(props);
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setScrolledHeader = this.setScrolledHeader.bind(this);
+      this.setMobileNavBtnStyle = this.setMobileNavBtnStyle.bind(this);
       this.appRef = React.createRef<HTMLDivElement>();
 
       this.state = {
         headerRef: null,
         showLoader: true,
         scrolledHeader: false,
+        mobileNavBtnStyle: 'text-red',
         noAnimation: false,
       };
     }
@@ -62,6 +64,10 @@ export default function withLayout<T extends React.Component>(
       this.setState({ scrolledHeader, noAnimation });
     }
 
+    setMobileNavBtnStyle(mobileNavBtnStyle: string) {
+      this.setState({ mobileNavBtnStyle });
+    }
+
     setHeaderRef(headerRef: RefObject<HTMLElement>) {
       this.setState({ headerRef });
     }
@@ -69,7 +75,13 @@ export default function withLayout<T extends React.Component>(
     // const [headerRef, setHeaderRef] =
     //   useState<RefObject<HTMLElement> | null>(null);
     render() {
-      const { headerRef, showLoader, scrolledHeader, noAnimation } = this.state;
+      const {
+        headerRef,
+        showLoader,
+        scrolledHeader,
+        noAnimation,
+        mobileNavBtnStyle,
+      } = this.state;
       const { setShowLoader, setShowMobileNav } = this.props;
 
       return (
@@ -80,7 +92,7 @@ export default function withLayout<T extends React.Component>(
           <Header
             {...this.props}
             mobileNavBtnInHeader={opts.mobileNavBtnInHeader}
-            mobileNavBtnstyle={opts.mobileNavBtnStyle}
+            mobileNavBtnstyle={mobileNavBtnStyle}
             noAnimation={noAnimation}
             setShowMobileNav={setShowMobileNav}
             headerRef={headerRef}
@@ -88,6 +100,7 @@ export default function withLayout<T extends React.Component>(
           />
           <Component
             {...this.props}
+            setMobileNavBtnStyle={this.setMobileNavBtnStyle}
             appRef={this.appRef}
             setScrolledHeader={this.setScrolledHeader}
             setHeaderRef={this.setHeaderRef}

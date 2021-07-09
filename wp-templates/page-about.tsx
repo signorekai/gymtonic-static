@@ -10,8 +10,10 @@ import withLoader from 'components/Loader';
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
+  setMobileNavBtnStyle,
 }: WithMobileNavProps & WithLayoutProps) => {
   useEffect(() => {
+    setMobileNavBtnStyle('text-red md:text-white');
     setShowLoader(false);
     setScrolledHeader(true, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,8 +52,4 @@ const Page: React.FunctionComponent<any> = ({
 />
 </div> */
 
-export default withLoader(
-  withMobileNav(
-    withLayout(Page, { mobileNavBtnStyle: 'text-red md:text-white' }),
-  ),
-);
+export default withLoader(withMobileNav(withLayout(Page)));
