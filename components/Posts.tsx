@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from 'scss/components/Posts.module.scss';
 import Heading, { HeadingProps } from './Heading';
 
 interface Props {

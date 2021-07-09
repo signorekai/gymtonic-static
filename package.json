@@ -31,7 +31,6 @@
   "dependencies": {
     "@apollo/client": "^3.3.4",
     "@wpengine/headless": "^0.6.3",
-    "focus-trap-react": "^8.7.0",
     "framer-motion": "^4.1.17",
     "graphql": "^15.4.0",
     "lodash": "^4.17.21",

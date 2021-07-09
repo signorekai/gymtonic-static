@@ -12,6 +12,7 @@ const templates: Templates<NextTemplate> = {
   'page-coaches': import('./page-coaches'),
   'page-stories': import('./page-stories'),
   'page-news': import('./page-news'),
+  'page-locations': import('./page-locations'),
   'single-story': import('./page-stories'),
   index: import('./index'),
   category: import('./category'),

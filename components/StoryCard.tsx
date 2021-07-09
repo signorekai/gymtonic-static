@@ -52,7 +52,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
   };
 
   return (
-    <article
+    <motion.article
       className={`w-full transition-all duration-200 ${
         isExpanded ? 'lg:w-7/10' : 'lg:w-1/2'
       } order-1 lg:order-2 lg:min-h-screen content-container-bg content-container-px content-container-positioning pt-36 lg:pt-24`}>
@@ -97,7 +97,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
           </p>
         </motion.div>
       </AnimatePresence>
-    </article>
+    </motion.article>
   );
 };
 

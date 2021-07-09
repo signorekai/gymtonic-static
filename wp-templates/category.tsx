@@ -4,7 +4,6 @@ import { Pagination } from '@wpengine/headless/next';
 import { getApolloClient, getPosts, categoryOptions } from '@wpengine/headless';
 import { useRouter } from 'next/router';
 import { GetStaticPropsContext } from 'next';
-import Footer from 'components/Footer';
 import Header from 'components/Header';
 import Posts from 'components/Posts';
 
@@ -27,7 +26,6 @@ export default function Category(): JSX.Element {
           <Pagination baseURL={basePath} pageInfo={posts.pageInfo} />
         )}
       </main>
-      <Footer copyrightHolder={settings?.title} />
     </>
   );
 }

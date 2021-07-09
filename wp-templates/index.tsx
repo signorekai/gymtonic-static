@@ -1,7 +1,6 @@
 import React from 'react';
 import { useGeneralSettings, usePosts } from '@wpengine/headless/react';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 import Posts from 'components/Posts';
 
 export default function Index(): JSX.Element {
@@ -13,7 +12,6 @@ export default function Index(): JSX.Element {
       <main className="content content-index">
         <Posts posts={posts?.nodes} />
       </main>
-      <Footer copyrightHolder={settings?.title} />
     </>
   );
 }
