@@ -63,8 +63,12 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
           <Image
             src={thumbnail.sourceUrl}
             layout="fill"
+            sizes="320px"
+            quality={90}
+            placeholder="blur"
+            blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUkpA4CAABqwENo/rLPQAAAABJRU5ErkJggg=="
             objectFit="cover"
-            alt=""
+            alt={title}
           />
         </div>
         <h6

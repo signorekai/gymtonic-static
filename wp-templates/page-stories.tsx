@@ -22,15 +22,15 @@ const storiesQuery = gql`
           id
           title
           uri
-          thumbnail {
-            thumbnail {
+          featuredImage {
+            node {
               id
-              sizes
-              sourceUrl
               mediaDetails {
                 height
                 width
               }
+              sourceUrl(size: LARGE)
+              placeholderSourceUrl: sourceUrl(size: PLACEHOLDER)
             }
           }
           storyFields {
@@ -68,8 +68,17 @@ export interface StoryNode {
   id: string;
   title: string;
   uri: string;
-  thumbnail: {
-    thumbnail: Thumbnail;
+  featuredImage: {
+    node: {
+      id: string;
+      sizes: string;
+      sourceUrl: string;
+      placeholderSourceUrl: string;
+      mediaDetails: {
+        height: number;
+        width: number;
+      };
+    };
   };
   storyFields: StoryFields;
 }
@@ -188,7 +197,7 @@ const Page: React.FunctionComponent<any> = ({
               titleClassName={expanded ? 'md:max-w-1/2' : ''}
               title={story.storyFields.videoTitle}
               subtitle={story.title}
-              thumbnail={story.thumbnail.thumbnail}
+              thumbnail={story.featuredImage.node}
             />
           ))}
         </motion.section>
