@@ -239,8 +239,10 @@ const Page: React.FunctionComponent<any> = ({
               },
             },
           }}
-          className="w-full md:w-5/6 lg:w-full flex flex-wrap flex-row mx-auto justify-center items-start mt-3">
-          {press?.map(({ node: item }, index) => (
+          className={`w-full md:w-5/6 lg:w-full flex flex-wrap flex-row mx-auto justify-center items-start mt-3 ${
+            press && press.length > 4 ? 'flex-last-item-align-start' : ''
+          }`}>
+          {press?.map(({ node: item }) => (
             <motion.article
               variants={{
                 initial: { y: -20, opacity: 0 },
@@ -255,7 +257,7 @@ const Page: React.FunctionComponent<any> = ({
                     : item.moreDetails.file.mediaItemUrl
                 }>
                 <a target="_blank">
-                  <h1 className="group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
+                  <h1 className="mx-auto group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
                     {item.title}
                   </h1>
                   <div className="w-7 h-7 relative mt-2 duration-200 transition-transform group-hover:-translate-y-1 mx-auto">
@@ -311,27 +313,12 @@ const Page: React.FunctionComponent<any> = ({
           className="font-bold text-lg lg:text-xl mt-6 md:mt-8 leading-none text-center">
           Media Coverage
         </motion.h2>
-        <motion.section
-          variants={{
-            initial: { y: -20, opacity: 0 },
-            exit: { y: -20, opacity: 0 },
-            enter: {
-              y: 0,
-              opacity: 1,
-              transition: {
-                delay: press ? press?.length * 0.1 + 0.5 : 0.4,
-                staggerChildren: 0.1,
-              },
-            },
-          }}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-          className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-3 flex-last-item-align-start mx-auto md:w-10/12">
+        <section className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-3 flex-last-item-align-start mx-auto md:w-10/12">
           {media?.map(({ node: item }) => {
             const date = new Date(item.date);
             return (
               <Bubble
+                key={item.id}
                 handler={() => {
                   setSelected(formatSelected(item));
                 }}
@@ -345,11 +332,11 @@ const Page: React.FunctionComponent<any> = ({
                     ? `0${date.getDate()}`
                     : date.getDate()
                 } ${months[date.getMonth()]} ${date.getFullYear()}`}
-                thumbnail={item.featuredImage.node}
+                thumbnail={item.featuredImage.node.sourceUrl}
               />
             );
           })}
-        </motion.section>
+        </section>
       </section>
       <h1
         className={`${
