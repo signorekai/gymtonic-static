@@ -194,10 +194,10 @@ const Page: React.FunctionComponent<any> = ({
               imageWrapperClassName={
                 story.id === selectedStory?.id ? 'border-4' : 'border-0'
               }
-              titleClassName={expanded ? 'md:max-w-1/2' : ''}
+              titleClassName={`${expanded ? 'md:max-w-1/2' : ''} text-base`}
               title={story.storyFields.videoTitle}
               subtitle={story.title}
-              thumbnail={story.featuredImage.node}
+              thumbnail={story.featuredImage.node.sourceUrl}
             />
           ))}
         </motion.section>
