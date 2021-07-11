@@ -27,6 +27,7 @@ interface Place {
   id: string;
   title?: string;
   uri?: string;
+  className?: string;
   clickHandler?(): void;
   mouseOverHandler?(): void;
   mouseOutHandler?(): void;
@@ -91,7 +92,6 @@ interface ILocation {
 }
 
 interface LocationFields {
-  address: string;
   area: string;
   contactNumber: string;
   location: {
@@ -111,4 +111,16 @@ interface LocationFields {
   };
   openingHours: string;
   openingSoon: null;
+}
+
+interface LatLngLiteral {
+  lat: number;
+  lng: number;
+}
+
+interface IActiveInfoWindow {
+  position: LatLngLiteral;
+  title: string;
+  id: string;
+  visible: boolean;
 }
