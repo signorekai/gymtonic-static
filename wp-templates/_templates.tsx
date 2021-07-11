@@ -13,6 +13,7 @@ const templates: Templates<NextTemplate> = {
   'page-stories': import('./page-stories'),
   'page-news': import('./page-news'),
   'page-locations': import('./page-locations'),
+  'single-location': import('./single-location'),
   'single-story': import('./page-stories'),
   index: import('./index'),
   category: import('./category'),
