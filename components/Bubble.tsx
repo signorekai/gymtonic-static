@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { motion, Variant } from 'framer-motion';
 
 interface BubbleProps {
-  thumbnail?: string;
+  thumbnail: string;
   handler(): void;
   subtitle: string;
   title: string;
@@ -11,6 +11,7 @@ interface BubbleProps {
   imageWrapperClassName?: string;
   titleClassName?: string;
   subTitleClassName?: string;
+  comingSoon?: boolean | null;
   variants?: {
     initial?: Variant;
     exit?: Variant;
@@ -28,6 +29,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   titleClassName = 'text-base',
   subTitleClassName = 'text-xs',
   variants = {},
+  comingSoon = false,
 }: BubbleProps) => {
   const clickHandler = (): void => {
     handler();
@@ -46,21 +48,28 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   return (
     <motion.article
       variants={articleVariants}
-      className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 ${className}`}>
+      className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 relative ${className}`}>
       <button type="button" onClick={clickHandler}>
         {thumbnail && (
           <div
-            className={`overflow-hidden border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto border-red group-hover:border-4 transition-all ${imageWrapperClassName}`}>
+            className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto border-red group-hover:border-4 transition-all ${imageWrapperClassName}`}>
             <Image
               src={thumbnail}
               layout="fill"
-              sizes="320px"
               quality={90}
+              sizes="320px"
               placeholder="blur"
               blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUkpA4CAABqwENo/rLPQAAAABJRU5ErkJggg=="
               objectFit="cover"
               alt={title}
             />
+            {comingSoon && (
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-12 text-center">
+                Opening
+                <br />
+                Soon
+              </div>
+            )}
           </div>
         )}
         <h6
