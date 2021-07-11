@@ -3,16 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface LatLngLiteral {
-  lat: number;
-  lng: number;
-}
-
 interface MarkerProps extends Place {
   // eslint-disable-next-line react/no-unused-prop-types
   lat: number;
   // eslint-disable-next-line react/no-unused-prop-types
   lng: number;
+  className?: string;
 }
 
 // eslint-disable-next-line react/no-unused-prop-types
@@ -20,6 +16,7 @@ const Marker = ({
   icon,
   title,
   id,
+  className = '',
   clickHandler = () => {},
   mouseOverHandler = () => {},
   mouseOutHandler = () => {},
@@ -38,7 +35,8 @@ const Marker = ({
       transform: `translateX(-${icon.width / 2}px) translateY(-${
         icon.height / 2
       }px)`,
-    }}>
+    }}
+    className={className}>
     <Image src={icon.url} width={icon.width} height={icon.height} alt={title} />
   </button>
 );
@@ -84,22 +82,26 @@ interface Props {
   currentMapCenter?: LatLngLiteral;
   places: Place[];
   initialCenter?: LatLngLiteral;
+  forceActiveInfoWindow?: IActiveInfoWindow;
+  setSelected: React.Dispatch<React.SetStateAction<ILocation | undefined>>;
 }
 
 const MapContainer = ({
   places,
   currentMapCenter,
+  forceActiveInfoWindow = undefined,
   initialCenter = { lat: 1.339652, lng: 103.837938 },
+  setSelected,
 }: Props): JSX.Element => {
-  const [activeInfoWindow, setActiveInfoWindow] = useState<{
-    position: LatLngLiteral;
-    title: string;
-    id: string;
-    visible: boolean;
-  }>();
+  const [activeInfoWindow, setActiveInfoWindow] = useState<
+    IActiveInfoWindow | undefined
+  >(forceActiveInfoWindow);
+
+  useEffect(() => {
+    setActiveInfoWindow(forceActiveInfoWindow);
+  }, [forceActiveInfoWindow]);
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '';
-
   return (
     <div className="w-full h-screen-border-1/2-10 lg:h-screen-border-60">
       <GoogleMapReact
