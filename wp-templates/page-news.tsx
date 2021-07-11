@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
 import Bubble from 'components/Bubble';

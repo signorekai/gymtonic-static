@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
 import Bubble from 'components/Bubble';

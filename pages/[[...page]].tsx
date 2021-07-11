@@ -30,32 +30,6 @@ export const menuQuery = gql`
   }
 `;
 
-export interface MenuData {
-  // eslint-disable-next-line react/no-unused-prop-types
-  map(
-    arg0: ({ node }: MenuData, index: number) => JSX.Element,
-  ):
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | React.ReactNodeArray
-    | React.ReactPortal
-    | null
-    | undefined;
-  // eslint-disable-next-line react/no-unused-prop-types
-  length: number;
-  // eslint-disable-next-line react/no-unused-prop-types
-  node: {
-    cssClasses: string;
-    order: number;
-    url: string;
-    label: string;
-    path: string;
-    id: string;
-  };
-}
-
 /**
  * @todo make conditionalTags available
  */

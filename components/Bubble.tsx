@@ -2,16 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import { motion, Variant } from 'framer-motion';
 
-export interface Thumbnail {
-  id: string;
-  sizes: string;
-  sourceUrl: string;
-  mediaDetails: {
-    height: number;
-    width: number;
-  };
-}
-
 interface BubbleProps {
   thumbnail?: string;
   handler(): void;

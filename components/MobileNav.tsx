@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { createContext, useEffect } from 'react';
 import Link from 'next/link';
 
-import { menuQuery, MenuData } from 'pages/[[...page]]';
+import { menuQuery } from 'pages/[[...page]]';
 import { useQuery } from '@apollo/client';
 
 const MobileNav: React.FunctionComponent<{
@@ -170,10 +170,6 @@ export type SetMobileNavContextType = React.Dispatch<
 >;
 
 export const SetMobileNavContext = createContext<any>(null);
-
-export interface WithMobileNavProps {
-  setShowMobileNav: (arg0: boolean) => void;
-}
 
 interface MobileNavState {
   showMobileNav: boolean;

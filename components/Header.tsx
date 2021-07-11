@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 // import image assets
 import logo from 'assets/images/logo.png';
-import { menuQuery, MenuData } from 'pages/[[...page]]';
+import { menuQuery } from 'pages/[[...page]]';
 import MobileNavBtn from 'components/MobileNavBtn';
 
 const Logo = ({ className = '' }: { className?: string }) => (

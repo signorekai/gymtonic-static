@@ -7,10 +7,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 
-import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
+import withMobileNav from 'components/MobileNav';
 import withLoader, { WithLoaderProps } from 'components/Loader';
 import VideoScroll from 'components/VideoScroll';
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import RightParallaxCard from 'components/RightParallaxCard';
 import MobileNavBtn from 'components/MobileNavBtn';
 import { useScroll } from 'lib/hooks';

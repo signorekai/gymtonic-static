@@ -3,18 +3,16 @@ import { motion } from 'framer-motion';
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
 
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import AboutCard from 'components/AboutCard';
 import MobileAboutHeader from 'components/MobileAboutHeader';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { getNextStaticProps } from '@wpengine/headless/next';
 
 import ArmOnRed from 'assets/images/arm-on-red.png';
-import DownloadBtn from 'assets/images/download.png';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
@@ -48,7 +46,7 @@ interface ResearchPaperFields {
   };
 }
 
-export interface ResearchPaperNode {
+interface ResearchPaperNode {
   id: string;
   title: string;
   moreResearchInfo: ResearchPaperFields;

@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { getNextStaticProps } from '@wpengine/headless/next';
-import withLayout, { WithLayoutProps } from 'components/Layout';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
-import { gql, useQuery } from '@apollo/client';
+import React, { useEffect, useRef, useState } from 'react';
 import { GetStaticPropsContext } from 'next';
+import { getNextStaticProps } from '@wpengine/headless/next';
+import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
-import Bubble, { Thumbnail } from 'components/Bubble';
-import StoryCard from 'components/StoryCard';
 import { useRouter } from 'next/router';
 import { find } from 'lodash';
+import { motion } from 'framer-motion';
+
+import withLayout from 'components/Layout';
+import Bubble from 'components/Bubble';
+import StoryCard from 'components/StoryCard';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 import MobileNavBtn from 'components/MobileNavBtn';
-import { motion } from 'framer-motion';
 
 const storiesQuery = gql`
   {
@@ -51,12 +51,6 @@ const storiesQuery = gql`
   }
 `;
 
-export interface Gym {
-  id: string;
-  uri: string;
-  title: string;
-}
-
 interface StoryFields {
   description: string;
   videoTitle: string;
@@ -64,7 +58,7 @@ interface StoryFields {
   gym: Gym[];
 }
 
-export interface StoryNode {
+interface StoryNode {
   id: string;
   title: string;
   uri: string;

@@ -10,16 +10,6 @@ interface LayoutState {
   mobileNavBtnStyle: string;
 }
 
-export interface WithLayoutProps {
-  setHeaderRef: (ref: RefObject<HTMLElement>) => void;
-  setScrolledHeader: (arg0: boolean, noAnimation?: boolean) => void;
-  setMobileNavBtnStyle: (arg0: string) => void;
-  showLoader: boolean;
-  setShowLoader: (arg0: boolean) => void;
-  setShowMobileNav: (arg0: boolean) => void;
-  appRef: React.RefObject<HTMLDivElement>;
-}
-
 // eslint-disable-next-line @typescript-eslint/ban-types
 export default function withLayout<T extends React.Component>(
   Component: React.ComponentType<T>,

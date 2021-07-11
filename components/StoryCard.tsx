@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
-import { Gym } from 'wp-templates/page-stories';
 import GymLink from 'components/GymLink';
 
 interface StoryProps {
