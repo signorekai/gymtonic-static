@@ -39,6 +39,11 @@ module.exports = {
       'screen-5': 'calc(var(--vh) * 500)',
       'screen-6': 'calc(var(--vh) * 600)',
     }),
+    minWidth: (theme) => ({
+      0: '0',
+      ...theme('spacing'),
+      52: '13rem',
+    }),
     minHeight: (theme) => ({
       0: '0',
       ...theme('spacing'),
@@ -79,6 +84,7 @@ module.exports = {
       height: {
         'screen-w-2/5': '40vw',
         'screen-border-10': 'calc(calc(var(--vh) * 100) - 20px)',
+        'screen-border-1/2-10': 'calc(calc(var(--vh) * 50) - 20px)',
         'screen-border-60': 'calc(calc(var(--vh) * 100) - 120px)',
       },
       fontSize: {
