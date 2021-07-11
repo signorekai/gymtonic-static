@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
@@ -28,56 +29,7 @@ interface QueryResult {
 }
 
 interface Locations {
-  edges: { node: Location }[] | undefined;
-}
-
-interface Location {
-  id: string;
-  uri: string;
-  title: string;
-  locationFields: LocationFields;
-  terms: {
-    nodes: {
-      id: string;
-      name: string;
-      termTaxonomyId: number;
-    }[];
-  };
-  featuredImage?: {
-    node: {
-      id: string;
-      sizes: string;
-      sourceUrl: string;
-      largeSourceUrl: string;
-      mediaDetails: {
-        height: number;
-        width: number;
-      };
-    };
-  };
-}
-
-interface LocationFields {
-  address: string;
-  area: string;
-  contactNumber: string;
-  location: {
-    city: string;
-    country: string;
-    countryShort: string;
-    latitude: number;
-    longitude: number;
-    placeId: string;
-    postCode: string;
-    state: string;
-    stateShort: string;
-    streetAddress: string;
-    streetName: string;
-    streetNumber: string;
-    zoom: string;
-  } | null;
-  openingHours: string;
-  openingSoon: null;
+  edges: { node: ILocation }[] | undefined;
 }
 
 const query = gql`
@@ -184,73 +136,73 @@ const Page: React.FunctionComponent<any> = ({
     setScrolledHeader(true, true);
   }, [setScrolledHeader, setShowLoader]);
 
+  const router = useRouter();
   const { data }: QueryResult = useQuery(query);
   const locationsOpenToPublic = data?.openToPublic.locations?.edges;
   const locationsNotOpenToPublic = data?.notOpenToPublic.locations?.edges;
 
+  const [selected, setSelected] = useState<ILocation>();
+
   const [currentMapCenter, setCurrentMapCenter] =
     useState<google.maps.LatLngLiteral>();
 
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((p) => {
+      setCurrentMapCenter({
+        lat: p.coords.latitude,
+        lng: p.coords.longitude,
+      });
+    });
+  }, []);
+
   const markers = useMemo(() => {
-    const allMarkers: {
-      position: {
-        lat: number;
-        lng: number;
-      };
-      icon: google.maps.Icon;
-      id: string;
-      title: string;
-      uri: string;
-    }[] = [];
+    const allMarkers: Place[] = [];
 
     locationsOpenToPublic?.forEach(({ node: location }) => {
-      if (location.locationFields.location) {
-        allMarkers.push({
-          position: {
-            lat: location.locationFields.location?.latitude,
-            lng: location.locationFields.location?.longitude,
-          },
-          icon: {
-            url: '/images/map-icon.png',
-            scaledSize: {
-              width: 31,
-              height: 36,
-              equals: () => true,
-            },
-          },
-          title: location.title,
-          id: location.id,
-          uri: location.uri,
-        });
-      }
+      allMarkers.push({
+        position: {
+          lat: location.locationFields.location.latitude,
+          lng: location.locationFields.location.longitude,
+        },
+        icon: {
+          url: '/images/map-icon.png',
+          width: 31,
+          height: 36,
+        },
+        title: location.title,
+        id: location.id,
+        uri: location.uri,
+        clickHandler: () => {
+          if (location.locationFields.openingSoon === null) {
+            void router.push(location.uri);
+          }
+        },
+      });
     });
 
     locationsNotOpenToPublic?.forEach(({ node: location }) => {
-      if (location.locationFields.location) {
-        allMarkers.push({
-          position: {
-            lat: location.locationFields.location?.latitude,
-            lng: location.locationFields.location?.longitude,
-          },
-          icon: {
-            url: '/images/map-icon-inactive.png',
-            scaledSize: {
-              width: 31,
-              height: 36,
-              equals: () => false,
-            },
-          },
-          title: location.title,
-          id: location.id,
-          uri: location.uri,
-        });
-      }
+      allMarkers.push({
+        position: {
+          lat: location.locationFields.location?.latitude,
+          lng: location.locationFields.location?.longitude,
+        },
+        icon: {
+          url: '/images/map-icon-inactive.png',
+          width: 31,
+          height: 36,
+        },
+        id: location.id,
+        mouseOverHandler: () => {
+          setSelected(location);
+        },
+        mouseOutHandler: () => {
+          setSelected(undefined);
+        },
+      });
     });
 
     return allMarkers;
-  }, [locationsOpenToPublic, locationsNotOpenToPublic]);
-
-  const [selected, setSelected] = useState<Location>();
+  }, [locationsOpenToPublic, locationsNotOpenToPublic, router]);
 
   return (
     <motion.main
@@ -301,23 +253,31 @@ const Page: React.FunctionComponent<any> = ({
               <Bubble
                 handler={() => {
                   setSelected(item);
-                  if (item.locationFields.location) {
-                    console.log('hi');
-                    setCurrentMapCenter({
-                      lat: item.locationFields.location?.latitude,
-                      lng: item.locationFields.location?.longitude,
-                    });
-                  }
+                  setCurrentMapCenter({
+                    lat: item.locationFields.location.latitude,
+                    lng: item.locationFields.location.longitude,
+                  });
                 }}
-                className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3"
+                className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
+                  item.locationFields.openingSoon === true
+                    ? 'pointer-events-none'
+                    : ''
+                }`}
                 titleClassName="text-sm md:text-base"
-                imageWrapperClassName={
+                imageWrapperClassName={`${
                   item.id === selected?.id ? 'border-4' : 'border-0'
-                }
+                } ${
+                  item.locationFields.openingSoon === true
+                    ? 'group-hover:border-0'
+                    : ''
+                }`}
+                comingSoon={item.locationFields.openingSoon}
                 title={item.title}
                 subtitle={item.locationFields.area}
                 thumbnail={
-                  item.featuredImage ? item.featuredImage.node.sourceUrl : ''
+                  item.featuredImage
+                    ? item.featuredImage.node.sourceUrl
+                    : '/images/map-no-icon.png'
                 }
               />
             );
@@ -357,8 +317,9 @@ const Page: React.FunctionComponent<any> = ({
                   enter: { y: 0, opacity: 1 },
                 }}
                 className="px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 w-1/3 lg:w-1/4 xl:w-1/4">
-                <button type="button">
+                <div className="text-center">
                   <Image
+                    layout="fixed"
                     src={
                       item.id === selected?.id
                         ? '/images/map-icon-active.png'
@@ -373,20 +334,15 @@ const Page: React.FunctionComponent<any> = ({
                   <h1 className="leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 text-sm md:text-base">
                     {item.title}
                   </h1>
-                </button>
+                </div>
               </motion.article>
             );
           })}
         </motion.section>
       </section>
-      <section className="border-10 md:border-60 border-red order-2 lg:order-1 w-screen lg:w-screen-1/2 min-h-screen relative lg:sticky top-0">
+      <section className="border-10 md:border-60 border-red order-2 lg:order-1 w-screen lg:w-screen-1/2 min-h-screen-1/2 lg:min-h-screen relative lg:sticky top-0">
         <MapContainer
-          markerClickHandler={(position) => {
-            setCurrentMapCenter(position);
-          }}
-          markerMouseOverHandler={(position) => {
-            setCurrentMapCenter(position);
-          }}
+          initialCenter={markers[0].position}
           currentMapCenter={currentMapCenter}
           places={markers}
         />
