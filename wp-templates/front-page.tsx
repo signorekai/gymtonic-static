@@ -4,8 +4,6 @@ import { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { getApolloClient, getPosts } from '@wpengine/headless';
 import { AnimatePresence, motion } from 'framer-motion';
-import debounce from 'lodash/debounce';
-import throttle from 'lodash/throttle';
 
 import withMobileNav from 'components/MobileNav';
 import withLoader, { WithLoaderProps } from 'components/Loader';
