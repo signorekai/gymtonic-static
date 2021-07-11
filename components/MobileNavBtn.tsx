@@ -1,5 +1,4 @@
 import React from 'react';
-import { WithMobileNavProps } from './MobileNav';
 
 interface Props {
   barStyle?: string;

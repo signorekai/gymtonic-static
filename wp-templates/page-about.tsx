@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import React, { useEffect } from 'react';
+import withLayout from 'components/Layout';
 
-import { LoaderContext, LoaderContextType } from 'pages/_app';
 import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
-import withMobileNav, { WithMobileNavProps } from 'components/MobileNav';
+import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
 const Page: React.FunctionComponent<any> = ({

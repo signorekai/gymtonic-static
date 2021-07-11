@@ -62,7 +62,7 @@ const Page: React.FunctionComponent<any> = (props: WithLayoutProps) => {
           }
         }
       }
-  `)
+  `);
 
   useEffect(() => {
     setShowLoader(false);

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import AboutCard from 'components/AboutCard';
 import MobileAboutHeader from 'components/MobileAboutHeader';
 import Carousel, { CarouselCard } from 'components/Carousel';

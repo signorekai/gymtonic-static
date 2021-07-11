@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import AboutCard from 'components/AboutCard';
 import Carousel, { CarouselCard } from 'components/Carousel';
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
 import MobileAboutHeader from 'components/MobileAboutHeader';
 import withMobileNav from 'components/MobileNav';

@@ -1,8 +1,7 @@
 import AboutCard from 'components/AboutCard';
-import withLayout, { WithLayoutProps } from 'components/Layout';
+import withLayout from 'components/Layout';
 import MobileAboutHeader from 'components/MobileAboutHeader';
-import { LoaderContext, LoaderContextType } from 'pages/_app';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
