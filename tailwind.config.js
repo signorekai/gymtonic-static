@@ -78,8 +78,8 @@ module.exports = {
       },
       height: {
         'screen-w-2/5': '40vw',
-        'screen-border-10': 'calc(calc(var(--vh) * 100) + 20px)',
-        'screen-border-60': 'calc(calc(var(--vh) * 100) + 120px)',
+        'screen-border-10': 'calc(calc(var(--vh) * 100) - 20px)',
+        'screen-border-60': 'calc(calc(var(--vh) * 100) - 120px)',
       },
       fontSize: {
         xxs: ['0.6rem', 1],
