@@ -5,6 +5,7 @@ interface CarouselProps {
   children: JSX.Element[];
   className?: string;
   isDraggable?: boolean;
+  showNav?: boolean;
   navBtnPosition?: 'top' | 'center';
 }
 
@@ -32,6 +33,7 @@ export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
 
 const Carousel: React.FunctionComponent<CarouselProps> = ({
   children,
+  showNav = true,
   className = '',
   isDraggable = true,
   navBtnPosition = 'top',
@@ -81,6 +83,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
 
   useEffect(() => {
     if (slidesContainer.current) {
+      console.log(slidesContainer.current);
       setSlideWidth(slidesContainer.current.clientWidth);
       window.addEventListener('resize', handleResize);
     }
@@ -99,39 +102,41 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         className={`flex flex-row h-full ${
           navBtnPosition === 'top' ? 'items-start' : 'items-center'
         }`}>
-        <button
-          type="button"
-          className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 ${
-            currentIndex === 0 ? 'opacity-50 hover:cursor-not-allowed' : ''
-          }`}
-          onClick={() => {
-            goTo(-1);
-          }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 28 28">
-            <g transform="translate(-1646 -2601) rotate(90)">
-              <g
-                transform="translate(2629 -1674) rotate(90)"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.5">
-                <circle cx="14" cy="14" r="14" stroke="none" />
-                <circle cx="14" cy="14" r="13.25" fill="none" />
+        {showNav && (
+          <button
+            type="button"
+            className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 ${
+              currentIndex === 0 ? 'opacity-50 hover:cursor-not-allowed' : ''
+            }`}
+            onClick={() => {
+              goTo(-1);
+            }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 28 28">
+              <g transform="translate(-1646 -2601) rotate(90)">
+                <g
+                  transform="translate(2629 -1674) rotate(90)"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="1.5">
+                  <circle cx="14" cy="14" r="14" stroke="none" />
+                  <circle cx="14" cy="14" r="13.25" fill="none" />
+                </g>
+                <path
+                  d="M4315.6,3241.3l6.374,5.975-6.355,6.018"
+                  transform="translate(5862.298 -5977.787) rotate(90)"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="1.5"
+                />
               </g>
-              <path
-                d="M4315.6,3241.3l6.374,5.975-6.355,6.018"
-                transform="translate(5862.298 -5977.787) rotate(90)"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.5"
-              />
-            </g>
-          </svg>
-        </button>
-        <div className="flex-1 h-full overflow-x-hidden" ref={container}>
+            </svg>
+          </button>
+        )}
+        <div className="flex-1 h-full overflow-hidden" ref={container}>
           <motion.div
             ref={slidesContainer}
             drag={isDraggable ? 'x' : false}
@@ -168,42 +173,44 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             {childrenWithProps}
           </motion.div>
         </div>
-        <button
-          type="button"
-          className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
-            currentIndex === children.length - 1
-              ? 'opacity-50 hover:cursor-not-allowed'
-              : ''
-          }`}
-          onClick={() => {
-            goTo(1);
-          }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 28 28">
-            <g transform="translate(1674 2629) rotate(-90)">
-              <g
-                id="Ellipse_417"
-                data-name="Ellipse 417"
-                transform="translate(2629 -1674) rotate(90)"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.5">
-                <circle cx="14" cy="14" r="14" stroke="none" />
-                <circle cx="14" cy="14" r="13.25" fill="none" />
+        {showNav && (
+          <button
+            type="button"
+            className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
+              currentIndex === children.length - 1
+                ? 'opacity-50 hover:cursor-not-allowed'
+                : ''
+            }`}
+            onClick={() => {
+              goTo(1);
+            }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 28 28">
+              <g transform="translate(1674 2629) rotate(-90)">
+                <g
+                  id="Ellipse_417"
+                  data-name="Ellipse 417"
+                  transform="translate(2629 -1674) rotate(90)"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="1.5">
+                  <circle cx="14" cy="14" r="14" stroke="none" />
+                  <circle cx="14" cy="14" r="13.25" fill="none" />
+                </g>
+                <path
+                  d="M4315.6,3241.3l6.374,5.975-6.355,6.018"
+                  transform="translate(5862.298 -5977.787) rotate(90)"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="1.5"
+                />
               </g>
-              <path
-                d="M4315.6,3241.3l6.374,5.975-6.355,6.018"
-                transform="translate(5862.298 -5977.787) rotate(90)"
-                fill="none"
-                stroke="#fff"
-                strokeWidth="1.5"
-              />
-            </g>
-          </svg>
-        </button>
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );
