@@ -422,8 +422,17 @@ const Page: React.FunctionComponent<any> = ({
                     </motion.a>
                   </Link>
                 </section>
-                <section className="flex flex-row w-full justify-center">
-                  hi
+                <section className="flex flex-col w-full items-center justify-end min-h-screen-1/8 overflow-hidden">
+                  <motion.button
+                    variants={{
+                      initial: { opacity: 0, y: 70 },
+                      exit: { opacity: 0, y: 20 },
+                      enter: { opacity: 1, y: 0 },
+                    }}>
+                    <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
+                      Sign Up
+                    </div>
+                  </motion.button>
                 </section>
               </section>
               {selected?.locationFields.images && (
@@ -436,14 +445,15 @@ const Page: React.FunctionComponent<any> = ({
                   <Carousel
                     navBtnStyle={{
                       position: 'absolute',
-                      top: '-2rem',
+                      top: '-2.5rem',
                       color: '#E62D2D',
+                      margin: 0,
                     }}
                     leftNavBtnStyle={{
-                      left: '0.5rem',
+                      left: '3%',
                     }}
                     rightNavBtnStyle={{
-                      right: '0.5rem',
+                      right: '3%',
                     }}
                     isDraggable={false}>
                     {selected.locationFields.images.map((image) => {
