@@ -254,18 +254,14 @@ const Page: React.FunctionComponent<any> = ({
           lat: location.locationFields.location?.latitude,
           lng: location.locationFields.location?.longitude,
         },
+        className: 'hover:cursor-default',
         icon: {
           url: '/images/map-icon-inactive.png',
           width: 31,
           height: 36,
         },
+        title: location.title,
         id: location.id,
-        mouseOverHandler: () => {
-          setSelected(location);
-        },
-        mouseOutHandler: () => {
-          setSelected(undefined);
-        },
       });
     });
 
