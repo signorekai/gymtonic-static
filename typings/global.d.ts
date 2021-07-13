@@ -77,6 +77,13 @@ interface ILocation {
       termTaxonomyId: number;
     }[];
   };
+  images?: {
+    sourceUrl: string;
+    mediaDetails: {
+      height: number;
+      width: number;
+    };
+  };
   featuredImage?: {
     node: {
       id: string;
