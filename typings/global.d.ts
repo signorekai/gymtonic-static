@@ -77,13 +77,6 @@ interface ILocation {
       termTaxonomyId: number;
     }[];
   };
-  images?: {
-    sourceUrl: string;
-    mediaDetails: {
-      height: number;
-      width: number;
-    };
-  };
   featuredImage?: {
     node: {
       id: string;
@@ -101,6 +94,13 @@ interface ILocation {
 interface LocationFields {
   area: string;
   contactNumber: string;
+  images?: {
+    sourceUrl: string;
+    mediaDetails: {
+      height: number;
+      width: number;
+    };
+  };
   location: {
     city: string;
     country: string;
