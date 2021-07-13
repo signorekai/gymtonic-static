@@ -49,6 +49,7 @@ module.exports = {
       ...theme('spacing'),
       full: '100%',
       screen: 'calc(var(--vh) * 100)',
+      'screen-1/8': 'calc(var(--vh) * 12.5)',
       'screen-1/6': 'calc(var(--vh) * 16.67)',
       'screen-1/4': 'calc(var(--vh) * 25)',
       'screen-1/2': 'calc(var(--vh) * 50)',
