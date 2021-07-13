@@ -13,6 +13,7 @@ import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
 import Bubble from 'components/Bubble';
 import MapContainer from 'components/MapContainer';
+import Carousel, { CarouselCard } from 'components/Carousel';
 
 interface QueryResult {
   data:
@@ -46,6 +47,13 @@ const query = gql`
             locationFields {
               area
               contactNumber
+              images {
+                sourceUrl(size: CAROUSEL_SMALL)
+                mediaDetails {
+                  width
+                  height
+                }
+              }
               location {
                 city
                 country
@@ -298,118 +306,170 @@ const Page: React.FunctionComponent<any> = ({
                   },
                 },
               }}
-              key="show-info"
-              className="px-3 md:px-14 lg:px-5">
-              <button
-                className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
-                type="button"
-                onClick={() => {
-                  void mapContainerControls.start({
-                    width: window && window.innerWidth >= 1024 ? '50%' : '100%',
-                    transition: { duration: 0.4 },
-                  });
-                  setTimeout(() => {
-                    setSelected(undefined);
-                    setActiveInfoWindow(undefined);
-                    setShowInfo(false);
-                  }, 100);
-                }}>
-                <motion.h2
+              className="flex flex-col lg:min-h-screen justify-between"
+              key="show-info">
+              <section className="flex-1 flex flex-col justify-between">
+                <section className="px-3 md:px-14 lg:px-5">
+                  <button
+                    className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
+                    type="button"
+                    onClick={() => {
+                      void mapContainerControls.start({
+                        width:
+                          window && window.innerWidth >= 1024 ? '50%' : '100%',
+                        transition: { duration: 0.4 },
+                      });
+                      setTimeout(() => {
+                        setSelected(undefined);
+                        setActiveInfoWindow(undefined);
+                        setShowInfo(false);
+                      }, 100);
+                    }}>
+                    <motion.h2
+                      variants={{
+                        initial: { y: -20, opacity: 0 },
+                        exit: { y: 0, opacity: 1 },
+                        enter: { y: 0, opacity: 1 },
+                      }}
+                      className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
+                      {'<'} Where to find us
+                    </motion.h2>
+                  </button>
+                  <motion.h1
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="font-bold text-lg lg:text-xl mt-6 lg:mt-16 text-center lg:leading-none leading-none">
+                    {selected?.title}
+                  </motion.h1>
+                  <motion.h3
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="font-bold text-xs text-red text-center mt-8">
+                    Address
+                  </motion.h3>
+                  <motion.p
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="text-black font-bold text-xs text-center">
+                    {selected?.locationFields.location.streetNumber}{' '}
+                    {selected?.locationFields.location.streetAddress}{' '}
+                    {selected?.locationFields.location.postCode}
+                  </motion.p>
+                  <Link
+                    href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
+                    <motion.a
+                      variants={{
+                        initial: { y: -20, opacity: 0 },
+                        exit: { y: 0, opacity: 1 },
+                        enter: { y: 0, opacity: 1 },
+                      }}
+                      className="font-bold text-xs text-red uppercase text-center block mt-3 underline"
+                      target="_blank">
+                      Get Directions
+                    </motion.a>
+                  </Link>
+                  <motion.h3
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="font-bold text-xs text-red text-center mt-8">
+                    Opening hours
+                  </motion.h3>
+                  <motion.p
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="text-black font-bold text-xs text-center"
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: selected?.locationFields.openingHours ?? '',
+                    }}
+                  />
+                  <motion.h3
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="font-bold text-xs text-red text-center mt-8">
+                    Call us
+                  </motion.h3>
+                  <Link
+                    href={`tel:${selected?.locationFields.contactNumber}`}
+                    passHref>
+                    <motion.a
+                      variants={{
+                        initial: { y: -20, opacity: 0 },
+                        exit: { y: 0, opacity: 1 },
+                        enter: { y: 0, opacity: 1 },
+                      }}
+                      className="font-bold text-xs text-black uppercase text-center block"
+                      target="_blank">
+                      {selected?.locationFields.contactNumber}
+                    </motion.a>
+                  </Link>
+                </section>
+                <section className="flex flex-row w-full justify-center">
+                  hi
+                </section>
+              </section>
+              {selected?.locationFields.images && (
+                <motion.section
                   variants={{
                     initial: { y: -20, opacity: 0 },
                     exit: { y: 0, opacity: 1 },
                     enter: { y: 0, opacity: 1 },
-                  }}
-                  className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
-                  {'<'} Where to find us
-                </motion.h2>
-              </button>
-              <motion.h1
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="font-bold text-lg lg:text-xl mt-6 lg:mt-16 text-center lg:leading-none leading-none">
-                {selected?.title}
-              </motion.h1>
-              <motion.h3
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="font-bold text-xs text-red text-center mt-8">
-                Address
-              </motion.h3>
-              <motion.p
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="text-black font-bold text-xs text-center">
-                {selected?.locationFields.location.streetNumber}{' '}
-                {selected?.locationFields.location.streetAddress}{' '}
-                {selected?.locationFields.location.postCode}
-              </motion.p>
-              <Link
-                href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
-                <motion.a
-                  variants={{
-                    initial: { y: -20, opacity: 0 },
-                    exit: { y: 0, opacity: 1 },
-                    enter: { y: 0, opacity: 1 },
-                  }}
-                  className="font-bold text-xs text-red uppercase text-center block mt-3 underline"
-                  target="_blank">
-                  Get Directions
-                </motion.a>
-              </Link>
-              <motion.h3
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="font-bold text-xs text-red text-center mt-8">
-                Opening hours
-              </motion.h3>
-              <motion.p
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="text-black font-bold text-xs text-center"
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                  __html: selected?.locationFields.openingHours ?? '',
-                }}
-              />
-              <motion.h3
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="font-bold text-xs text-red text-center mt-8">
-                Call us
-              </motion.h3>
-              <Link
-                href={`tel:${selected?.locationFields.contactNumber}`}
-                passHref>
-                <motion.a
-                  variants={{
-                    initial: { y: -20, opacity: 0 },
-                    exit: { y: 0, opacity: 1 },
-                    enter: { y: 0, opacity: 1 },
-                  }}
-                  className="font-bold text-xs text-black uppercase text-center block"
-                  target="_blank">
-                  {selected?.locationFields.contactNumber}
-                </motion.a>
-              </Link>
+                  }}>
+                  <Carousel
+                    navBtnStyle={{
+                      position: 'absolute',
+                      top: '-2rem',
+                      color: '#E62D2D',
+                    }}
+                    leftNavBtnStyle={{
+                      left: '0.5rem',
+                    }}
+                    rightNavBtnStyle={{
+                      right: '0.5rem',
+                    }}
+                    isDraggable={false}>
+                    {selected.locationFields.images.map((image) => {
+                      const ratio =
+                        image.mediaDetails.width / image.mediaDetails.height;
+
+                      return (
+                        <CarouselCard>
+                          <div
+                            className="w-full relative"
+                            style={{
+                              paddingBottom: `${100 / ratio}%`,
+                            }}>
+                            <Image
+                              src={image.sourceUrl}
+                              layout="fill"
+                              alt=""
+                              className="pointer-events-none"
+                            />
+                          </div>
+                        </CarouselCard>
+                      );
+                    })}
+                  </Carousel>
+                </motion.section>
+              )}
             </motion.section>
           )}
           {!showInfo && (
