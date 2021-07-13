@@ -83,7 +83,6 @@ interface Props {
   places: Place[];
   initialCenter?: LatLngLiteral;
   forceActiveInfoWindow?: IActiveInfoWindow;
-  setSelected: React.Dispatch<React.SetStateAction<ILocation | undefined>>;
 }
 
 const MapContainer = ({
@@ -91,7 +90,6 @@ const MapContainer = ({
   currentMapCenter,
   forceActiveInfoWindow = undefined,
   initialCenter = { lat: 1.339652, lng: 103.837938 },
-  setSelected,
 }: Props): JSX.Element => {
   const [activeInfoWindow, setActiveInfoWindow] = useState<
     IActiveInfoWindow | undefined

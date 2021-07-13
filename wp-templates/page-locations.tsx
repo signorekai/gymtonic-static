@@ -554,7 +554,6 @@ const Page: React.FunctionComponent<any> = ({
         animate={mapContainerControls}
         className="border-10 md:border-60 border-red order-2 lg:order-1 w-screen lg:w-screen-1/2 min-h-screen-1/2 lg:min-h-screen relative lg:sticky top-0">
         <MapContainer
-          setSelected={setSelected}
           forceActiveInfoWindow={activeInfoWindow}
           initialCenter={markers[0].position}
           currentMapCenter={currentMapCenter}
