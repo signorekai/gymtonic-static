@@ -119,7 +119,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 text-white ${
               currentIndex === 0 ? 'opacity-50 hover:cursor-not-allowed' : ''
             }`}
-            style={{ ...fullNavBtnStyle }}
+            style={{ ...fullNavBtnStyle, ...leftNavBtnStyle }}
             onClick={() => {
               goTo(-1);
             }}>
