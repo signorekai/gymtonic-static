@@ -108,6 +108,7 @@ const MapContainer = ({
         defaultCenter={initialCenter}
         center={currentMapCenter}
         options={{
+          clickableIcons: false,
           streetViewControl: false,
           mapTypeControl: false,
           fullscreenControl: false,
