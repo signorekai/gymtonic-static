@@ -100,7 +100,7 @@ interface LocationFields {
       height: number;
       width: number;
     };
-  };
+  }[];
   location: {
     city: string;
     country: string;
