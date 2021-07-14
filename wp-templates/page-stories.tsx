@@ -99,12 +99,6 @@ const Page: React.FunctionComponent<any> = ({
   const [selectedStory, setSelectedStory] = useState<StoryNode>();
   const [expanded, setExpanded] = useState(false);
 
-  const clickHandler = (story: StoryNode) => {
-    setSelectedStory(story);
-    setExpanded(true);
-    path.current = story.uri;
-  };
-
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
@@ -112,10 +106,13 @@ const Page: React.FunctionComponent<any> = ({
     if (path.current !== '/stories') {
       const current = find(
         stories,
-        (story) => story.node.uri.slice(0, -1) === router.asPath,
+        (story) => story.node.uri.slice(0, -1) === path.current,
       );
+
       if (current) {
-        clickHandler(current.node);
+        setSelectedStory(current.node);
+        setExpanded(true);
+        path.current = current.node.uri;
       }
     }
 
@@ -125,7 +122,8 @@ const Page: React.FunctionComponent<any> = ({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024 && typeof selectedStory === 'undefined') {
-        if (stories) setSelectedStory(stories[0].node);
+        if (stories && /stories/.exec(path.current))
+          setSelectedStory(stories[0].node);
       }
     };
 
@@ -134,7 +132,7 @@ const Page: React.FunctionComponent<any> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [stories, selectedStory]);
+  }, [stories, selectedStory, path]);
 
   return (
     <main className="flex flex-col lg:flex-row relative items-start">
