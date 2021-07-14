@@ -161,28 +161,27 @@ const Page: React.FunctionComponent<any> = ({
   const mapContainerControls = useAnimation();
 
   const clickHandler = useCallback(
-    (location: ILocation) => {
+    (selectedLocation: ILocation) => {
       if (window && window.innerWidth >= 1024) {
         void mapContainerControls.start({
           width: window.innerWidth >= 1366 ? '70%' : '60%',
           transition: { delay: 0.2, duration: 0.4 },
         });
       }
-      setSelected(location);
-      setCurrentMapCenter({
-        lat: location.locationFields.location.latitude,
-        lng: location.locationFields.location.longitude,
-      });
 
       setShowInfo(true);
-
+      setSelected(selectedLocation);
+      setCurrentMapCenter({
+        lat: selectedLocation.locationFields.location.latitude,
+        lng: selectedLocation.locationFields.location.longitude,
+      });
       setActiveInfoWindow({
         position: {
-          lat: location.locationFields.location.latitude,
-          lng: location.locationFields.location.longitude,
+          lat: selectedLocation.locationFields.location.latitude,
+          lng: selectedLocation.locationFields.location.longitude,
         },
-        title: location.title,
-        id: location.id,
+        title: selectedLocation.title,
+        id: selectedLocation.id,
         visible: true,
       });
     },
