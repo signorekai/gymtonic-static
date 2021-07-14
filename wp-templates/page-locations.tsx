@@ -366,6 +366,7 @@ const Page: React.FunctionComponent<any> = ({
                     {selected?.locationFields.location.postCode}
                   </motion.p>
                   <Link
+                    passHref
                     href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
                     <motion.a
                       variants={{
