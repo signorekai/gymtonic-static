@@ -483,136 +483,142 @@ const Page: React.FunctionComponent<any> = ({
             </motion.section>
           )}
           {!showInfo && (
-            <motion.section
-              variants={{
-                initial: { x: 0, opacity: 1 },
-                exit: { x: '100%', opacity: 1 },
-                enter: { x: 0, opacity: 1 },
-              }}
-              key="show-list">
-              <header className="pointer-events-none top-0 w-full pt-12 lg:pt-20 text-center z-30">
-                <motion.h1 className="page-title relative z-20 pt-2 pb-4 block">
-                  Where to find us
-                </motion.h1>
+            <>
+              <motion.section
+                variants={{
+                  initial: { x: 0, opacity: 1 },
+                  exit: { x: '100%', opacity: 1 },
+                  enter: { x: 0, opacity: 1 },
+                }}
+                key="show-list">
+                <header className="pointer-events-none top-0 w-full pt-12 lg:pt-20 text-center z-30">
+                  <motion.h1 className="page-title relative z-20 pt-2 pb-4 block">
+                    Where to find us
+                  </motion.h1>
+                  <motion.h2
+                    variants={{
+                      initial: { y: -20, opacity: 0 },
+                      exit: { y: 0, opacity: 1 },
+                      enter: { y: 0, opacity: 1 },
+                    }}
+                    className="font-bold text-lg lg:text-xl mt-4 leading-none">
+                    Locations open to public
+                  </motion.h2>
+                </header>
+                <motion.section
+                  variants={{
+                    initial: { y: -20, opacity: 0 },
+                    exit: { y: 0, opacity: 1 },
+                    enter: {
+                      y: 0,
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.1,
+                      },
+                    },
+                  }}
+                  initial="initial"
+                  animate="enter"
+                  exit="exit"
+                  className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
+                  {locationsOpenToPublic?.map(({ node: location }) => {
+                    return (
+                      <Bubble
+                        variants={{
+                          initial: { y: -20, opacity: 0 },
+                          exit: { y: 0, opacity: 1 },
+                          enter: { y: 0, opacity: 1 },
+                        }}
+                        handler={() => {
+                          clickHandler(location);
+                        }}
+                        className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
+                          location.locationFields.openingSoon === true
+                            ? 'pointer-events-none'
+                            : ''
+                        }`}
+                        titleClassName="text-sm md:text-base"
+                        imageWrapperClassName={`${
+                          location.id === selected?.id ? 'border-4' : 'border-0'
+                        } ${
+                          location.locationFields.openingSoon === true
+                            ? 'group-hover:border-0'
+                            : ''
+                        }`}
+                        comingSoon={location.locationFields.openingSoon}
+                        title={location.title}
+                        subtitle={location.locationFields.area}
+                        thumbnail={
+                          location.featuredImage
+                            ? location.featuredImage.node.sourceUrl
+                            : '/images/map-no-icon.png'
+                        }
+                      />
+                    );
+                  })}
+                </motion.section>
                 <motion.h2
                   variants={{
                     initial: { y: -20, opacity: 0 },
                     exit: { y: 0, opacity: 1 },
                     enter: { y: 0, opacity: 1 },
                   }}
-                  className="font-bold text-lg lg:text-xl mt-4 leading-none">
-                  Locations open to public
+                  className="font-bold text-lg lg:text-xl mt-8 leading-none text-center">
+                  By referral only
                 </motion.h2>
-              </header>
-              <motion.section
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: {
-                    y: 0,
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
+                <motion.section
+                  variants={{
+                    initial: { y: -20, opacity: 0 },
+                    exit: { y: 0, opacity: 1 },
+                    enter: {
+                      y: 0,
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.1,
+                      },
                     },
-                  },
-                }}
-                initial="initial"
-                animate="enter"
-                exit="exit"
-                className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
-                {locationsOpenToPublic?.map(({ node: location }) => {
-                  return (
-                    <Bubble
-                      variants={{
-                        initial: { y: -20, opacity: 0 },
-                        exit: { y: 0, opacity: 1 },
-                        enter: { y: 0, opacity: 1 },
-                      }}
-                      handler={() => {
-                        clickHandler(location);
-                      }}
-                      className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
-                        location.locationFields.openingSoon === true
-                          ? 'pointer-events-none'
-                          : ''
-                      }`}
-                      titleClassName="text-sm md:text-base"
-                      imageWrapperClassName={`${
-                        location.id === selected?.id ? 'border-4' : 'border-0'
-                      } ${
-                        location.locationFields.openingSoon === true
-                          ? 'group-hover:border-0'
-                          : ''
-                      }`}
-                      comingSoon={location.locationFields.openingSoon}
-                      title={location.title}
-                      subtitle={location.locationFields.area}
-                      thumbnail={
-                        location.featuredImage
-                          ? location.featuredImage.node.sourceUrl
-                          : '/images/map-no-icon.png'
-                      }
-                    />
-                  );
-                })}
+                  }}
+                  initial="initial"
+                  animate="enter"
+                  exit="exit"
+                  className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
+                  {locationsNotOpenToPublic?.map(({ node: item }) => {
+                    return (
+                      <motion.article
+                        variants={{
+                          initial: { y: -20, opacity: 0 },
+                          exit: { y: 0, opacity: 1 },
+                          enter: { y: 0, opacity: 1 },
+                        }}
+                        className="px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 w-1/3 lg:w-1/4 xl:w-1/4">
+                        <div className="text-center">
+                          <Image
+                            layout="fixed"
+                            src={
+                              item.id === selected?.id
+                                ? '/images/map-icon-active.png'
+                                : '/images/map-icon-inactive.png'
+                            }
+                            width={31}
+                            height={36}
+                            quality={100}
+                            objectFit="cover"
+                            alt={item.title}
+                          />
+                          <h1 className="leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 text-sm md:text-base">
+                            {item.title}
+                          </h1>
+                        </div>
+                      </motion.article>
+                    );
+                  })}
+                </motion.section>
               </motion.section>
-              <motion.h2
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: { y: 0, opacity: 1 },
-                }}
-                className="font-bold text-lg lg:text-xl mt-8 leading-none text-center">
-                By referral only
-              </motion.h2>
-              <motion.section
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  exit: { y: 0, opacity: 1 },
-                  enter: {
-                    y: 0,
-                    opacity: 1,
-                    transition: {
-                      staggerChildren: 0.1,
-                    },
-                  },
-                }}
-                initial="initial"
-                animate="enter"
-                exit="exit"
-                className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
-                {locationsNotOpenToPublic?.map(({ node: item }) => {
-                  return (
-                    <motion.article
-                      variants={{
-                        initial: { y: -20, opacity: 0 },
-                        exit: { y: 0, opacity: 1 },
-                        enter: { y: 0, opacity: 1 },
-                      }}
-                      className="px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 w-1/3 lg:w-1/4 xl:w-1/4">
-                      <div className="text-center">
-                        <Image
-                          layout="fixed"
-                          src={
-                            item.id === selected?.id
-                              ? '/images/map-icon-active.png'
-                              : '/images/map-icon-inactive.png'
-                          }
-                          width={31}
-                          height={36}
-                          quality={100}
-                          objectFit="cover"
-                          alt={item.title}
-                        />
-                        <h1 className="leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 text-sm md:text-base">
-                          {item.title}
-                        </h1>
-                      </div>
-                    </motion.article>
-                  );
-                })}
-              </motion.section>
-            </motion.section>
+              <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+                <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+                <p>An initiative by Lien Foundation</p>
+              </div>
+            </>
           )}
         </AnimatePresence>
       </section>

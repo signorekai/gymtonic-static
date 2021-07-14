@@ -1,5 +1,5 @@
 [] use video for mobile view on <VideoScroll> to save bandwidth
-[] add the "Email us at ...." text at the bottom of /stories
+[x] add the "Email us at ...." text at the bottom of /stories
 [x] on mobile, the browser chrome results in resizes and resets the X axis of VideoScroller
 [x] need to change Layout into a HOC so that we can set headerRef
 [x] figure out how to not rerender <VideoScroll /> so that the loader screen wouldn't get auto cancelled

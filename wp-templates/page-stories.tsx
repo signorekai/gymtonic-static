@@ -158,10 +158,7 @@ const Page: React.FunctionComponent<any> = ({
       <section
         className={`transition-all duration-200 order-2 lg:order-1 w-full lg:min-h-screen ${
           expanded ? 'lg:w-3/10' : 'lg:w-1/2'
-        } pt-8 md:pt-14 lg:pt-14 text-center z-30`}>
-        <h1 className="page-title text-red relative hidden lg:block z-20 pt-24 md:pt-14">
-          Stories
-        </h1>
+        } pt-8 md:pt-14 lg:pt-14 text-center z-30 flex flex-col justify-between`}>
         <motion.section
           variants={{
             initial: { opacity: 0 },
@@ -171,9 +168,13 @@ const Page: React.FunctionComponent<any> = ({
           initial="initial"
           exit="exit"
           animate="enter"
-          className={`relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start ${
-            expanded ? 'mt-4 lg:mt-8' : 'mt-34 lg:mt-4'
-          } lg:pt-0 flex-last-item-align-start`}>
+          className="relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 flex-last-item-align-start">
+          <h1
+            className={`page-title text-red relative hidden lg:block w-full z-20 pt-24 md:pt-14 ${
+              expanded ? 'mb-4 lg:mb-8' : 'mb-34 lg:mb-8'
+            }`}>
+            Stories
+          </h1>
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
           {stories?.map(({ node: story }) => (
             <Bubble
@@ -195,6 +196,10 @@ const Page: React.FunctionComponent<any> = ({
             />
           ))}
         </motion.section>
+        <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+          <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+          <p>An initiative by Lien Foundation</p>
+        </div>
       </section>
       {selectedStory && (
         <StoryCard

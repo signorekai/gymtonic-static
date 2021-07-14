@@ -337,6 +337,10 @@ const Page: React.FunctionComponent<any> = ({
             );
           })}
         </section>
+        <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+          <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+          <p>An initiative by Lien Foundation</p>
+        </div>
       </section>
       <h1
         className={`${
