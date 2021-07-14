@@ -43,6 +43,7 @@ const query = gql`
           node {
             id
             uri
+            slug
             title
             locationFields {
               area
@@ -100,6 +101,7 @@ const query = gql`
           node {
             id
             uri
+            slug
             title
             locationFields {
               area
