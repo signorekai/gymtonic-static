@@ -1,10 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, Variant } from 'framer-motion';
 
 interface BubbleProps {
   thumbnail: string;
-  handler(): void;
+  href?: string;
+  handler(evt: Event): void;
   subtitle: string;
   title: string;
   className?: string;
@@ -19,9 +21,46 @@ interface BubbleProps {
   };
 }
 
+interface BubbleLinkProp {
+  href: string | undefined;
+  children: React.ReactNode;
+  clickHandler(evt: any): void;
+}
+
+const BubbleLink: React.FunctionComponent<BubbleLinkProp> = ({
+  href,
+  children,
+  clickHandler,
+}: BubbleLinkProp) => {
+  if (href) {
+    return (
+      <Link href={href}>
+        <a
+          role="button"
+          tabIndex={0}
+          onClick={clickHandler}
+          onKeyPress={clickHandler}>
+          {children}
+        </a>
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      role="button"
+      tabIndex={0}
+      onClick={clickHandler}
+      onKeyPress={clickHandler}>
+      {children}
+    </a>
+  );
+};
+
 const Bubble: React.FunctionComponent<BubbleProps> = ({
   thumbnail,
   handler,
+  href,
   subtitle,
   title,
   className = '',
@@ -31,8 +70,8 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   variants = {},
   comingSoon = false,
 }: BubbleProps) => {
-  const clickHandler = (): void => {
-    handler();
+  const clickHandler = (evt: any): void => {
+    handler(evt);
     if (window.innerWidth < 1024) {
       window.scrollTo({ left: 0, top: 0 });
     }
@@ -49,7 +88,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
     <motion.article
       variants={articleVariants}
       className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 relative ${className}`}>
-      <button type="button" onClick={clickHandler}>
+      <BubbleLink href={href} clickHandler={clickHandler}>
         {thumbnail && (
           <div
             className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto border-red group-hover:border-4 transition-all ${imageWrapperClassName}`}>
@@ -80,7 +119,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
           className={`leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 ${titleClassName}`}>
           {title}
         </h1>
-      </button>
+      </BubbleLink>
     </motion.article>
   );
 };
