@@ -28,9 +28,9 @@ interface Place {
   title?: string;
   uri?: string;
   className?: string;
-  clickHandler?(): void;
-  mouseOverHandler?(): void;
-  mouseOutHandler?(): void;
+  clickHandler?(evt: Event): void;
+  mouseOverHandler?(evt: Event): void;
+  mouseOutHandler?(evt: Event): void;
 }
 
 interface MenuData {
@@ -68,6 +68,7 @@ interface Gym {
 interface ILocation {
   id: string;
   uri: string;
+  slug: string;
   title: string;
   locationFields: LocationFields;
   terms: {
