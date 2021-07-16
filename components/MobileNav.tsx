@@ -5,6 +5,10 @@ import Link from 'next/link';
 
 import { menuQuery } from 'pages/[[...page]]';
 import { useQuery } from '@apollo/client';
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 
 const MobileNav: React.FunctionComponent<{
   showMobileNav: boolean;
@@ -147,18 +151,19 @@ const MobileNav: React.FunctionComponent<{
               );
             })}
           </ul>
-          <div className="min-h-screen-1/6 flex flex-col justify-end items-center">
-            <motion.button
-              variants={{
-                initial: { opacity: 0, y: 70 },
-                exit: { opacity: 0, y: 20 },
-                show: { opacity: 1, y: 0 },
-              }}>
-              <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
-                Sign Up
-              </div>
-            </motion.button>
-          </div>
+          <motion.div
+            variants={{
+              initial: { opacity: 0, y: 70 },
+              exit: { opacity: 0, y: 20 },
+              show: { opacity: 1, y: 0 },
+            }}
+            className="min-h-screen-1/6 flex flex-col justify-end mb-4 items-center">
+            <SignUpBtn
+              src={SignupBtnSrc}
+              mobileSrc={SignupBtnMobileSrc}
+              hoverSrc={SignupBtnHoverSrc}
+            />
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
