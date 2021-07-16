@@ -81,6 +81,7 @@ module.exports = {
         '7/10': '70%',
         'screen-2/5': '40vw',
         'screen-1/2': '50vw',
+        'screen-home-video': 'calc(var(--vh) * 187.1px)',
       },
       height: {
         'screen-w-2/5': '40vw',
