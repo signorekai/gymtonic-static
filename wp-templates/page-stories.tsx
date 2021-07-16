@@ -171,7 +171,7 @@ const Page: React.FunctionComponent<any> = ({
           initial="initial"
           exit="exit"
           animate="enter"
-          className="relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 flex-last-item-align-start">
+          className="relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 lg:flex-last-item-align-start">
           <h1
             className={`page-title text-red relative hidden lg:block w-full z-20 pt-24 md:pt-14 ${
               expanded ? 'mb-4 lg:mb-8' : 'mb-34 lg:mb-8'
