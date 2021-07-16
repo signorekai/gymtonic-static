@@ -10,6 +10,7 @@ interface Props {
   ext?: 'jpg' | 'jpeg' | 'gif' | 'png' | 'JPG' | 'JPEG' | 'GIF' | 'PNG';
   path: string;
   children?: JSX.Element;
+  videoPath: string;
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
 }
 
@@ -85,6 +86,7 @@ export default function VideoScroller({
   children,
   videoDuration,
   setShowLoader,
+  videoPath,
 }: Props & WithLoaderProps): JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -92,14 +94,11 @@ export default function VideoScroller({
   const currentFrameRef = useRef(0);
   const frame0Ref = useRef<HTMLImageElement>(null);
   const intervalAnimationRef = useRef<boolean>(false);
-  const intervalAnimationDirection = useRef<'forward' | 'reverse'>('forward');
+  const [isMobile, setIsMobile] = useState(true);
 
   const isIntersecting = useRef(true);
 
-  const thenRef = useRef(window.performance.now());
-
   const [showReminder, setShowReminder] = useState(true);
-  const [isDragable, setIsDragable] = useState(false);
 
   const canvasAnimateControls = useAnimation();
 
@@ -108,30 +107,35 @@ export default function VideoScroller({
 
   useEffect(() => {
     const videoFrames: Array<HTMLImageElement> = [];
-    // eslint-disable-next-line no-plusplus
-    for (let x = 0; x <= totalFrames; x++) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      const imageObj = document.createElement('img');
-      imageObj.setAttribute('src', `${path}/frame-${x}.${ext}`);
-      videoFrames.push(imageObj);
-    }
-    if (canvasRef.current) fitImageOn(canvasRef.current, videoFrames[0]);
 
-    if (videoFrames.filter((img) => !img.complete).length > 0) {
-      void Promise.all(
-        videoFrames
-          .filter((img) => !img.complete)
-          .map(
-            (img) =>
-              new Promise((resolve) => {
-                // eslint-disable-next-line no-param-reassign,no-multi-assign
-                img.addEventListener('load', resolve);
-                img.addEventListener('error', resolve);
-              }),
-          ),
-      ).then(() => {
+    if (window.innerWidth >= 1024) {
+      // eslint-disable-next-line no-plusplus
+      for (let x = 0; x <= totalFrames; x++) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        const imageObj = document.createElement('img');
+        imageObj.setAttribute('src', `${path}/frame-${x}.${ext}`);
+        videoFrames.push(imageObj);
+      }
+      if (canvasRef.current) fitImageOn(canvasRef.current, videoFrames[0]);
+
+      if (videoFrames.filter((img) => !img.complete).length > 0) {
+        void Promise.all(
+          videoFrames
+            .filter((img) => !img.complete)
+            .map(
+              (img) =>
+                new Promise((resolve) => {
+                  // eslint-disable-next-line no-param-reassign,no-multi-assign
+                  img.addEventListener('load', resolve);
+                  img.addEventListener('error', resolve);
+                }),
+            ),
+        ).then(() => {
+          setShowLoader(false);
+        });
+      } else {
         setShowLoader(false);
-      });
+      }
     } else {
       setShowLoader(false);
     }
@@ -140,6 +144,8 @@ export default function VideoScroller({
       if (window.pageYOffset > 1) {
         setShowReminder(false);
       }
+
+      if (isMobile) return;
 
       if (window.innerWidth >= breakpoint && scrollerRef.current) {
         // @todo eventually use framer-motion 's useElementScroll
@@ -160,73 +166,18 @@ export default function VideoScroller({
 
         currentFrameRef.current = currentFrame;
         tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-      } else if (canvasRef.current) {
-        // console.log('mobile');
-        // mobile - auto loop through frames
-        const frameDuration = (videoDuration / totalFrames) * 1000; // get duration in milliseconds
-        if (intervalAnimationRef.current === false) {
-          intervalAnimationRef.current = true;
-
-          const nextFrame = (newTime?: number) => {
-            if (intervalAnimationRef.current === false) {
-              return;
-            }
-
-            if (
-              newTime &&
-              newTime - thenRef.current > frameDuration &&
-              isIntersecting.current
-            ) {
-              if (
-                (currentFrameRef.current === totalFrames &&
-                  intervalAnimationDirection.current === 'forward') ||
-                (currentFrameRef.current === 0 &&
-                  intervalAnimationDirection.current === 'reverse')
-              ) {
-                intervalAnimationDirection.current =
-                  intervalAnimationDirection.current === 'forward'
-                    ? 'reverse'
-                    : 'forward';
-              }
-
-              if (intervalAnimationDirection.current === 'forward') {
-                currentFrameRef.current += 1;
-              } else {
-                currentFrameRef.current -= 1;
-              }
-
-              tryToFitImageOn(videoFrames[currentFrameRef.current], canvasRef);
-              thenRef.current =
-                newTime - ((newTime - thenRef.current) % frameDuration);
-            }
-
-            requestAnimationFrame(nextFrame);
-          };
-
-          nextFrame();
-        }
       }
     };
 
     const handleResize = () => {
       // console.log('handling resize');
-      let canvasWidth =
+      const canvasWidth =
         (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
 
       if (window.innerWidth < breakpoint) {
-        setIsDragable(true);
+        setIsMobile(true);
       } else {
-        setIsDragable(false);
-      }
-
-      if (frame0Ref.current && window.innerWidth < breakpoint) {
-        const imageRatio =
-          frame0Ref.current.naturalWidth / frame0Ref.current.naturalHeight;
-        // window is vertically scrollable
-        canvasWidth =
-          (window.innerHeight - borderWidth * 2) *
-          imageRatio *
-          window.devicePixelRatio;
+        setIsMobile(false);
       }
 
       if (
@@ -288,8 +239,8 @@ export default function VideoScroller({
     frame0Ref,
     canvasAnimateControls,
     videoDuration,
-    isDragable,
     canvasRef,
+    isMobile,
   ]);
 
   useEffect(() => {
@@ -308,7 +259,9 @@ export default function VideoScroller({
       ref={scrollerRef}>
       <div
         ref={canvasContainerRef}
-        className="sticky border-box bg-pink overflow-hidden top-0 w-full h-[100vh] flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red">
+        className={`${
+          isMobile ? '' : 'sticky'
+        } border-box bg-pink overflow-hidden top-0 w-full h-[100vh] flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red`}>
         <AnimatePresence>
           {showReminder && (
             <motion.div
@@ -335,23 +288,35 @@ export default function VideoScroller({
             </motion.div>
           )}
         </AnimatePresence>
-        <motion.canvas
-          animate={canvasAnimateControls}
-          drag={isDragable ? 'x' : false}
-          dragConstraints={scrollerRef}
-          dragMomentum={false}
-          dragElastic={0}
-          ref={canvasRef}
-          width={window.innerWidth - borderWidth * 2}
-          height={window.innerHeight - borderWidth * 2}
-          className="h-full absolute top-0 left-0 z-30"
-        />
-        <img
-          ref={frame0Ref}
-          className="object-cover w-full h-full origin-center absolute z-20 top-0"
-          src={`${path}/frame-0.${ext}`}
-          alt=""
-        />
+        {!isMobile && (
+          <motion.canvas
+            animate={canvasAnimateControls}
+            ref={canvasRef}
+            width={window.innerWidth - borderWidth * 2}
+            height={window.innerHeight - borderWidth * 2}
+            className="h-full absolute top-0 left-0 z-30"
+          />
+        )}
+        {isMobile && (
+          <motion.div className="w-screen-home-video h-screen relative">
+            <motion.video
+              animate={canvasAnimateControls}
+              drag="x"
+              dragConstraints={scrollerRef}
+              dragMomentum={false}
+              dragElastic={0}
+              disablePictureInPicture
+              controlsList="nodownload"
+              playsInline
+              autoPlay
+              muted
+              loop
+              className="object-cover object-center w-screen-home-video h-full max-w-none"
+              src={videoPath}>
+              <source src={videoPath} type="video/mp4" />
+            </motion.video>
+          </motion.div>
+        )}
         {children}
       </div>
     </section>
