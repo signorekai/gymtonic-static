@@ -16,7 +16,7 @@ const Logo = ({ className = '' }: { className?: string }) => (
   <Link href="/">
     <a className="pointer-events-auto relative z-40">
       <div
-        className={`hover:cursor-pointer pointer-events-auto ${className} relative w-18 h-18 md:w-[105px] md:h-[105px]`}>
+        className={`hover:cursor-generic pointer-events-auto ${className} relative w-18 h-18 md:w-[105px] md:h-[105px]`}>
         <Image
           loading="eager"
           src={logo}

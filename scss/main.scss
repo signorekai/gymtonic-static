@@ -18,6 +18,30 @@
   }
 }
 
+a {
+  @apply hover:cursor-generic;
+
+  &[href*='about'],
+  &[href*='technology'],
+  &[href*='simple'],
+  &[href*='research'],
+  &[href*='coaches'] {
+    @apply hover:cursor-about;
+  }
+
+  &[href*='locations'] {
+    @apply hover:cursor-locations;
+  }
+
+  &[href*='news'] {
+    @apply hover:cursor-news;
+  }
+
+  &[href*='stories'] {
+    @apply hover:cursor-stories;
+  }
+}
+
 .menu-item a {
   @apply relative;
   @apply hidden;

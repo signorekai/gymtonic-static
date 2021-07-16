@@ -37,7 +37,8 @@ const SignUpBtn = ({ src, hoverSrc, mobileSrc }: Props): JSX.Element => {
         }}
         onMouseOver={() => {
           setBtnSrc(hoverSrc);
-        }}>
+        }}
+        className="hover:cursor-signup w-full h-full">
         <Image src={btnSrc} layout="fill" alt="Sign up for GymTonic" />
       </button>
     </div>
