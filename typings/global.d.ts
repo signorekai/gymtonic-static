@@ -28,9 +28,9 @@ interface Place {
   title?: string;
   uri?: string;
   className?: string;
-  clickHandler?(evt: Event): void;
-  mouseOverHandler?(evt: Event): void;
-  mouseOutHandler?(evt: Event): void;
+  clickHandler?(evt: any): void;
+  mouseOverHandler?(evt: any): void;
+  mouseOutHandler?(evt: any): void;
 }
 
 interface MenuData {

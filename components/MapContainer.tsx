@@ -120,11 +120,11 @@ const MapContainer = ({
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...item}
             key={item.id}
-            clickHandler={() => {
-              if (item.clickHandler) item.clickHandler();
+            clickHandler={(evt) => {
+              if (item.clickHandler) item.clickHandler(evt);
             }}
-            mouseOverHandler={() => {
-              if (item.mouseOverHandler) item.mouseOverHandler();
+            mouseOverHandler={(evt) => {
+              if (item.mouseOverHandler) item.mouseOverHandler(evt);
               if (item.title) {
                 setActiveInfoWindow({
                   position: item.position,
@@ -134,8 +134,8 @@ const MapContainer = ({
                 });
               }
             }}
-            mouseOutHandler={() => {
-              if (item.mouseOutHandler) item.mouseOutHandler();
+            mouseOutHandler={(evt) => {
+              if (item.mouseOutHandler) item.mouseOutHandler(evt);
               if (item.title) {
                 setActiveInfoWindow(undefined);
               }
