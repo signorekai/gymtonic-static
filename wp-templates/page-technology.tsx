@@ -37,6 +37,11 @@ import HumanIllustration7 from 'assets/images/humanillust_7.png';
 import CollapseBtn from 'assets/images/collapse.png';
 import ExpandBtn from 'assets/images/expand.png';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-5-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-5-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-5.png';
+
 const TechCard = ({
   headerSrc,
   title,
@@ -395,6 +400,13 @@ const Page: React.FunctionComponent<any> = ({
           </CarouselCard>
         </Carousel>
       </section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </main>
   );
 };

@@ -15,6 +15,11 @@ import Bubble from 'components/Bubble';
 import MapContainer from 'components/MapContainer';
 import Carousel, { CarouselCard } from 'components/Carousel';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-4-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-4-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-4.png';
+
 interface QueryResult {
   data:
     | {
@@ -634,6 +639,13 @@ const Page: React.FunctionComponent<any> = ({
           places={markers}
         />
       </motion.section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </motion.main>
   );
 };

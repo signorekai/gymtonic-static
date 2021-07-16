@@ -16,6 +16,11 @@ import ArmOnRed from 'assets/images/arm-on-red.png';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-3-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-3-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-3.png';
+
 const query = gql`
   {
     researchPapers(where: { orderby: { field: MENU_ORDER, order: ASC } }) {
@@ -206,6 +211,13 @@ const Page: React.FunctionComponent<any> = ({
           ))}
         </section>
       </section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </main>
   );
 };

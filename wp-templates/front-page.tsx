@@ -20,6 +20,11 @@ import Gym4 from 'assets/images/gym4.jpg';
 import Gym5 from 'assets/images/gym5.jpg';
 import Gym6 from 'assets/images/gym6.jpg';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
+
 const breakpoint = 1024;
 
 /**
@@ -135,6 +140,7 @@ const Page: React.FunctionComponent<any> = ({
         setShowLoader={setShowLoader}
         totalFrames={69}
         videoDuration={3}
+        videoPath="/videos/home.mp4"
         path="/images/home-video-frames"
         setHeaderRef={setHeaderRef}>
         <AnimatePresence exitBeforeEnter>
@@ -261,10 +267,28 @@ const Page: React.FunctionComponent<any> = ({
           muted
           loop
           className="w-full h-full absolute top-0 left-0 z-0 object-cover object-center"
-          src="/videos/Thematic-8-MaiTuLiao-H.mp4">
-          <source src="/videos/Thematic-8-MaiTuLiao-H.mp4" type="video/mp4" />
+          src={
+            window.innerWidth >= 1366
+              ? '/videos/Thematic-8-MaiTuLiao-H.mp4'
+              : '/videos/Thematic-9-MaiTuLiao-V.mp4'
+          }>
+          <source
+            src={
+              window.innerWidth >= 1366
+                ? '/videos/Thematic-8-MaiTuLiao-H.mp4'
+                : '/videos/Thematic-9-MaiTuLiao-V.mp4'
+            }
+            type="video/mp4"
+          />
         </video>
       </section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </>
   );
 };

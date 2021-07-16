@@ -12,6 +12,11 @@ import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
 import Bubble from 'components/Bubble';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
+
 const query = gql`
   {
     pressReleases(where: { orderby: { field: DATE, order: DESC } }) {
@@ -411,6 +416,13 @@ const Page: React.FunctionComponent<any> = ({
           )}
         </AnimatePresence>
       </motion.section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </motion.main>
   );
 };

@@ -6,6 +6,11 @@ import AboutCard from 'components/AboutCard';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-2-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-2-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-2.png';
+
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
@@ -38,6 +43,13 @@ const Page: React.FunctionComponent<any> = ({
           </video>
         </div>
       </motion.section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </motion.main>
   );
 };

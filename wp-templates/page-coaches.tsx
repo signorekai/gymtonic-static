@@ -15,6 +15,11 @@ import Coach4 from 'assets/images/Coach-4.png';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
+
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
@@ -195,6 +200,13 @@ const Page: React.FunctionComponent<any> = ({
           </Carousel>
         </div>
       </section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </main>
   );
 };

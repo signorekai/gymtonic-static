@@ -9,6 +9,11 @@ import ScreenOnRed from 'assets/images/screen-on-red.png';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-4-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-4-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-4.png';
+
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
@@ -39,6 +44,13 @@ const Page: React.FunctionComponent<any> = ({
           />
         </div>
       </section>
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </main>
   );
 };

@@ -14,6 +14,11 @@ import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 import MobileNavBtn from 'components/MobileNavBtn';
 
+import SignUpBtn from 'components/SignUpButton';
+import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
+import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
+import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
+
 const storiesQuery = gql`
   {
     stories(where: { orderby: { field: TITLE, order: ASC } }) {
@@ -210,6 +215,13 @@ const Page: React.FunctionComponent<any> = ({
           gym={selectedStory?.storyFields.gym[0]}
         />
       )}
+      <div className="fixed bottom-5 right-5 z-40">
+        <SignUpBtn
+          src={SignupBtnSrc}
+          mobileSrc={SignupBtnMobileSrc}
+          hoverSrc={SignupBtnHoverSrc}
+        />
+      </div>
     </main>
   );
 };
