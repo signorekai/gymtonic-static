@@ -1,6 +1,7 @@
 [] Add form + sign up button
 [] Add about page animation
-[] Add custom cursors
+[] Add image posters for all videos
+[x] Add custom cursors
 [x] use video for mobile view on <VideoScroll> to save bandwidth
 [x] add the "Email us at ...." text at the bottom of /stories
 [x] on mobile, the browser chrome results in resizes and resets the X axis of VideoScroller
