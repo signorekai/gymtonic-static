@@ -261,7 +261,7 @@ export default function VideoScroller({
         ref={canvasContainerRef}
         className={`${
           isMobile ? '' : 'sticky'
-        } border-box bg-pink overflow-hidden top-0 w-full h-[100vh] flex flex-col justify-items-start md:justify-center items-center pt-24 md:pt-0 border-10 md:border-60 border-red`}>
+        } border-box bg-pink overflow-hidden top-0 w-full h-[100vh] flex flex-col justify-items-start md:justify-center items-center md:pt-0 border-10 md:border-60 border-red`}>
         <AnimatePresence>
           {showReminder && (
             <motion.div

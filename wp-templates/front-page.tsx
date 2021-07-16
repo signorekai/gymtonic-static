@@ -145,11 +145,11 @@ const Page: React.FunctionComponent<any> = ({
         setHeaderRef={setHeaderRef}>
         <AnimatePresence exitBeforeEnter>
           <motion.div
-            initial={{ opacity: 0, translateY: 40 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: 30 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="relative z-30 text-center text-red mx-8 pointer-events-none">
+            className="absolute top-1/3 -translate-y-1/2 z-30 text-center text-red mx-8 pointer-events-none">
             <h1 className="h1 text-red">Gym Tonic</h1>
             <h4 className="text-2xl md:text-3xl font-black leading-none">
               Exercise as Medicine
