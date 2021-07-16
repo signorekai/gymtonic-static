@@ -44,7 +44,7 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
       src={src}
       alt=""
       layout="fill"
-      sizes="(min-width: 1366px) 800px, (min-width: 1024px) 600px, 400px"
+      sizes="(min-width: 1920px) 960px, (min-width: 1366px) 750px, (min-width: 1024px) 600px, 400px"
       quality="100"
       objectFit="cover"
       priority
