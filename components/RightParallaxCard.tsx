@@ -13,6 +13,7 @@ const RightParallaxCard = ({
   paragraph,
   link,
   href,
+  videoPoster,
 }: {
   className?: string;
   headerTitle: string;
@@ -21,6 +22,7 @@ const RightParallaxCard = ({
   paragraph: string;
   link: string;
   href: string;
+  videoPoster: string;
 }): JSX.Element => {
   const [show, setShow] = useState(false);
   const card = useRef<HTMLDivElement>(null);
@@ -83,6 +85,7 @@ const RightParallaxCard = ({
                 autoPlay
                 muted
                 loop
+                poster={videoPoster}
                 src={videoSrc}
                 className="w-auto h-auto max-w-full max-h-full relative z-20">
                 <source src={videoSrc} type="video/mp4" />
