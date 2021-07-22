@@ -203,6 +203,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 headerTitle="Ka-Ching!"
                 videoSrc="/videos/Thematic-2-KaChing.mp4"
+                videoPoster="/images/Thematic-2-KaChing.jpg"
                 videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
                 paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
                 href="/about"
@@ -211,6 +212,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
                 videoSrc="/videos/Thematic-3-Kakis.mp4"
+                videoPoster="/images/Thematic-3-Kakis.jpg"
                 headerTitle="Kakis"
                 paragraph="Help Pa and Ma make new friends."
                 href="/locations"
@@ -219,6 +221,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
                 videoSrc="/videos/Thematic-4-Boleh.mp4"
+                videoPoster="/images/Thematic-4-Boleh.jpg"
                 headerTitle="Boleh"
                 paragraph="To continue doing the things you love, you have to stay physically strong."
                 href="/research"
@@ -227,6 +230,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                 videoSrc="/videos/Thematic-5-Huat.mp4"
+                videoPoster="/images/Thematic-5-Huat.jpg"
                 headerTitle="Huat!"
                 paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
                 href="/stories"
@@ -235,6 +239,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
                 videoSrc="/videos/Thematic-6-Kilat.mp4"
+                videoPoster="/images/Thematic-6-Kilat.jpg"
                 headerTitle="Kilat!"
                 paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
                 href="/technology"
@@ -243,6 +248,7 @@ const Page: React.FunctionComponent<any> = ({
               <RightParallaxCard
                 videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
                 videoSrc="/videos/Thematic-7-Pro.mp4"
+                videoPoster="/images/Thematic-7-Pro.jpg"
                 headerTitle="Pro"
                 paragraph="Exercise trainers who will guide you every step of the way."
                 href="/coaches"
@@ -294,16 +300,3 @@ const Page: React.FunctionComponent<any> = ({
 };
 
 export default withLoader(withMobileNav(withLayout(Page)));
-
-/**
- * Get additional data from WordPress that is specific to this template.
- *
- * Here we retrieve the latest six WordPress posts in a named category to
- * display at the bottom of the front page.
- *
- * @see https://github.com/wpengine/headless-framework/tree/canary/docs/queries
- */
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const client = getApolloClient(context);
-  await getPosts(client, firstSixInCategory);
-}
