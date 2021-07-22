@@ -8,7 +8,6 @@ import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import loading from 'assets/images/loading.gif';
 
 const transition = { duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] };
-// export const LoaderContext = createContext<any>(null);
 
 interface Props {
   showLoader: boolean;

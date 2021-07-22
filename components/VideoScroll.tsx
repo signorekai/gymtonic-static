@@ -2,8 +2,6 @@ import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { WithLoaderProps } from './Loader';
 
-// import { LoaderContext, LoaderContextType } from '../pages/_app';
-
 interface Props {
   totalFrames: number;
   videoDuration: number;

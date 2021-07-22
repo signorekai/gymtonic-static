@@ -1,10 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
-import { getApolloClient, getUriInfo } from '@wpengine/headless';
-import {
-  getNextStaticProps,
-  usePost,
-  useUriInfo,
-} from '@wpengine/headless/next';
+import { getApolloClient } from '@wpengine/headless';
+import { getNextStaticProps, useUriInfo } from '@wpengine/headless/next';
 import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
