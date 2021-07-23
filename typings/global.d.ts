@@ -1,5 +1,9 @@
 declare module '*.svg';
 
+interface WithSignUpFormProps {
+  setShowSignUpForm: (arg0: boolean) => void;
+}
+
 interface WithLayoutProps {
   setHeaderRef: (ref: RefObject<HTMLElement>) => void;
   setScrolledHeader: (arg0: boolean, noAnimation?: boolean) => void;
