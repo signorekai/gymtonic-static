@@ -36,6 +36,7 @@ const BubbleLink: React.FunctionComponent<BubbleLinkProp> = ({
     return (
       <Link href={href}>
         <a
+          className="bubble__link"
           role="button"
           tabIndex={0}
           onClick={clickHandler}
@@ -48,6 +49,7 @@ const BubbleLink: React.FunctionComponent<BubbleLinkProp> = ({
 
   return (
     <a
+      className="bubble__link"
       role="button"
       tabIndex={0}
       onClick={clickHandler}
@@ -87,11 +89,11 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   return (
     <motion.article
       variants={articleVariants}
-      className={`px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 relative ${className}`}>
+      className={`bubble px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 relative ${className}`}>
       <BubbleLink href={href} clickHandler={clickHandler}>
         {thumbnail && (
           <div
-            className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40  bg-black mb-3 mx-auto border-red group-hover:border-4 transition-all ${imageWrapperClassName}`}>
+            className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-40 md:h-40 mb-3 mx-auto border-red group-hover:border-4 transition-all bubble__image-wrapper ${imageWrapperClassName}`}>
             <Image
               src={thumbnail}
               layout="fill"
@@ -112,11 +114,11 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
           </div>
         )}
         <h6
-          className={`text-red uppercase leading-none group-hover:opacity-80 mb-2 ${subTitleClassName}`}>
+          className={`text-red uppercase leading-none group-hover:opacity-80 mb-2 bubble__subtitle ${subTitleClassName}`}>
           {subtitle}
         </h6>
         <h1
-          className={`leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 ${titleClassName}`}>
+          className={`leading-none transition-all duration-200 mx-auto mx-au text-black bubble__title font-black group-hover:opacity-80 ${titleClassName}`}>
           {title}
         </h1>
       </BubbleLink>
