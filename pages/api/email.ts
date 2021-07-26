@@ -83,4 +83,6 @@ export default async function handler(
   } catch (error: unknown) {
     res.status(400).json({ error });
   }
+
+  return true;
 }
