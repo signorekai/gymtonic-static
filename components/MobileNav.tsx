@@ -13,12 +13,15 @@ import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 const MobileNav: React.FunctionComponent<{
   showMobileNav: boolean;
   setShowMobileNav: (arg0: boolean) => void;
+  setShowSignUpForm: (arg0: boolean) => void;
 }> = ({
   showMobileNav,
   setShowMobileNav,
+  setShowSignUpForm,
 }: {
   showMobileNav: boolean;
   setShowMobileNav: (arg0: boolean) => void;
+  setShowSignUpForm: (arg0: boolean) => void;
 }) => {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
@@ -159,6 +162,7 @@ const MobileNav: React.FunctionComponent<{
             }}
             className="min-h-screen-1/6 flex flex-col justify-end mb-4 items-center">
             <SignUpBtn
+              setShowSignUpForm={setShowSignUpForm}
               src={SignupBtnSrc}
               mobileSrc={SignupBtnMobileSrc}
               hoverSrc={SignupBtnHoverSrc}
@@ -183,7 +187,10 @@ interface MobileNavState {
 export default function withMobileNav<T extends React.Component>(
   Component: React.ComponentType<T>,
 ): React.ComponentClass<T & WithMobileNavProps> {
-  return class extends React.Component<T & WithMobileNavProps, MobileNavState> {
+  return class extends React.Component<
+    T & WithMobileNavProps & WithSignUpFormProps,
+    MobileNavState
+  > {
     constructor(props: T & WithMobileNavProps) {
       super(props);
       this.setShowMobileNav = this.setShowMobileNav.bind(this);
@@ -198,10 +205,13 @@ export default function withMobileNav<T extends React.Component>(
 
     render() {
       const { showMobileNav } = this.state;
+      const { setShowSignUpForm } = this.props;
+
       return (
         <>
           <MobileNav
             {...this.props}
+            setShowSignUpForm={setShowSignUpForm}
             setShowMobileNav={this.setShowMobileNav}
             showMobileNav={showMobileNav}
           />

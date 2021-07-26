@@ -11,6 +11,8 @@ import Link from 'next/link';
 import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
 import withMobileNav from 'components/MobileNav';
+import withSignUpForm from 'components/SignUpForm';
+
 import Bubble from 'components/Bubble';
 import MapContainer from 'components/MapContainer';
 import Carousel, { CarouselCard } from 'components/Carousel';
@@ -146,7 +148,8 @@ const query = gql`
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
-}: WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
@@ -641,6 +644,7 @@ const Page: React.FunctionComponent<any> = ({
       </motion.section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -659,4 +663,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context);
 }
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));

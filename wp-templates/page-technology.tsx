@@ -4,9 +4,11 @@ import Image from 'next/image';
 
 import AboutCard from 'components/AboutCard';
 import Carousel, { CarouselCard } from 'components/Carousel';
+import MobileAboutHeader from 'components/MobileAboutHeader';
+
 import withLayout from 'components/Layout';
 import withLoader from 'components/Loader';
-import MobileAboutHeader from 'components/MobileAboutHeader';
+import withSignUpForm from 'components/SignUpForm';
 import withMobileNav from 'components/MobileNav';
 
 import TechHeader1 from 'assets/images/tech-name-1.png';
@@ -258,7 +260,8 @@ const TechCard = ({
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
-}: WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
@@ -402,6 +405,7 @@ const Page: React.FunctionComponent<any> = ({
       </section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -411,4 +415,4 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));

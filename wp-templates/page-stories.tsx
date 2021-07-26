@@ -8,10 +8,12 @@ import { find } from 'lodash';
 import { motion } from 'framer-motion';
 
 import withLayout from 'components/Layout';
-import Bubble from 'components/Bubble';
-import StoryCard from 'components/StoryCard';
+import withSignUpForm from 'components/SignUpForm';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
+
+import Bubble from 'components/Bubble';
+import StoryCard from 'components/StoryCard';
 import MobileNavBtn from 'components/MobileNavBtn';
 
 import SignUpBtn from 'components/SignUpButton';
@@ -94,7 +96,8 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setShowMobileNav,
-}: WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithLayoutProps & WithSignUpFormProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
 
@@ -217,6 +220,7 @@ const Page: React.FunctionComponent<any> = ({
       )}
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -235,6 +239,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return getNextStaticProps(context);
 }
 
-export default withLoader(
-  withMobileNav(withLayout(Page, { mobileNavBtnInHeader: false })),
+export default withSignUpForm(
+  withLoader(
+    withMobileNav(
+      withLayout(Page, {
+        mobileNavBtnInHeader: false,
+      }),
+    ),
+  ),
 );

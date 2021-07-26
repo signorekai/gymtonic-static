@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
 
-import withLayout from 'components/Layout';
 import AboutCard from 'components/AboutCard';
 import MobileAboutHeader from 'components/MobileAboutHeader';
 import { GetStaticPropsContext } from 'next';
@@ -12,7 +11,8 @@ import Link from 'next/link';
 
 import { getNextStaticProps } from '@wpengine/headless/next';
 
-import ArmOnRed from 'assets/images/arm-on-red.png';
+import withLayout from 'components/Layout';
+import withSignUpForm from 'components/SignUpForm';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
 
@@ -20,6 +20,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-3-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-3-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-3.png';
+import ArmOnRed from 'assets/images/arm-on-red.png';
 
 const query = gql`
   {
@@ -149,7 +150,8 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
-}: WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithLayoutProps & WithSignUpFormProps) => {
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
 
@@ -213,6 +215,7 @@ const Page: React.FunctionComponent<any> = ({
       </section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -222,7 +225,7 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getStaticProps(context: GetStaticPropsContext) {

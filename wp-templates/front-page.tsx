@@ -24,6 +24,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
+import withSignUpForm from 'components/SignUpForm';
 
 const breakpoint = 1024;
 
@@ -57,7 +58,11 @@ const Page: React.FunctionComponent<any> = ({
   setHeaderRef,
   setShowMobileNav,
   setShowLoader,
-}: WithMobileNavProps & WithLayoutProps & WithLoaderProps) => {
+  setShowSignUpForm,
+}: WithMobileNavProps &
+  WithLayoutProps &
+  WithLoaderProps &
+  WithSignUpFormProps) => {
   const container = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const leftViewport = useRef<HTMLDivElement>(null);
@@ -290,6 +295,7 @@ const Page: React.FunctionComponent<any> = ({
       </section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -299,4 +305,4 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));

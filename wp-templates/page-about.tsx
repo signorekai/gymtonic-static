@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import AboutCard from 'components/AboutCard';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
+import withSignUpForm from 'components/SignUpForm';
 
 import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-2-1.png';
@@ -15,7 +16,8 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setMobileNavBtnStyle,
-}: WithMobileNavProps & WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithMobileNavProps & WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setMobileNavBtnStyle('text-red md:text-white');
     setShowLoader(false);
@@ -45,6 +47,7 @@ const Page: React.FunctionComponent<any> = ({
       </motion.section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -63,4 +66,4 @@ const Page: React.FunctionComponent<any> = ({
 />
 </div> */
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));

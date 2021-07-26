@@ -14,6 +14,7 @@ import Coach3 from 'assets/images/Coach-3.png';
 import Coach4 from 'assets/images/Coach-4.png';
 import withMobileNav from 'components/MobileNav';
 import withLoader from 'components/Loader';
+import withSignUpForm from 'components/SignUpForm';
 
 import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
@@ -23,7 +24,8 @@ import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
-}: WithLayoutProps) => {
+  setShowSignUpForm,
+}: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
@@ -202,6 +204,7 @@ const Page: React.FunctionComponent<any> = ({
       </section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
+          setShowSignUpForm={setShowSignUpForm}
           src={SignupBtnSrc}
           mobileSrc={SignupBtnMobileSrc}
           hoverSrc={SignupBtnHoverSrc}
@@ -211,4 +214,4 @@ const Page: React.FunctionComponent<any> = ({
   );
 };
 
-export default withLoader(withMobileNav(withLayout(Page)));
+export default withSignUpForm(withLoader(withMobileNav(withLayout(Page))));
