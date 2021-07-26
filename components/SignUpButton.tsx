@@ -6,9 +6,15 @@ interface Props {
   src: StaticImageData;
   hoverSrc: StaticImageData;
   mobileSrc: StaticImageData;
+  setShowSignUpForm: (arg0: boolean) => void;
 }
 
-const SignUpBtn = ({ src, hoverSrc, mobileSrc }: Props): JSX.Element => {
+const SignUpBtn = ({
+  src,
+  hoverSrc,
+  mobileSrc,
+  setShowSignUpForm,
+}: Props): JSX.Element => {
   const [btnSrc, setBtnSrc] = useState(src);
 
   useEffect(() => {
@@ -37,6 +43,9 @@ const SignUpBtn = ({ src, hoverSrc, mobileSrc }: Props): JSX.Element => {
         }}
         onMouseOver={() => {
           setBtnSrc(hoverSrc);
+        }}
+        onMouseDown={() => {
+          setShowSignUpForm(true);
         }}
         className="hover:cursor-signup w-full h-full">
         <Image src={btnSrc} layout="fill" alt="Sign up for GymTonic" />
