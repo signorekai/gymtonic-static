@@ -22,7 +22,10 @@ module.exports = {
         DEFAULT: '#E62D2D',
       },
       pink: '#F4D3CD',
-      black: '#000000',
+      black: {
+        DEFAULT: '#000000',
+        opaque: 'rgba(0,0,0,0.4)',
+      },
       white: '#ffffff',
     },
     height: (theme) => ({
