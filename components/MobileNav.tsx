@@ -186,12 +186,12 @@ interface MobileNavState {
 
 export default function withMobileNav<T extends React.Component>(
   Component: React.ComponentType<T>,
-): React.ComponentClass<T & WithMobileNavProps> {
+): React.ComponentClass<T & WithMobileNavProps & WithSignUpFormProps> {
   return class extends React.Component<
     T & WithMobileNavProps & WithSignUpFormProps,
     MobileNavState
   > {
-    constructor(props: T & WithMobileNavProps) {
+    constructor(props: T & WithMobileNavProps & WithSignUpFormProps) {
       super(props);
       this.setShowMobileNav = this.setShowMobileNav.bind(this);
       this.state = {
