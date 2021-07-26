@@ -167,3 +167,83 @@ body {
 .snap-child {
   scroll-snap-align: start;
 }
+
+.field-group {
+  @apply flex;
+  @apply flex-col;
+  @apply md:flex-row;
+  @apply border-b-2;
+  @apply border-red;
+  @apply pb-1;
+  @apply mb-3;
+}
+
+.input-wrapper {
+  @apply w-full;
+  @apply border-red;
+
+  @apply first:border-b-2;
+  @apply first:pb-1;
+  @apply first:mb-3;
+  @apply md:first:border-b-0;
+  @apply md:first:pb-0;
+  @apply md:first:mb-0;
+  @apply last:border-b-0;
+  @apply last:mb-0;
+  @apply last:pb-0;
+}
+
+.input-radio {
+  & + span:before {
+    content: '';
+    background: url(/images/unchecked.svg);
+    width: 19px;
+    height: 19px;
+    @apply mr-2;
+    @apply bg-no-repeat;
+    @apply bg-contain;
+    @apply inline-block;
+    @apply align-top;
+  }
+  &:checked + span:before {
+    background: url(/images/checked.svg);
+  }
+}
+
+.text-field {
+  @apply bg-transparent;
+  @apply w-full;
+  @apply text-red;
+  @apply text-center;
+  @apply border-red;
+  @apply block;
+
+  @apply placeholder:opacity-40;
+  @apply placeholder:text-red;
+}
+
+.has-error {
+  @apply relative;
+  @apply overflow-visible;
+  @apply mt-3;
+
+  @apply after:uppercase;
+  @apply after:text-red;
+  @apply after:text-xs;
+  @apply after:text-center;
+  @apply after:w-full;
+  @apply after:absolute;
+  @apply after:-top-4;
+  @apply after:block;
+  @apply after:left-0;
+
+  &::after {
+    content: 'Forget ah?';
+  }
+}
+
+input[type='radio']:checked + .bubble {
+  .bubble__image-wrapper {
+    border-width: 4px !important;
+  }
+}
