@@ -84,30 +84,17 @@ const TechCard = ({
     show: { opacity: 1, y: 0 },
   };
   return (
-    <motion.div
-      variants={{
-        hide: { opacity: 0, y: 30 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { staggerChildren: 0.1, delayChildren: 0.3 },
-        },
-      }}
-      initial="hide"
-      animate="show"
-      className="min-h-80 relative flex flex-col justify-center items-center pt-6 overflow-hidden">
+    <div className="min-h-80 relative flex flex-col justify-center items-center pt-6 overflow-hidden">
       <motion.div
         variants={{
-          hide: { opacity: 0, y: 30 },
+          hide: { opacity: 0, y: -20 },
           show: { opacity: 1, y: 0 },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
         <Image src={headerSrc} placeholder="blur" alt={title} />
       </motion.div>
       <div className="flex flex-row w-full justify-center items-start md:items-center mt-2 px-2 mb-8 flex-wrap md:flex-nowrap">
-        <motion.div
-          variants={cardVariants}
-          className="md:order-2 w-3/4 md:w-1/2 pointer-events-none">
+        <div className="md:order-2 w-3/4 md:w-1/2 pointer-events-none">
           <Image
             sizes="(min-width: 768px) 370px, 200px"
             src={mainCardSrc}
@@ -116,14 +103,13 @@ const TechCard = ({
             priority
             quality={100}
           />
-          <motion.h2
-            variants={cardVariants}
-            className="font-bold uppercase leading-none text-center text-xs mt-3">
-            {mainCardTitle}
-          </motion.h2>
-        </motion.div>
-        <motion.div
-          variants={cardVariants}
+          <h2
+            className="font-bold uppercase leading-none text-center text-xs mt-3"
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: mainCardTitle }}
+          />
+        </div>
+        <div
           className={`w-1/3 md:w-1/4 md:pr-4 mt-6 md:mt-0 md:order-1 pointer-events-none ${
             subCards[1] ? '' : 'hidden md:block'
           }`}>
@@ -136,17 +122,17 @@ const TechCard = ({
                 alt={subCards[1].title}
                 quality={100}
               />
-              <motion.h2 className="font-bold uppercase leading-none text-center text-xs mt-3">
-                {subCards[1].title}
-              </motion.h2>
+              <h2
+                className="font-bold uppercase leading-none text-center text-xs mt-3"
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{ __html: subCards[1].title }}
+              />
             </>
           ) : (
             <></>
           )}
-        </motion.div>
-        <motion.div
-          variants={cardVariants}
-          className="w-1/3 md:w-1/4 md:pl-4 mt-6 md:mt-0 md:order-3 pointer-events-none">
+        </div>
+        <div className="w-1/3 md:w-1/4 md:pl-4 mt-6 md:mt-0 md:order-3 pointer-events-none">
           <Image
             sizes="(min-width: 768px) 200px, 100px"
             src={subCards[0].src}
@@ -154,14 +140,16 @@ const TechCard = ({
             alt={subCards[0].title}
             quality={100}
           />
-          <motion.h2 className="font-bold uppercase leading-none text-center text-xs mt-3">
-            {subCards[0].title}
-          </motion.h2>
-        </motion.div>
+          <h2
+            className="font-bold uppercase leading-none text-center text-xs mt-3"
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: subCards[0].title }}
+          />
+        </div>
       </div>
       <motion.p
         variants={{
-          hide: { opacity: 0, y: 30 },
+          hide: { opacity: 0, y: -20 },
           show: { opacity: 1, y: 0 },
         }}
         className="text-center text-sm leading-none md:text-lg md:leading-tight">
@@ -187,7 +175,7 @@ const TechCard = ({
             initial="hide"
             animate="show"
             exit="hide"
-            className="w-2/3 md:w-1/3 absolute bottom-12 text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
+            className="w-2/3 md:w-1/3 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
           </motion.div>
         )}
@@ -253,7 +241,7 @@ const TechCard = ({
           </AnimatePresence>
         </button>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -274,8 +262,8 @@ const Page: React.FunctionComponent<any> = ({
       <section className="content-container pt-10 md:pt-18 lg:pt-32 flex-1">
         <div className="content-container-px">
           <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="page-title text-white max-w-xs xl:max-w-lg">
             Equipment that can help you
           </motion.h2>
@@ -287,11 +275,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Stand up for Singapore"
               text="These equipment help you stand up from a sitting position without pain."
               mainCardSrc={FREIEQ1}
-              mainCardTitle="FREI Leg Trainer"
+              mainCardTitle="FREI<br />Leg Trainer"
               subCards={[
                 {
                   src: HUREQ1,
-                  title: 'HUR Leg Press Rehab',
+                  title: 'HUR<BR />Leg Press Rehab',
                 },
               ]}>
               <div className="text-center">
@@ -311,11 +299,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Go Jalan Jalan"
               text="These equipment help you walk faster and climb stairs with more confidence."
               mainCardSrc={FREIEQ2}
-              mainCardTitle="FREI Knee Flexor - Extensor"
+              mainCardTitle="FREI<br />Knee Flexor - Extensor"
               subCards={[
                 {
                   src: HUREQ2,
-                  title: 'HUR Leg Extension - Curl Rehab',
+                  title: 'HUR<BR />Leg Extension - Curl Rehab',
                 },
               ]}>
               <div className="text-center">
@@ -333,15 +321,15 @@ const Page: React.FunctionComponent<any> = ({
               title="Shop at NTUC"
               text="These equipment strengthen your upper body, so you can carry those heavy grocery bags home."
               mainCardSrc={FREIEQ3}
-              mainCardTitle="FREI Rowing Machine - Chest Press"
+              mainCardTitle="FREI<br />Rowing Machine - Chest Press"
               subCards={[
                 {
-                  src: HUREQ3a,
-                  title: 'HUR Lat Pull Easy Access',
+                  src: HUREQ3b,
+                  title: 'HUR<BR />Lat Pull Easy Access',
                 },
                 {
-                  src: HUREQ3b,
-                  title: 'HUR Chest Press Easy Access',
+                  src: HUREQ3a,
+                  title: 'HUR<BR />Chest Press Easy Access',
                 },
               ]}>
               <div className="text-center">
@@ -361,11 +349,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Reduce Backache"
               text="These equipment strengthen weak back muscles and improve your posture. You’ll look better!"
               mainCardSrc={FREIEQ4}
-              mainCardTitle="FREI Abdominal & Back Trainer"
+              mainCardTitle="FREI<br />Abdominal & Back Trainer"
               subCards={[
                 {
                   src: HUREQ4,
-                  title: 'HUR Abdomen - Back Easy Access',
+                  title: 'HUR<BR />Abdomen - Back Easy Access',
                 },
               ]}>
               <div className="text-center">
@@ -383,11 +371,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Balance on the MRT"
               text="These equipment strengthen the muscles on the sides of your legs that help you keep your balance."
               mainCardSrc={FREIEQ5}
-              mainCardTitle="FREI Abductor - Adductor"
+              mainCardTitle="FREI<br />Abductor - Adductor"
               subCards={[
                 {
                   src: HUREQ5,
-                  title: 'HUR Adduction - Abduction Rehab',
+                  title: 'HUR<BR />Adduction - Abduction Rehab',
                 },
               ]}>
               <div className="text-center">
