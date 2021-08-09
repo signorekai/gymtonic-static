@@ -153,7 +153,16 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row items-start relative">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
-      <section className="content-container content-container-px pt-10 md:pt-18 lg:pt-22">
+      <motion.section
+        initial="initial"
+        animate="show"
+        exit="exit"
+        variants={{
+          initial: { opacity: 1 },
+          show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+          exit: { opacity: 1 },
+        }}
+        className="content-container content-container-px pt-10 md:pt-18 lg:pt-22">
         <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
           <Image
             src={ArmOnRed}
@@ -163,8 +172,11 @@ const Page: React.FunctionComponent<any> = ({
           />
         </div>
         <motion.section
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}>
+          variants={{
+            initial: { y: -20, opacity: 0 },
+            show: { y: 0, opacity: 1 },
+            exit: { y: -20, opacity: 0 },
+          }}>
           <h2 className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
             As you get older, <br />
             you <em>can</em> get stronger
@@ -176,8 +188,11 @@ const Page: React.FunctionComponent<any> = ({
           </h4>
         </motion.section>
         <motion.section
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}>
+          variants={{
+            initial: { y: -20, opacity: 0 },
+            show: { y: 0, opacity: 1 },
+            exit: { y: -20, opacity: 0 },
+          }}>
           <h5 className="font-bold uppercase text-xs mt-3">Research Papers</h5>
           <section className="flex flex-wrap flex-row mb-6">
             {researchPapers?.map(({ node: researchPaper }, index: number) => (
@@ -199,7 +214,7 @@ const Page: React.FunctionComponent<any> = ({
             ))}
           </section>
         </motion.section>
-      </section>
+      </motion.section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
           setShowSignUpForm={setShowSignUpForm}
