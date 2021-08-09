@@ -85,28 +85,16 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
 }: ResearchPaperCardProps) => {
   const link = type === 'external_link' ? url : file || '';
   return (
-    <motion.article
-      custom={{ index }}
-      variants={{
-        exit: { x: -20, opacity: 0 },
-        enter: (custom: { index: number }) => ({
-          x: 0,
-          opacity: 1,
-          transition: { delay: custom.index * 0.08 + 0.3 },
-        }),
-      }}
-      initial="exit"
-      animate="enter"
-      className="w-full md:w-1/3 mb-3 group">
+    <article className="w-full md:w-1/3 mb-3 group">
       <Link href={link}>
         <a target="_blank">
-          <h2 className="group-hover:opacity-90 transition-opacity font-bold uppercase text-xxs md:text-xs mt-3 md:max-w-5/6">
+          <h2 className="transition-opacity font-bold uppercase text-xxs md:text-xs mt-3 md:max-w-5/6">
             {organisation}
           </h2>
-          <h1 className="group-hover:opacity-90 mt-1 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
+          <h1 className="mt-1 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
             {title}
           </h1>
-          <div className="w-7 h-7 relative mt-2 duration-200 transition-transform group-hover:-translate-y-1 text-white">
+          <div className="w-7 h-7 relative mt-2  text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -143,7 +131,7 @@ const ResearchPaperCard: React.FunctionComponent<ResearchPaperCardProps> = ({
           </div>
         </a>
       </Link>
-    </motion.article>
+    </article>
   );
 };
 
@@ -174,44 +162,43 @@ const Page: React.FunctionComponent<any> = ({
             alt=""
           />
         </div>
-        <motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
-          As you get older, <br />
-          you <em>can</em> get stronger
-        </motion.h2>
-        <motion.h4
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-          className="text-lg md:text-2xl leading-none mt:leading-base mt-5 pb-8 border-b-2 border-white">
-          Why bother? So you can continue to do the things you love – whether it
-          is working, hobbies, cooking, sports, taking care of your grandkids –
-          or simply living your life without relying on others.
-        </motion.h4>
-        <motion.h5
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0, transition: { delay: 0.2 } }}
-          className="font-bold uppercase text-xs mt-3">
-          Research Papers
-        </motion.h5>
-        <section className="flex flex-wrap flex-row mb-6">
-          {researchPapers?.map(({ node: researchPaper }, index: number) => (
-            <ResearchPaperCard
-              index={index}
-              key={researchPaper.id}
-              title={researchPaper.title}
-              type={researchPaper.moreResearchInfo.typeOfLink}
-              organisation={researchPaper.moreResearchInfo.researchOrganisation}
-              file={
-                researchPaper.moreResearchInfo.file
-                  ? researchPaper.moreResearchInfo.file.mediaItemUrl
-                  : null
-              }
-              url={researchPaper.moreResearchInfo.url}
-            />
-          ))}
-        </section>
+        <motion.section
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}>
+          <h2 className="text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10">
+            As you get older, <br />
+            you <em>can</em> get stronger
+          </h2>
+          <h4 className="text-lg md:text-2xl leading-tight mt-5 pb-8 border-b-2 border-white relative z-10">
+            Why bother? So you can continue to do the things you love – whether
+            it is working, hobbies, cooking, sports, taking care of your
+            grandkids – or simply living your life without relying on others.
+          </h4>
+        </motion.section>
+        <motion.section
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}>
+          <h5 className="font-bold uppercase text-xs mt-3">Research Papers</h5>
+          <section className="flex flex-wrap flex-row mb-6">
+            {researchPapers?.map(({ node: researchPaper }, index: number) => (
+              <ResearchPaperCard
+                index={index}
+                key={researchPaper.id}
+                title={researchPaper.title}
+                type={researchPaper.moreResearchInfo.typeOfLink}
+                organisation={
+                  researchPaper.moreResearchInfo.researchOrganisation
+                }
+                file={
+                  researchPaper.moreResearchInfo.file
+                    ? researchPaper.moreResearchInfo.file.mediaItemUrl
+                    : null
+                }
+                url={researchPaper.moreResearchInfo.url}
+              />
+            ))}
+          </section>
+        </motion.section>
       </section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
