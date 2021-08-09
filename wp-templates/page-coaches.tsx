@@ -32,7 +32,7 @@ const Page: React.FunctionComponent<any> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const h4Classes = 'text-lg md:text-2xl leading-none md:leading-base mt-5';
+  const h4Classes = 'text-lg md:text-2xl leading-none md:leading-tight mt-5';
 
   const paraVariants = {
     hide: { x: -20, opacity: 0 },
