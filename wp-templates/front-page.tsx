@@ -264,7 +264,7 @@ const Page: React.FunctionComponent<any> = ({
         </div>
       </section>
       <section className="fixed top-0 w-full h-screen border-red border-10 md:border-60 z-10 flex flex-col justify-center items-center">
-        <h1 className="text-7xl md:text-9xl lg:text-11xl word-spacing-0 md:word-spacing-8 font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
+        <h1 className="text-7xl md:text-9xl lg:text-11xl font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
           Mai tu liao!
         </h1>
         <h4 className="h4 text-red relative z-10 text-center max-w-5/6 md:max-w-2/3">
