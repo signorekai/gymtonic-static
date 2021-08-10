@@ -174,11 +174,11 @@ const Page: React.FunctionComponent<any> = ({
               ref={leftViewport}
               variants={{
                 initial: { opacity: 0 },
-                animate: { opacity: 1 },
+                show: { opacity: 1 },
                 exit: { opacity: 0 },
               }}
               initial="initial"
-              animate="animate"
+              animate="show"
               exit="exit"
               className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
               <LeftCard src={Gym1} />
@@ -196,13 +196,13 @@ const Page: React.FunctionComponent<any> = ({
             <motion.div
               variants={{
                 initial: { opacity: 0 },
-                animate: { opacity: 1 },
+                show: { opacity: 1 },
                 exit: { opacity: 0 },
               }}
               id="right"
               ref={rightViewport}
               initial="initial"
-              animate="animate"
+              animate="show"
               exit="exit"
               className="flex-1 flex flex-col w-full h-[300vh] lg:h-screen-6 relative">
               <RightParallaxCard
