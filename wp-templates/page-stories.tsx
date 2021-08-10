@@ -167,20 +167,26 @@ const Page: React.FunctionComponent<any> = ({
         } pt-8 md:pt-14 lg:pt-14 text-center z-30 flex flex-col justify-between`}>
         <motion.section
           variants={{
-            initial: { opacity: 0 },
-            exit: { opacity: 0 },
-            enter: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            initial: { opacity: 0, y: -20 },
+            exit: { opacity: 0, y: -20 },
+            show: { opacity: 1, y: 0, transition: { staggerChildren: 0.1 } },
           }}
           initial="initial"
           exit="exit"
-          animate="enter"
-          className="relative md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 lg:flex-last-item-align-start">
-          <h1
-            className={`page-title text-red relative hidden lg:block w-full z-20 pt-24 md:pt-14 ${
+          animate="show"
+          className="relative max-w-2xl h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 lg:flex-last-item-align-start">
+          <button
+            type="button"
+            className={`hover:cursor-pointer block w-full mt-24 md:mt-14 ${
               expanded ? 'mb-4 lg:mb-8' : 'mb-34 lg:mb-8'
-            }`}>
-            Stories
-          </h1>
+            }`}
+            onClick={() => {
+              setExpanded(false);
+            }}>
+            <h1 className="page-title text-red relative hidden lg:block w-full z-20">
+              Stories
+            </h1>
+          </button>
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
           {stories?.map(({ node: story }) => (
             <Bubble
@@ -192,9 +198,6 @@ const Page: React.FunctionComponent<any> = ({
               className={
                 expanded ? 'md:w-1/3 lg:w-full' : 'md:w-1/3 lg:w-1/2 xl:w-1/3'
               }
-              imageWrapperClassName={
-                story.id === selectedStory?.id ? 'border-4' : 'border-0'
-              }
               titleClassName={`${expanded ? 'md:max-w-1/2' : ''} text-base`}
               title={story.storyFields.videoTitle}
               subtitle={story.title}
@@ -203,7 +206,10 @@ const Page: React.FunctionComponent<any> = ({
           ))}
         </motion.section>
         <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
-          <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+          <p>
+            WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or email{' '}
+            <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+          </p>
           <p>An initiative by Lien Foundation</p>
         </div>
       </section>

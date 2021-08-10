@@ -186,9 +186,6 @@ const Page: React.FunctionComponent<any> = ({
 
     if (selected) {
       setMobileNavBtnStyle('text-white');
-      void mediaAnimationControl.start({
-        maxHeight: '100vh',
-      });
     }
 
     return () => {
@@ -228,7 +225,7 @@ const Page: React.FunctionComponent<any> = ({
             variants={{
               initial: { y: -20, opacity: 0 },
               exit: { y: -20, opacity: 0 },
-              enter: { y: 0, opacity: 1 },
+              enter: { y: 0, opacity: 1, transition: { delay: 0.1 } },
             }}
             className="font-bold text-lg lg:text-xl mt-4 leading-none">
             Press Release
@@ -236,27 +233,18 @@ const Page: React.FunctionComponent<any> = ({
         </header>
         <motion.div
           variants={{
-            initial: { y: 0, opacity: 0 },
-            exit: { y: 0, opacity: 0 },
+            initial: { y: -20, opacity: 0 },
+            exit: { y: -20, opacity: 0 },
             enter: {
               y: 0,
               opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-              },
             },
           }}
-          className={`w-full md:w-5/6 lg:w-full flex flex-wrap flex-row mx-auto justify-center items-start mt-3 ${
+          className={`w-full max-w-lg md:w-5/6 lg:w-full flex flex-wrap flex-row mx-auto justify-center items-start mt-3 ${
             press && press.length > 4 ? 'flex-last-item-align-start' : ''
           }`}>
           {press?.map(({ node: item }) => (
-            <motion.article
-              variants={{
-                initial: { y: -20, opacity: 0 },
-                exit: { y: -20, opacity: 0 },
-                enter: { y: 0, opacity: 1 },
-              }}
-              className="w-1/4 mb-3 group text-center">
+            <article className="w-1/4 mb-3 group text-center">
               <Link
                 href={
                   item.moreDetails.typeOfLink === 'external_link'
@@ -264,7 +252,7 @@ const Page: React.FunctionComponent<any> = ({
                     : item.moreDetails.file.mediaItemUrl
                 }>
                 <a target="_blank">
-                  <h1 className="mx-auto group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6">
+                  <h1 className="mx-auto group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6 px-3 lg:px-0">
                     {item.title}
                   </h1>
                   <div className="w-7 h-7 relative mt-2 duration-200 transition-transform group-hover:-translate-y-1 mx-auto">
@@ -304,48 +292,52 @@ const Page: React.FunctionComponent<any> = ({
                   </div>
                 </a>
               </Link>
-            </motion.article>
+            </article>
           ))}
         </motion.div>
-        <motion.h2
+        <motion.div
           variants={{
             initial: { y: -20, opacity: 0 },
             exit: { y: -20, opacity: 0 },
             enter: {
               y: 0,
               opacity: 1,
-              transition: { delay: press ? press?.length * 0.1 + 0.3 : 0.3 },
             },
-          }}
-          className="font-bold text-lg lg:text-xl mt-6 md:mt-8 leading-none text-center">
-          Media Coverage
-        </motion.h2>
-        <section className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-3 flex-last-item-align-start mx-auto md:w-10/12">
-          {media?.map(({ node: item }) => {
-            const date = new Date(item.date);
-            return (
-              <Bubble
-                key={item.id}
-                handler={() => {
-                  setSelected(formatSelected(item));
-                }}
-                className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3"
-                imageWrapperClassName={
-                  item.id === selected?.id ? 'border-4' : 'border-0'
-                }
-                title={item.title}
-                subtitle={`${
-                  date.getDate().toString().length === 1
-                    ? `0${date.getDate()}`
-                    : date.getDate()
-                } ${months[date.getMonth()]} ${date.getFullYear()}`}
-                thumbnail={item.featuredImage.node.sourceUrl}
-              />
-            );
-          })}
-        </section>
+          }}>
+          <h2 className="font-bold text-lg lg:text-xl mt-6 md:mt-8 leading-none text-center">
+            Media Coverage
+          </h2>
+          <section className="w-full max-w-2xl mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-3 flex-last-item-align-start mx-auto md:w-10/12">
+            {media?.map(({ node: item }) => {
+              const date = new Date(item.date);
+              return (
+                <Bubble
+                  key={item.id}
+                  handler={() => {
+                    setSelected(formatSelected(item));
+                  }}
+                  className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3"
+                  title={item.title}
+                  subtitle={`${item.moreDetails.publisher}<br />${
+                    date.getDate().toString().length === 1
+                      ? `0${date.getDate()}`
+                      : date.getDate()
+                  } ${months[date.getMonth()]} ${date.getFullYear()}`}
+                  thumbnail={
+                    item.featuredImage
+                      ? item.featuredImage.node.sourceUrl
+                      : '/images/map-no-icon.png'
+                  }
+                />
+              );
+            })}
+          </section>
+        </motion.div>
         <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
-          <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+          <p>
+            WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or email{' '}
+            <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+          </p>
           <p>An initiative by Lien Foundation</p>
         </div>
       </section>
@@ -356,7 +348,6 @@ const Page: React.FunctionComponent<any> = ({
         News
       </h1>
       <motion.section
-        initial={{ maxHeight: 0 }}
         animate={mediaAnimationControl}
         className={`content-container-bg content-container-size content-container-order content-container-positioning lg:min-h-screen content-container-px ${
           selected ? 'order-2' : ''
@@ -377,7 +368,7 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="show"
               exit="exit"
-              className="flex flex-col justify-center lg:min-h-screen">
+              className="flex flex-col justify-center lg:min-h-screen lg:pt-22 lg:pb-12">
               <motion.h3
                 variants={selectedChildVariant}
                 className="font-bold uppercase text-xs lg:pt-0 pt-6 md:pt-8">
@@ -390,7 +381,7 @@ const Page: React.FunctionComponent<any> = ({
               </motion.h3>
               <motion.h2
                 variants={selectedChildVariant}
-                className="font-bold text-lg md:text-2xl mt-3 leading-none">
+                className="font-black text-lg md:text-2xl mt-3 leading-none">
                 {selected.title}
               </motion.h2>
               {selected.featuredImage && (

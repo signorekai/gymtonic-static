@@ -58,59 +58,66 @@ const Page: React.FunctionComponent<any> = ({
     <main className="flex flex-col lg:flex-row items-start relative min-h-screen">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
-      <section className="content-container pt-10 md:pt-18 lg:pt-22 justify-end flex-1">
-        <div className="content-container-px">
-          <motion.h2
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="page-title">
-            Coaches
-          </motion.h2>
-          <motion.h4
-            initial="hide"
-            animate="show"
-            exit="hide"
-            variants={paraVariants}
-            className={h4Classes}>
+      <motion.section
+        initial="initial"
+        animate="show"
+        exit="exit"
+        variants={{
+          initial: { opacity: 1 },
+          exit: { opacity: 1 },
+          show: { opacity: 1, transition: { staggerChildren: 0.1 } },
+        }}
+        className="content-container pt-10 md:pt-18 lg:pt-22 justify-end flex-1">
+        <motion.div
+          variants={{
+            initial: { y: -20, opacity: 0 },
+            show: { y: 0, opacity: 1 },
+            exit: { y: -20, opacity: 0 },
+          }}
+          className="content-container-px">
+          <h2 className="page-title">Coaches</h2>
+          <h4 className={h4Classes}>
             They’re exercise trainers, physiotherapists and occupational
             therapists and fitness instructors trained overseas.
-          </motion.h4>
-          <motion.h4
-            initial="hide"
-            animate="show"
-            exit="hide"
-            variants={paraVariants}
-            className={h4Classes}>
+          </h4>
+          <h4 className={h4Classes}>
             While they are professionals, the uncles and aunties at our gyms
             treat them like their own children: Their training sessions are
             filled with encouragement and laughter.
-          </motion.h4>
-        </div>
+          </h4>
+        </motion.div>
         <div>
           <motion.h5
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            variants={{
+              initial: { y: -20, opacity: 0 },
+              show: { y: 0, opacity: 1 },
+              exit: { y: -20, opacity: 0 },
+            }}
             className="font-bold uppercase text-xs mt-8 mb-4 text-center">
             What they say
           </motion.h5>
           <Carousel>
             <CarouselCard>
-              <motion.blockquote
-                variants={blockQuoteVariants}
-                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                “One of my clients used to take 6 painkiller pills everyday for
-                body aches. Now, she takes just 1.”
-              </motion.blockquote>
-              <motion.h2
-                variants={coachNameVariants}
-                className="font-bold uppercase text-center text-xs mt-3">
-                Jason Tan,
-                <br />
-                Care corner at Woodsquare
-              </motion.h2>
               <motion.div
-                variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+                initial="initial"
+                animate="show"
+                exit="exit"
+                variants={{
+                  initial: { y: -20, opacity: 0 },
+                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
+                  exit: { y: -20, opacity: 0 },
+                }}>
+                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                  “One of my clients used to take 6 painkiller pills everyday
+                  for body aches. Now, she takes just 1.”
+                </blockquote>
+                <h2 className="font-bold uppercase text-center text-xs mt-3">
+                  Jason Tan,
+                  <br />
+                  Care corner at Woodsquare
+                </h2>
+              </motion.div>
+              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach1}
@@ -118,25 +125,29 @@ const Page: React.FunctionComponent<any> = ({
                   placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
-              </motion.div>
+              </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.blockquote
-                variants={blockQuoteVariants}
-                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                “Many seniors worry about getting injured. That’s why we are
-                here to guide them on the correct techniques.”
-              </motion.blockquote>
-              <motion.h2
-                variants={coachNameVariants}
-                className="font-bold uppercase text-center text-xs mt-3">
-                Looi Yuan Hui,
-                <br />
-                Bishan Community Clubb
-              </motion.h2>
               <motion.div
-                variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+                initial="initial"
+                animate="show"
+                exit="exit"
+                variants={{
+                  initial: { y: -20, opacity: 0 },
+                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
+                  exit: { y: -20, opacity: 0 },
+                }}>
+                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                  “Many seniors worry about getting injured. That’s why we are
+                  here to guide them on the correct techniques.”
+                </blockquote>
+                <h2 className="font-bold uppercase text-center text-xs mt-3">
+                  Looi Yuan Hui,
+                  <br />
+                  Bishan Community Clubb
+                </h2>
+              </motion.div>
+              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach2}
@@ -144,26 +155,30 @@ const Page: React.FunctionComponent<any> = ({
                   placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
-              </motion.div>
+              </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.blockquote
-                variants={blockQuoteVariants}
-                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                “Improved fitness created new possibilities for many seniors.
-                Some picked up a new sport or rekindled the love of a sport they
-                in their younger days, making new friends as a result.”
-              </motion.blockquote>
-              <motion.h2
-                variants={coachNameVariants}
-                className="font-bold uppercase text-center text-xs mt-3">
-                Andrew Yeo,
-                <br />
-                Peacehaven Bedok Arena
-              </motion.h2>
               <motion.div
-                variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+                initial="initial"
+                animate="show"
+                exit="exit"
+                variants={{
+                  initial: { y: -20, opacity: 0 },
+                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
+                  exit: { y: -20, opacity: 0 },
+                }}>
+                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                  “Improved fitness created new possibilities for many seniors.
+                  Some picked up a new sport or rekindled the love of a sport
+                  they in their younger days, making new friends as a result.”
+                </blockquote>
+                <h2 className="font-bold uppercase text-center text-xs mt-3">
+                  Andrew Yeo,
+                  <br />
+                  Peacehaven Bedok Arena
+                </h2>
+              </motion.div>
+              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach3}
@@ -171,25 +186,29 @@ const Page: React.FunctionComponent<any> = ({
                   placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
-              </motion.div>
+              </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.blockquote
-                variants={blockQuoteVariants}
-                className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                “Exercise helps reduce challenging behaviours from seniors with
-                dementia.”
-              </motion.blockquote>
-              <motion.h2
-                variants={coachNameVariants}
-                className="font-bold uppercase text-center text-xs mt-3">
-                Joseph Chan
-                <br />
-                Bishan Community Club
-              </motion.h2>
               <motion.div
-                variants={coachImageVariants}
-                className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+                initial="initial"
+                animate="show"
+                exit="exit"
+                variants={{
+                  initial: { y: -20, opacity: 0 },
+                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
+                  exit: { y: -20, opacity: 0 },
+                }}>
+                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                  “Exercise helps reduce challenging behaviours from seniors
+                  with dementia.”
+                </blockquote>
+                <h2 className="font-bold uppercase text-center text-xs mt-3">
+                  Joseph Chan
+                  <br />
+                  Bishan Community Club
+                </h2>
+              </motion.div>
+              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
                   src={Coach4}
@@ -197,11 +216,11 @@ const Page: React.FunctionComponent<any> = ({
                   placeholder="blur"
                   sizes="(min-width: 768px) 360px, 220px"
                 />
-              </motion.div>
+              </div>
             </CarouselCard>
           </Carousel>
         </div>
-      </section>
+      </motion.section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
           setShowSignUpForm={setShowSignUpForm}

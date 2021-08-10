@@ -88,7 +88,7 @@ const TechCard = ({
       <motion.div
         variants={{
           hide: { opacity: 0, y: -20 },
-          show: { opacity: 1, y: 0 },
+          show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
         <Image src={headerSrc} placeholder="blur" alt={title} />
@@ -150,7 +150,7 @@ const TechCard = ({
       <motion.p
         variants={{
           hide: { opacity: 0, y: -20 },
-          show: { opacity: 1, y: 0 },
+          show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="text-center text-sm leading-none md:text-lg md:leading-tight">
         {text}

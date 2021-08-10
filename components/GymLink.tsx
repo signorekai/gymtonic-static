@@ -22,7 +22,7 @@ const GymLink: React.FunctionComponent<Props> = ({
       className={
         type === 'above'
           ? 'mb-2 group-hover:-translate-y-1 transition-transform duration-100'
-          : 'group-hover:-translate-x-1 mr-2 transition-transform duration-100'
+          : 'group-hover:-translate-y-1 mr-2 transition-transform duration-100'
       }
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 162.34 198.05"
@@ -40,9 +40,7 @@ const GymLink: React.FunctionComponent<Props> = ({
             ? 'font-black text-xs md:text-base'
             : 'text-xs uppercase'
         }
-          ${
-            linkStyle === 'red' ? 'text-red' : 'text-white'
-          } group-hover:opacity-90 transition-opacity duration-100`}>
+          ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}>
         {text}
       </a>
     </Link>

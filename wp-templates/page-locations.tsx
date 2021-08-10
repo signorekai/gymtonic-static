@@ -191,6 +191,7 @@ const Page: React.FunctionComponent<any> = ({
         title: selectedLocation.title,
         id: selectedLocation.id,
         visible: true,
+        style: 'red',
       });
     },
     [mapContainerControls],
@@ -303,10 +304,10 @@ const Page: React.FunctionComponent<any> = ({
           {showInfo && (
             <motion.section
               variants={{
-                initial: { x: '-100%', opacity: 0 },
-                exit: { x: '-100%', opacity: 0 },
+                initial: { y: -20, opacity: 0 },
+                exit: { y: -20, opacity: 0 },
                 enter: {
-                  x: 0,
+                  y: 0,
                   opacity: 1,
                   transition: {
                     delay: 0.2,
@@ -318,7 +319,7 @@ const Page: React.FunctionComponent<any> = ({
               className="flex flex-col lg:min-h-screen justify-between"
               key="show-info">
               <section className="flex-1 flex flex-col justify-between">
-                <section className="px-3 md:px-14 lg:px-5">
+                <p className="px-3 md:px-14 lg:px-5">
                   <button
                     className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
                     type="button"
@@ -334,115 +335,59 @@ const Page: React.FunctionComponent<any> = ({
                         setShowInfo(false);
                       }, 100);
                     }}>
-                    <motion.h2
-                      variants={{
-                        initial: { y: -20, opacity: 0 },
-                        exit: { y: 0, opacity: 1 },
-                        enter: { y: 0, opacity: 1 },
-                      }}
-                      className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
+                    <h2 className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
                       {'<'} Where to find us
-                    </motion.h2>
+                    </h2>
                   </button>
-                  <motion.h1
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="font-bold text-lg lg:text-xl mt-6 lg:mt-16 text-center lg:leading-none leading-none">
+                  <h1 className="font-black text-lg lg:text-xl mt-6 lg:mt-16 text-center leading-tight">
                     {selected?.title}
-                  </motion.h1>
-                  <motion.h3
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="font-bold text-xs text-red text-center mt-8">
+                  </h1>
+                  <h3 className="font-bold text-xs text-red text-center mt-8">
                     Address
-                  </motion.h3>
-                  <motion.p
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="text-black font-bold text-xs text-center">
+                  </h3>
+                  <p className="text-black font-bold text-xs text-center leading-tight lg:max-w-1/2 mx-auto block">
                     {selected?.locationFields.location.streetNumber}{' '}
                     {selected?.locationFields.location.streetAddress}{' '}
                     {selected?.locationFields.location.postCode}
-                  </motion.p>
+                  </p>
                   <Link
                     passHref
                     href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
-                    <motion.a
-                      variants={{
-                        initial: { y: -20, opacity: 0 },
-                        exit: { y: 0, opacity: 1 },
-                        enter: { y: 0, opacity: 1 },
-                      }}
+                    <a
                       className="font-bold text-xs text-red uppercase text-center block mt-3 underline"
                       target="_blank">
                       Get Directions
-                    </motion.a>
+                    </a>
                   </Link>
-                  <motion.h3
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="font-bold text-xs text-red text-center mt-8">
+                  <h3 className="font-bold text-xs text-red text-center mt-8">
                     Opening hours
-                  </motion.h3>
-                  <motion.p
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="text-black font-bold text-xs text-center"
+                  </h3>
+                  <p
+                    className="text-black font-bold text-xs text-center leading-tight"
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
                       __html: selected?.locationFields.openingHours ?? '',
                     }}
                   />
-                  <motion.h3
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="font-bold text-xs text-red text-center mt-8">
+                  <h3 className="font-bold text-xs text-red text-center mt-8">
                     Call us
-                  </motion.h3>
+                  </h3>
                   <Link
                     href={`tel:${selected?.locationFields.contactNumber}`}
                     passHref>
-                    <motion.a
-                      variants={{
-                        initial: { y: -20, opacity: 0 },
-                        exit: { y: 0, opacity: 1 },
-                        enter: { y: 0, opacity: 1 },
-                      }}
+                    <a
                       className="font-bold text-xs text-black uppercase text-center block"
                       target="_blank">
                       {selected?.locationFields.contactNumber}
-                    </motion.a>
+                    </a>
                   </Link>
-                </section>
+                </p>
                 <section className="flex flex-col w-full items-center justify-end min-h-screen-1/8 overflow-hidden">
-                  <motion.button
-                    variants={{
-                      initial: { opacity: 0, y: 70 },
-                      exit: { opacity: 0, y: 20 },
-                      enter: { opacity: 1, y: 0 },
-                    }}>
+                  <button type="button">
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
                       Sign Up
                     </div>
-                  </motion.button>
+                  </button>
                 </section>
               </section>
               {selected?.locationFields.images && (
@@ -502,9 +447,9 @@ const Page: React.FunctionComponent<any> = ({
                 }}
                 key="show-list">
                 <header className="pointer-events-none top-0 w-full pt-12 lg:pt-20 text-center z-30">
-                  <motion.h1 className="page-title relative z-20 pt-2 pb-4 block">
+                  <h1 className="page-title relative z-20 pt-2 pb-4 block">
                     Where to find us
-                  </motion.h1>
+                  </h1>
                   <motion.h2
                     variants={{
                       initial: { y: -20, opacity: 0 },
@@ -530,7 +475,7 @@ const Page: React.FunctionComponent<any> = ({
                   initial="initial"
                   animate="enter"
                   exit="exit"
-                  className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
+                  className="w-full max-w-2xl mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
                   {locationsOpenToPublic?.map(({ node: location }) => {
                     return (
                       <Bubble
@@ -540,6 +485,7 @@ const Page: React.FunctionComponent<any> = ({
                           enter: { y: 0, opacity: 1 },
                         }}
                         handler={() => {
+                          window.dispatchEvent(new Event('resize'));
                           clickHandler(location);
                         }}
                         className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
@@ -583,9 +529,6 @@ const Page: React.FunctionComponent<any> = ({
                     enter: {
                       y: 0,
                       opacity: 1,
-                      transition: {
-                        staggerChildren: 0.1,
-                      },
                     },
                   }}
                   initial="initial"
@@ -625,7 +568,10 @@ const Page: React.FunctionComponent<any> = ({
                 </motion.section>
               </motion.section>
               <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
-                <p>Email us at hello@gymtonic.sg or WhatsApp 9000 0000.</p>
+                <p>
+                  WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or{' '}
+                  email <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+                </p>
                 <p>An initiative by Lien Foundation</p>
               </div>
             </>
