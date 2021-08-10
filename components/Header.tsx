@@ -131,7 +131,7 @@ function Header({
         <header
           className="absolute top-0 l-0 w-full z-40 text-white"
           ref={selfRef}>
-          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-6 pointer-events-none">
+          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
             <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
               {menuItems.map(({ node }: MenuData, index: number) => {
                 return (
@@ -168,7 +168,7 @@ function Header({
               ease: [0.175, 0.85, 0.42, 0.96],
             }}
             className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-4 md:p-6">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-4 md:py-6 md:px-12">
               <Logo />
               <ul className="flex flex-row text-center items-center antialiased">
                 {menuItems.map(({ node }: MenuData) => {
