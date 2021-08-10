@@ -135,4 +135,5 @@ interface IActiveInfoWindow {
   title: string;
   id: string;
   visible: boolean;
+  style: 'red' | 'white';
 }
