@@ -67,6 +67,9 @@ module.exports = {
       'screen-6': 'calc(var(--vh) * 600)',
     }),
     extend: {
+      lineHeight: {
+        tight: '1.2',
+      },
       cursor: {
         generic: "url('/images/cursor-generic.png'), pointer",
         about: "url('/images/cursor-about.png'), pointer",
@@ -124,6 +127,7 @@ module.exports = {
         '2/3': '66.67%',
         '3/4': '75%',
         '5/6': '83.33%',
+        '2xl': '40rem',
       },
       maxHeight: {
         none: 'none',
