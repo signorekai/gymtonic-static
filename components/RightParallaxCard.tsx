@@ -122,7 +122,7 @@ const RightParallaxCard = ({
                     initial: { opacity: 0, x: '40%' },
                     exit: { opacity: 0, x: '40%' },
                   }}
-                  className="text-xs md:text-base leading-none group hover:cursor-pointer hover:mr-[-1px]">
+                  className="text-xs md:text-base leading-none group hover:cursor-pointer">
                   <motion.div
                     variants={{
                       animate: {
