@@ -402,7 +402,7 @@ const Page: React.FunctionComponent<any> = ({
               )}
               <motion.p
                 variants={selectedChildVariant}
-                className="text-sm md:text-lg leading-tighter md:leading-tighter mb-10 mt-3">
+                className="text-sm md:text-lg leading-tighter md:leading-tight mb-8 mt-3">
                 {selected.moreDetails.description}
               </motion.p>
             </motion.div>
