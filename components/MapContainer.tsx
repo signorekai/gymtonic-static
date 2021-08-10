@@ -49,17 +49,21 @@ interface InfoWindowProps {
   lat: number;
   // eslint-disable-next-line react/no-unused-prop-types
   lng: number;
+  style: 'red' | 'white';
 }
 
 const InfoWindow = ({
   visible,
   title = '',
   id = '0',
+  style,
 }: InfoWindowProps): JSX.Element => (
   <AnimatePresence exitBeforeEnter>
     {visible && (
       <motion.div
-        className="text-center min-w-52 bg-pink p-2 rounded-xl text-red font-bold text-sm"
+        className={`text-center min-w-32 p-1 rounded-xl font-bold text-sm ${
+          style === 'red' ? 'bg-pink text-red' : 'bg-white text-black'
+        }`}
         style={{
           transform: 'translateX(-50%) translateY(calc(-100% - 1.5rem))',
         }}
@@ -109,6 +113,7 @@ const MapContainer = ({
           clickableIcons: false,
           streetViewControl: false,
           mapTypeControl: false,
+          zoomControl: false,
           fullscreenControl: false,
         }}
         zoom={13}
@@ -131,6 +136,8 @@ const MapContainer = ({
                   title: item.title,
                   id: item.id,
                   visible: true,
+                  style:
+                    item.icon.url === '/images/map-icon.png' ? 'red' : 'white',
                 });
               }
             }}
