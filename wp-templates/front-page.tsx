@@ -279,13 +279,13 @@ const Page: React.FunctionComponent<any> = ({
           loop
           className="w-full h-full absolute top-0 left-0 z-0 object-cover object-center"
           src={
-            window.innerWidth >= 1366
+            window.innerWidth >= 1024
               ? '/videos/Thematic-8-MaiTuLiao-H.mp4'
               : '/videos/Thematic-9-MaiTuLiao-V.mp4'
           }>
           <source
             src={
-              window.innerWidth >= 1366
+              window.innerWidth >= 1024
                 ? '/videos/Thematic-8-MaiTuLiao-H.mp4'
                 : '/videos/Thematic-9-MaiTuLiao-V.mp4'
             }
