@@ -38,7 +38,6 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
   const parentVariants = {
     beforeEnter: {
       opacity: 0,
-      y: '-40',
     },
     enter: {
       opacity: 1,
@@ -46,15 +45,14 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
     },
     exit: {
       opacity: 0,
-      y: '-40',
     },
   };
 
   return (
     <motion.article
       className={`w-full transition-all duration-200 ${
-        isExpanded ? 'lg:w-7/10' : 'lg:w-1/2'
-      } order-1 lg:order-2 lg:min-h-screen content-container-bg content-container-px content-container-positioning pt-36 lg:pt-24`}>
+        isExpanded ? 'lg:w-7/10 lg:pt-24' : 'lg:w-1/2 lg:pt-48'
+      } order-1 lg:order-2 lg:min-h-screen content-container-bg content-container-px content-container-positioning pt-36`}>
       <Head>
         <title>{title} - GymTonic</title>
       </Head>
@@ -67,7 +65,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
           exit="exit">
           <h1 className="font-bold uppercase text-xs">{title}</h1>
           <div className="flex flex-col md:flex-row md:justify-between">
-            <h2 className="font-bold text-lg md:text-2xl mt-1 md:mt-0 leading-none">
+            <h2 className="font-black text-lg md:text-2xl mt-1 md:mt-0 leading-none">
               {videoTitle}
             </h2>
             {gym && (
@@ -91,7 +89,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
               />
             </div>
           )}
-          <p className="text-sm md:text-lg leading-tighter md:leading-tighter mb-10">
+          <p className="text-sm md:text-lg leading-tighter md:leading-tight mb-10">
             {description}
           </p>
         </motion.div>
