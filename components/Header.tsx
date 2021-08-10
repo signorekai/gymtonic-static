@@ -112,7 +112,7 @@ function Header({
   }, [headerRef, selfRef]);
 
   const isCurrent = (currentPath: string): boolean => {
-    const aboutPages = ['/research', '/its-simple', '/coaches'];
+    const aboutPages = ['/research', '/its-simple', '/coaches', '/technology'];
     return (
       currentPath === router.asPath ||
       ((currentPath === '/about' || currentPath === '/gymtonic/about') &&
