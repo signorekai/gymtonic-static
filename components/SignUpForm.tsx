@@ -210,7 +210,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
             variants={{
               initial: { y: '50%', opacity: 0 },
               enter: { y: 0, opacity: 1 },
-              exit: { y: '-50%', opacity: 0 },
+              exit: { y: '50%', opacity: 0 },
             }}>
             <motion.button
               onClick={() => {
