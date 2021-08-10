@@ -405,6 +405,18 @@ const Page: React.FunctionComponent<any> = ({
                 className="text-sm md:text-lg leading-tighter md:leading-tight mb-8 mt-3">
                 {selected.moreDetails.description}
               </motion.p>
+              <Link
+                href={
+                  selected.moreDetails.typeOfLink === 'external_link'
+                    ? selected.moreDetails.url
+                    : selected.moreDetails.file.mediaItemUrl
+                }>
+                <a
+                  className="uppercase self-start text-xs lg:pt-0 pt-6 link"
+                  target="_blank">
+                  Read more
+                </a>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
