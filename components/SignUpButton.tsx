@@ -15,14 +15,16 @@ const SignUpBtn = ({
   mobileSrc,
   setShowSignUpForm,
 }: Props): JSX.Element => {
-  const [btnSrc, setBtnSrc] = useState(src);
+  const [btnStyle, setBtnStyle] = useState<'default' | 'hover' | 'mobile'>(
+    'default',
+  );
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
-        setBtnSrc(src);
+        setBtnStyle('default');
       } else {
-        setBtnSrc(mobileSrc);
+        setBtnStyle('mobile');
       }
     };
     handleResize();
@@ -35,20 +37,43 @@ const SignUpBtn = ({
   }, [mobileSrc, src]);
 
   return (
-    <div className="relative w-16 h-16 md:w-24 md:h-24">
+    <div className="relative sign-up-btn w-16 h-16 md:w-24 md:h-24 rounded-full">
       <button
         type="button"
         onMouseOut={() => {
-          setBtnSrc(window.innerWidth >= 768 ? src : mobileSrc);
+          setBtnStyle(window.innerWidth >= 768 ? 'default' : 'mobile');
         }}
         onMouseOver={() => {
-          setBtnSrc(hoverSrc);
+          setBtnStyle('hover');
         }}
         onMouseDown={() => {
           setShowSignUpForm(true);
         }}
         className="hover:cursor-signup w-full h-full">
-        <Image src={btnSrc} layout="fill" alt="Sign up for GymTonic" />
+        <div className={`${btnStyle !== 'default' ? 'hidden' : ''}`}>
+          <Image
+            unoptimized
+            src={src}
+            layout="fill"
+            alt="Sign up for GymTonic"
+          />
+        </div>
+        <div className={`${btnStyle !== 'mobile' ? 'hidden' : ''}`}>
+          <Image
+            unoptimized
+            src={mobileSrc}
+            layout="fill"
+            alt="Sign up for GymTonic"
+          />
+        </div>
+        <div className={`${btnStyle !== 'hover' ? 'hidden' : ''}`}>
+          <Image
+            unoptimized
+            src={hoverSrc}
+            layout="fill"
+            alt="Sign up for GymTonic"
+          />
+        </div>
       </button>
     </div>
   );
