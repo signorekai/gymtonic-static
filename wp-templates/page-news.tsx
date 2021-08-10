@@ -54,6 +54,7 @@ const query = gql`
           moreDetails {
             description
             publisher
+            showPhoto
             typeOfLink
             url
             file {
@@ -103,6 +104,7 @@ interface Media {
     publisher: string;
     typeOfLink: 'external_link' | 'pdf';
     url: string;
+    showPhoto?: boolean;
     file: {
       mediaItemUrl: string;
     };
@@ -384,22 +386,23 @@ const Page: React.FunctionComponent<any> = ({
                 className="font-black text-lg md:text-2xl mt-3 leading-none">
                 {selected.title}
               </motion.h2>
-              {selected.featuredImage && (
-                <motion.div
-                  variants={selectedChildVariant}
-                  className="w-full relative mt-3">
-                  <Image
-                    objectFit="cover"
-                    width={selected.featuredImage.node.mediaDetails.width}
-                    height={selected.featuredImage.node.mediaDetails.height}
-                    sizes="(min-width: 1024px) 700px, 320px"
-                    quality={90}
-                    placeholder="blur"
-                    blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUkpA4CAABqwENo/rLPQAAAABJRU5ErkJggg=="
-                    src={selected.featuredImage.node.largeSourceUrl}
-                  />
-                </motion.div>
-              )}
+              {selected.featuredImage !== null &&
+                selected.moreDetails.showPhoto !== null && (
+                  <motion.div
+                    variants={selectedChildVariant}
+                    className="w-full relative mt-3">
+                    <Image
+                      objectFit="cover"
+                      width={selected.featuredImage.node.mediaDetails.width}
+                      height={selected.featuredImage.node.mediaDetails.height}
+                      sizes="(min-width: 1024px) 700px, 320px"
+                      quality={90}
+                      placeholder="blur"
+                      blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUkpA4CAABqwENo/rLPQAAAABJRU5ErkJggg=="
+                      src={selected.featuredImage.node.largeSourceUrl}
+                    />
+                  </motion.div>
+                )}
               <motion.p
                 variants={selectedChildVariant}
                 className="text-sm md:text-lg leading-tighter md:leading-tight mb-8 mt-3">
