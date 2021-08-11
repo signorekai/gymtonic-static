@@ -73,9 +73,27 @@ const text: {
     ...defaults,
     title: '报名',
     subtitle: `恭喜你！You're taking the first step towards a stronger, better you.`,
-    namePlaceholder: '我的名字',
   },
-  ms: defaults,
+  ms: {
+    title: 'Mendaftar',
+    subtitle:
+      'Tahniah! Anda telah mengambil langkah pertama kepada anda yang lebih kuat, lebih baik.',
+    name: 'Nama Saya',
+    age: 'Umar Saya',
+    email: 'Alamat Emel Saya',
+    contact: 'Nombor Telefon Saya',
+    myAddress: 'Alamat Saya',
+    note: 'Catatan kepada Kami (E.g. Ada keadaan kesihatan?)',
+    seniorName: 'Nama Senior',
+    seniorAge: `Umur Senior`,
+    seniorAddress: `Alamat Senior`,
+    warning:
+      'Harap maklum bahawa pengangkutan tidak disediakan. Warga emas mesti pergi ke lokasi Gym Tonic sendiri.',
+    selectGym: 'Pilih gim',
+    signUpForMyself: 'Saya mendaftar untuk saya sendiri',
+    signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
+    submit: 'Hantar',
+  },
   ta: defaults,
 };
 
@@ -234,7 +252,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
           exit="exit"
           className={`fixed bg-black-opaque z-70 top-0 left-0 w-full min-h-screen h-screen overflow-scroll flex flex-col ${
             success ? 'justify-center' : 'justify-start'
-          } items-center`}>
+          } items-center cursor-generic`}>
           <AnimatePresence exitBeforeEnter>
             {success ? (
               <>
@@ -321,7 +339,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                   onClick={() => {
                     setShowSignUpForm(false);
                   }}
-                  className="mt-3 inline-block w-7 h-7 md:w-8 md:h-8 absolute top-0 right-4 z-40 lg:-top-10 lg:-right-10"
+                  className="mt-3 inline-block w-7 h-7 md:w-8 md:h-8 absolute top-0 right-4 z-40 lg:-top-10 lg:-right-10 hover:cursor-generic"
                   variants={{
                     initial: { opacity: 0, y: -100 },
                     exit: { opacity: 0, y: -100 },
@@ -412,10 +430,10 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                 </motion.h2>
                 <form
                   onSubmit={onSubmit}
-                  className={
-                    loading ? 'pointer-events-none opacity-50 relative' : ''
-                  }>
-                  <div className="field-group !border-b-0 !mb-6">
+                  className={`form-${lang}
+                    ${loading ? 'pointer-events-none opacity-50 relative' : ''}
+                  `}>
+                  <div className="field-group !items-start !border-b-0 !mb-6">
                     <label className="w-full text-red hover:cursor-generic">
                       <input
                         className="hidden input-radio"
@@ -704,7 +722,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                     // clickHandler(location);
                                   }}
                                   borderColor="pink"
-                                  className="w-full md:pb-8"
+                                  className="w-full md:pb-8 hover:cursor-generic"
                                   subTitleClassName="text-center text-xs"
                                   titleClassName="text-sm md:text-base text-center"
                                   comingSoon={
@@ -736,7 +754,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                   {!loading && (
                     <button
                       type="submit"
-                      className="block mx-auto overflow-hidden">
+                      className="block mx-auto overflow-hidden hover:cursor-submit">
                       <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-14 text-center">
                         {text[lang].submit}
                       </div>
