@@ -77,6 +77,7 @@ module.exports = {
         news: "url('/images/cursor-news.png'), pointer",
         stories: "url('/images/cursor-stories.png'), pointer",
         signup: "url('/images/cursor-signup.png'), pointer",
+        submit: "url('/images/cursor-submit.png'), pointer",
       },
       spacing: {
         18: '4.5rem',
