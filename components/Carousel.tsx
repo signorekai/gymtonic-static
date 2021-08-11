@@ -115,10 +115,13 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     };
   }, [slidesContainer, carouselAnimationControls]);
 
-  const childrenWithProps = React.Children.map(children, (child, index) =>
-    // eslint-disable-next-line react/no-array-index-key
-    React.cloneElement(child, { index, currentIndex }),
+  const childrenWithProps = React.Children.map(
+    infiniteChildren,
+    (child, index) =>
+      // eslint-disable-next-line react/no-array-index-key
+      React.cloneElement(child, { index, currentIndex }),
   );
+
   return (
     <div className={`max-w-full h-auto relative ${className}`}>
       <div
@@ -183,7 +186,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             }}
             custom={{
               currentIndex,
-              childrenCount: children.length,
+              childrenCount: infiniteChildren.length,
             }}
             initial="hide"
             animate={carouselAnimationControls}
@@ -192,7 +195,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
               isDraggable ? 'md:cursor-move' : ''
             }`}
             style={{
-              width: `${children.length * 100}%`,
+              width: `${infiniteChildren.length * 100}%`,
             }}>
             {childrenWithProps}
           </motion.div>
@@ -201,7 +204,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
           <button
             type="button"
             className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
-              currentIndex === children.length - 1
+              currentIndex === infiniteChildren.length - 1
                 ? 'opacity-50 hover:cursor-not-allowed'
                 : ''
             }`}
