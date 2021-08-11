@@ -383,7 +383,12 @@ const Page: React.FunctionComponent<any> = ({
                   </Link>
                 </p>
                 <section className="flex flex-col w-full items-center justify-end min-h-screen-1/8 overflow-hidden">
-                  <button type="button">
+                  <button
+                    className="btn-sign--up hover:cursor-signup"
+                    type="button"
+                    onClick={() => {
+                      setShowSignUpForm(true);
+                    }}>
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
                       Sign Up
                     </div>
@@ -495,7 +500,9 @@ const Page: React.FunctionComponent<any> = ({
                         }`}
                         titleClassName="text-sm md:text-base"
                         imageWrapperClassName={`${
-                          location.id === selected?.id ? 'border-4' : 'border-0'
+                          location.id === selected?.id
+                            ? 'border-red'
+                            : 'border-white'
                         } ${
                           location.locationFields.openingSoon === true
                             ? 'group-hover:border-0'
@@ -569,10 +576,18 @@ const Page: React.FunctionComponent<any> = ({
               </motion.section>
               <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
                 <p>
-                  WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or{' '}
+                  WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or
                   email <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
                 </p>
-                <p>An initiative by Lien Foundation</p>
+                <p>
+                  An initiative by{' '}
+                  <a
+                    href="//lienfoundation.org/"
+                    target="_blank"
+                    rel="noreferrer">
+                    Lien Foundation
+                  </a>
+                </p>
               </div>
             </>
           )}
