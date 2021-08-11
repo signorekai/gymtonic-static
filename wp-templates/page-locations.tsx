@@ -298,7 +298,7 @@ const Page: React.FunctionComponent<any> = ({
       initial="initial"
       animate="enter"
       exit="exit"
-      className="flex flex-col lg:flex-row relative items-start min-h-screen">
+      className="flex flex-col lg:flex-row relative items-start min-h-screen cursor-locations">
       <section className="lg:flex w-full lg:w-auto lg:min-h-screen flex-col justify-start order-3 text-red lg:order-1 flex-1">
         <AnimatePresence exitBeforeEnter>
           {showInfo && (

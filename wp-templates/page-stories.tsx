@@ -143,7 +143,7 @@ const Page: React.FunctionComponent<any> = ({
   }, [stories, selectedStory, path]);
 
   return (
-    <main className="flex flex-col lg:flex-row relative items-start">
+    <main className="flex flex-col lg:flex-row relative items-start cursor-stories">
       <div className="fixed pointer-events-auto top-6 md:top-12 leading-0 md:-translate-y-1/2 right-6 md:right-8 z-40">
         <MobileNavBtn
           setShowMobileNav={setShowMobileNav}

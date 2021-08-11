@@ -222,7 +222,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                         setSuccess(false);
                       }, 300);
                     }}
-                    className="mt-3 inline-block w-7 h-7 md:w-8 md:h-8 absolute top-0 right-4 z-40 lg:-top-4 lg:-right-4"
+                    className="mt-3 inline-block w-7 h-7 md:w-8 md:h-8 absolute top-0 right-4 z-40 lg:-top-4 lg:-right-4 hover:cursor-generic"
                     variants={{
                       initial: { opacity: 0, y: -100 },
                       exit: { opacity: 0, y: -100 },

@@ -150,7 +150,7 @@ const Page: React.FunctionComponent<any> = ({
   }, []);
 
   return (
-    <main className="flex flex-col lg:flex-row items-start relative">
+    <main className="flex flex-col lg:flex-row items-start relative cursor-about">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
       <motion.section
