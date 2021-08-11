@@ -114,7 +114,8 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
         )}
         <h6
           className={`text-red uppercase leading-none group-hover:opacity-80 mb-2 bubble__subtitle ${subTitleClassName}`}
-          dangerouslySetInnerHTML={{ __html: subtitle }} />
+          dangerouslySetInnerHTML={{ __html: subtitle }}
+        />
         <h1
           className={`leading-none transition-all duration-200 mx-auto mx-au text-black bubble__title font-black group-hover:opacity-80 ${titleClassName}`}>
           {title}
