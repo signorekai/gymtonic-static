@@ -212,6 +212,7 @@ body {
   @apply flex;
   @apply flex-col;
   @apply md:flex-row;
+  @apply md:items-end;
   @apply border-b-2;
   @apply border-red;
   @apply pb-1;
@@ -254,9 +255,10 @@ body {
   @apply bg-transparent;
   @apply w-full;
   @apply text-red;
-  @apply text-center;
   @apply border-red;
   @apply block;
+  @apply px-4;
+  @apply focus:outline-none;
 
   @apply placeholder:opacity-40;
   @apply placeholder:text-red;
