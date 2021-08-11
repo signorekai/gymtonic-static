@@ -98,7 +98,6 @@ const TechCard = ({
           <Image
             sizes="(min-width: 768px) 370px, 200px"
             src={mainCardSrc}
-            placeholder="blur"
             alt={mainCardTitle}
             priority
             quality={100}
@@ -118,7 +117,6 @@ const TechCard = ({
               <Image
                 sizes="(min-width: 768px) 200px, 100px"
                 src={subCards[1].src}
-                placeholder="blur"
                 alt={subCards[1].title}
                 quality={100}
               />
@@ -136,7 +134,6 @@ const TechCard = ({
           <Image
             sizes="(min-width: 768px) 200px, 100px"
             src={subCards[0].src}
-            placeholder="blur"
             alt={subCards[0].title}
             quality={100}
           />
