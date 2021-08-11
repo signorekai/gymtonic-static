@@ -52,7 +52,12 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or email{' '}
           <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
         </p>
-        <p>An initiative by Lien Foundation</p>
+        <p>
+          An initiative by{' '}
+          <a href="//lienfoundation.org/" target="_blank" rel="noreferrer">
+            Lien Foundation
+          </a>
+        </p>
       </div>
     </section>
   );
