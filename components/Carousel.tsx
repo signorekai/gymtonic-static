@@ -44,11 +44,21 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   rightNavBtnStyle = {},
   leftNavBtnStyle = {},
 }: CarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(children.length * 3);
   const [slideWidth, setSlideWidth] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const carouselAnimationControls = useAnimation();
+
+  const infiniteChildren = [
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+  ];
 
   const fullNavBtnStyle = {
     display: 'inline-block',
@@ -59,7 +69,9 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     if (speed < 0) {
       setCurrentIndex(Math.max(currentIndex + speed, 0));
     } else if (speed > 0) {
-      setCurrentIndex(Math.min(currentIndex + speed, children.length - 1));
+      setCurrentIndex(
+        Math.min(currentIndex + speed, infiniteChildren.length - 1),
+      );
     }
   };
 
@@ -103,10 +115,13 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     };
   }, [slidesContainer, carouselAnimationControls]);
 
-  const childrenWithProps = React.Children.map(children, (child, index) =>
-    // eslint-disable-next-line react/no-array-index-key
-    React.cloneElement(child, { index, currentIndex }),
+  const childrenWithProps = React.Children.map(
+    infiniteChildren,
+    (child, index) =>
+      // eslint-disable-next-line react/no-array-index-key
+      React.cloneElement(child, { index, currentIndex }),
   );
+
   return (
     <div className={`max-w-full h-auto relative ${className}`}>
       <div
@@ -162,20 +177,16 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
               show: (custom: {
                 currentIndex: number;
                 childrenCount: number;
-              }) => {
-                const width = slidesContainer.current?.clientWidth || 0;
-
-                return {
-                  x: (custom.currentIndex / custom.childrenCount) * width * -1,
-                  transition: {
-                    duration: 0.2,
-                  },
-                };
-              },
+              }) => ({
+                x: `${(custom.currentIndex / custom.childrenCount) * -100}%`,
+                transition: {
+                  duration: 0.2,
+                },
+              }),
             }}
             custom={{
               currentIndex,
-              childrenCount: children.length,
+              childrenCount: infiniteChildren.length,
             }}
             initial="hide"
             animate={carouselAnimationControls}
@@ -184,7 +195,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
               isDraggable ? 'md:cursor-move' : ''
             }`}
             style={{
-              width: `${children.length * 100}%`,
+              width: `${infiniteChildren.length * 100}%`,
             }}>
             {childrenWithProps}
           </motion.div>
@@ -193,7 +204,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
           <button
             type="button"
             className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
-              currentIndex === children.length - 1
+              currentIndex === infiniteChildren.length - 1
                 ? 'opacity-50 hover:cursor-not-allowed'
                 : ''
             }`}
