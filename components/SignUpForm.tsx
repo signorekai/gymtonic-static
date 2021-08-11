@@ -22,7 +22,26 @@ interface SignUpFormProps {
   setShowSignUpForm(arg0: boolean): void;
 }
 
-const defaults = {
+interface Translation {
+  title: string;
+  subtitle: string;
+  name: string;
+  age: string;
+  email: string;
+  contact: string;
+  myAddress: string;
+  note: string;
+  seniorName: string;
+  seniorAge: string;
+  seniorAddress: string;
+  warning: string;
+  selectGym: string;
+  signUpForMyself: string;
+  signUpForSomeoneElse: string;
+  submit: string;
+}
+
+const defaults: Translation = {
   title: 'Sign up',
   subtitle:
     "Congratulations! You're taking the first step towards a stronger, better you.",
@@ -43,7 +62,12 @@ const defaults = {
   submit: 'submit',
 };
 
-const text = {
+const text: {
+  en: Translation;
+  zh: Translation;
+  ms: Translation;
+  ta: Translation;
+} = {
   en: defaults,
   zh: {
     ...defaults,
