@@ -9,6 +9,7 @@ interface BubbleProps {
   handler(evt: Event): void;
   subtitle: string;
   title: string;
+  borderColor?: 'white' | 'pink';
   className?: string;
   imageWrapperClassName?: string;
   titleClassName?: string;
@@ -65,6 +66,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   href,
   subtitle,
   title,
+  borderColor = 'white',
   className = '',
   imageWrapperClassName = '',
   titleClassName = 'text-base',
@@ -92,7 +94,9 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
       <BubbleLink href={href} clickHandler={clickHandler}>
         {thumbnail && (
           <div
-            className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-36 md:h-36 mb-3 mx-auto border-white hover:border-red border-4 transition-all !content-box bubble__image-wrapper ${imageWrapperClassName}`}>
+            className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-36 md:h-36 mb-3 mx-auto ${
+              borderColor === 'white' ? 'border-white' : 'border-pink'
+            } hover:border-red border-4 transition-all !content-box bubble__image-wrapper ${imageWrapperClassName}`}>
             <Image
               src={thumbnail}
               layout="fill"
