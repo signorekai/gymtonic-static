@@ -32,8 +32,8 @@ const Page: React.FunctionComponent<any> = ({
       <MobileAboutHeader isSticky={false} />
       <section className="content-container content-container-px justify-center flex-1 pt-10 md:pt-18 lg:pt-0">
         <motion.h1
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           className="text-3xl md:text-5xl leading-none text-center font-black mt-10 lg:mt-0 mb-32">
           It won’t be difficult, just trust us :)
         </motion.h1>
