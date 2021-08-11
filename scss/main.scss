@@ -278,9 +278,23 @@ body {
   @apply after:-top-4;
   @apply after:block;
   @apply after:left-0;
+}
 
-  &::after {
+.form-en {
+  .has-error::after {
     content: 'Forget ah?';
+  }
+}
+
+.form-ms {
+  .has-error::after {
+    content: 'Dilupakan?';
+  }
+}
+
+.form-zh {
+  .has-error::after {
+    content: '您忘记了吗？';
   }
 }
 
