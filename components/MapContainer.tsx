@@ -49,14 +49,14 @@ interface InfoWindowProps {
   lat: number;
   // eslint-disable-next-line react/no-unused-prop-types
   lng: number;
-  style: 'red' | 'white';
+  style?: 'red' | 'white';
 }
 
 const InfoWindow = ({
   visible,
   title = '',
   id = '0',
-  style,
+  style = 'red',
 }: InfoWindowProps): JSX.Element => (
   <AnimatePresence exitBeforeEnter>
     {visible && (
