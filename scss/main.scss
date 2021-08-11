@@ -293,3 +293,42 @@ input[type='radio']:checked + .bubble {
 .sign-up-btn {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
+.cursor-generic {
+  button:not(.btn-sign--up),
+  a {
+    @apply hover:cursor-generic;
+  }
+}
+
+.cursor-about {
+  button:not(.btn-sign--up),
+  a {
+    @apply hover:cursor-about;
+  }
+}
+
+.cursor-stories {
+  button:not(.btn-sign--up),
+  a {
+    @apply hover:cursor-stories;
+  }
+}
+
+.cursor-locations {
+  button:not(.btn-sign--up),
+  a {
+    @apply hover:cursor-locations;
+  }
+}
+
+.cursor-news {
+  button:not(.btn-sign--up),
+  a {
+    @apply hover:cursor-news;
+  }
+}
+
+.btn-sign--up {
+  @apply hover:cursor-signup;
+}
