@@ -177,12 +177,16 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
               show: (custom: {
                 currentIndex: number;
                 childrenCount: number;
-              }) => ({
-                x: `${(custom.currentIndex / custom.childrenCount) * -100}%`,
-                transition: {
-                  duration: 0.2,
-                },
-              }),
+              }) => {
+                const width = slidesContainer.current?.clientWidth || 0;
+
+                return {
+                  x: (custom.currentIndex / custom.childrenCount) * width * -1,
+                  transition: {
+                    duration: 0.2,
+                  },
+                };
+              },
             }}
             custom={{
               currentIndex,
