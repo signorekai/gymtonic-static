@@ -99,6 +99,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
             } hover:border-red border-4 transition-all !content-box bubble__image-wrapper ${imageWrapperClassName}`}>
             <Image
               src={thumbnail}
+              unoptimized
               layout="fill"
               quality={90}
               sizes="320px"
