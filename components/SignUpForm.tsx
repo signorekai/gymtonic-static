@@ -310,7 +310,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                     <Image src={SuccessZh} layout="fill" unoptimized alt="" />
                   )}
                 </div>
-                <div className="text-sm text-center text-white justify-self-end pb-4 w-full max-w-xs pt-4 mx-auto">
+                <footer className="text-sm text-center text-white justify-self-end pb-4 w-full max-w-xs pt-4 mx-auto">
                   <p>
                     WhatsApp or call us at <a href="tel:96882388">9688 2388</a>{' '}
                     or email{' '}
@@ -325,7 +325,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       Lien Foundation
                     </a>
                   </p>
-                </div>
+                </footer>
               </>
             ) : (
               <motion.div
