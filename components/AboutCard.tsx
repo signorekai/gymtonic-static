@@ -47,7 +47,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           .
         </h5>
       </div>
-      <div className="text-xs text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+      <footer className="text-xs text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
         <p>
           WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or email{' '}
           <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
@@ -58,7 +58,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
             Lien Foundation
           </a>
         </p>
-      </div>
+      </footer>
     </section>
   );
 };

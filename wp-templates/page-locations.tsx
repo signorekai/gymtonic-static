@@ -574,7 +574,7 @@ const Page: React.FunctionComponent<any> = ({
                   })}
                 </motion.section>
               </motion.section>
-              <div className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+              <footer className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
                 <p>
                   WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or
                   email <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
@@ -588,7 +588,7 @@ const Page: React.FunctionComponent<any> = ({
                     Lien Foundation
                   </a>
                 </p>
-              </div>
+              </footer>
             </>
           )}
         </AnimatePresence>
