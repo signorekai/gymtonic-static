@@ -51,8 +51,7 @@ a {
 
 .link {
   @apply relative;
-  @apply hidden;
-  @apply lg:inline-block;
+  @apply inline-block;
   @apply after:empty-content;
   @apply after:absolute;
   @apply after:h-[2px];
