@@ -319,7 +319,7 @@ const Page: React.FunctionComponent<any> = ({
               className="flex flex-col lg:min-h-screen justify-between"
               key="show-info">
               <section className="flex-1 flex flex-col justify-between">
-                <p className="px-3 md:px-14 lg:px-5">
+                <div className="px-3 md:px-14 lg:px-5">
                   <button
                     className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
                     type="button"
@@ -381,7 +381,7 @@ const Page: React.FunctionComponent<any> = ({
                       {selected?.locationFields.contactNumber}
                     </a>
                   </Link>
-                </p>
+                </div>
                 <section className="flex flex-col w-full items-center justify-end min-h-screen-1/8 overflow-hidden">
                   <button
                     className="btn-sign--up hover:cursor-signup"
