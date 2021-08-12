@@ -99,6 +99,7 @@ const TechCard = ({
             sizes="(min-width: 768px) 370px, 200px"
             src={mainCardSrc}
             alt={mainCardTitle}
+            unoptimized
             priority
             quality={100}
           />
@@ -118,6 +119,7 @@ const TechCard = ({
                 sizes="(min-width: 768px) 200px, 100px"
                 src={subCards[1].src}
                 alt={subCards[1].title}
+                unoptimized
                 quality={100}
               />
               <h2
@@ -135,6 +137,7 @@ const TechCard = ({
             sizes="(min-width: 768px) 200px, 100px"
             src={subCards[0].src}
             alt={subCards[0].title}
+            unoptimized
             quality={100}
           />
           <h2
