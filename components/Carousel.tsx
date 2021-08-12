@@ -128,31 +128,30 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         <div className="flex-1 h-full overflow-hidden" ref={container}>
           <motion.div
             ref={slidesContainer}
+            initial="initial"
+            exit="exit"
+            animate="enter"
             variants={{
-              hide: {
-                x: `0%`,
-              },
-              show: (custom: {
+              initial: (custom: {
                 currentIndex: number;
                 childrenCount: number;
-              }) => {
-                const width = slidesContainer.current?.clientWidth || 0;
-
-                return {
-                  x: (custom.currentIndex / custom.childrenCount) * width * -1,
-                  transition: {
-                    duration: 0.2,
-                  },
-                };
-              },
+              }) => ({
+                x: `${(custom.currentIndex / custom.childrenCount) * -100}%`,
+              }),
+              enter: (custom: {
+                currentIndex: number;
+                childrenCount: number;
+              }) => ({
+                x: `${(custom.currentIndex / custom.childrenCount) * -100}%`,
+                transition: {
+                  duration: 0.2,
+                },
+              }),
             }}
             custom={{
               currentIndex,
               childrenCount: infiniteChildren.length,
             }}
-            initial="hide"
-            animate={carouselAnimationControls}
-            exit="hide"
             className="flex flex-row flex-wrap md:px-0"
             style={{
               width: `${infiniteChildren.length * 100}%`,

@@ -78,17 +78,12 @@ const TechCard = ({
       ];
 }) => {
   const [expanded, setExpanded] = useState(false);
-
-  const cardVariants = {
-    hide: { opacity: 0, y: 50 },
-    show: { opacity: 1, y: 0 },
-  };
   return (
     <div className="min-h-80 relative flex flex-col justify-center items-center pt-6 overflow-hidden">
       <motion.div
         variants={{
-          hide: { opacity: 0, y: -20 },
-          show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
+          initial: { opacity: 0, y: -20 },
+          enter: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
         <Image src={headerSrc} sizes="210px" placeholder="blur" alt={title} />
@@ -146,8 +141,8 @@ const TechCard = ({
       </div>
       <motion.p
         variants={{
-          hide: { opacity: 0, y: -20 },
-          show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
+          initial: { opacity: 0, y: -20 },
+          enter: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="text-center text-sm leading-none md:text-lg md:leading-tight">
         {text}
@@ -156,7 +151,7 @@ const TechCard = ({
         {expanded && (
           <motion.div
             variants={{
-              hide: {
+              initial: {
                 opacity: 0,
                 y: 30,
                 scale: 0,
@@ -169,9 +164,9 @@ const TechCard = ({
                 transformOrigin: 'bottom center',
               },
             }}
-            initial="hide"
-            animate="show"
-            exit="hide"
+            initial="initial"
+            animate="enter"
+            exit="initial"
             className="w-2/3 md:w-1/3 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
           </motion.div>
