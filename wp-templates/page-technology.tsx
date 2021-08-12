@@ -91,7 +91,7 @@ const TechCard = ({
           show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
-        <Image src={headerSrc} sizes="210px" placeholder="blur" alt={title} />
+        <Image src={headerSrc} sizes="210px" placeholder="blur" alt="" />
       </motion.div>
       <div className="flex flex-row w-full justify-center items-start md:items-center mt-2 px-2 mb-8 flex-wrap md:flex-nowrap">
         <div className="md:order-2 w-3/4 md:w-1/2 pointer-events-none">
