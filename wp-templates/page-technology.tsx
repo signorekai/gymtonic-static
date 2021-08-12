@@ -91,14 +91,13 @@ const TechCard = ({
           show: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
-        <Image src={headerSrc} sizes="210px" placeholder="blur" alt="" />
+        <Image src={headerSrc} sizes="210px" placeholder="blur" alt={title} />
       </motion.div>
       <div className="flex flex-row w-full justify-center items-start md:items-center mt-2 px-2 mb-8 flex-wrap md:flex-nowrap">
         <div className="md:order-2 w-3/4 md:w-1/2 pointer-events-none">
           <Image
             sizes="(min-width: 768px) 370px, 200px"
             src={mainCardSrc}
-            alt={mainCardTitle}
             unoptimized
             priority
             quality={100}
@@ -118,7 +117,6 @@ const TechCard = ({
               <Image
                 sizes="(min-width: 768px) 200px, 100px"
                 src={subCards[1].src}
-                alt={subCards[1].title}
                 unoptimized
                 quality={100}
               />
@@ -136,7 +134,6 @@ const TechCard = ({
           <Image
             sizes="(min-width: 768px) 200px, 100px"
             src={subCards[0].src}
-            alt={subCards[0].title}
             unoptimized
             quality={100}
           />
