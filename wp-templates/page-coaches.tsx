@@ -67,7 +67,7 @@ const Page: React.FunctionComponent<any> = ({
           exit: { opacity: 1 },
           show: { opacity: 1, transition: { staggerChildren: 0.1 } },
         }}
-        className="content-container pt-10 md:pt-18 lg:pt-22 justify-end flex-1">
+        className="content-container pt-10 md:pt-18 lg:pt-32 justify-between flex-1">
         <motion.div
           variants={{
             initial: { y: -20, opacity: 0 },
