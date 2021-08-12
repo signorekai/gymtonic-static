@@ -1,4 +1,15 @@
 @font-face {
+  font-family: 'DFZongYiBold1B-GB';
+  src: url('../assets/fonts//DFZongYiBold1B-GB.woff2') format('woff2'),
+    url('../assets/fonts//DFZongYiBold1B-GB.woff') format('woff'),
+    url('../assets/fonts//DFZongYiBold1B-GB.svg#DFZongYiBold1B-GB')
+      format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Gotham HTF';
   src: url('../assets/fonts//GothamHTF-Black.woff2') format('woff2'),
     url('../assets/fonts//GothamHTF-Black.woff') format('woff'),

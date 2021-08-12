@@ -285,21 +285,32 @@ body {
   @apply after:left-0;
 }
 
-.form-en {
+.form--en {
   .has-error::after {
     content: 'Forget ah?';
   }
 }
 
-.form-ms {
+.form--ms {
   .has-error::after {
     content: 'Dilupakan?';
   }
 }
 
-.form-zh {
+.form--zh {
+  font-family: 'DFZongYiBold1B-GB' !important;
+  * {
+    font-family: 'DFZongYiBold1B-GB' !important;
+  }
+
   .has-error::after {
     content: '您忘记了吗？';
+  }
+}
+
+.form--disabled {
+  .form__inner-wrap {
+    @apply opacity-50;
   }
 }
 
