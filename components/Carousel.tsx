@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, PanInfo, useAnimation } from 'framer-motion';
+import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 
 interface CarouselProps {
   children: JSX.Element[];
   className?: string;
-  isDraggable?: boolean;
   showNav?: boolean;
   navBtnStyle?: React.CSSProperties;
   leftNavBtnStyle?: React.CSSProperties;
@@ -38,7 +37,6 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   children,
   showNav = true,
   className = '',
-  isDraggable = true,
   navBtnPosition = 'top',
   navBtnStyle = {},
   rightNavBtnStyle = {},
@@ -75,45 +73,10 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
     }
   };
 
-  const handleDrag = (
-    evt: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo,
-  ) => {
-    if (container.current) {
-      if (
-        info.point.x !== 0 &&
-        info.point.y !== 0 &&
-        Math.abs(info.offset.x) > container.current.clientWidth * 0.2
-      ) {
-        setTimeout(() => {
-          goTo(info.offset.x < 0 ? 1 : -1);
-        }, 100);
-      } else {
-        void carouselAnimationControls.start('show');
-      }
-    }
-  };
-
   useEffect(() => {
-    void carouselAnimationControls.start('show');
+    void carouselAnimationControls.start('enter');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carouselAnimationControls, currentIndex]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (slidesContainer.current) {
-        setSlideWidth(slidesContainer.current.clientWidth);
-      }
-    };
-
-    if (slidesContainer.current) {
-      setSlideWidth(slidesContainer.current.clientWidth);
-      window.addEventListener('resize', handleResize);
-    }
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [slidesContainer, carouselAnimationControls]);
 
   const childrenWithProps = React.Children.map(
     infiniteChildren,
@@ -166,10 +129,6 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         <div className="flex-1 h-full overflow-hidden" ref={container}>
           <motion.div
             ref={slidesContainer}
-            drag={isDraggable ? 'x' : false}
-            dragConstraints={container}
-            dragMomentum={false}
-            onDragEnd={handleDrag}
             variants={{
               hide: {
                 x: `0%`,
@@ -195,9 +154,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
             initial="hide"
             animate={carouselAnimationControls}
             exit="hide"
-            className={`flex flex-row flex-wrap md:px-0 ${
-              isDraggable ? 'md:cursor-move' : ''
-            }`}
+            className="flex flex-row flex-wrap md:px-0"
             style={{
               width: `${infiniteChildren.length * 100}%`,
             }}>

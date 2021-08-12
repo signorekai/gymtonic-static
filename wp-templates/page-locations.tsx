@@ -414,8 +414,7 @@ const Page: React.FunctionComponent<any> = ({
                     }}
                     rightNavBtnStyle={{
                       right: '3%',
-                    }}
-                    isDraggable={false}>
+                    }}>
                     {selected.locationFields.images.map((image) => {
                       const ratio =
                         image.mediaDetails.width / image.mediaDetails.height;
