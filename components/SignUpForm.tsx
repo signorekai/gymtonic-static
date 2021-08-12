@@ -329,7 +329,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
               </>
             ) : (
               <motion.div
-                className="bg-pink max-w-3xl w-full lg:mt-28 px-4 md:px-22 relative"
+                className="bg-pink max-w-3xl w-full lg:mt-28 px-4 md:px-16 relative"
                 variants={{
                   initial: { y: '50%', opacity: 0 },
                   enter: { y: 0, opacity: 1 },
@@ -433,8 +433,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                   className={`form-${lang}
                     ${loading ? 'pointer-events-none opacity-50 relative' : ''}
                   `}>
-                  <div className="field-group !items-start !border-b-0 !mb-6">
-                    <label className="w-full text-red hover:cursor-generic">
+                  <div className="field-group !items-start !border-b-0 !mb-6 md:justify-center">
+                    <label className="text-red hover:cursor-generic md:pr-2">
                       <input
                         className="hidden input-radio"
                         type="radio"
@@ -445,7 +445,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       />
                       <span>{text[lang].signUpForMyself}</span>
                     </label>
-                    <label className="w-full text-red hover:cursor-generic">
+                    <label className="text-red text-right hover:cursor-generic md:pl-2">
                       <input
                         className="hidden input-radio"
                         type="radio"
