@@ -428,6 +428,7 @@ const Page: React.FunctionComponent<any> = ({
                               paddingBottom: `${100 / ratio}%`,
                             }}>
                             <Image
+                              unoptimized
                               src={image.sourceUrl}
                               layout="fill"
                               alt=""
