@@ -43,7 +43,6 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   leftNavBtnStyle = {},
 }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(children.length * 3);
-  const [slideWidth, setSlideWidth] = useState(0);
   const container = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const carouselAnimationControls = useAnimation();
