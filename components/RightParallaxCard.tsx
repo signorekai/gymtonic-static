@@ -62,7 +62,7 @@ const RightParallaxCard = ({
               className={`relative flex flex-col justify-center items-center ${videoClassName}`}>
               <motion.h1
                 variants={{
-                  animate: {
+                  show: {
                     opacity: 1,
                     y: '-50%',
                   },
@@ -93,7 +93,7 @@ const RightParallaxCard = ({
             </div>
             <motion.p
               variants={{
-                animate: {
+                show: {
                   opacity: 1,
                   y: 0,
                   transition: {
@@ -110,22 +110,23 @@ const RightParallaxCard = ({
               <Link href={href} scroll={false} passHref>
                 <motion.a
                   variants={{
-                    animate: {
+                    show: {
                       opacity: 1,
+                      y: 0,
                       x: 0,
                       transition: {
                         delay: 0.2,
                         when: 'beforeChildren',
-                        duration: 0.7,
+                        duration: 0.2,
                       },
                     },
-                    initial: { opacity: 0, x: '40%' },
-                    exit: { opacity: 0, x: '40%' },
+                    initial: { opacity: 0, x: 0, y: -20 },
+                    exit: { opacity: 0, x: 0, y: -20 },
                   }}
                   className="text-xs md:text-base leading-none group hover:cursor-pointer">
                   <motion.div
                     variants={{
-                      animate: {
+                      show: {
                         opacity: 1,
                         x: 0,
                         transition: { delay: 0, duration: 0.2 },

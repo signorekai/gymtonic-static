@@ -127,42 +127,52 @@ function Header({
         {/* Add extra elements to <head> here. */}
       </Head>
       <WPHead />
-      {!scrolled && (
-        <header
-          className="absolute top-0 l-0 w-full z-40 text-white"
-          ref={selfRef}>
-          <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
-            <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
-              {menuItems.map(({ node }: MenuData, index: number) => {
-                return (
-                  <>
-                    {Math.floor(menuItems.length / 2) === index && (
-                      <Logo className="mx-3" />
-                    )}
-                    <li
-                      key={`${node.id}`}
-                      className="px-4 font-black hidden xl:list-item menu-item pointer-events-auto">
-                      <Link href={node.path} scroll={false}>
-                        <a className="after:scale-x-0">{node.label}</a>
-                      </Link>
-                    </li>
-                  </>
-                );
-              })}
-              {menuItems.length % 2 === 0 ? (
-                ''
-              ) : (
-                <li className="inline-block pl-4" />
-              )}
-            </ul>
-          </div>
-        </header>
-      )}
+      <AnimatePresence>
+        {!scrolled && (
+          <motion.header
+            initial={{ translateY: '-100%' }}
+            animate={{ translateY: 0 }}
+            exit={{ translateY: '-100%' }}
+            transition={{
+              duration: noAnimation ? 0 : 0.35,
+              ease: [0.175, 0.85, 0.42, 0.96],
+            }}
+            className="fixed top-0 l-0 w-full z-40 text-white"
+            ref={selfRef}>
+            <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
+              <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
+                {menuItems.map(({ node }: MenuData, index: number) => {
+                  return (
+                    <>
+                      {Math.floor(menuItems.length / 2) === index && (
+                        <Logo className="mx-3" />
+                      )}
+                      <li
+                        key={`${node.id}`}
+                        className="px-4 font-black hidden xl:list-item menu-item pointer-events-auto">
+                        <Link href={node.path} scroll={false}>
+                          <a className="after:scale-x-0">{node.label}</a>
+                        </Link>
+                      </li>
+                    </>
+                  );
+                })}
+                {menuItems.length % 2 === 0 ? (
+                  ''
+                ) : (
+                  <li className="inline-block pl-4" />
+                )}
+              </ul>
+            </div>
+          </motion.header>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {scrolled && (
           <motion.header
             initial={{ translateY: '-100%' }}
             animate={{ translateY: 0 }}
+            exit={{ translateY: '-100%' }}
             transition={{
               duration: noAnimation ? 0 : 0.35,
               ease: [0.175, 0.85, 0.42, 0.96],
