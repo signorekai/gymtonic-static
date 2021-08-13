@@ -114,7 +114,7 @@ const Page: React.FunctionComponent<any> = ({
         setShowLoader={setShowLoader}
         totalFrames={69}
         videoDuration={3}
-        height={4}
+        height={5}
         videoPath="/videos/home.mp4"
         path="/images/home-video-frames">
         <AnimatePresence exitBeforeEnter>
@@ -123,7 +123,7 @@ const Page: React.FunctionComponent<any> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.175, 0.85, 0.42, 0.96] }}
-            className="absolute top-1/3 -translate-y-1/2 z-30 text-center text-red mx-8 pointer-events-none">
+            className="absolute top-1/3 -translate-y-1/2 left-0 z-30 w-full text-center text-red px-8 pointer-events-none">
             <h1 className="h1 text-red">Gym Tonic</h1>
             <h4 className="text-2xl md:text-3xl font-black leading-none">
               Exercise as Medicine
@@ -259,7 +259,7 @@ const Page: React.FunctionComponent<any> = ({
           setShowBtn(false);
         }}
       /> */}
-      <section className="w-full h-[100vh] lg:h-screen border-red border-10 md:border-60 relative z-20 flex flex-col justify-center items-center snap-child">
+      <section className="w-full h-screen border-red border-10 md:border-60 relative z-20 flex flex-col justify-center items-center snap-child">
         <h1 className="text-7xl md:text-9xl lg:text-11xl font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
           Mai tu liao!
         </h1>

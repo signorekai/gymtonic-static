@@ -265,7 +265,9 @@ export default function VideoScroller({
           container.current.scrollHeight /
           (height / (height + 7));
 
-        const rawFrame = Math.round((scrollYProgress * totalFrames) / 0.25);
+        const rawFrame = Math.round(
+          (scrollYProgress * totalFrames) / (1 / height),
+        );
 
         let currentFrame =
           rawFrame > totalFrames ? rawFrame % totalFrames : rawFrame;
@@ -274,13 +276,16 @@ export default function VideoScroller({
           currentFrame = totalFrames;
         }
 
-        tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+        if (isMobile === false) {
+          tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+        }
       }
     };
 
     if (container.current) {
       container.current.addEventListener('scroll', handleScroll);
     }
+    handleScroll();
 
     const currentContainer = container.current;
 
@@ -290,6 +295,7 @@ export default function VideoScroller({
       }
     };
   }, [
+    isMobile,
     borderWidth,
     canvasAnimateControls,
     container,
@@ -305,14 +311,14 @@ export default function VideoScroller({
       ref={videoScrollerRef}
       className="w-full relative"
       style={{
-        height: `calc(var(--vh) * ${height * 100})`,
+        height: `calc(var(--vh) * ${isMobile ? 100 : height * 100})`,
       }}>
       <div ref={ref} className="w-full sticky top-0 left-0">
         <div
           ref={canvasContainerRef}
           className={`${
             isMobile ? '' : 'sticky'
-          } snap-child border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center md:pt-0 border-10 md:border-60 border-red`}>
+          } snap-child border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-center items-center md:pt-0 border-10 md:border-60 border-red relative`}>
           <AnimatePresence>
             {showReminder && (
               <motion.div
@@ -353,7 +359,7 @@ export default function VideoScroller({
               <motion.video
                 animate={canvasAnimateControls}
                 drag="x"
-                dragConstraints={scrollerRef}
+                dragConstraints={videoScrollerRef}
                 dragMomentum={false}
                 dragElastic={0}
                 disablePictureInPicture

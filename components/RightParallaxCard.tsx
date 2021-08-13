@@ -100,7 +100,7 @@ const RightParallaxCard = ({
               className="px-4 md:px-0 md:w-7/12 mt-2 md:mt-4 text-sm md:text-lg md:leading-tight font-bold pb-4">
               {paragraph}
             </motion.p>
-            <div className="absolute flex flex-row items-start bottom-7 md:right-8 max-w-sm -translate-x-2 md:translate-x-0 md:text-right">
+            <div className="absolute flex flex-row items-start bottom-7 left-0 w-full">
               <Link href={href} scroll={false} passHref>
                 <motion.a
                   variants={{
@@ -117,7 +117,7 @@ const RightParallaxCard = ({
                     initial: { opacity: 0, x: 0, y: -20 },
                     exit: { opacity: 0, x: 0, y: -20 },
                   }}
-                  className="text-xs md:text-base leading-none group hover:cursor-pointer">
+                  className="text-xs md:text-base leading-none group hover:cursor-pointer max-w-2/3 md:max-w-sm block mx-auto md:mr-8">
                   <motion.div
                     variants={{
                       show: {
@@ -125,7 +125,7 @@ const RightParallaxCard = ({
                         x: 0,
                         transition: { delay: 0, duration: 0.2 },
                       },
-                      initial: { opacity: 0, x: '-100%' },
+                      initial: { opacity: 0, x: 0 },
                       exit: { opacity: 0, x: 0 },
                       hover: { x: '-0.5rem' },
                     }}
