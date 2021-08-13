@@ -318,7 +318,7 @@ const Page: React.FunctionComponent<any> = ({
                   handler={() => {
                     setSelected(formatSelected(item));
                   }}
-                  className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3"
+                  className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 focus:outline-none"
                   title={item.title}
                   subtitle={`${item.moreDetails.publisher}<br />${
                     date.getDate().toString().length === 1
@@ -420,7 +420,7 @@ const Page: React.FunctionComponent<any> = ({
                     : selected.moreDetails.file.mediaItemUrl
                 }>
                 <a
-                  className="uppercase self-start text-xs lg:pt-0 pt-6 link"
+                  className="uppercase self-start text-xs mb-12 lg:mb-0 link"
                   target="_blank">
                   Read more
                 </a>
