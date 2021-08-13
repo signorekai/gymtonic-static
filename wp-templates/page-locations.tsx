@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
-import { getNextStaticProps } from '@wpengine/headless/next';
+import { getNextStaticProps, useUriInfo } from '@wpengine/headless/next';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import { GetStaticPropsContext } from 'next';
+import { find } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,6 +22,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-4-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-4-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-4.png';
+import { useRouter } from 'next/router';
 
 interface QueryResult {
   data:
@@ -159,6 +161,8 @@ const Page: React.FunctionComponent<any> = ({
   const locationsOpenToPublic = data?.openToPublic.locations?.edges;
   const locationsNotOpenToPublic = data?.notOpenToPublic.locations?.edges;
 
+  const router = useRouter();
+
   const [showInfo, setShowInfo] = useState(false);
   const [selected, setSelected] = useState<ILocation>();
   const [currentMapCenter, setCurrentMapCenter] = useState<LatLngLiteral>();
@@ -167,6 +171,7 @@ const Page: React.FunctionComponent<any> = ({
   >(undefined);
 
   const mapContainerControls = useAnimation();
+  const uriInfo = useUriInfo();
 
   const clickHandler = useCallback(
     (selectedLocation: ILocation) => {
@@ -198,13 +203,30 @@ const Page: React.FunctionComponent<any> = ({
   );
 
   useEffect(() => {
+    if (
+      uriInfo?.uriPath !== '/gymtonic/locations' &&
+      uriInfo?.uriPath !== '/locations' &&
+      selected === undefined
+    ) {
+      const compiledLocations = [
+        ...locationsNotOpenToPublic!,
+        ...locationsOpenToPublic!,
+      ];
+
+      const current = find(compiledLocations, (location) => {
+        return location.node.uri === `/${uriInfo?.uriPath}/`;
+      });
+      if (current) clickHandler(current.node);
+    }
+
     navigator.geolocation.getCurrentPosition((p) => {
       setCurrentMapCenter({
         lat: p.coords.latitude,
         lng: p.coords.longitude,
       });
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locationsNotOpenToPublic, locationsOpenToPublic, uriInfo?.uriPath]);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -324,16 +346,25 @@ const Page: React.FunctionComponent<any> = ({
                     className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
                     type="button"
                     onClick={() => {
-                      void mapContainerControls.start({
-                        width:
-                          window && window.innerWidth >= 1024 ? '50%' : '100%',
-                        transition: { duration: 0.4 },
-                      });
-                      setTimeout(() => {
-                        setSelected(undefined);
-                        setActiveInfoWindow(undefined);
-                        setShowInfo(false);
-                      }, 100);
+                      if (
+                        uriInfo?.uriPath === 'gymtonic/locations' ||
+                        uriInfo?.uriPath === 'locations'
+                      ) {
+                        void mapContainerControls.start({
+                          width:
+                            window && window.innerWidth >= 1024
+                              ? '50%'
+                              : '100%',
+                          transition: { duration: 0.4 },
+                        });
+                        setTimeout(() => {
+                          setSelected(undefined);
+                          setActiveInfoWindow(undefined);
+                          setShowInfo(false);
+                        }, 100);
+                      } else {
+                        void router.push('/locations');
+                      }
                     }}>
                     <h2 className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
                       {'<'} Where to find us
