@@ -168,7 +168,7 @@ const TechCard = ({
                 y: 30,
                 scale: 0,
                 transformOrigin: 'bottom center',
-              }
+              },
             }}
             className="w-2/3 md:w-1/3 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
