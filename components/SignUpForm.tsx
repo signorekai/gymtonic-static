@@ -527,6 +527,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               type="text"
                               disabled={watchType !== 'someone else'}
                               placeholder={text[lang].contact}
+                              pattern="[0-9]*"
                               className="text-field md:border-l-2 border-red"
                               {...register('contact', {
                                 required: true,
@@ -634,6 +635,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               className="text-field md:border-l-2"
                               min="12"
                               max="99"
+                              pattern="[0-9]*"
                               {...register('age', {
                                 min: 12,
                                 max: 99,
