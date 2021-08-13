@@ -197,15 +197,14 @@ const Page: React.FunctionComponent<any> = ({
           }
           scrollTo(0);
         }}
+        show={true}
         className="lg:w-1/2 snap-end"
         headerTitle="Ka-Ching!"
         videoSrc="/videos/Thematic-2-KaChing.mp4"
-        videoPoster="/images/Thematic-2-KaChing.jpg"
         videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
         paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
         href="/about"
         link="What is Gym Tonic?"
-        container={container}
       />
       <RightParallaxCard
         onEnter={() => {
@@ -214,12 +213,10 @@ const Page: React.FunctionComponent<any> = ({
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
         videoSrc="/videos/Thematic-3-Kakis.mp4"
-        videoPoster="/images/Thematic-3-Kakis.jpg"
         headerTitle="Kakis"
         paragraph="Help Pa and Ma make new friends."
         href="/locations"
         link="Find a gym near you"
-        container={container}
       />
       <RightParallaxCard
         onEnter={() => {
@@ -228,12 +225,10 @@ const Page: React.FunctionComponent<any> = ({
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-4-Boleh.mp4"
-        videoPoster="/images/Thematic-4-Boleh.jpg"
         headerTitle="Boleh"
         paragraph="To continue doing the things you love, you have to stay physically strong."
         href="/research"
         link="Why Strength Training matters even more when you are old."
-        container={container}
       />
       <RightParallaxCard
         onEnter={() => {
@@ -242,12 +237,10 @@ const Page: React.FunctionComponent<any> = ({
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-5-Huat.mp4"
-        videoPoster="/images/Thematic-5-Huat.jpg"
         headerTitle="Huat!"
         paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
         href="/stories"
         link="Read their stories"
-        container={container}
       />
       <RightParallaxCard
         onEnter={() => {
@@ -256,12 +249,10 @@ const Page: React.FunctionComponent<any> = ({
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
         videoSrc="/videos/Thematic-6-Kilat.mp4"
-        videoPoster="/images/Thematic-6-Kilat.jpg"
         headerTitle="Kilat!"
         paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
         href="/technology"
         link="Understand the process"
-        container={container}
       />
       <RightParallaxCard
         onEnter={() => {
@@ -270,12 +261,10 @@ const Page: React.FunctionComponent<any> = ({
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-7-Pro.mp4"
-        videoPoster="/images/Thematic-7-Pro.jpg"
         headerTitle="Pro"
         paragraph="Exercise trainers who will guide you every step of the way."
         href="/coaches"
         link="Meet the professionals"
-        container={container}
       />
       {/* <SnapperContainer
         length={6}

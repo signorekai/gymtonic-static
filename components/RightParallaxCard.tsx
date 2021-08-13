@@ -14,11 +14,9 @@ const RightParallaxCard = ({
   paragraph,
   link,
   href,
-  videoPoster,
+  show = false,
   onEnter = () => {},
-  container,
 }: {
-  container: React.RefObject<HTMLDivElement>;
   className?: string;
   headerTitle: string;
   videoSrc: string;
@@ -26,10 +24,10 @@ const RightParallaxCard = ({
   paragraph: string;
   link: string;
   href: string;
-  videoPoster: string;
+  show?: boolean;
   onEnter?(): void;
 }): JSX.Element => {
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(show);
 
   const { ref, inView } = useInView({
     threshold: 0.95,
@@ -38,7 +36,7 @@ const RightParallaxCard = ({
   useEffect(() => {
     if (inView) {
       onEnter();
-      setShow(true);
+      setVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onEnter, inView, link]);
@@ -51,7 +49,7 @@ const RightParallaxCard = ({
       ref={ref}
       className={`h-screen pt-screen-1/2 lg:pt-0 w-full text-white bg-red text-center md:text-lg leading-tight md:leading-tight flex flex-col justify-center items-center relative ${className}`}>
       <AnimatePresence exitBeforeEnter>
-        {show && (
+        {visible && (
           <>
             <div
               className={`relative flex flex-col justify-center items-center ${videoClassName}`}>
