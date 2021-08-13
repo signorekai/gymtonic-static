@@ -157,16 +157,19 @@ const TechCard = ({
                 scale: 0,
                 transformOrigin: 'bottom center',
               },
-              show: {
+              enter: {
                 opacity: 1,
                 y: 0,
                 scale: 1,
                 transformOrigin: 'bottom center',
               },
+              exit: {
+                opacity: 0,
+                y: 30,
+                scale: 0,
+                transformOrigin: 'bottom center',
+              }
             }}
-            initial="initial"
-            animate="enter"
-            exit="initial"
             className="w-2/3 md:w-1/3 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
           </motion.div>
