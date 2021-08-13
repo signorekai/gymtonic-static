@@ -25,6 +25,7 @@ import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 import withSignUpForm from 'components/SignUpForm';
 import { useScroll } from 'lib/hooks';
+import GymLink from 'components/GymLink';
 
 /**
  * Example of post variables to query the first six posts in a named category.
@@ -37,7 +38,15 @@ const firstSixInCategory = {
   },
 };
 
-const LeftCard = ({ src }: { src: StaticImageData }) => (
+const LeftCard = ({
+  src,
+  url,
+  linkText,
+}: {
+  src: StaticImageData;
+  url: string;
+  linkText: string;
+}) => (
   <div className="bg-white flex-1 w-full h-[50vh] lg:h-screen relative">
     <Image
       src={src}
@@ -48,6 +57,13 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
       objectFit="cover"
       priority
       placeholder="blur"
+    />
+    <GymLink
+      href={url}
+      text={linkText}
+      type="above"
+      linkStyle="white"
+      className="absolute left-0 bottom-3 lg:bottom-8 text-center lg:text-left lg:pl-8 right-0 lg:right-auto hover:cursor-locations"
     />
   </div>
 );
@@ -142,12 +158,32 @@ const Page: React.FunctionComponent<any> = ({
             transform: 'translate3d(0, -83.33%, 0)',
           }}
           className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute transition-transform duration-200">
-          <LeftCard src={Gym1} />
-          <LeftCard src={Gym2} />
-          <LeftCard src={Gym3} />
-          <LeftCard src={Gym4} />
-          <LeftCard src={Gym5} />
-          <LeftCard src={Gym6} />
+          <LeftCard
+            src={Gym1}
+            url="/location/fei-yue-senior-activity-centre-bukit-batok/"
+            linkText="Fei Yue Senior Activity Centre,<br/>Bukit Batok"
+          />
+          <LeftCard src={Gym2} url="/" linkText="Bishan Community Club" />
+          <LeftCard
+            src={Gym3}
+            url="/location/care-corner-woodsquare-2/"
+            linkText="Yong En Active Hub YEAH!,<br/>Bukit Merah"
+          />
+          <LeftCard
+            src={Gym4}
+            url="/"
+            linkText="Care Corner Community Hub,<br/>Woodlands"
+          />
+          <LeftCard
+            src={Gym5}
+            url="/"
+            linkText="The Salvation Army,<br/>Peacehaven Bedok Arena"
+          />
+          <LeftCard
+            src={Gym6}
+            url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
+            linkText="Tzu Chi Foundation Nanyang,<br/>Jurong West"
+          />
         </motion.div>
         <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
           Gym

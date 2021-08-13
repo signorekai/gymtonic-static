@@ -6,6 +6,7 @@ interface Props {
   text: string;
   linkStyle?: 'red' | 'white';
   type?: 'above' | 'inline';
+  className?: string;
 }
 
 const GymLink: React.FunctionComponent<Props> = ({
@@ -13,11 +14,14 @@ const GymLink: React.FunctionComponent<Props> = ({
   text,
   linkStyle = 'red',
   type = 'above',
+  className = '',
 }: Props) => (
   <div
-    className={`flex group items-center mt-2 md:mt-0 ${
-      type === 'above' ? 'flex-col' : 'flex-row'
-    }`}>
+    className={`flex group mt-2 md:mt-0 ${
+      type === 'above'
+        ? 'flex-col items-center lg:items-start'
+        : 'flex-row items-center'
+    } ${className} ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}>
     <svg
       className={
         type === 'above'
@@ -40,9 +44,9 @@ const GymLink: React.FunctionComponent<Props> = ({
             ? 'font-black text-xs md:text-base'
             : 'text-xs uppercase'
         }
-          ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}>
-        {text}
-      </a>
+          ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     </Link>
   </div>
 );

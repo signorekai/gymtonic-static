@@ -35,8 +35,6 @@ const RightParallaxCard = ({
     threshold: 0.95,
   });
 
-  console.log(38, 'render', link);
-
   useEffect(() => {
     if (inView) {
       onEnter();
@@ -46,7 +44,10 @@ const RightParallaxCard = ({
   }, [onEnter, inView, link]);
 
   return (
-    <div
+    <motion.div
+      initial="initial"
+      exit="exit"
+      animate="show"
       ref={ref}
       className={`h-screen pt-screen-1/2 lg:pt-0 w-full text-white bg-red text-center md:text-lg leading-tight md:leading-tight flex flex-col justify-center items-center relative ${className}`}>
       <AnimatePresence exitBeforeEnter>
@@ -62,11 +63,11 @@ const RightParallaxCard = ({
                   },
                   exit: {
                     opacity: 0,
-                    y: '-20%',
+                    y: '-60%',
                   },
                   initial: {
                     opacity: 1,
-                    y: '-20%',
+                    y: '-60%',
                   },
                 }}
                 className="h1 italic absolute top-1/2 w-screen lg:w-[50vw] text-center z-10">
@@ -79,7 +80,6 @@ const RightParallaxCard = ({
                 autoPlay
                 muted
                 loop
-                poster={videoPoster}
                 src={videoSrc}
                 className="w-auto h-auto max-w-full max-h-full relative z-0">
                 <source src={videoSrc} type="video/mp4" />
@@ -94,8 +94,8 @@ const RightParallaxCard = ({
                     delay: 0.1,
                   },
                 },
-                initial: { opacity: 0, y: 30 },
-                exit: { opacity: 0, y: 30 },
+                initial: { opacity: 0, y: -20 },
+                exit: { opacity: 0, y: -20 },
               }}
               className="px-4 md:px-0 md:w-7/12 mt-2 md:mt-4 text-sm md:text-lg md:leading-tight font-bold pb-4">
               {paragraph}
@@ -139,7 +139,7 @@ const RightParallaxCard = ({
           </>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
