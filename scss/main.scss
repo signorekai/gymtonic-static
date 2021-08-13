@@ -308,9 +308,9 @@ body {
 }
 
 .form--zh {
-  font-family: 'DFZongYiBold1B-GB' !important;
+  @apply font-chinese;
   * {
-    font-family: 'DFZongYiBold1B-GB' !important;
+    @apply font-chinese;
   }
 
   .has-error::after {

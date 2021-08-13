@@ -159,6 +159,11 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Gotham HTF', ...defaultTheme.fontFamily.sans],
+        chinese: [
+          'Gotham HTF',
+          'Noto Sans SC',
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
     },
   },
