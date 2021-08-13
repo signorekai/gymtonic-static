@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
+import { AnimatePresence, motion, useElementScroll } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 import withMobileNav from 'components/MobileNav';
@@ -24,6 +24,7 @@ import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 import withSignUpForm from 'components/SignUpForm';
+import { useScroll } from 'lib/hooks';
 
 /**
  * Example of post variables to query the first six posts in a named category.
@@ -51,72 +52,6 @@ const LeftCard = ({ src }: { src: StaticImageData }) => (
   </div>
 );
 
-interface SnapperContainerProps {
-  onEnter?(): void;
-  onExit?(): void;
-  onChange?(index: number): void;
-  length: number;
-}
-
-interface SnapperProps {
-  onChange(): void;
-}
-
-const Snapper: React.FunctionComponent<SnapperProps> = ({
-  onChange,
-}: SnapperProps) => {
-  const { ref, inView, entry } = useInView({
-    threshold: [1],
-  });
-
-  useEffect(() => {
-    if (entry?.isIntersecting) onChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView]);
-
-  return (
-    <div
-      ref={ref}
-      className="snap-child h-[100vh] lg:h-screen w-full relative z-30 pointer-events-none"
-    />
-  );
-};
-
-const SnapperContainer: React.FunctionComponent<SnapperContainerProps> = ({
-  onEnter = () => {},
-  onExit = () => {},
-  onChange = () => {},
-  length,
-}: SnapperContainerProps) => {
-  const { ref, inView, entry } = useInView({
-    threshold: [0, 1],
-  });
-
-  useEffect(() => {
-    console.log(entry?.intersectionRatio, 99);
-    if (inView) {
-      onEnter();
-    } else {
-      onExit();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView]);
-
-  console.log('snapper container');
-
-  return (
-    <div ref={ref}>
-      {[...Array(length)].map((e, i) => (
-        <Snapper
-          onChange={() => {
-            onChange(i);
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
 const Page: React.FunctionComponent<any> = ({
   setHeaderRef,
   setShowMobileNav,
@@ -129,30 +64,20 @@ const Page: React.FunctionComponent<any> = ({
   WithSignUpFormProps) => {
   const container = useRef<HTMLDivElement>(null);
   const leftViewport = useRef<HTMLDivElement>(null);
-  const rightViewport = useRef<HTMLDivElement>(null);
+
+  const currentSlide = useRef(-1);
 
   const [showBtn, setShowBtn] = useState(true);
-  const [leftTransform, setLeftTransform] = useState('-83.33%');
-  const [rightTransform, setRightTransform] = useState('0%');
-
-  // const { ref, inView, entry } = useInView({
-  //   threshold: [0.1],
-  //   rootMargin: '-100px 0px 0px 0px',
-  // });
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     setScrolledHeader(true);
-  //     container.current?.classList.add('snap-container');
-  //     setShowBtn(false);
-  //   }
-  // }, [inView, setScrolledHeader]);
 
   const scrollTo = (index: number) => {
-    let newLeftPosition = 0;
-    let newRightPosition = 0;
+    if (currentSlide.current === -1) {
+      container.current?.classList.add('snap-container');
+    }
 
-    if (leftViewport.current && rightViewport.current) {
+    currentSlide.current = index;
+    let newLeftPosition = 0;
+
+    if (leftViewport.current) {
       const progress = index / leftViewport.current.children.length;
       const leftValue = progress + 1 / leftViewport.current.children.length;
 
@@ -161,20 +86,17 @@ const Page: React.FunctionComponent<any> = ({
         1 - 1 / leftViewport.current.children.length,
       );
 
-      newRightPosition = Math.min(
-        Math.max(progress, 0),
-        1 - 1 / leftViewport.current.children.length,
-      );
-
-      setLeftTransform(`${newLeftPosition * -100}%`);
-      setRightTransform(`${newRightPosition * -100}%`);
+      leftViewport.current.style.transform = `translate3d(0, ${
+        newLeftPosition * -100
+      }%, 0)`;
     }
   };
 
   return (
     <div
+      id="container"
       ref={container}
-      className="h-[100vh] lg:h-screen overflow-y-scroll snap-container">
+      className="h-screen w-full overflow-y-scroll overflow-x-hidden relative flex-wrap flex flex-row">
       <div className="absolute top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
         <MobileNavBtn
           setShowMobileNav={setShowMobileNav}
@@ -182,12 +104,19 @@ const Page: React.FunctionComponent<any> = ({
         />
       </div>
       <VideoScroll
+        onEnter={() => {
+          container.current?.classList.remove('snap-container');
+          setScrolledHeader(false);
+          setShowBtn(true);
+          currentSlide.current = -1;
+        }}
+        container={container}
         setShowLoader={setShowLoader}
         totalFrames={69}
         videoDuration={3}
+        height={4}
         videoPath="/videos/home.mp4"
-        path="/images/home-video-frames"
-        setHeaderRef={setHeaderRef}>
+        path="/images/home-video-frames">
         <AnimatePresence exitBeforeEnter>
           <motion.div
             initial={{ opacity: 0 }}
@@ -202,108 +131,117 @@ const Page: React.FunctionComponent<any> = ({
           </motion.div>
         </AnimatePresence>
       </VideoScroll>
-      <div className="sticky top-0 left-0 w-full h-[100vh] lg:h-screen flex flex-col lg:flex-row z-20 snap-child">
-        <div className="lg:flex-1 relative z-40 h-[50vh] lg:h-screen overflow-hidden bg-red">
-          <motion.div
-            id="left"
-            ref={leftViewport}
-            variants={{
-              initial: { opacity: 1, y: '-83.33%' },
-              show: (custom: string) => ({
-                y: custom,
-              }),
-              exit: { opacity: 1 },
-            }}
-            custom={leftTransform}
-            initial="initial"
-            animate="show"
-            exit="exit"
-            className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
-            <LeftCard src={Gym1} />
-            <LeftCard src={Gym2} />
-            <LeftCard src={Gym3} />
-            <LeftCard src={Gym4} />
-            <LeftCard src={Gym5} />
-            <LeftCard src={Gym6} />
-          </motion.div>
-          <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
-            Gym
-          </h1>
-        </div>
-        <div className="lg:flex-1 h-[50vh] lg:h-screen bottom-0 overflow-hidden bg-red">
-          <motion.div
-            variants={{
-              initial: { opacity: 1 },
-              show: (custom: string) => ({
-                y: custom,
-              }),
-              exit: { opacity: 1 },
-            }}
-            id="right"
-            ref={rightViewport}
-            custom={rightTransform}
-            initial="initial"
-            animate="show"
-            exit="exit"
-            className="flex-1 flex flex-col w-full h-[300vh] lg:h-screen-6 relative">
-            <RightParallaxCard
-              headerTitle="Ka-Ching!"
-              videoSrc="/videos/Thematic-2-KaChing.mp4"
-              videoPoster="/images/Thematic-2-KaChing.jpg"
-              videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
-              paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
-              href="/about"
-              link="What is Gym Tonic?"
-            />
-            <RightParallaxCard
-              videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
-              videoSrc="/videos/Thematic-3-Kakis.mp4"
-              videoPoster="/images/Thematic-3-Kakis.jpg"
-              headerTitle="Kakis"
-              paragraph="Help Pa and Ma make new friends."
-              href="/locations"
-              link="Find a gym near you"
-            />
-            <RightParallaxCard
-              videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
-              videoSrc="/videos/Thematic-4-Boleh.mp4"
-              videoPoster="/images/Thematic-4-Boleh.jpg"
-              headerTitle="Boleh"
-              paragraph="To continue doing the things you love, you have to stay physically strong."
-              href="/research"
-              link="Why Strength Training matters even more when you are old."
-            />
-            <RightParallaxCard
-              videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
-              videoSrc="/videos/Thematic-5-Huat.mp4"
-              videoPoster="/images/Thematic-5-Huat.jpg"
-              headerTitle="Huat!"
-              paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
-              href="/stories"
-              link="Read their stories"
-            />
-            <RightParallaxCard
-              videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
-              videoSrc="/videos/Thematic-6-Kilat.mp4"
-              videoPoster="/images/Thematic-6-Kilat.jpg"
-              headerTitle="Kilat!"
-              paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
-              href="/technology"
-              link="Understand the process"
-            />
-            <RightParallaxCard
-              videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
-              videoSrc="/videos/Thematic-7-Pro.mp4"
-              videoPoster="/images/Thematic-7-Pro.jpg"
-              headerTitle="Pro"
-              paragraph="Exercise trainers who will guide you every step of the way."
-              href="/coaches"
-              link="Meet the professionals"
-            />
-          </motion.div>
-        </div>
+      <div className="sticky top-0 left-0 inline-block z-20 w-full lg:w-1/2 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
+        <motion.div
+          id="left"
+          ref={leftViewport}
+          initial="initial"
+          animate="show"
+          exit="exit"
+          style={{
+            transform: 'translate3d(0, -83.33%, 0)',
+          }}
+          className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute transition-transform duration-200">
+          <LeftCard src={Gym1} />
+          <LeftCard src={Gym2} />
+          <LeftCard src={Gym3} />
+          <LeftCard src={Gym4} />
+          <LeftCard src={Gym5} />
+          <LeftCard src={Gym6} />
+        </motion.div>
+        <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
+          Gym
+        </h1>
       </div>
-      <SnapperContainer
+      <RightParallaxCard
+        onEnter={() => {
+          if (currentSlide.current === -1) {
+            setScrolledHeader(true);
+            setShowBtn(false);
+          }
+          scrollTo(0);
+        }}
+        className="lg:w-1/2 snap-end"
+        headerTitle="Ka-Ching!"
+        videoSrc="/videos/Thematic-2-KaChing.mp4"
+        videoPoster="/images/Thematic-2-KaChing.jpg"
+        videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
+        paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
+        href="/about"
+        link="What is Gym Tonic?"
+        container={container}
+      />
+      <RightParallaxCard
+        onEnter={() => {
+          scrollTo(1);
+        }}
+        className="lg:pl-[50vw] snap-end"
+        videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
+        videoSrc="/videos/Thematic-3-Kakis.mp4"
+        videoPoster="/images/Thematic-3-Kakis.jpg"
+        headerTitle="Kakis"
+        paragraph="Help Pa and Ma make new friends."
+        href="/locations"
+        link="Find a gym near you"
+        container={container}
+      />
+      <RightParallaxCard
+        onEnter={() => {
+          scrollTo(2);
+        }}
+        className="lg:pl-[50vw] snap-end"
+        videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
+        videoSrc="/videos/Thematic-4-Boleh.mp4"
+        videoPoster="/images/Thematic-4-Boleh.jpg"
+        headerTitle="Boleh"
+        paragraph="To continue doing the things you love, you have to stay physically strong."
+        href="/research"
+        link="Why Strength Training matters even more when you are old."
+        container={container}
+      />
+      <RightParallaxCard
+        onEnter={() => {
+          scrollTo(3);
+        }}
+        className="lg:pl-[50vw] snap-end"
+        videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+        videoSrc="/videos/Thematic-5-Huat.mp4"
+        videoPoster="/images/Thematic-5-Huat.jpg"
+        headerTitle="Huat!"
+        paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
+        href="/stories"
+        link="Read their stories"
+        container={container}
+      />
+      <RightParallaxCard
+        onEnter={() => {
+          scrollTo(4);
+        }}
+        className="lg:pl-[50vw] snap-end"
+        videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
+        videoSrc="/videos/Thematic-6-Kilat.mp4"
+        videoPoster="/images/Thematic-6-Kilat.jpg"
+        headerTitle="Kilat!"
+        paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
+        href="/technology"
+        link="Understand the process"
+        container={container}
+      />
+      <RightParallaxCard
+        onEnter={() => {
+          scrollTo(5);
+        }}
+        className="lg:pl-[50vw] snap-end"
+        videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+        videoSrc="/videos/Thematic-7-Pro.mp4"
+        videoPoster="/images/Thematic-7-Pro.jpg"
+        headerTitle="Pro"
+        paragraph="Exercise trainers who will guide you every step of the way."
+        href="/coaches"
+        link="Meet the professionals"
+        container={container}
+      />
+      {/* <SnapperContainer
         length={6}
         onChange={(index) => {
           scrollTo(index);
@@ -311,16 +249,16 @@ const Page: React.FunctionComponent<any> = ({
         }}
         onExit={() => {
           setScrolledHeader(false);
-          container.current?.classList.remove('snap-container');
+          // container.current?.classList.remove('snap-container');
           setShowBtn(true);
           console.log(303);
         }}
         onEnter={() => {
           setScrolledHeader(true);
-          container.current?.classList.add('snap-container');
+          // container.current?.classList.add('snap-container');
           setShowBtn(false);
         }}
-      />
+      /> */}
       <section className="w-full h-[100vh] lg:h-screen border-red border-10 md:border-60 relative z-20 flex flex-col justify-center items-center snap-child">
         <h1 className="text-7xl md:text-9xl lg:text-11xl font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
           Mai tu liao!
@@ -351,16 +289,22 @@ const Page: React.FunctionComponent<any> = ({
           />
         </video>
       </section>
-      {showBtn && (
-        <div className="fixed bottom-5 right-5 z-40">
-          <SignUpBtn
-            setShowSignUpForm={setShowSignUpForm}
-            src={SignupBtnSrc}
-            mobileSrc={SignupBtnMobileSrc}
-            hoverSrc={SignupBtnHoverSrc}
-          />
-        </div>
-      )}
+      <AnimatePresence exitBeforeEnter>
+        {showBtn && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed bottom-5 right-5 lg:right-10 z-40">
+            <SignUpBtn
+              setShowSignUpForm={setShowSignUpForm}
+              src={SignupBtnSrc}
+              mobileSrc={SignupBtnMobileSrc}
+              hoverSrc={SignupBtnHoverSrc}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

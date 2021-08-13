@@ -756,6 +756,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                             <>
                               {location.locationFields.openingSoon !== true && (
                                 <label
+                                  key={location.id}
                                   htmlFor={location.id}
                                   className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3">
                                   <input

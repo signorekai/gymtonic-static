@@ -1,15 +1,18 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { WithLoaderProps } from './Loader';
+import { useInView } from 'react-intersection-observer';
+import { WithLoaderProps } from 'components/Loader';
 
 interface Props {
+  height: number;
   totalFrames: number;
   videoDuration: number;
   ext?: 'jpg' | 'jpeg' | 'gif' | 'png' | 'JPG' | 'JPEG' | 'GIF' | 'PNG';
   path: string;
   children?: JSX.Element;
   videoPath: string;
-  setHeaderRef: (ref: RefObject<HTMLElement>) => void;
+  onEnter?(): void;
+  container: React.RefObject<HTMLDivElement>;
 }
 
 const fitImageOn = (canvas: HTMLCanvasElement, imageObj: HTMLImageElement) => {
@@ -80,15 +83,18 @@ export default function VideoScroller({
   ext = 'jpg',
   totalFrames,
   path,
-  setHeaderRef,
   children,
   videoDuration,
   setShowLoader,
   videoPath,
+  container,
+  height,
+  onEnter = () => {},
 }: Props & WithLoaderProps): JSX.Element {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const videoScrollerRef = useRef<HTMLDivElement>(null);
   const currentFrameRef = useRef(0);
   const frame0Ref = useRef<HTMLImageElement>(null);
   const intervalAnimationRef = useRef<boolean>(false);
@@ -102,6 +108,18 @@ export default function VideoScroller({
 
   const breakpoint = 1024;
   const borderWidth = window.innerWidth >= 768 ? 60 : 10;
+
+  const { ref, inView, entry } = useInView({
+    threshold: 0.39,
+  });
+
+  useEffect(() => {
+    if (inView) {
+      console.log('in view', entry?.intersectionRatio);
+      onEnter();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   useEffect(() => {
     const videoFrames: Array<HTMLImageElement> = [];
@@ -138,34 +156,37 @@ export default function VideoScroller({
       setShowLoader(false);
     }
 
-    const handleScroll = () => {
-      if (window.pageYOffset > 1) {
-        setShowReminder(false);
-      }
+    //   const handleScroll = () => {
+    //     if (isMobile) return;
+    //     if (container && container.current) {
+    //       if (container.current.offsetTop > 1) {
+    //         setShowReminder(false);
+    //       }
+    //       if (
+    //         container.current.clientWidth >= breakpoint &&
+    //         scrollerRef.current
+    //       ) {
+    //         // @todo eventually use framer-motion 's useElementScroll
+    //         // console.log('desktop');
+    //         intervalAnimationRef.current = false;
+    //         // desktop
+    //         const maxAmount =
+    //           scrollerRef.current?.scrollHeight -
+    //           document.documentElement.clientHeight * 1.1;
 
-      if (isMobile) return;
+    //         const currentAmount =
+    //           window.pageYOffset - scrollerRef.current?.offsetTop;
+    //         const scrollPercentage = currentAmount / maxAmount;
+    //         const currentFrame =
+    //           currentAmount < maxAmount
+    //             ? Math.round(scrollPercentage * totalFrames)
+    //             : totalFrames;
 
-      if (window.innerWidth >= breakpoint && scrollerRef.current) {
-        // @todo eventually use framer-motion 's useElementScroll
-        // console.log('desktop');
-
-        intervalAnimationRef.current = false;
-        // desktop
-        const maxAmount =
-          scrollerRef.current?.scrollHeight -
-          document.documentElement.clientHeight * 1.1;
-        const currentAmount =
-          window.pageYOffset - scrollerRef.current?.offsetTop;
-        const scrollPercentage = currentAmount / maxAmount;
-        const currentFrame =
-          currentAmount < maxAmount
-            ? Math.round(scrollPercentage * totalFrames)
-            : totalFrames;
-
-        currentFrameRef.current = currentFrame;
-        tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-      }
-    };
+    //         currentFrameRef.current = currentFrame;
+    //         tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+    //       }
+    //     }
+    //   };
 
     const handleResize = () => {
       // console.log('handling resize');
@@ -200,123 +221,156 @@ export default function VideoScroller({
           },
         });
       }
-      handleScroll();
+      // handleScroll();
+    };
+    handleResize();
+    // const currentFrame =
+    //   currentProgress.get() < 0.2222222222222
+    //     ? Math.round(currentProgress.get() * totalFrames)
+    //     : totalFrames;
+
+    // currentFrameRef.current = currentFrame;
+    // tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+    // tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+
+    //   const observer = new IntersectionObserver(
+    //     (entries) => {
+    //       const xx = entries[0];
+    //       isIntersecting.current = xx.isIntersecting;
+    //     },
+    //     {
+    //       root: null,
+    //       threshold: [0, 0.5, 1],
+    //     },
+    //   );
+
+    //   if (canvasRef.current) observer.observe(canvasRef.current);
+
+    //   const canvas = canvasRef.current;
+
+    //   if (window.innerWidth >= breakpoint) {
+    //     container?.current?.addEventListener('scroll', handleScroll);
+    //   }
+    //   window.addEventListener('resize', handleResize);
+    //   return () => {
+    //     if (canvas) observer.unobserve(canvas);
+    //     window.removeEventListener('scroll', handleScroll);
+    //     window.removeEventListener('resize', handleResize);
+    //   };
+
+    const handleScroll = () => {
+      if (container.current) {
+        const scrollYProgress =
+          container.current.scrollTop /
+          container.current.scrollHeight /
+          (height / (height + 7));
+
+        const rawFrame = Math.round((scrollYProgress * totalFrames) / 0.25);
+
+        let currentFrame =
+          rawFrame > totalFrames ? rawFrame % totalFrames : rawFrame;
+
+        if (rawFrame > totalFrames * (height - 1)) {
+          currentFrame = totalFrames;
+        }
+
+        tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+      }
     };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        isIntersecting.current = entry.isIntersecting;
-      },
-      {
-        root: null,
-        threshold: [0, 0.5, 1],
-      },
-    );
-
-    if (canvasRef.current) observer.observe(canvasRef.current);
-
-    handleResize();
-    const canvas = canvasRef.current;
-
-    if (window.innerWidth >= breakpoint) {
-      window.addEventListener('scroll', handleScroll);
+    if (container.current) {
+      container.current.addEventListener('scroll', handleScroll);
     }
-    window.addEventListener('resize', handleResize);
+
+    const currentContainer = container.current;
+
     return () => {
-      if (canvas) observer.unobserve(canvas);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
+      if (currentContainer) {
+        currentContainer.removeEventListener('scroll', handleScroll);
+      }
     };
   }, [
     borderWidth,
+    canvasAnimateControls,
+    container,
     ext,
+    height,
     path,
     setShowLoader,
     totalFrames,
-    frame0Ref,
-    canvasAnimateControls,
-    videoDuration,
-    canvasRef,
-    isMobile,
   ]);
 
-  useEffect(() => {
-    if (scrollerRef) {
-      setHeaderRef(scrollerRef);
-    }
-  }, [scrollerRef, setHeaderRef]);
-
   return (
-    <section
-      className={
-        window.innerWidth < breakpoint
-          ? 'h-[100vh] relative z-30 snap-child'
-          : 'h-[250vh] relative z-30 snap-child'
-      }
-      ref={scrollerRef}>
-      <div
-        ref={canvasContainerRef}
-        className={`${
-          isMobile ? '' : 'sticky'
-        } border-box bg-pink overflow-hidden top-0 w-full h-[100vh] flex flex-col justify-items-start md:justify-center items-center md:pt-0 border-10 md:border-60 border-red`}>
-        <AnimatePresence>
-          {showReminder && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, translateY: 30 }}
-              transition={{
-                duration: 0.4,
-                ease: [0.175, 0.85, 0.42, 0.96],
-                when: 'beforeChildren',
-              }}
-              className="xl:hidden text-sm absolute z-30 bottom-0 p-3 text-white">
+    <div
+      ref={videoScrollerRef}
+      className="w-full relative"
+      style={{
+        height: `calc(var(--vh) * ${height * 100})`,
+      }}>
+      <div ref={ref} className="w-full sticky top-0 left-0">
+        <div
+          ref={canvasContainerRef}
+          className={`${
+            isMobile ? '' : 'sticky'
+          } snap-child border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-items-start md:justify-center items-center md:pt-0 border-10 md:border-60 border-red`}>
+          <AnimatePresence>
+            {showReminder && (
               <motion.div
-                className="w-full flex flex-col items-center"
-                initial={{ translateY: 0 }}
-                animate={{ translateY: [0, -5, 0] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, translateY: 30 }}
                 transition={{
-                  repeat: Infinity,
-                  duration: 1.2,
-                }}>
-                Scroll
-                <img src="images/down-arrow.svg" alt="" />
+                  duration: 0.4,
+                  ease: [0.175, 0.85, 0.42, 0.96],
+                  when: 'beforeChildren',
+                }}
+                className="xl:hidden text-sm absolute z-30 bottom-0 p-3 text-white">
+                <motion.div
+                  className="w-full flex flex-col items-center"
+                  initial={{ translateY: 0 }}
+                  animate={{ translateY: [0, -5, 0] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 1.2,
+                  }}>
+                  Scroll
+                  <img src="images/down-arrow.svg" alt="" />
+                </motion.div>
               </motion.div>
+            )}
+          </AnimatePresence>
+          {!isMobile && (
+            <motion.canvas
+              animate={canvasAnimateControls}
+              ref={canvasRef}
+              width={window.innerWidth - borderWidth * 2}
+              height={window.innerHeight - borderWidth * 2}
+              className="h-full absolute top-0 left-0 z-30"
+            />
+          )}
+          {isMobile && (
+            <motion.div className="w-screen-home-video h-screen relative">
+              <motion.video
+                animate={canvasAnimateControls}
+                drag="x"
+                dragConstraints={scrollerRef}
+                dragMomentum={false}
+                dragElastic={0}
+                disablePictureInPicture
+                controlsList="nodownload"
+                playsInline
+                autoPlay
+                muted
+                loop
+                className="object-cover object-center w-screen-home-video h-screen max-w-none"
+                src={videoPath}>
+                <source src={videoPath} type="video/mp4" />
+              </motion.video>
             </motion.div>
           )}
-        </AnimatePresence>
-        {!isMobile && (
-          <motion.canvas
-            animate={canvasAnimateControls}
-            ref={canvasRef}
-            width={window.innerWidth - borderWidth * 2}
-            height={window.innerHeight - borderWidth * 2}
-            className="h-full absolute top-0 left-0 z-30"
-          />
-        )}
-        {isMobile && (
-          <motion.div className="w-screen-home-video h-screen relative">
-            <motion.video
-              animate={canvasAnimateControls}
-              drag="x"
-              dragConstraints={scrollerRef}
-              dragMomentum={false}
-              dragElastic={0}
-              disablePictureInPicture
-              controlsList="nodownload"
-              playsInline
-              autoPlay
-              muted
-              loop
-              className="object-cover object-center w-screen-home-video h-full max-w-none"
-              src={videoPath}>
-              <source src={videoPath} type="video/mp4" />
-            </motion.video>
-          </motion.div>
-        )}
-        {children}
+          {children}
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

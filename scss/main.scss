@@ -213,6 +213,16 @@ body {
   scroll-snap-align: start;
 }
 
+.snap-end {
+  scroll-snap-align: end;
+}
+
+.lg\:snap-child {
+  @media (min-width: 1024px) {
+    scroll-snap-align: start;
+  }
+}
+
 .field-group {
   @apply flex;
   @apply flex-col;
