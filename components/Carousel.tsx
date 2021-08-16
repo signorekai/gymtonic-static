@@ -93,7 +93,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         {showNav && (
           <button
             type="button"
-            className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 text-white ${
+            className={`inline-block ml-2 md:ml-9 transition-opacity duration-200 p-3 text-white ${
               currentIndex === 0 ? 'opacity-50 hover:cursor-not-allowed' : ''
             }`}
             style={{ ...fullNavBtnStyle, ...leftNavBtnStyle }}
@@ -162,7 +162,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
         {showNav && (
           <button
             type="button"
-            className={`inline-block mr-2 md:mr-9 transition-opacity duration-200 ${
+            className={`inline-block mr-2 md:mr-9 transition-opacity p-3 duration-200 ${
               currentIndex === infiniteChildren.length - 1
                 ? 'opacity-50 hover:cursor-not-allowed'
                 : ''
