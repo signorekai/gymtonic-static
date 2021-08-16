@@ -453,7 +453,9 @@ const Page: React.FunctionComponent<any> = ({
                     className="btn-sign--up hover:cursor-signup"
                     type="button"
                     onClick={() => {
-                      setShowSignUpForm(true);
+                      setShowSignUpForm(true, {
+                        selectedGym: selected?.title,
+                      });
                     }}>
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
                       Sign Up

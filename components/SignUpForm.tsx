@@ -16,10 +16,12 @@ import Head from 'next/head';
 
 interface WithSignUpFormState {
   showForm: boolean;
+  defaultValues: SignUpFormDefaults;
 }
 
 interface SignUpFormProps {
   showForm: boolean;
+  defaultValues: SignUpFormDefaults;
   setShowSignUpForm(arg0: boolean): void;
 }
 
@@ -158,7 +160,10 @@ const query = gql`
   {
     openToPublic: status(id: "dGVybToz") {
       name
-      locations(where: { orderby: { field: TITLE, order: ASC } }) {
+      locations(
+        where: { orderby: { field: MENU_ORDER, order: ASC }, status: PUBLISH }
+        first: 1000
+      ) {
         edges {
           node {
             id
@@ -221,6 +226,7 @@ interface LocationQuery {
 const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
   showForm,
   setShowSignUpForm,
+  defaultValues,
 }: SignUpFormProps) => {
   const [lang, setLang] = useState<'en' | 'zh' | 'ms' | 'ta'>('en');
   const [loading, setLoading] = useState(false);
@@ -234,6 +240,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
     formState: { errors },
   } = useForm<FormData>({
     mode: 'onTouched',
+    defaultValues,
   });
   const watchSelectedGym = watch('selectedGym');
   const watchType = watch('type');
@@ -255,6 +262,13 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
 
   const { data }: LocationQuery = useQuery(query);
   const locations = data?.openToPublic.locations?.edges;
+
+  useEffect(() => {
+    if (defaultValues && defaultValues.selectedGym) {
+      setValue('selectedGym', defaultValues.selectedGym);
+      setShowLocationSelector(false);
+    }
+  }, [defaultValues, setValue]);
 
   useEffect(() => {
     if (showForm) {
@@ -423,8 +437,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                   </motion.button>
                   <div className="flex flex-row justify-center pt-5 md:pt-7 pb-10">
                     <button
-                      className={`mr-2 focus:outline-none ${
-                        lang === 'en' ? 'border-b-2' : ''
+                      className={`mr-2 focus:outline-none lang-btn ${
+                        lang === 'en' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
                       onClick={() => {
@@ -434,8 +448,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       <span className="hidden md:inline">lish</span>
                     </button>
                     <button
-                      className={`mr-2 focus:outline-none font-normal font-chinese ${
-                        lang === 'zh' ? 'border-b-2' : ''
+                      className={`mr-2 focus:outline-none lang-btn font-normal font-chinese ${
+                        lang === 'zh' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
                       onClick={() => {
@@ -444,8 +458,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       中文
                     </button>
                     <button
-                      className={`mr-2 focus:outline-none ${
-                        lang === 'ms' ? 'border-b-2' : ''
+                      className={`mr-2 focus:outline-none lang-btn ${
+                        lang === 'ms' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
                       onClick={() => {
@@ -454,8 +468,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       Behasa Malayu
                     </button>
                     <button
-                      className={`mr-6 md:pr-0 focus:outline-none ${
-                        lang === 'ta' ? 'border-b-2' : ''
+                      className={`mr-6 md:pr-0 focus:outline-none lang-btn ${
+                        lang === 'ta' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
                       onClick={() => {
@@ -868,18 +882,20 @@ export default function withSignUpForm<T extends React.Component>(
       this.setShowSignUpForm = this.setShowSignUpForm.bind(this);
       this.state = {
         showForm: false,
+        defaultValues: {},
       };
     }
 
-    setShowSignUpForm(showForm: boolean) {
-      this.setState({ showForm });
+    setShowSignUpForm(showForm: boolean, defaultValues = {}) {
+      this.setState({ showForm, defaultValues });
     }
 
     render() {
-      const { showForm } = this.state;
+      const { defaultValues, showForm } = this.state;
       return (
         <>
           <SignUpForm
+            defaultValues={defaultValues}
             showForm={showForm}
             setShowSignUpForm={this.setShowSignUpForm}
           />
