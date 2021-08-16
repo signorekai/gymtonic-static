@@ -208,7 +208,11 @@ const Page: React.FunctionComponent<any> = ({
             url="/location/fei-yue-senior-activity-centre-bukit-batok/"
             linkText="Fei Yue Senior Activity Centre,<br/>Bukit Batok"
           />
-          <LeftCard src={Gym2} url="/" linkText="Bishan Community Club" />
+          <LeftCard
+            src={Gym2}
+            url="/location/bishan-community-club"
+            linkText="Bishan Community Club"
+          />
           <LeftCard
             src={Gym3}
             url="/location/care-corner-woodsquare-2/"
@@ -216,12 +220,12 @@ const Page: React.FunctionComponent<any> = ({
           />
           <LeftCard
             src={Gym4}
-            url="/"
+            url="/location/.care-corner-community-hub"
             linkText="Care Corner Community Hub,<br/>Woodlands"
           />
           <LeftCard
             src={Gym5}
-            url="/"
+            url="/location/peacehaven-day-centre/"
             linkText="The Salvation Army,<br/>Peacehaven Bedok Arena"
           />
           <LeftCard
