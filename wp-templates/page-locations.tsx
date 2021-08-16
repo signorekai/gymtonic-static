@@ -214,25 +214,54 @@ const Page: React.FunctionComponent<any> = ({
       uriInfo?.uriPath !== '/locations' &&
       selected === undefined
     ) {
-      const compiledLocations = [
-        ...locationsNotOpenToPublic!,
-        ...locationsOpenToPublic!,
-      ];
-
-      const current = find(compiledLocations, (location) => {
+      const inOpenToPublic = find(locationsOpenToPublic, (location) => {
         return location.node.uri === `/${uriInfo?.uriPath}/`;
       });
-      if (current) clickHandler(current.node);
-    }
 
-    navigator.geolocation.getCurrentPosition((p) => {
-      setCurrentMapCenter({
-        lat: p.coords.latitude,
-        lng: p.coords.longitude,
+      if (
+        inOpenToPublic &&
+        inOpenToPublic.node.locationFields.openingSoon === null
+      ) {
+        clickHandler(inOpenToPublic.node);
+      } else if (inOpenToPublic === undefined) {
+        const inNotOpenToPublic = find(locationsNotOpenToPublic, (location) => {
+          return location.node.uri === `/${uriInfo?.uriPath}/`;
+        });
+
+        if (inNotOpenToPublic) {
+          setCurrentMapCenter({
+            lat: inNotOpenToPublic.node.locationFields.location.latitude,
+            lng: inNotOpenToPublic.node.locationFields.location.longitude,
+          });
+          setActiveInfoWindow({
+            position: {
+              lat: inNotOpenToPublic.node.locationFields.location.latitude,
+              lng: inNotOpenToPublic.node.locationFields.location.longitude,
+            },
+            title: inNotOpenToPublic.node.title,
+            id: inNotOpenToPublic.node.id,
+            visible: true,
+            style: 'white',
+          });
+        } else {
+          navigator.geolocation.getCurrentPosition((p) => {
+            setCurrentMapCenter({
+              lat: p.coords.latitude,
+              lng: p.coords.longitude,
+            });
+          });
+        }
+      }
+    } else {
+      navigator.geolocation.getCurrentPosition((p) => {
+        setCurrentMapCenter({
+          lat: p.coords.latitude,
+          lng: p.coords.longitude,
+        });
       });
-    });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locationsNotOpenToPublic, locationsOpenToPublic, uriInfo?.uriPath]);
+  }, [locationsOpenToPublic, locationsNotOpenToPublic, uriInfo?.uriPath]);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -442,7 +471,7 @@ const Page: React.FunctionComponent<any> = ({
                   <Carousel
                     navBtnStyle={{
                       position: 'absolute',
-                      top: '-2.5rem',
+                      top: '-3.25rem',
                       color: '#E62D2D',
                       margin: 0,
                     }}
