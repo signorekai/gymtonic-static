@@ -1,6 +1,6 @@
-[] Add form + sign up button
-[] Add about page animation
-[] Add image posters for all videos
+[x] Add form + sign up button
+[x] Add about page animation
+[x] Add image posters for all videos
 [x] Add custom cursors
 [x] use video for mobile view on <VideoScroll> to save bandwidth
 [x] add the "Email us at ...." text at the bottom of /stories
@@ -9,3 +9,13 @@
 [x] figure out how to not rerender <VideoScroll /> so that the loader screen wouldn't get auto cancelled
 	- maybe add a state in Layout to state it's getting updated?
 [-] maybe add some magnetic to the split parallax, so it animates but bounces back if user didn't scroll enough
+[] sign up button should be different at footer of front page
+[] slow down speed of transition of LeftCard
+[] buttons to have some padding
+[] emoji to be only on links
+[] locations not open to public goes to general page
+[] remove focus outline on Bubble
+[] photo carousel on locations to be fixed height
+[] read more to have underline by default
+[] multilang underline animation
+[] ticked circle has bg repeat
