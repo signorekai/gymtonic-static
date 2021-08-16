@@ -47,7 +47,10 @@ const query = gql`
   {
     openToPublic: status(id: "dGVybToz") {
       name
-      locations(where: { orderby: { field: MENU_ORDER, order: ASC } }) {
+      locations(
+        where: { orderby: { field: MENU_ORDER, order: ASC }, status: PUBLISH }
+        first: 1000
+      ) {
         edges {
           node {
             id
@@ -105,7 +108,10 @@ const query = gql`
     }
     notOpenToPublic: status(id: "dGVybTo0") {
       name
-      locations(where: { orderby: { field: MENU_ORDER, order: ASC } }) {
+      locations(
+        where: { orderby: { field: MENU_ORDER, order: ASC }, status: PUBLISH }
+        first: 1000
+      ) {
         edges {
           node {
             id
