@@ -49,6 +49,7 @@ a {
   }
 }
 
+.lang-btn,
 .link,
 footer a {
   @apply relative;
@@ -65,12 +66,14 @@ footer a {
   @apply after:origin-left;
 }
 
-.link {
+.link,
+.lang-btn.lang-btn--selected {
   @apply after:scale-x-100;
   @apply hover:after:scale-x-0;
 }
 
-footer a {
+footer a,
+.lang-btn {
   @apply after:scale-x-0;
   @apply hover:after:scale-x-100;
   @apply after:bg-black;
