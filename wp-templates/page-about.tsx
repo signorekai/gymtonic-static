@@ -28,7 +28,7 @@ const Page: React.FunctionComponent<any> = ({
   return (
     <motion.main
       layout
-      className="flex flex-col lg:flex-row relative cursor-about">
+      className="flex flex-col lg:flex-row relative page-about">
       <AboutCard />
       <motion.section
         layoutId="about"

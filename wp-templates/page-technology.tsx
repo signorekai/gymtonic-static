@@ -251,7 +251,7 @@ const Page: React.FunctionComponent<any> = ({
   }, [setScrolledHeader, setShowLoader]);
 
   return (
-    <main className="flex flex-col lg:flex-row relative items-start min-h-screen cursor-about">
+    <main className="flex flex-col lg:flex-row relative items-start min-h-screen page-about">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
       <section className="content-container pt-10 md:pt-18 lg:pt-32 flex-1">

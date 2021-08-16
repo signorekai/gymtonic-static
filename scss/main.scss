@@ -341,28 +341,28 @@ input[type='radio']:checked + .bubble {
   }
 }
 
-.cursor-about {
+.page-about {
   button:not(.btn-sign--up),
   a {
     @apply hover:cursor-about;
   }
 }
 
-.cursor-stories {
+.page-stories {
   button:not(.btn-sign--up),
   a {
     @apply hover:cursor-stories;
   }
 }
 
-.cursor-locations {
+.page-locations {
   button:not(.btn-sign--up),
   a {
     @apply hover:cursor-locations;
   }
 }
 
-.cursor-news {
+.page-news {
   button:not(.btn-sign--up),
   a {
     @apply hover:cursor-news;

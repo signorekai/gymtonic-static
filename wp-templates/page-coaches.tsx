@@ -55,7 +55,7 @@ const Page: React.FunctionComponent<any> = ({
   };
 
   return (
-    <main className="flex flex-col lg:flex-row items-start relative min-h-screen cursor-about">
+    <main className="flex flex-col lg:flex-row items-start relative min-h-screen page-about">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
       <motion.section

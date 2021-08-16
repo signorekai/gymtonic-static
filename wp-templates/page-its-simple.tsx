@@ -27,7 +27,7 @@ const Page: React.FunctionComponent<any> = ({
   }, []);
 
   return (
-    <main className="flex flex-col lg:flex-row relative items-start min-h-screen cursor-about">
+    <main className="flex flex-col lg:flex-row relative items-start min-h-screen page-about">
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky={false} />
       <section className="content-container content-container-px justify-center flex-1 pt-10 md:pt-18 lg:pt-0">
