@@ -60,14 +60,19 @@ footer a {
   @apply after:left-0;
   @apply after:bg-white;
   @apply after:w-full;
-  @apply after:scale-x-100;
-  @apply hover:after:scale-x-0;
   @apply after:transition-transform;
   @apply after:duration-200;
   @apply after:origin-left;
 }
 
+.link {
+  @apply after:scale-x-100;
+  @apply hover:after:scale-x-0;
+}
+
 footer a {
+  @apply after:scale-x-0;
+  @apply hover:after:scale-x-100;
   @apply after:bg-black;
 }
 
