@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useElementScroll } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
 
 import withMobileNav from 'components/MobileNav';
 import withLoader, { WithLoaderProps } from 'components/Loader';
@@ -24,8 +23,9 @@ import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 import withSignUpForm from 'components/SignUpForm';
-import { useScroll } from 'lib/hooks';
 import GymLink from 'components/GymLink';
+
+const heightOfScroller = 5;
 
 /**
  * Example of post variables to query the first six posts in a named category.
@@ -68,8 +68,11 @@ const LeftCard = ({
   </div>
 );
 
+const isMobile = () => {
+  return window.innerWidth < 1024;
+};
+
 const Page: React.FunctionComponent<any> = ({
-  setHeaderRef,
   setShowMobileNav,
   setShowLoader,
   setShowSignUpForm,
@@ -80,16 +83,10 @@ const Page: React.FunctionComponent<any> = ({
   WithSignUpFormProps) => {
   const container = useRef<HTMLDivElement>(null);
   const leftViewport = useRef<HTMLDivElement>(null);
-
   const currentSlide = useRef(-1);
-
   const [showBtn, setShowBtn] = useState(true);
 
   const scrollTo = (index: number) => {
-    if (currentSlide.current === -1) {
-      container.current?.classList.add('snap-container');
-    }
-
     currentSlide.current = index;
     let newLeftPosition = 0;
 
@@ -107,6 +104,54 @@ const Page: React.FunctionComponent<any> = ({
       }%, 0)`;
     }
   };
+
+  const scroll = useElementScroll(container);
+
+  useEffect(() => {
+    if (container.current && leftViewport.current) {
+      const handleScroll = () => {
+        const scrollYProgress = scroll.scrollYProgress.get();
+        const scrollY = scroll.scrollY.get();
+        const parallaxCardBoundary = isMobile()
+          ? 1.5 / 8.5
+          : heightOfScroller / (heightOfScroller + 7);
+
+        // check if showing the cards
+        if (scrollYProgress > parallaxCardBoundary) {
+          container.current?.classList.add('snap-container');
+
+          const progress =
+            (scrollY - parallaxCardBoundary * container.current!.scrollHeight) /
+            (window.innerHeight * 6);
+
+          const leftValue =
+            progress + 1 / leftViewport.current!.children.length;
+
+          const newLeftPosition = Math.min(
+            Math.max(1 - leftValue, 0),
+            1 - 1 / leftViewport.current!.children.length,
+          );
+
+          leftViewport.current!.style.transform = `translate3d(0, ${
+            newLeftPosition * -100
+          }%, 0)`;
+        } else {
+          container.current?.classList.remove('snap-container');
+        }
+      };
+
+      container.current?.addEventListener('scroll', handleScroll);
+      const cachedContainer = container.current;
+
+      return () => {
+        cachedContainer?.removeEventListener('scroll', handleScroll);
+      };
+    }
+
+    return () => {};
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [container, leftViewport]);
 
   return (
     <div
@@ -130,7 +175,7 @@ const Page: React.FunctionComponent<any> = ({
         setShowLoader={setShowLoader}
         totalFrames={69}
         videoDuration={3}
-        height={5}
+        height={heightOfScroller}
         videoPath="/videos/home.mp4"
         path="/images/home-video-frames">
         <AnimatePresence exitBeforeEnter>
@@ -157,7 +202,7 @@ const Page: React.FunctionComponent<any> = ({
           style={{
             transform: 'translate3d(0, -83.33%, 0)',
           }}
-          className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute transition-transform duration-200">
+          className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
           <LeftCard
             src={Gym1}
             url="/location/fei-yue-senior-activity-centre-bukit-batok/"
@@ -195,9 +240,8 @@ const Page: React.FunctionComponent<any> = ({
             setScrolledHeader(true);
             setShowBtn(false);
           }
-          scrollTo(0);
         }}
-        show={true}
+        show
         className="lg:w-1/2 snap-end"
         headerTitle="Ka-Ching!"
         videoSrc="/videos/Thematic-2-KaChing.mp4"
@@ -207,9 +251,6 @@ const Page: React.FunctionComponent<any> = ({
         link="What is Gym Tonic?"
       />
       <RightParallaxCard
-        onEnter={() => {
-          scrollTo(1);
-        }}
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
         videoSrc="/videos/Thematic-3-Kakis.mp4"
@@ -219,9 +260,6 @@ const Page: React.FunctionComponent<any> = ({
         link="Find a gym near you"
       />
       <RightParallaxCard
-        onEnter={() => {
-          scrollTo(2);
-        }}
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-4-Boleh.mp4"
@@ -231,9 +269,6 @@ const Page: React.FunctionComponent<any> = ({
         link="Why Strength Training matters even more when you are old."
       />
       <RightParallaxCard
-        onEnter={() => {
-          scrollTo(3);
-        }}
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-5-Huat.mp4"
@@ -243,9 +278,6 @@ const Page: React.FunctionComponent<any> = ({
         link="Read their stories"
       />
       <RightParallaxCard
-        onEnter={() => {
-          scrollTo(4);
-        }}
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
         videoSrc="/videos/Thematic-6-Kilat.mp4"
@@ -255,9 +287,6 @@ const Page: React.FunctionComponent<any> = ({
         link="Understand the process"
       />
       <RightParallaxCard
-        onEnter={() => {
-          scrollTo(5);
-        }}
         className="lg:pl-[50vw] snap-end"
         videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
         videoSrc="/videos/Thematic-7-Pro.mp4"

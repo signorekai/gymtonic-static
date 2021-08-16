@@ -224,39 +224,6 @@ export default function VideoScroller({
       // handleScroll();
     };
     handleResize();
-    // const currentFrame =
-    //   currentProgress.get() < 0.2222222222222
-    //     ? Math.round(currentProgress.get() * totalFrames)
-    //     : totalFrames;
-
-    // currentFrameRef.current = currentFrame;
-    // tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-    // tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-
-    //   const observer = new IntersectionObserver(
-    //     (entries) => {
-    //       const xx = entries[0];
-    //       isIntersecting.current = xx.isIntersecting;
-    //     },
-    //     {
-    //       root: null,
-    //       threshold: [0, 0.5, 1],
-    //     },
-    //   );
-
-    //   if (canvasRef.current) observer.observe(canvasRef.current);
-
-    //   const canvas = canvasRef.current;
-
-    //   if (window.innerWidth >= breakpoint) {
-    //     container?.current?.addEventListener('scroll', handleScroll);
-    //   }
-    //   window.addEventListener('resize', handleResize);
-    //   return () => {
-    //     if (canvas) observer.unobserve(canvas);
-    //     window.removeEventListener('scroll', handleScroll);
-    //     window.removeEventListener('resize', handleResize);
-    //   };
 
     const handleScroll = () => {
       if (container.current) {
