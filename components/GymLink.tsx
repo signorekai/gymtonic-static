@@ -4,7 +4,7 @@ import Link from 'next/link';
 interface Props {
   href: string;
   text: string;
-  linkStyle?: 'red' | 'white';
+  linkStyle?: 'red' | 'white' | 'home';
   type?: 'above' | 'inline';
   className?: string;
 }
@@ -21,7 +21,7 @@ const GymLink: React.FunctionComponent<Props> = ({
       type === 'above'
         ? 'flex-col items-center lg:items-start'
         : 'flex-row items-center'
-    } ${className} ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}>
+    } ${className} ${linkStyle === 'white' ? 'text-white' : 'text-red'}`}>
     <svg
       className={
         type === 'above'
