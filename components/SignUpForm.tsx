@@ -792,6 +792,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                       id={location.id}
                                       type="radio"
                                       key={location.id}
+                                      disabled={!watchType}
                                       value={location.title}
                                       {...register('selectedGym', {
                                         required: true,
@@ -804,8 +805,13 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                         enter: { y: 0, opacity: 1 },
                                       }}
                                       handler={() => {
-                                        setValue('selectedGym', location.title);
-                                        setShowLocationSelector(false);
+                                        if (watchType) {
+                                          setValue(
+                                            'selectedGym',
+                                            location.title,
+                                          );
+                                          setShowLocationSelector(false);
+                                        }
                                         // clickHandler(location);
                                       }}
                                       borderColor="pink"
