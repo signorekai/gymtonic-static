@@ -105,6 +105,7 @@ interface ILocation {
 
 interface LocationFields {
   area: string;
+  address: string;
   contactNumber: string;
   images?: {
     sourceUrl: string;
