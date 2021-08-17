@@ -5,14 +5,23 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
-import LoadingGif from 'assets/images/loading.gif';
+import Head from 'next/head';
 
 import Bubble from 'components/Bubble';
 
+import LoadingGif from 'assets/images/loading.gif';
 import SuccessEng from 'assets/images/SignUpComplete-Eng.png';
 import SuccessMy from 'assets/images/SignUpComplete-Malay.png';
 import SuccessZh from 'assets/images/SignUpComplete-Mandarin.png';
-import Head from 'next/head';
+import ShareBtn from 'assets/images/share.png';
+import TelegramBtn from 'assets/images/telegram.png';
+import LinkBtn from 'assets/images/link.png';
+import SignalBtn from 'assets/images/signal.png';
+import WeChatBtn from 'assets/images/wechat.png';
+import FacebookBtn from 'assets/images/facebook.png';
+import WhatsAppBtn from 'assets/images/whatsapp.png';
+import Link from 'next/link';
+import { getUriInfo } from '@wpengine/headless';
 
 interface WithSignUpFormState {
   showForm: boolean;
@@ -43,6 +52,8 @@ interface Translation {
   signUpForMyself: string;
   signUpForSomeoneElse: string;
   submit: string;
+  shareText: string;
+  linkCopied: string;
 }
 
 const defaults: Translation = {
@@ -65,6 +76,8 @@ const defaults: Translation = {
   signUpForMyself: 'I am signing up for myself',
   signUpForSomeoneElse: 'I am signing up for someone else',
   submit: 'submit',
+  shareText: 'Check out Gym Tonic!',
+  linkCopied: 'Link Copied',
 };
 
 const text: {
@@ -75,6 +88,7 @@ const text: {
 } = {
   en: defaults,
   zh: {
+    ...defaults,
     title: '报名',
     chooseOne: '来… 选一个',
     subtitle: '恭喜您，为更健壮的自己跨出第一步',
@@ -94,6 +108,7 @@ const text: {
     submit: '发送',
   },
   ms: {
+    ...defaults,
     title: 'Mendaftar',
     chooseOne: 'Pilih satu',
     subtitle:
@@ -115,6 +130,7 @@ const text: {
     submit: 'Hantar',
   },
   ta: {
+    ...defaults,
     title: 'பதிவு',
     chooseOne: 'வாருங்கள், ஒன்றைத் தேர்ந்தெடுங்கள்',
     subtitle:
@@ -231,6 +247,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
   const [lang, setLang] = useState<'en' | 'zh' | 'ms' | 'ta'>('en');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showSharePanel, setShowSharePanel] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [showLocationSelector, setShowLocationSelector] = useState(true);
   const {
     register,
@@ -279,6 +297,24 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
       document.querySelector('html')?.classList.remove('overflow-hidden');
     }
   }, [showForm]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setShowSharePanel(false);
+      } else {
+        setShowSharePanel(true);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+
+  }, []);
 
   return (
     <>
@@ -435,9 +471,9 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       </g>
                     </svg>
                   </motion.button>
-                  <div className="flex flex-row justify-center pt-5 md:pt-7 pb-10">
+                  <div className="flex flex-row justify-start md:justify-center pt-5 md:pt-7 pb-2 md:pb-10">
                     <button
-                      className={`mr-2 focus:outline-none lang-btn ${
+                      className={`lg:ml-6 mr-2 focus:outline-none lang-btn ${
                         lang === 'en' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
@@ -468,7 +504,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       Behasa Malayu
                     </button>
                     <button
-                      className={`mr-6 md:pr-0 focus:outline-none lang-btn ${
+                      className={`mr-2 md:pr-0 focus:outline-none lang-btn ${
                         lang === 'ta' ? 'lang-btn--selected' : ''
                       }`}
                       type="button"
@@ -477,7 +513,129 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       }}>
                       <img src="/images/tamil.svg" alt="" />
                     </button>
+                    <button
+                      className={`mr-6 md:pr-0 focus:outline-none share-btn ${
+                        lang === 'ta' ? 'lang-btn--selected' : ''
+                      }`}
+                      type="button"
+                      onClick={() => {
+                        setShowSharePanel(!showSharePanel);
+                      }}>
+                      <Image
+                        unoptimized
+                        width={14}
+                        height={17}
+                        src={ShareBtn}
+                        alt=""
+                        layout="fixed"
+                      />
+                    </button>
                   </div>
+                  {showSharePanel && (
+                    <div className="share-panel">
+                      <div className="absolute">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="27.178"
+                          height="28.101"
+                          viewBox="0 0 27.178 28.101">
+                          <path
+                            id="Path_14798"
+                            data-name="Path 14798"
+                            d="M3460,3051.328a33.859,33.859,0,0,0,2.257,10.829c2.7,7.125,9.184,15.825,24.136,16.522"
+                            transform="translate(-3459.254 -3051.327)"
+                            fill="none"
+                            stroke="#000"
+                            strokeWidth="1.5"
+                          />
+                        </svg>
+                      </div>
+
+                      <div className="share-panel__container">
+                        <div className="share-panel__wrapper">
+                          <span>
+                            <em>Jio</em> your friends
+                          </span>
+                          <div className="share-panel__icons">
+                            <a
+                              href={`https://wa.me/?text=${encodeURI(
+                                text[lang].shareText,
+                              )} - ${window.location.href}`}
+                              target="_blank"
+                              rel="noreferrer">
+                              <Image
+                                src={WhatsAppBtn}
+                                loading="eager"
+                                width={26}
+                                height={26}
+                                alt="Share on WhatsApp"
+                              />
+                            </a>
+                            <a
+                              href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
+                              target="_blank"
+                              rel="noreferrer">
+                              <Image
+                                src={FacebookBtn}
+                                loading="eager"
+                                width={26}
+                                height={26}
+                                alt="Share on Facebook"
+                              />
+                            </a>
+                            <Image
+                              src={WeChatBtn}
+                              loading="eager"
+                              width={26}
+                              height={26}
+                              alt="Share on WeChat"
+                            />
+                            <Image
+                              src={SignalBtn}
+                              width={26}
+                              height={26}
+                              alt="Share on Signal"
+                            />
+                            <a
+                              href={`https://telegram.me/share/url?url=${window.location.href}&text=${text[lang].shareText}`}
+                              target="_blank"
+                              rel="noreferrer">
+                              <Image
+                                src={TelegramBtn}
+                                loading="eager"
+                                width={26}
+                                height={26}
+                                alt="Share on Telegram"
+                              />
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const toBeCopied = `${text[lang].shareText} - ${window.location.href}`;
+                                void navigator.clipboard
+                                  .writeText(toBeCopied)
+                                  .then(() => {
+                                    setLinkCopied(true);
+                                  });
+                              }}>
+                              <Image
+                                src={LinkBtn}
+                                loading="eager"
+                                width={26}
+                                height={26}
+                                alt="Share on Facebook"
+                              />
+                            </button>
+                          </div>
+                          {linkCopied && (
+                            <p className="text-xs text-red uppercase">
+                              {text[lang].linkCopied}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <motion.h1
                     variants={textVariants}
                     className={`page-title text-red relative z-20 pt-2 pb-2 text-center form--${lang}`}>
