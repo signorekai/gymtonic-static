@@ -159,7 +159,7 @@ module.exports = {
         'screen-2/10': '20vh',
       },
       fontFamily: {
-        sans: ['Gotham HTF', ...defaultTheme.fontFamily.sans],
+        sans: ['Gotham HTF', 'Noto Sans SC', ...defaultTheme.fontFamily.sans],
         chinese: [
           'Gotham HTF',
           'Noto Sans SC',
