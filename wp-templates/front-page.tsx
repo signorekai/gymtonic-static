@@ -63,7 +63,7 @@ const LeftCard = ({
       text={linkText}
       type="above"
       linkStyle="home"
-      className="absolute left-0 bottom-3 lg:bottom-8 text-center lg:text-left lg:pl-8 right-0 lg:right-auto hover:cursor-locations"
+      className="absolute left-0 bottom-3 lg:bottom-8 text-center lg:text-left lg:pl-8 right-0 lg:right-auto"
     />
   </div>
 );
