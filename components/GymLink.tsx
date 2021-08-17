@@ -44,7 +44,9 @@ const GymLink: React.FunctionComponent<Props> = ({
             ? 'font-black text-xs md:text-base'
             : 'text-xs uppercase'
         }
-          ${linkStyle === 'red' ? 'text-red' : 'text-white'}`}
+          ${
+            linkStyle === 'red' ? 'text-red' : 'text-white'
+          } hover:cursor-locations`}
         dangerouslySetInnerHTML={{ __html: text }}
       />
     </Link>
