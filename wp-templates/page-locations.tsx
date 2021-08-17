@@ -59,6 +59,7 @@ const query = gql`
             title
             locationFields {
               area
+              address
               contactNumber
               images {
                 sourceUrl(size: CAROUSEL_MEDIUM)
@@ -411,11 +412,12 @@ const Page: React.FunctionComponent<any> = ({
                   <h3 className="font-bold text-xs text-red text-center mt-8">
                     Address
                   </h3>
-                  <p className="text-black font-bold text-xs text-center leading-tight lg:max-w-1/2 mx-auto block">
-                    {selected?.locationFields.location.streetNumber}{' '}
-                    {selected?.locationFields.location.streetAddress}{' '}
-                    {selected?.locationFields.location.postCode}
-                  </p>
+                  <p
+                    className="text-black font-bold text-xs text-center leading-tight lg:max-w-1/2 mx-auto block"
+                    dangerouslySetInnerHTML={{
+                      __html: selected?.locationFields.address,
+                    }}
+                  />
                   <Link
                     passHref
                     href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
