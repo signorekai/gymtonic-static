@@ -501,11 +501,6 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       }
                     `}>
                     <div className="field-group flex-wrap !items-start !border-b-0 !mb-6 md:justify-center">
-                      {!watchType && (
-                        <p className="uppercase text-red text-xs text-center w-full pb-2">
-                          {text[lang].chooseOne}
-                        </p>
-                      )}
                       <label className="text-red hover:cursor-generic md:pr-2">
                         <input
                           className="hidden input-radio"
