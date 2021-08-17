@@ -415,7 +415,9 @@ const Page: React.FunctionComponent<any> = ({
                   <p
                     className="text-black font-bold text-xs text-center leading-tight lg:max-w-1/2 mx-auto block"
                     dangerouslySetInnerHTML={{
-                      __html: selected?.locationFields.address,
+                      __html: selected?.locationFields.address
+                        ? selected.locationFields.address
+                        : '',
                     }}
                   />
                   <Link

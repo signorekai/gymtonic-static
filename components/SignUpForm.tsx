@@ -313,7 +313,6 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-
   }, []);
 
   return (
