@@ -85,26 +85,6 @@ const Page: React.FunctionComponent<any> = ({
   const leftViewport = useRef<HTMLDivElement>(null);
   const currentSlide = useRef(-1);
   const [showBtn, setShowBtn] = useState(true);
-
-  const scrollTo = (index: number) => {
-    currentSlide.current = index;
-    let newLeftPosition = 0;
-
-    if (leftViewport.current) {
-      const progress = index / leftViewport.current.children.length;
-      const leftValue = progress + 1 / leftViewport.current.children.length;
-
-      newLeftPosition = Math.min(
-        Math.max(1 - leftValue, 0),
-        1 - 1 / leftViewport.current.children.length,
-      );
-
-      leftViewport.current.style.transform = `translate3d(0, ${
-        newLeftPosition * -100
-      }%, 0)`;
-    }
-  };
-
   const scroll = useElementScroll(container);
 
   useEffect(() => {
@@ -112,16 +92,22 @@ const Page: React.FunctionComponent<any> = ({
       const handleScroll = () => {
         const scrollYProgress = scroll.scrollYProgress.get();
         const scrollY = scroll.scrollY.get();
-        const parallaxCardBoundary = isMobile()
+        const parallaxLowerBound = isMobile()
           ? 1.5 / 8.5
           : heightOfScroller / (heightOfScroller + 7);
+        const parallaxUpperBound = isMobile()
+          ? 7.5 / 8.5
+          : (heightOfScroller + 6) / (heightOfScroller + 7);
 
         // check if showing the cards
-        if (scrollYProgress > parallaxCardBoundary) {
+        if (
+          scrollYProgress > parallaxLowerBound &&
+          scrollYProgress <= parallaxUpperBound
+        ) {
           container.current?.classList.add('snap-container');
 
           const progress =
-            (scrollY - parallaxCardBoundary * container.current!.scrollHeight) /
+            (scrollY - parallaxLowerBound * container.current!.scrollHeight) /
             (window.innerHeight * 6);
 
           const leftValue =
@@ -192,131 +178,133 @@ const Page: React.FunctionComponent<any> = ({
           </motion.div>
         </AnimatePresence>
       </VideoScroll>
-      <div className="sticky top-0 left-0 inline-block z-20 w-full lg:w-1/2 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
-        <motion.div
-          id="left"
-          ref={leftViewport}
-          initial="initial"
-          animate="show"
-          exit="exit"
-          style={{
-            transform: 'translate3d(0, -83.33%, 0)',
+      <div className="flex-wrap flex flex-row">
+        <div className="sticky top-0 left-0 inline-block z-20 w-full lg:w-1/2 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
+          <motion.div
+            id="left"
+            ref={leftViewport}
+            initial="initial"
+            animate="show"
+            exit="exit"
+            style={{
+              transform: 'translate3d(0, -83.33%, 0)',
+            }}
+            className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
+            <LeftCard
+              src={Gym1}
+              url="/location/fei-yue-senior-activity-centre-bukit-batok/"
+              linkText="Fei Yue Senior Activity Centre,<br/>Bukit Batok"
+            />
+            <LeftCard
+              src={Gym2}
+              url="/location/bishan-community-club"
+              linkText="Bishan Community Club"
+            />
+            <LeftCard
+              src={Gym3}
+              url="/location/care-corner-woodsquare-2/"
+              linkText="Yong En Active Hub YEAH!,<br/>Bukit Merah"
+            />
+            <LeftCard
+              src={Gym4}
+              url="/location/.care-corner-community-hub"
+              linkText="Care Corner Community Hub,<br/>Woodlands"
+            />
+            <LeftCard
+              src={Gym5}
+              url="/location/peacehaven-day-centre/"
+              linkText="The Salvation Army,<br/>Peacehaven Bedok Arena"
+            />
+            <LeftCard
+              src={Gym6}
+              url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
+              linkText="Tzu Chi Foundation Nanyang,<br/>Jurong West"
+            />
+          </motion.div>
+          <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
+            Gym
+          </h1>
+        </div>
+        <RightParallaxCard
+          onEnter={() => {
+            if (currentSlide.current === -1) {
+              setScrolledHeader(true);
+              setShowBtn(false);
+            }
           }}
-          className="flex flex-col-reverse w-full h-screen-3 lg:h-screen-6 absolute">
-          <LeftCard
-            src={Gym1}
-            url="/location/fei-yue-senior-activity-centre-bukit-batok/"
-            linkText="Fei Yue Senior Activity Centre,<br/>Bukit Batok"
-          />
-          <LeftCard
-            src={Gym2}
-            url="/location/bishan-community-club"
-            linkText="Bishan Community Club"
-          />
-          <LeftCard
-            src={Gym3}
-            url="/location/care-corner-woodsquare-2/"
-            linkText="Yong En Active Hub YEAH!,<br/>Bukit Merah"
-          />
-          <LeftCard
-            src={Gym4}
-            url="/location/.care-corner-community-hub"
-            linkText="Care Corner Community Hub,<br/>Woodlands"
-          />
-          <LeftCard
-            src={Gym5}
-            url="/location/peacehaven-day-centre/"
-            linkText="The Salvation Army,<br/>Peacehaven Bedok Arena"
-          />
-          <LeftCard
-            src={Gym6}
-            url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
-            linkText="Tzu Chi Foundation Nanyang,<br/>Jurong West"
-          />
-        </motion.div>
-        <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
-          Gym
-        </h1>
-      </div>
-      <RightParallaxCard
-        onEnter={() => {
-          if (currentSlide.current === -1) {
+          show
+          className="lg:w-1/2 snap-end"
+          headerTitle="Ka-Ching!"
+          videoSrc="/videos/Thematic-2-KaChing.mp4"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-24"
+          paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
+          href="/about"
+          link="What is Gym Tonic?"
+        />
+        <RightParallaxCard
+          className="lg:pl-[50vw] snap-end"
+          videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4 lg:mt-12"
+          videoSrc="/videos/Thematic-3-Kakis.mp4"
+          headerTitle="Kakis"
+          paragraph="Help Pa and Ma make new friends."
+          href="/locations"
+          link="Find a gym near you"
+        />
+        <RightParallaxCard
+          className="lg:pl-[50vw] snap-end"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-20"
+          videoSrc="/videos/Thematic-4-Boleh.mp4"
+          headerTitle="Boleh"
+          paragraph="To continue doing the things you love, you have to stay physically strong."
+          href="/research"
+          link="Why Strength Training matters even more when you are old."
+        />
+        <RightParallaxCard
+          className="lg:pl-[50vw] snap-end"
+          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5 lg:mt-26"
+          videoSrc="/videos/Thematic-5-Huat.mp4"
+          headerTitle="Huat!"
+          paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
+          href="/stories"
+          link="Read their stories"
+        />
+        <RightParallaxCard
+          className="lg:pl-[50vw] snap-end"
+          videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5 lg:mt-20"
+          videoSrc="/videos/Thematic-6-Kilat.mp4"
+          headerTitle="Kilat!"
+          paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
+          href="/technology"
+          link="Understand the process"
+        />
+        <RightParallaxCard
+          className="lg:pl-[50vw] snap-end"
+          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5 lg:mt-20"
+          videoSrc="/videos/Thematic-7-Pro.mp4"
+          headerTitle="Pro"
+          paragraph="Exercise trainers who will guide you every step of the way."
+          href="/coaches"
+          link="Meet the professionals"
+        />
+        {/* <SnapperContainer
+          length={6}
+          onChange={(index) => {
+            scrollTo(index);
+            console.log('currently at slide', index);
+          }}
+          onExit={() => {
+            setScrolledHeader(false);
+            // container.current?.classList.remove('snap-container');
+            setShowBtn(true);
+            console.log(303);
+          }}
+          onEnter={() => {
             setScrolledHeader(true);
+            // container.current?.classList.add('snap-container');
             setShowBtn(false);
-          }
-        }}
-        show
-        className="lg:w-1/2 snap-end"
-        headerTitle="Ka-Ching!"
-        videoSrc="/videos/Thematic-2-KaChing.mp4"
-        videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
-        paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
-        href="/about"
-        link="What is Gym Tonic?"
-      />
-      <RightParallaxCard
-        className="lg:pl-[50vw] snap-end"
-        videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4"
-        videoSrc="/videos/Thematic-3-Kakis.mp4"
-        headerTitle="Kakis"
-        paragraph="Help Pa and Ma make new friends."
-        href="/locations"
-        link="Find a gym near you"
-      />
-      <RightParallaxCard
-        className="lg:pl-[50vw] snap-end"
-        videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
-        videoSrc="/videos/Thematic-4-Boleh.mp4"
-        headerTitle="Boleh"
-        paragraph="To continue doing the things you love, you have to stay physically strong."
-        href="/research"
-        link="Why Strength Training matters even more when you are old."
-      />
-      <RightParallaxCard
-        className="lg:pl-[50vw] snap-end"
-        videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
-        videoSrc="/videos/Thematic-5-Huat.mp4"
-        headerTitle="Huat!"
-        paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
-        href="/stories"
-        link="Read their stories"
-      />
-      <RightParallaxCard
-        className="lg:pl-[50vw] snap-end"
-        videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5"
-        videoSrc="/videos/Thematic-6-Kilat.mp4"
-        headerTitle="Kilat!"
-        paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
-        href="/technology"
-        link="Understand the process"
-      />
-      <RightParallaxCard
-        className="lg:pl-[50vw] snap-end"
-        videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
-        videoSrc="/videos/Thematic-7-Pro.mp4"
-        headerTitle="Pro"
-        paragraph="Exercise trainers who will guide you every step of the way."
-        href="/coaches"
-        link="Meet the professionals"
-      />
-      {/* <SnapperContainer
-        length={6}
-        onChange={(index) => {
-          scrollTo(index);
-          console.log('currently at slide', index);
-        }}
-        onExit={() => {
-          setScrolledHeader(false);
-          // container.current?.classList.remove('snap-container');
-          setShowBtn(true);
-          console.log(303);
-        }}
-        onEnter={() => {
-          setScrolledHeader(true);
-          // container.current?.classList.add('snap-container');
-          setShowBtn(false);
-        }}
-      /> */}
+          }}
+        /> */}
+      </div>
       <section className="w-full h-screen border-red border-10 md:border-60 relative z-20 flex flex-col justify-center items-center snap-child">
         <h1 className="text-7xl md:text-9xl lg:text-11xl font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
           Mai tu liao!
