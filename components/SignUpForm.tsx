@@ -340,7 +340,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
             initial="initial"
             animate="enter"
             exit="exit"
-            className={`fixed bg-black-opaque z-70 top-0 left-0 w-full min-h-screen h-screen overflow-scroll flex flex-col ${
+            className={`fixed bg-black-opaque z-70 top-0 left-0 w-full min-h-screen h-screen overflow-auto flex flex-col ${
               success ? 'justify-center' : 'justify-start'
             } items-center cursor-generic`}>
             <AnimatePresence exitBeforeEnter>
