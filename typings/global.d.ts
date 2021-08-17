@@ -1,7 +1,14 @@
 declare module '*.svg';
 
 interface WithSignUpFormProps {
-  setShowSignUpForm: (arg0: boolean) => void;
+  setShowSignUpForm: (
+    arg0: boolean,
+    defaultValues?: SignUpFormDefaults,
+  ) => void;
+}
+
+interface SignUpFormDefaults {
+  selectedGym?: string;
 }
 
 interface WithLayoutProps {
