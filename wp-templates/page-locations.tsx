@@ -61,7 +61,7 @@ const query = gql`
               area
               contactNumber
               images {
-                sourceUrl(size: CAROUSEL_SMALL)
+                sourceUrl(size: CAROUSEL_MEDIUM)
                 mediaDetails {
                   width
                   height
@@ -492,12 +492,13 @@ const Page: React.FunctionComponent<any> = ({
                           <div
                             className="w-full relative"
                             style={{
-                              paddingBottom: `${100 / ratio}%`,
+                              paddingBottom: `${100 / 1.3333}%`,
                             }}>
                             <Image
                               unoptimized
                               src={image.sourceUrl}
                               layout="fill"
+                              objectFit="cover"
                               alt=""
                               className="pointer-events-none"
                             />
