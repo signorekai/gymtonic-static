@@ -58,14 +58,17 @@ const RightParallaxCard = ({
                   show: {
                     opacity: 1,
                     y: '-50%',
+                    transition: {
+                      delay: 0.5,
+                    },
                   },
                   exit: {
                     opacity: 0,
-                    y: '-60%',
+                    y: '-40%',
                   },
                   initial: {
-                    opacity: 1,
-                    y: '-60%',
+                    opacity: 0,
+                    y: '-40%',
                   },
                 }}
                 className="h1 italic absolute top-1/2 w-screen lg:w-[50vw] text-center z-10">
