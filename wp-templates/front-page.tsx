@@ -10,6 +10,8 @@ import VideoScroll from 'components/VideoScroll';
 import withLayout from 'components/Layout';
 import RightParallaxCard from 'components/RightParallaxCard';
 import MobileNavBtn from 'components/MobileNavBtn';
+import withSignUpForm from 'components/SignUpForm';
+import GymLink from 'components/GymLink';
 
 import Gym1 from 'assets/images/gym1.jpg';
 import Gym2 from 'assets/images/gym2.jpg';
@@ -22,8 +24,9 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
-import withSignUpForm from 'components/SignUpForm';
-import GymLink from 'components/GymLink';
+import SignupFooterBtnSrc from 'assets/images/SignUpButtons-7.png';
+import SignupFooterBtnMobileSrc from 'assets/images/SignUpButtons-Small-7.png';
+import SignupFooterExtraSrc from 'assets/images/signup-here.png';
 
 const heightOfScroller = 5;
 
@@ -85,7 +88,9 @@ const Page: React.FunctionComponent<any> = ({
   const leftViewport = useRef<HTMLDivElement>(null);
   const currentSlide = useRef(-1);
   const [showBtn, setShowBtn] = useState(true);
+  const [showFooterBtn, setShowFooterBtn] = useState(false);
   const scroll = useElementScroll(container);
+  const collapsed = useRef(false);
 
   useEffect(() => {
     if (container.current && leftViewport.current) {
@@ -105,6 +110,13 @@ const Page: React.FunctionComponent<any> = ({
           scrollYProgress <= parallaxUpperBound
         ) {
           container.current?.classList.add('snap-container');
+          if (collapsed.current === false) {
+            console.log(114);
+            collapsed.current = true;
+            setScrolledHeader(true);
+            setShowBtn(false);
+            setShowFooterBtn(false);
+          }
 
           const progress =
             (scrollY - parallaxLowerBound * container.current!.scrollHeight) /
@@ -121,7 +133,15 @@ const Page: React.FunctionComponent<any> = ({
           leftViewport.current!.style.transform = `translate3d(0, ${
             newLeftPosition * -100
           }%, 0)`;
+        } else if (scrollYProgress > parallaxUpperBound) {
+          if (collapsed.current === false) {
+            setScrolledHeader(true);
+            collapsed.current = true;
+          }
+          setShowFooterBtn(true);
+          setShowBtn(true);
         } else {
+          collapsed.current = false;
           container.current?.classList.remove('snap-container');
         }
       };
@@ -226,12 +246,6 @@ const Page: React.FunctionComponent<any> = ({
           </h1>
         </div>
         <RightParallaxCard
-          onEnter={() => {
-            if (currentSlide.current === -1) {
-              setScrolledHeader(true);
-              setShowBtn(false);
-            }
-          }}
           show
           className="lg:w-1/2 snap-end"
           headerTitle="Ka-Ching!"
@@ -342,11 +356,23 @@ const Page: React.FunctionComponent<any> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed bottom-5 right-5 lg:right-10 z-40">
+            {showFooterBtn && (
+              <div className="absolute -top-12 -left-20">
+                <Image
+                  width={100}
+                  height={77}
+                  src={SignupFooterExtraSrc}
+                  alt=""
+                />
+              </div>
+            )}
             <SignUpBtn
               setShowSignUpForm={setShowSignUpForm}
-              src={SignupBtnSrc}
-              mobileSrc={SignupBtnMobileSrc}
-              hoverSrc={SignupBtnHoverSrc}
+              src={showFooterBtn ? SignupFooterBtnSrc : SignupBtnSrc}
+              mobileSrc={
+                showFooterBtn ? SignupFooterBtnMobileSrc : SignupBtnMobileSrc
+              }
+              hoverSrc={showFooterBtn ? SignupFooterBtnSrc : SignupBtnHoverSrc}
             />
           </motion.div>
         )}
