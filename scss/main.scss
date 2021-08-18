@@ -83,6 +83,7 @@ a {
     @apply text-xs;
     @apply uppercase;
     @apply items-center;
+    @apply md:items-start;
   }
 
   .share-panel__icons {
