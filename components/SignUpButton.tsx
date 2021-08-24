@@ -50,7 +50,7 @@ const SignUpBtn = ({
           setShowSignUpForm(true);
         }}
         className="hover:cursor-signup w-full h-full btn-sign--up">
-        <div className={`${btnStyle !== 'default' ? 'hidden' : ''}`}>
+        <div className={`${btnStyle !== 'default' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
             unoptimized
             loading="eager"
@@ -59,7 +59,7 @@ const SignUpBtn = ({
             alt="Sign up for GymTonic"
           />
         </div>
-        <div className={`${btnStyle !== 'mobile' ? 'hidden' : ''}`}>
+        <div className={`${btnStyle !== 'mobile' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
             unoptimized
             loading="eager"
@@ -68,7 +68,7 @@ const SignUpBtn = ({
             alt="Sign up for GymTonic"
           />
         </div>
-        <div className={`${btnStyle !== 'hover' ? 'hidden' : ''}`}>
+        <div className={`${btnStyle !== 'hover' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
             loading="eager"
             unoptimized
