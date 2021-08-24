@@ -96,7 +96,7 @@ const Page: React.FunctionComponent<any> = ({
             className="font-bold uppercase text-xs mt-8 mb-4 text-center">
             What they say
           </motion.h5>
-          <Carousel>
+          <Carousel navBtnPosition="top" navBtnStyle={{}}>
             <CarouselCard>
               <div>
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
