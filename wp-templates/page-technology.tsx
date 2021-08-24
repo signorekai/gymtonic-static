@@ -139,14 +139,9 @@ const TechCard = ({
           />
         </div>
       </div>
-      <motion.p
-        variants={{
-          initial: { opacity: 0, y: -20 },
-          enter: { opacity: 1, y: 0, transition: { delay: 0.1 } },
-        }}
-        className="text-center text-sm leading-none md:text-lg md:leading-tight">
+      <p className="text-center text-sm leading-none md:text-lg md:leading-tight">
         {text}
-      </motion.p>
+      </p>
       <AnimatePresence exitBeforeEnter>
         {expanded && (
           <motion.div
