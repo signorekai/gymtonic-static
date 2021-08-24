@@ -52,6 +52,8 @@ interface Translation {
   submit: string;
   shareText: string;
   linkCopied: string;
+  invite: string;
+  success: string;
 }
 
 const defaults: Translation = {
@@ -74,8 +76,14 @@ const defaults: Translation = {
   signUpForMyself: 'I am signing up for myself',
   signUpForSomeoneElse: 'I am signing up for someone else',
   submit: 'submit',
-  shareText: 'Check out Gym Tonic!',
+  shareText: 'I just signed up for this gym. Who wants to join me?',
   linkCopied: 'Link Copied',
+  invite: '<em>Jio</em> your friends',
+  success: `<p>
+  If you have any questions, <br />WhatsApp or call us at
+  <a href="tel:96882388">9688 2388</a> or email
+  <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+</p>`,
 };
 
 const text: {
@@ -86,10 +94,9 @@ const text: {
 } = {
   en: defaults,
   zh: {
-    ...defaults,
     title: '报名',
     chooseOne: '来… 选一个',
-    subtitle: '恭喜您，为更健壮的自己跨出第一步',
+    subtitle: '恭喜您，为更健壮的自己跨出第一步！',
     name: '我的名字',
     age: '我的年龄',
     email: '我的电邮',
@@ -104,6 +111,14 @@ const text: {
     signUpForMyself: '我为自己报名',
     signUpForSomeoneElse: '我为别人报名',
     submit: '发送',
+    shareText: '',
+    linkCopied: '网页链接已复制',
+    invite: '',
+    success: `<p>
+  如果您有任何疑问，<br />请使用 WhatsApp 或致电
+  <a href="tel:96882388">9688 2388</a> 或发电邮至
+  <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+</p>`,
   },
   ms: {
     ...defaults,
@@ -126,27 +141,43 @@ const text: {
     signUpForMyself: 'Saya mendaftar untuk saya sendiri',
     signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
     submit: 'Hantar',
+    shareText: '',
+    linkCopied: '网页链接已复制',
+    invite: '',
+    success: `<p>
+    Sekiranya anda mempunyai sebarang pertanyaan,<br />WhatsApp atau hubungi kami di 
+  <a href="tel:96882388">9688 2388</a> atau e-mel
+  <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
+</p>`,
   },
   ta: {
-    ...defaults,
     title: 'பதிவு',
     chooseOne: 'வாருங்கள், ஒன்றைத் தேர்ந்தெடுங்கள்',
     subtitle:
       'வாழ்த்துக்கள்! நீங்கள் ஒரு வலிமையான, சிறந்த நபராக மாறுவதற்கான முதல் அடியை எடுத்து வைக்கிறீர்கள்.',
     name: 'என் பெயர்',
-    age: '我的年龄',
-    email: '我的电邮',
-    contact: '我的联络号码',
-    myAddress: '我的地址',
-    note: '须注意事项（例如：任何健康状况？）',
-    seniorName: '长者名字',
-    seniorAge: '长者年龄',
-    seniorAddress: '长者地址',
-    warning: '我们不提供接送，长者须自行到健得力中心。',
-    selectGym: '您首选的健得力中心',
-    signUpForMyself: '我为自己报名',
-    signUpForSomeoneElse: '我为别人报名',
-    submit: '发送',
+    age: 'என் வயது',
+    email: 'எனது மின்னஞ்சல் முகவரி',
+    contact: 'எனது தொடர்பு எண்',
+    myAddress: 'என் முகவரி',
+    note: 'எங்களுக்கான குறிப்பு (E.g. மருத்துவ நிலை?)',
+    seniorName: 'மூத்த நபரின் பெயர்',
+    seniorAge: 'மூத்த நபரின் வயது',
+    seniorAddress: 'மூத்த நபரின் வீட்டு முகவரி',
+    warning:
+      'போக்குவரத்து வாகனம் வழங்கப்படவில்லை என்பதை நினைவில் கொள்க. மூத்த நபர் Gym Tonic இருப்பிடத்திற்கு சொந்தமாக பயணம் செய்ய வேண்டும்.',
+    selectGym: 'விருப்பமான உடற்பயிற்சி கூடத்தைத் தேர்ந்தெடுக்கவும்',
+    signUpForMyself: 'நான் எனக்காக பதிவு செய்கிறேன்',
+    signUpForSomeoneElse: 'நான் வேறொருவருக்காக பதிவு செய்கிறேன்',
+    submit: 'சமர்ப்பிக்கவும்',
+    shareText: '',
+    linkCopied: 'இணைப்பு நகலெடுக்கப்பட்டது!',
+    invite: '',
+    success: `<p>
+    உங்களுக்கு ஏதேனும் கேள்விகள் இருந்தால்,<br />WhatsApp செய்யுங்கள் அல்லது  
+  <a href="tel:96882388">9688 2388</a> என்ற எண்ணில் எங்களை அழைக்கவும் அல்லது
+  <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a> இல் எங்களுக்கு ஒரு மின்னஞ்சல் அனுப்பவும்.
+</p>`,
   },
 };
 
@@ -402,23 +433,14 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                     {lang === 'zh' && (
                       <Image src={SuccessZh} layout="fill" unoptimized alt="" />
                     )}
+                    {lang === 'ta' && (
+                      <Image src={SuccessEng} layout="fill" unoptimized alt="" />
+                    )}
                   </div>
-                  <footer className="text-sm text-center text-white justify-self-end pb-4 w-full max-w-xs pt-4 mx-auto">
-                    <p>
-                      WhatsApp or call us at{' '}
-                      <a href="tel:96882388">9688 2388</a> or email{' '}
-                      <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
-                    </p>
-                    <p>
-                      An initiative by{' '}
-                      <a
-                        href="//lienfoundation.org/"
-                        target="_blank"
-                        rel="noreferrer">
-                        Lien Foundation
-                      </a>
-                    </p>
-                  </footer>
+                  <footer
+                    dangerouslySetInnerHTML={{ __html: text[lang].success }}
+                    className="text-sm text-center text-white justify-self-end pb-4 w-full max-w-xs pt-4 mx-auto"
+                  />
                 </>
               ) : (
                 <motion.div
@@ -550,9 +572,11 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
 
                       <div className="share-panel__container">
                         <div className="share-panel__wrapper">
-                          <span>
-                            <em>Jio</em> your friends
-                          </span>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: text[lang].invite,
+                            }}
+                          />
                           <div className="share-panel__icons">
                             <a
                               href={`https://wa.me/?text=${encodeURI(
@@ -699,7 +723,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               />
                             </div>
                             <div
-                              className={`input-wrapper md:w-1/3 ${
+                              className={`input-wrapper input-wrapper--left ${
                                 errors.contact ? 'has-error' : ''
                               }`}>
                               <input
@@ -749,7 +773,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               />
                             </div>
                             <div
-                              className={`input-wrapper md:w-1/3  ${
+                              className={`input-wrapper input-wrapper--left  ${
                                 errors.seniorAge ? 'has-error' : ''
                               }`}>
                               <input
@@ -804,7 +828,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               />
                             </div>
                             <div
-                              className={`input-wrapper md:w-1/3  ${
+                              className={`input-wrapper input-wrapper--left  ${
                                 errors.age ? 'has-error' : ''
                               }`}>
                               <input
@@ -845,7 +869,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                               />
                             </div>
                             <div
-                              className={`input-wrapper md:w-1/3 ${
+                              className={`input-wrapper input-wrapper--left ${
                                 errors.contact ? 'has-error' : ''
                               }`}>
                               <input
@@ -1009,7 +1033,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                         <button
                           type="submit"
                           className="block mx-auto overflow-hidden hover:cursor-submit">
-                          <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-14 text-center">
+                          <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center submit-text">
                             {text[lang].submit}
                           </div>
                         </button>
