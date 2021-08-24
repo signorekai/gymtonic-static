@@ -197,7 +197,7 @@ const TechCard = ({
                     rotate: 180,
                     opacity: 0.2,
                     transformOrigin: 'center',
-                    transition: { duration: 0.2 },
+                    transition: { duration: 0.4 },
                   },
                 }}
                 initial="initial"
@@ -219,7 +219,7 @@ const TechCard = ({
                     rotate: 180,
                     opacity: 0.2,
                     transformOrigin: 'center',
-                    transition: { duration: 0.2 },
+                    transition: { duration: 0.4 },
                   },
                 }}
                 initial="initial"
