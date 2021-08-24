@@ -434,7 +434,12 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       <Image src={SuccessZh} layout="fill" unoptimized alt="" />
                     )}
                     {lang === 'ta' && (
-                      <Image src={SuccessEng} layout="fill" unoptimized alt="" />
+                      <Image
+                        src={SuccessEng}
+                        layout="fill"
+                        unoptimized
+                        alt=""
+                      />
                     )}
                   </div>
                   <footer

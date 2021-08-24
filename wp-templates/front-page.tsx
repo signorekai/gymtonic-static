@@ -179,7 +179,6 @@ const Page: React.FunctionComponent<any> = ({
         container={container}
         setShowLoader={setShowLoader}
         totalFrames={69}
-        videoDuration={3}
         height={heightOfScroller}
         videoPath="/videos/home.mp4"
         path="/images/home-video-frames">

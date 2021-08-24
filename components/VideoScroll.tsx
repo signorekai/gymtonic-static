@@ -6,7 +6,6 @@ import { WithLoaderProps } from 'components/Loader';
 interface Props {
   height: number;
   totalFrames: number;
-  videoDuration: number;
   ext?: 'jpg' | 'jpeg' | 'gif' | 'png' | 'JPG' | 'JPEG' | 'GIF' | 'PNG';
   path: string;
   children?: JSX.Element;
