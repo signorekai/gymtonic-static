@@ -162,7 +162,10 @@ const Page: React.FunctionComponent<any> = ({
     <div
       id="container"
       ref={container}
-      className="h-screen w-full overflow-y-scroll overflow-x-hidden relative flex-wrap flex flex-row">
+      className="h-screen w-full max-w-full overflow-y-auto relative flex-wrap flex flex-row"
+      style={{
+        scrollbarWidth: 'none',
+      }}>
       <div className="absolute top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
         <MobileNavBtn
           setShowMobileNav={setShowMobileNav}
@@ -340,9 +343,12 @@ const Page: React.FunctionComponent<any> = ({
               ease: [0.175, 0.85, 0.42, 0.96],
               when: 'beforeChildren',
             }}
-            className="fixed w-full text-sm z-30 bottom-0 p-3 text-white">
+            style={{
+              translateX: '-50%',
+            }}
+            className="fixed left-1/2 text-sm z-30 bottom-3 text-white flex flex-row justify-center">
             <motion.div
-              className="w-full flex flex-col items-center"
+              className="flex flex-col items-center"
               initial={{ translateY: 0 }}
               animate={{ translateY: [0, -5, 0] }}
               transition={{

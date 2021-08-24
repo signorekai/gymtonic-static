@@ -71,7 +71,7 @@ const RightParallaxCard = ({
                     y: '-40%',
                   },
                 }}
-                className="h1 italic absolute top-1/2 w-screen lg:w-[50vw] text-center z-10">
+                className="h1 italic absolute top-1/2 w-full text-center z-10">
                 {headerTitle}
               </motion.h1>
               <video
