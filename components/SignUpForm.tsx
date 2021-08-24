@@ -20,8 +20,6 @@ import SignalBtn from 'assets/images/signal.png';
 import WeChatBtn from 'assets/images/wechat.png';
 import FacebookBtn from 'assets/images/facebook.png';
 import WhatsAppBtn from 'assets/images/whatsapp.png';
-import Link from 'next/link';
-import { getUriInfo } from '@wpengine/headless';
 
 interface WithSignUpFormState {
   showForm: boolean;
