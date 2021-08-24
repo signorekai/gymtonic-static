@@ -305,6 +305,10 @@ body {
   @apply last:pb-0;
 }
 
+.input-wrapper--left {
+  @apply md:w-1/3;
+}
+
 .input-radio {
   & + span:before {
     content: '';
@@ -357,9 +361,19 @@ body {
   }
 }
 
+.form--ta {
+  .has-error::after {
+    content: 'மறந்துவிட்டீர்களா?';
+  }
+}
+
 .form--ms {
   .has-error::after {
     content: 'Dilupakan?';
+  }
+
+  .input-wrapper--left {
+    @apply md:w-1/2;
   }
 }
 
@@ -367,6 +381,10 @@ body {
   @apply font-chinese;
   * {
     @apply font-chinese;
+  }
+
+  .submit-text {
+    @apply text-base;
   }
 
   .has-error::after {
