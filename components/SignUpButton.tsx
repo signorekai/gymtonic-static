@@ -53,6 +53,7 @@ const SignUpBtn = ({
         <div className={`${btnStyle !== 'default' ? 'hidden' : ''}`}>
           <Image
             unoptimized
+            loading="eager"
             src={src}
             layout="fill"
             alt="Sign up for GymTonic"
@@ -61,6 +62,7 @@ const SignUpBtn = ({
         <div className={`${btnStyle !== 'mobile' ? 'hidden' : ''}`}>
           <Image
             unoptimized
+            loading="eager"
             src={mobileSrc}
             layout="fill"
             alt="Sign up for GymTonic"
@@ -68,6 +70,7 @@ const SignUpBtn = ({
         </div>
         <div className={`${btnStyle !== 'hover' ? 'hidden' : ''}`}>
           <Image
+            loading="eager"
             unoptimized
             src={hoverSrc}
             layout="fill"
