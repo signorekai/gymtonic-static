@@ -187,7 +187,7 @@ const TechCard = ({
               <motion.div
                 key="expanded"
                 variants={{
-                  initial: { rotate: -360, opacity: 0 },
+                  initial: { rotate: 0, opacity: 0.2 },
                   animate: {
                     rotate: 0,
                     opacity: 1,
@@ -195,7 +195,7 @@ const TechCard = ({
                   },
                   exit: {
                     rotate: 180,
-                    opacity: 0,
+                    opacity: 0.2,
                     transformOrigin: 'center',
                     transition: { duration: 0.2 },
                   },
@@ -209,7 +209,7 @@ const TechCard = ({
               <motion.div
                 key="collapsed"
                 variants={{
-                  initial: { rotate: -360, opacity: 0 },
+                  initial: { rotate: 0, opacity: 0.2 },
                   animate: {
                     rotate: 0,
                     opacity: 1,
@@ -217,7 +217,7 @@ const TechCard = ({
                   },
                   exit: {
                     rotate: 180,
-                    opacity: 0,
+                    opacity: 0.2,
                     transformOrigin: 'center',
                     transition: { duration: 0.2 },
                   },
