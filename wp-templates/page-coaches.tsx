@@ -98,15 +98,7 @@ const Page: React.FunctionComponent<any> = ({
           </motion.h5>
           <Carousel>
             <CarouselCard>
-              <motion.div
-                initial="initial"
-                animate="show"
-                exit="exit"
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
-                  exit: { y: -20, opacity: 0 },
-                }}>
+              <div>
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
                   “One of my clients used to take 6 painkiller pills everyday
                   for body aches. Now, she takes just 1.”
@@ -116,7 +108,7 @@ const Page: React.FunctionComponent<any> = ({
                   <br />
                   Care corner at Woodsquare
                 </h2>
-              </motion.div>
+              </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
@@ -127,15 +119,7 @@ const Page: React.FunctionComponent<any> = ({
               </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.div
-                initial="initial"
-                animate="show"
-                exit="exit"
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
-                  exit: { y: -20, opacity: 0 },
-                }}>
+              <div>
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
                   “Many seniors worry about getting injured. That’s why we are
                   here to guide them on the correct techniques.”
@@ -145,7 +129,7 @@ const Page: React.FunctionComponent<any> = ({
                   <br />
                   Bishan Community Clubb
                 </h2>
-              </motion.div>
+              </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
@@ -156,15 +140,7 @@ const Page: React.FunctionComponent<any> = ({
               </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.div
-                initial="initial"
-                animate="show"
-                exit="exit"
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
-                  exit: { y: -20, opacity: 0 },
-                }}>
+              <div>
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
                   “Improved fitness created new possibilities for many seniors.
                   Some picked up a new sport or rekindled the love of a sport
@@ -175,7 +151,7 @@ const Page: React.FunctionComponent<any> = ({
                   <br />
                   Peacehaven Bedok Arena
                 </h2>
-              </motion.div>
+              </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
@@ -186,15 +162,7 @@ const Page: React.FunctionComponent<any> = ({
               </div>
             </CarouselCard>
             <CarouselCard>
-              <motion.div
-                initial="initial"
-                animate="show"
-                exit="exit"
-                variants={{
-                  initial: { y: -20, opacity: 0 },
-                  show: { y: 0, opacity: 1, transition: { delay: 0.1 } },
-                  exit: { y: -20, opacity: 0 },
-                }}>
+              <div>
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
                   “Exercise helps reduce challenging behaviours from seniors
                   with dementia.”
@@ -204,7 +172,7 @@ const Page: React.FunctionComponent<any> = ({
                   <br />
                   Bishan Community Club
                 </h2>
-              </motion.div>
+              </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
                 <Image
                   loading="eager"
