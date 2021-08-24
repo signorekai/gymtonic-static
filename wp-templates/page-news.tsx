@@ -257,7 +257,7 @@ const Page: React.FunctionComponent<any> = ({
                   <h1 className="mx-auto group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6 px-3 lg:px-0">
                     {item.title}
                   </h1>
-                  <div className="w-7 h-7 relative mt-2 duration-200 transition-transform group-hover:-translate-y-1 mx-auto">
+                  <div className="w-7 h-7 relative mt-2 mx-auto">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
