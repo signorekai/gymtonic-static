@@ -102,7 +102,7 @@ footer a {
   @apply after:h-[2px];
   @apply after:bottom-[-1px];
   @apply after:left-0;
-  @apply after:bg-white;
+  @apply after:bg-current;
   @apply after:w-full;
   @apply after:transition-transform;
   @apply after:duration-200;
@@ -124,7 +124,6 @@ footer a,
 .lang-btn {
   @apply after:scale-x-0;
   @apply hover:after:scale-x-100;
-  @apply after:bg-black;
 }
 
 .menu-item a {
