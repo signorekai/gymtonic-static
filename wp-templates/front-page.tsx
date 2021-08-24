@@ -89,6 +89,7 @@ const Page: React.FunctionComponent<any> = ({
   const currentSlide = useRef(-1);
   const [showBtn, setShowBtn] = useState(true);
   const [showFooterBtn, setShowFooterBtn] = useState(false);
+  const [showReminder, setShowReminder] = useState(true);
   const scroll = useElementScroll(container);
   const collapsed = useRef(false);
 
@@ -109,14 +110,12 @@ const Page: React.FunctionComponent<any> = ({
           scrollYProgress > parallaxLowerBound &&
           scrollYProgress <= parallaxUpperBound
         ) {
+          if (showReminder === false) setShowReminder(true);
+          if (showBtn === true) setShowBtn(false);
+          if (showFooterBtn === true) setShowFooterBtn(false);
+          setScrolledHeader(true);
+
           container.current?.classList.add('snap-container');
-          if (collapsed.current === false) {
-            console.log(114);
-            collapsed.current = true;
-            setScrolledHeader(true);
-            setShowBtn(false);
-            setShowFooterBtn(false);
-          }
 
           const progress =
             (scrollY - parallaxLowerBound * container.current!.scrollHeight) /
@@ -134,13 +133,13 @@ const Page: React.FunctionComponent<any> = ({
             newLeftPosition * -100
           }%, 0)`;
         } else if (scrollYProgress > parallaxUpperBound) {
-          if (collapsed.current === false) {
-            setScrolledHeader(true);
-            collapsed.current = true;
-          }
-          setShowFooterBtn(true);
+          // in footer
+          setScrolledHeader(true);
           setShowBtn(true);
+          setShowFooterBtn(true);
+          setShowReminder(false);
         } else {
+          setShowReminder(true);
           collapsed.current = false;
           container.current?.classList.remove('snap-container');
         }
@@ -222,12 +221,12 @@ const Page: React.FunctionComponent<any> = ({
             />
             <LeftCard
               src={Gym3}
-              url="/location/care-corner-woodsquare-2/"
+              url="/location/yong-en-active-ageing-centre/"
               linkText="Yong En Active Hub YEAH!,<br/>Bukit Merah"
             />
             <LeftCard
               src={Gym4}
-              url="/location/.care-corner-community-hub"
+              url="/location/care-corner-community-hub/"
               linkText="Care Corner Community Hub,<br/>Woodlands"
             />
             <LeftCard
@@ -300,24 +299,6 @@ const Page: React.FunctionComponent<any> = ({
           href="/coaches"
           link="Meet the professionals"
         />
-        {/* <SnapperContainer
-          length={6}
-          onChange={(index) => {
-            scrollTo(index);
-            console.log('currently at slide', index);
-          }}
-          onExit={() => {
-            setScrolledHeader(false);
-            // container.current?.classList.remove('snap-container');
-            setShowBtn(true);
-            console.log(303);
-          }}
-          onEnter={() => {
-            setScrolledHeader(true);
-            // container.current?.classList.add('snap-container');
-            setShowBtn(false);
-          }}
-        /> */}
       </div>
       <section className="w-full h-screen border-red border-10 md:border-60 relative z-20 flex flex-col justify-center items-center snap-child">
         <h1 className="text-7xl md:text-9xl lg:text-11xl font-black leading-none mb-2 lg:mb-0 text-red italic relative z-10 mt-screen-2/10 text-center">
@@ -349,6 +330,32 @@ const Page: React.FunctionComponent<any> = ({
           />
         </video>
       </section>
+      <AnimatePresence>
+        {showReminder && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, translateY: 30 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.175, 0.85, 0.42, 0.96],
+              when: 'beforeChildren',
+            }}
+            className="fixed w-full text-sm z-30 bottom-0 p-3 text-white">
+            <motion.div
+              className="w-full flex flex-col items-center"
+              initial={{ translateY: 0 }}
+              animate={{ translateY: [0, -5, 0] }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.2,
+              }}>
+              <span className="">Scroll</span>
+              <img src="images/down-arrow.svg" alt="" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <AnimatePresence exitBeforeEnter>
         {showBtn && (
           <motion.div

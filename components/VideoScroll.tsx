@@ -84,25 +84,16 @@ export default function VideoScroller({
   totalFrames,
   path,
   children,
-  videoDuration,
   setShowLoader,
   videoPath,
   container,
   height,
   onEnter = () => {},
 }: Props & WithLoaderProps): JSX.Element {
-  const scrollerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const videoScrollerRef = useRef<HTMLDivElement>(null);
-  const currentFrameRef = useRef(0);
-  const frame0Ref = useRef<HTMLImageElement>(null);
-  const intervalAnimationRef = useRef<boolean>(false);
   const [isMobile, setIsMobile] = useState(true);
-
-  const isIntersecting = useRef(true);
-
-  const [showReminder, setShowReminder] = useState(true);
 
   const canvasAnimateControls = useAnimation();
 
@@ -286,32 +277,6 @@ export default function VideoScroller({
           className={`${
             isMobile ? '' : 'sticky'
           } snap-child border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-center items-center md:pt-0 border-10 md:border-60 border-red relative`}>
-          <AnimatePresence>
-            {showReminder && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, translateY: 30 }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.175, 0.85, 0.42, 0.96],
-                  when: 'beforeChildren',
-                }}
-                className="xl:hidden text-sm absolute z-30 bottom-0 p-3 text-white">
-                <motion.div
-                  className="w-full flex flex-col items-center"
-                  initial={{ translateY: 0 }}
-                  animate={{ translateY: [0, -5, 0] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.2,
-                  }}>
-                  Scroll
-                  <img src="images/down-arrow.svg" alt="" />
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
           {!isMobile && (
             <motion.canvas
               animate={canvasAnimateControls}
