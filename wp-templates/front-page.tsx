@@ -29,7 +29,7 @@ import SignupFooterBtnSrc from 'assets/images/SignUpButtons-7.png';
 import SignupFooterBtnMobileSrc from 'assets/images/SignUpButtons-Small-7.png';
 import SignupFooterExtraSrc from 'assets/images/signup-here.png';
 
-const heightOfScroller = 5;
+const heightOfScroller = 4;
 
 /**
  * Example of post variables to query the first six posts in a named category.
