@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useElementScroll } from 'framer-motion';
+import ScrollSnap from 'scroll-snap';
 
 import withMobileNav from 'components/MobileNav';
 import withLoader, { WithLoaderProps } from 'components/Loader';
@@ -95,6 +96,11 @@ const Page: React.FunctionComponent<any> = ({
 
   useEffect(() => {
     if (container.current && leftViewport.current) {
+      const snapObject = new ScrollSnap(container.current, {
+        snapDestinationY: '100%',
+        threshold: 0.1,
+      });
+
       const handleScroll = () => {
         const scrollYProgress = scroll.scrollYProgress.get();
         const scrollY = scroll.scrollY.get();
@@ -115,7 +121,12 @@ const Page: React.FunctionComponent<any> = ({
           if (showFooterBtn === true) setShowFooterBtn(false);
           setScrolledHeader(true);
 
-          container.current?.classList.add('snap-container');
+          if (isMobile()) {
+            container.current?.classList.add('snap-container');
+          } else {
+            container.current?.classList.remove('snap-container');
+            snapObject.bind();
+          }
 
           const progress =
             (scrollY - parallaxLowerBound * container.current!.scrollHeight) /
@@ -355,7 +366,7 @@ const Page: React.FunctionComponent<any> = ({
                 repeat: Infinity,
                 duration: 1.2,
               }}>
-              <span className="">Scroll</span>
+              <span className="hidden lg:inline">Scroll</span>
               <img src="images/down-arrow.svg" alt="" />
             </motion.div>
           </motion.div>

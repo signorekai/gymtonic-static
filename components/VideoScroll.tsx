@@ -275,7 +275,7 @@ export default function VideoScroller({
           ref={canvasContainerRef}
           className={`${
             isMobile ? '' : 'sticky'
-          } snap-child border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-center items-center md:pt-0 border-10 md:border-60 border-red relative`}>
+          } border-box bg-pink overflow-hidden top-0 w-full h-screen flex flex-col justify-center items-center md:pt-0 border-10 md:border-60 border-red relative`}>
           {!isMobile && (
             <motion.canvas
               animate={canvasAnimateControls}
