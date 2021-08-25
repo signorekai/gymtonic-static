@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Props {
   hideOnMobile?: boolean;
@@ -11,22 +12,31 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
       className={`order-2 lg:order-1 w-full lg:w-1/2 pt-8 md:pt-16 lg:pt-28 lg:min-h-screen flex flex-col justify-between ${
         hideOnMobile ? 'hidden lg:block' : ''
       }`}>
-      <div>
-        <h1 className="text-2xl md:text-2xl leading-none text-red font-black text-center mb-6 md:mb-12">
+      <div className="w-full max-w-xl xl:max-w-2xl px-8 md:px-4 lg:px-2 xl:px-8 mx-auto">
+        <h1 className="text-2xl leading-none text-red font-black text-center mb-6 md:mb-12">
           About
         </h1>
-        <h5 className="px-8 md:px-32 lg:px-20 xl:px-24 mb-6 md:mb-12 text-center text-2xl md:text-5xl leading-tighter font-black">
+        <h5 className="mb-6 md:mb-12 text-center text-2xl md:text-5xl leading-tighter font-black">
           Gym Tonic is known affectionately as the “Uncle Auntie Gym” – designed
           specially for our Merdeka and Pioneer Generations.
         </h5>
-        <h5 className="px-8 md:px-32 lg:px-20 xl:px-22 text-center text-2xl md:text-5xl leading-tighter font-black">
+        <h5 className="text-center text-2xl md:text-5xl leading-tighter font-black">
           It is{' '}
           <Link href="/research" scroll={false}>
             <a className="about-link">
               <span>proven</span>
             </a>
           </Link>{' '}
-          to help seniors get stronger even as they get older, through a{' '}
+          to help seniors get stronger even as they get
+          <span className="float-left align-top -mr-6 lg:-mr-4 translate-x-3 md:translate-x-8 lg:translate-x-12 leading-0">
+            <Image
+              src="/images/steps.jpg"
+              width={window.innerWidth < 768 ? 24.5 : 41}
+              height={window.innerWidth < 768 ? 52 : 87}
+              alt=""
+            />
+          </span>{' '}
+          older, through a{' '}
           <Link href="/its-simple" scroll={false}>
             <a className="about-link">
               <span>simple</span>
@@ -37,8 +47,23 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
             <a className="about-link">
               <span>high-tech</span>
             </a>
-          </Link>{' '}
-          gym equipment and coaches who{' '}
+          </Link>
+          <Image
+            src="/images/screen.png"
+            width={window.innerWidth < 768 ? 53 : 85}
+            height={window.innerWidth < 768 ? 25 : 40}
+            alt=""
+          />{' '}
+          equipment and coaches{' '}
+          <span className="align-top">
+            <Image
+              src="/images/coach-animated.gif"
+              width={window.innerWidth < 768 ? 40 : 70}
+              height={window.innerWidth < 768 ? 73.5 : 128.625}
+              alt=""
+            />
+          </span>{' '}
+          who{' '}
           <Link href="/coaches" scroll={false}>
             <a className="about-link">
               <span>care</span>
