@@ -637,7 +637,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                             <button
                               type="button"
                               onClick={() => {
-                                const toBeCopied = `${text[lang].shareText} - ${window.location.href}`;
+                                const toBeCopied = window.location.origin;
                                 void navigator.clipboard
                                   .writeText(toBeCopied)
                                   .then(() => {
