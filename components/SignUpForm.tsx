@@ -609,19 +609,6 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                 alt="Share on Facebook"
                               />
                             </a>
-                            <Image
-                              src={WeChatBtn}
-                              loading="eager"
-                              width={26}
-                              height={26}
-                              alt="Share on WeChat"
-                            />
-                            <Image
-                              src={SignalBtn}
-                              width={26}
-                              height={26}
-                              alt="Share on Signal"
-                            />
                             <a
                               href={`https://telegram.me/share/url?url=${window.location.href}&text=${text[lang].shareText}`}
                               target="_blank"
