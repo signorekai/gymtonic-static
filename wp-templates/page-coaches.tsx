@@ -106,7 +106,7 @@ const Page: React.FunctionComponent<any> = ({
                 <h2 className="font-bold uppercase text-center text-xs mt-3">
                   Jason Tan,
                   <br />
-                  Care corner at Woodsquare
+                  Ageility Lab, PulseSync
                 </h2>
               </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">

@@ -263,7 +263,7 @@ const Page: React.FunctionComponent<any> = ({
           headerTitle="Ka-Ching!"
           videoSrc="/videos/Thematic-2-KaChing.mp4"
           videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-24"
-          paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know retiring is expensive. Here’s a cheaper way."
+          paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know growing old can be expensive. Here’s a cheaper way."
           href="/about"
           link="What is Gym Tonic?"
         />
@@ -283,7 +283,7 @@ const Page: React.FunctionComponent<any> = ({
           headerTitle="Boleh"
           paragraph="To continue doing the things you love, you have to stay physically strong."
           href="/research"
-          link="Why Strength Training matters even more when you are old."
+          link="Why Strength Training matters even more when you are old"
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"

@@ -318,6 +318,7 @@ const Page: React.FunctionComponent<any> = ({
                   handler={() => {
                     setSelected(formatSelected(item));
                   }}
+                  borderColor={selected?.id === item.id ? 'red' : 'white'}
                   className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 focus:outline-none"
                   title={item.title}
                   subtitle={`${item.moreDetails.publisher}<br />${
