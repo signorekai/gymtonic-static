@@ -23,6 +23,7 @@ import SignupBtnSrc from 'assets/images/SignUpButtons-4-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-4-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-4.png';
 import { useRouter } from 'next/router';
+import { useInView } from 'react-intersection-observer';
 
 interface QueryResult {
   data:
@@ -158,6 +159,7 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setShowSignUpForm,
+  setMobileNavBtnStyle,
 }: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
@@ -266,6 +268,12 @@ const Page: React.FunctionComponent<any> = ({
 
   useEffect(() => {
     const resizeHandler = () => {
+      if (window.innerWidth >= 768 && window.innerWidth <= 1024) {
+        setMobileNavBtnStyle('text-white');
+      } else {
+        setMobileNavBtnStyle('text-red');
+      }
+
       if (showInfo) {
         if (window.innerWidth >= 1024) {
           void mapContainerControls.start({
@@ -286,7 +294,11 @@ const Page: React.FunctionComponent<any> = ({
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
-  }, [mapContainerControls, showInfo]);
+  }, [mapContainerControls, setMobileNavBtnStyle, showInfo]);
+
+  useEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, []);
 
   const markers = useMemo(() => {
     const allMarkers: Place[] = [];
@@ -670,6 +682,7 @@ const Page: React.FunctionComponent<any> = ({
         animate={mapContainerControls}
         className="border-10 md:border-60 border-red order-2 lg:order-1 w-screen lg:w-screen-1/2 min-h-screen-1/2 lg:min-h-screen relative lg:sticky top-0">
         <MapContainer
+          setMobileNavBtnStyle={setMobileNavBtnStyle}
           forceActiveInfoWindow={activeInfoWindow}
           initialCenter={markers[0].position}
           currentMapCenter={currentMapCenter}
