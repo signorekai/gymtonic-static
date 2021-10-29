@@ -50,97 +50,59 @@ a {
 }
 
 .share-btn {
-  @apply hidden;
-  @apply p-2;
-  @apply md:flex;
-  @apply flex-col;
-  @apply justify-center;
+  @apply hidden p-2 md:flex flex-col justify-center;
 }
 
 .share-panel {
-  @apply block;
-  @apply md:absolute;
-  @apply md:top-16;
-  @apply md:w-48;
-  @apply md:right-10;
-  @apply lg:right-4;
-  @apply md:z-40;
+  @apply block md:absolute md:top-16 md:w-48 md:right-10 lg:right-4 md:z-40;
 
   .absolute {
-    @apply hidden;
-    @apply md:block;
+    @apply hidden md:block;
   }
 
   .share-panel__container {
-    @apply md:ml-8;
-    @apply md:mt-5;
+    @apply md:ml-8 md:mt-5;
   }
 
   .share-panel__wrapper {
-    @apply flex;
-    @apply flex-row;
-    @apply md:flex-col;
-    @apply text-xs;
-    @apply uppercase;
-    @apply items-center;
-    @apply md:items-start;
+    @apply flex flex-row md:flex-col text-xs uppercase items-center md:items-start;
   }
 
   .share-panel__icons {
-    @apply ml-2;
-    @apply md:ml-0;
+    @apply ml-2 md:ml-0;
   }
 }
 
 .lang-btn,
 .link,
 footer a {
-  @apply relative;
-  @apply inline-block;
-  @apply after:empty-content;
-  @apply after:absolute;
-  @apply after:h-[2px];
-  @apply after:bottom-[-1px];
-  @apply after:left-0;
-  @apply after:bg-current;
-  @apply after:w-full;
-  @apply after:transition-transform;
-  @apply after:duration-200;
-  @apply after:origin-left;
+  @apply relative inline-block;
+
+  &:after {
+    @apply empty-content absolute h-[2px] bottom-[-1px] left-0 bg-current w-full transition-transform duration-200 origin-left;
+  }
 }
 
 .link,
 .lang-btn.lang-btn--selected {
-  @apply after:scale-x-100;
-  @apply hover:after:scale-x-0;
+  @apply after:scale-x-100 lg:hover:after:scale-x-0;
 }
 
 .lang-btn {
-  @apply lg:p-1;
-  @apply after:bottom-0;
+  @apply lg:p-1 after:bottom-0;
 }
 
 footer a,
 .lang-btn {
-  @apply after:scale-x-0;
-  @apply hover:after:scale-x-100;
+  @apply after:scale-x-0 hover:after:scale-x-100;
 }
 
 .menu-item a {
-  @apply relative;
-  @apply hidden;
-  @apply lg:block;
-  @apply after:empty-content;
-  @apply after:absolute;
-  @apply after:h-[2px];
-  @apply after:bottom-[-1px];
-  @apply after:left-0;
-  @apply after:bg-white;
-  @apply after:w-full;
-  @apply hover:after:scale-x-100;
-  @apply after:transition-transform;
-  @apply after:duration-200;
-  @apply after:origin-left;
+  @apply relative hidden lg:block;
+
+  &:after {
+    @apply empty-content absolute h-[2px] bottom-[-1px] left-0 bg-white w-full hover:after:scale-x-100 transition-transform duration-200 origin-left;
+  }
 
   &.after\:scale-x-100 {
     @apply hover:after:scale-x-0;
@@ -148,55 +110,27 @@ footer a,
 }
 
 .h1 {
-  @apply text-6xl;
-  @apply md:text-8xl;
-  @apply font-black;
-  @apply leading-none;
-  @apply mb-0;
+  @apply text-6xl md:text-8xl font-black leading-none mb-0;
 }
 
 .h4 {
-  @apply text-2xl;
-  @apply md:text-4xl;
-  @apply leading-none;
-  @apply word-spacing-0;
-  @apply font-black;
+  @apply text-2xl md:text-4xl leading-none word-spacing-0 font-black;
 }
 
 .page-title {
-  @apply text-2xl;
-  @apply md:text-5xl;
-  @apply leading-tight;
-  @apply md:leading-none;
-  @apply font-black;
-  @apply relative;
-  @apply z-10;
+  @apply text-2xl md:text-5xl leading-tight md:leading-none font-black relative z-10;
 }
 
 .about-link {
-  @apply text-red;
-  @apply inline-block;
-  @apply relative;
+  @apply text-red inline-block relative leading-[0.8];
 
-  @apply after:empty-content;
-  @apply after:absolute;
-  @apply after:h-[3px];
-  @apply after:bottom-[-3px];
-  @apply after:left-0;
-  @apply after:bg-red;
-  @apply after:w-full;
-  @apply hover:after:scale-x-100;
-  @apply after:transition-transform;
-  @apply after:duration-200;
-  @apply after:origin-left;
-  @apply after:z-10;
-  @apply hover:after:scale-x-0;
-
-  line-height: 0.8;
+  &:after {
+    @apply empty-content absolute h-[3px] bottom-[-3px] left-0 bg-red w-full hover:after:scale-x-100;
+    @apply transition-transform duration-200 origin-left z-10 hover:after:scale-x-0;
+  }
 
   span {
-    @apply relative;
-    @apply z-30;
+    @apply relative z-30;
     text-shadow: 3px 3px white, 3px -3px white, -3px 3px white, -3px -3px white;
   }
 }
@@ -209,10 +143,7 @@ footer a,
 }
 
 .content-container {
-  @apply lg:min-h-screen;
-  @apply relative;
-  @apply lg:flex;
-  @apply flex-col;
+  @apply lg:min-h-screen relative lg:flex flex-col;
   @extend .content-container-bg;
   @extend .content-container-size;
   @extend .content-container-order;
@@ -220,29 +151,23 @@ footer a,
 }
 
 .content-container-positioning {
-  @apply lg:sticky;
-  @apply top-0;
-  @apply z-20;
+  @apply lg:sticky top-0 z-20;
 }
 
 .content-container-order {
-  @apply order-2;
-  @apply lg:order-1;
+  @apply order-2 lg:order-1;
 }
 
 .content-container-size {
-  @apply w-full;
-  @apply lg:w-1/2;
+  @apply w-full lg:w-1/2;
 }
 
 .content-container-bg {
-  @apply bg-red;
-  @apply text-white;
+  @apply bg-red text-white;
 }
 
 .content-container-px {
-  @apply px-4;
-  @apply md:px-16;
+  @apply px-4 md:px-16;
 }
 
 body {
@@ -250,8 +175,7 @@ body {
 }
 
 .flex-last-item-align-start {
-  @apply after:empty-content;
-  @apply after:flex-1;
+  @apply after:empty-content after:flex-1;
 }
 
 .snap-container {
@@ -275,29 +199,14 @@ body {
 }
 
 .field-group {
-  @apply flex;
-  @apply flex-col;
-  @apply md:flex-row;
-  @apply md:items-end;
-  @apply border-b-2;
-  @apply border-red;
-  @apply pb-1;
-  @apply mb-3;
+  @apply flex flex-col md:flex-row md:items-end border-b-2 border-red pb-1 mb-3;
 }
 
 .input-wrapper {
-  @apply w-full;
-  @apply border-red;
+  @apply w-full border-red;
 
-  @apply first:border-b-2;
-  @apply first:pb-1;
-  @apply first:mb-3;
-  @apply md:first:border-b-0;
-  @apply md:first:pb-0;
-  @apply md:first:mb-0;
-  @apply last:border-b-0;
-  @apply last:mb-0;
-  @apply last:pb-0;
+  @apply first:border-b-2 first:pb-1 first:mb-3 md:first:border-b-0 md:first:pb-0 md:first:mb-0;
+  @apply last:border-b-0 last:mb-0 last:pb-0;
 }
 
 .input-wrapper--left {
@@ -323,32 +232,17 @@ body {
 }
 
 .text-field {
-  @apply bg-transparent;
-  @apply w-full;
-  @apply text-red;
-  @apply border-red;
-  @apply block;
-  @apply px-4;
-  @apply focus:outline-none;
+  @apply bg-transparent w-full text-red border-red block px-4 focus:outline-none;
 
-  @apply placeholder:opacity-40;
-  @apply placeholder:text-red;
+  @apply placeholder:opacity-40 placeholder:text-red;
 }
 
 .has-error {
-  @apply relative;
-  @apply overflow-visible;
-  @apply mt-3;
+  @apply relative overflow-visible mt-3;
 
-  @apply after:uppercase;
-  @apply after:text-red;
-  @apply after:text-xs;
-  @apply after:text-center;
-  @apply after:w-full;
-  @apply after:absolute;
-  @apply after:-top-4;
-  @apply after:block;
-  @apply after:left-0;
+  &:after {
+    @apply uppercase text-red text-xs text-center w-full absolute -top-4 block left-0;
+  }
 }
 
 .form--en {
