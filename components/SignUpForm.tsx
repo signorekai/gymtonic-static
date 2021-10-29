@@ -113,7 +113,7 @@ const text: {
     submit: '发送',
     shareText: '',
     linkCopied: '网页链接已复制',
-    invite: '',
+    invite: '邀请你的朋友一起健力!',
     success: `<p>
   如果您有任何疑问，<br />请使用 WhatsApp 或致电
   <a href="tel:96882388">9688 2388</a> 或发电邮至
@@ -142,8 +142,8 @@ const text: {
     signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
     submit: 'Hantar',
     shareText: '',
-    linkCopied: '网页链接已复制',
-    invite: '',
+    linkCopied: 'Pilih satu',
+    invite: 'Bawa kawan-kawan anda',
     success: `<p>
     Sekiranya anda mempunyai sebarang pertanyaan,<br />WhatsApp atau hubungi kami di 
   <a href="tel:96882388">9688 2388</a> atau e-mel
@@ -172,7 +172,7 @@ const text: {
     submit: 'சமர்ப்பிக்கவும்',
     shareText: '',
     linkCopied: 'இணைப்பு நகலெடுக்கப்பட்டது!',
-    invite: '',
+    invite: 'உங்கள்நண்பரக்ளளஅளைக்கவும்',
     success: `<p>
     உங்களுக்கு ஏதேனும் கேள்விகள் இருந்தால்,<br />WhatsApp செய்யுங்கள் அல்லது  
   <a href="tel:96882388">9688 2388</a> என்ற எண்ணில் எங்களை அழைக்கவும் அல்லது
@@ -525,7 +525,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                       onClick={() => {
                         setLang('ms');
                       }}>
-                      Behasa Malayu
+                      Bahasa Melayu
                     </button>
                     <button
                       className={`mr-2 md:pr-0 focus:outline-none lang-btn ${
