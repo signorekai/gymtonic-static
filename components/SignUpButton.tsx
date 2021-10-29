@@ -49,7 +49,7 @@ const SignUpBtn = ({
         onMouseDown={() => {
           setShowSignUpForm(true);
         }}
-        className="hover:cursor-signup w-full h-full btn-sign--up">
+        className="hover:cursor-signup w-full h-full btn-sign--up m-[-1px]">
         <div
           className={`${btnStyle !== 'default' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
