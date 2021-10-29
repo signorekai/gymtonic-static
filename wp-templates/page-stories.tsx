@@ -162,7 +162,7 @@ const Page: React.FunctionComponent<any> = ({
         </h1>
       </header>
       <section
-        className={`transition-all duration-200 order-2 lg:order-1 w-full lg:min-h-screen ${
+        className={`transition-all duration-200 order-2 lg:order-1 w-full md:min-h-screen ${
           expanded ? 'lg:w-3/10' : 'lg:w-1/2'
         } pt-8 md:pt-14 lg:pt-14 text-center z-20 flex flex-col justify-between`}>
         <motion.section
@@ -174,11 +174,11 @@ const Page: React.FunctionComponent<any> = ({
           initial="initial"
           exit="exit"
           animate="show"
-          className="relative max-w-2xl h-auto mx-auto flex flex-row flex-wrap justify-center items-start lg:pt-0 lg:flex-last-item-align-start">
+          className="relative max-w-2xl h-auto mx-auto flex flex-row flex-wrap items-start lg:pt-0 md:flex-last-item-align-start">
           <button
             type="button"
             className={`hover:cursor-pointer block w-full md:mt-14 ${
-              expanded ? 'mb-4 lg:mb-8' : 'mb-34 lg:mb-8'
+              expanded ? 'mb-4 lg:mb-8' : 'mb-4 lg:mb-8'
             }`}
             onClick={() => {
               setExpanded(false);
@@ -195,6 +195,7 @@ const Page: React.FunctionComponent<any> = ({
                 setExpanded(true);
                 path.current = story.uri;
               }}
+              borderColor={selectedStory?.id === story.id ? 'red' : 'white'}
               className={
                 expanded ? 'md:w-1/3 lg:w-full' : 'md:w-1/3 lg:w-1/2 xl:w-1/3'
               }
