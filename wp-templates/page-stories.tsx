@@ -174,11 +174,11 @@ const Page: React.FunctionComponent<any> = ({
           initial="initial"
           exit="exit"
           animate="show"
-          className="relative max-w-2xl md:w-10/12 h-auto mx-auto flex flex-row flex-wrap items-start lg:pt-0 md:flex-last-item-align-start">
+          className="relative max-w-2xl md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center md:justify-start lg:pt-0 md:flex-last-item-align-start">
           <button
             type="button"
             className={`hover:cursor-pointer block w-full md:mt-20 ${
-              expanded ? 'mb-4 lg:mb-8' : 'mb-4 lg:mb-8'
+              expanded ? 'mb-4 lg:mb-8' : 'mb-20 lg:mb-8'
             }`}
             onClick={() => {
               setExpanded(false);
@@ -206,7 +206,7 @@ const Page: React.FunctionComponent<any> = ({
             />
           ))}
         </motion.section>
-        <footer className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 pt-8 mx-auto">
+        <footer className="text-xs text-black text-center justify-self-end pb-4 max-w-2/3 py-8 mx-auto">
           <p>
             WhatsApp or call us at <a href="tel:96882388">9688 2388</a> or email{' '}
             <a href="mailto:hello@gymtonic.sg">hello@gymtonic.sg</a>
