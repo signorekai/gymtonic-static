@@ -15,17 +15,19 @@ interface CarouselCardProps {
   children: React.ReactNode;
   index?: number;
   currentIndex?: number;
+  className?: string;
 }
 
 export const CarouselCard: React.FunctionComponent<CarouselCardProps> = ({
   children,
   index,
   currentIndex,
+  className = '',
 }: CarouselCardProps) => {
   return (
     <motion.article
       variants={{ show: { opacity: 1 }, hide: { opacity: 1 } }}
-      className="flex-1 h-full px-0">
+      className={`flex-1 h-full px-0 ${className}`}>
       <AnimatePresence exitBeforeEnter>
         {index === currentIndex && children}
       </AnimatePresence>
@@ -85,7 +87,7 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   );
 
   return (
-    <div className={`max-w-full h-auto relative ${className}`}>
+    <div className={`max-w-full flex-1 relative ${className}`}>
       <div
         className={`flex flex-row h-full ${
           navBtnPosition === 'top' ? 'items-start' : 'items-center'

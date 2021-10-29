@@ -141,7 +141,7 @@ const Page: React.FunctionComponent<any> = ({
             </CarouselCard>
             <CarouselCard>
               <div>
-                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-[28rem]">
                   “Improved fitness created new possibilities for many seniors.
                   Some picked up a new sport or rekindled the love of a sport
                   they in their younger days, making new friends as a result.”

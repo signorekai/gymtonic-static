@@ -174,10 +174,10 @@ const Page: React.FunctionComponent<any> = ({
           initial="initial"
           exit="exit"
           animate="show"
-          className="relative max-w-2xl h-auto mx-auto flex flex-row flex-wrap items-start lg:pt-0 md:flex-last-item-align-start">
+          className="relative max-w-2xl md:w-10/12 h-auto mx-auto flex flex-row flex-wrap items-start lg:pt-0 md:flex-last-item-align-start">
           <button
             type="button"
-            className={`hover:cursor-pointer block w-full md:mt-14 ${
+            className={`hover:cursor-pointer block w-full md:mt-20 ${
               expanded ? 'mb-4 lg:mb-8' : 'mb-4 lg:mb-8'
             }`}
             onClick={() => {

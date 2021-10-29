@@ -218,7 +218,7 @@ const Page: React.FunctionComponent<any> = ({
       <section className="lg:flex lg:min-h-screen flex-col justify-start order-3 text-red lg:order-1 w-full lg:w-1/2">
         <header className="pointer-events-none top-0 w-full pt-12 lg:pt-20 text-center z-30">
           <motion.h1
-            className={`page-title relative z-20 pt-2 pb-4 ${
+            className={`page-title relative z-20 pt-2 pb-4 lg:pt-16 ${
               selected ? 'hidden lg:block' : 'block'
             }`}>
             News

@@ -37,7 +37,7 @@ const SignUpBtn = ({
   }, [mobileSrc, src]);
 
   return (
-    <div className="relative sign-up-btn w-16 h-16 md:w-24 md:h-24 rounded-full">
+    <div className="relative sign-up-btn w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden">
       <button
         type="button"
         onMouseOut={() => {
@@ -49,7 +49,7 @@ const SignUpBtn = ({
         onMouseDown={() => {
           setShowSignUpForm(true);
         }}
-        className="hover:cursor-signup w-full h-full btn-sign--up m-[-1px]">
+        className="hover:cursor-signup w-full h-full btn-sign--up">
         <div
           className={`${btnStyle !== 'default' ? 'hidden' : ''} bg-no-repeat`}>
           <Image

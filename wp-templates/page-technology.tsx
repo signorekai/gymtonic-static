@@ -52,6 +52,7 @@ const TechCard = ({
   mainCardTitle,
   subCards,
   children,
+  className = '',
 }: {
   children: React.ReactNode;
   headerSrc: StaticImageData;
@@ -59,6 +60,7 @@ const TechCard = ({
   text: string;
   mainCardSrc: StaticImageData;
   mainCardTitle: string;
+  className?: string;
   subCards:
     | [
         {
@@ -79,7 +81,8 @@ const TechCard = ({
 }) => {
   const [expanded, setExpanded] = useState(false);
   return (
-    <div className="min-h-80 relative flex flex-col justify-center items-center pt-6 overflow-hidden">
+    <div
+      className={`min-h-96 relative flex flex-col justify-center items-center pt-6 ${className}`}>
       <motion.div
         variants={{
           initial: { opacity: 0, y: -20 },
@@ -165,7 +168,7 @@ const TechCard = ({
                 transformOrigin: 'bottom center',
               },
             }}
-            className="w-2/3 md:w-1/3 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
+            className="w-2/3 md:w-1/3 lg:w-2/3 xl:w-1/2 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
           </motion.div>
         )}
@@ -259,7 +262,7 @@ const Page: React.FunctionComponent<any> = ({
           </motion.h2>
         </div>
         <Carousel navBtnPosition="center" className="mb-6">
-          <CarouselCard>
+          <CarouselCard className="lg:pt-12">
             <TechCard
               headerSrc={TechHeader1}
               title="Stand up for Singapore"

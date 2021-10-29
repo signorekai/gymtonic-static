@@ -2,6 +2,7 @@ import GoogleMapReact from 'google-map-react';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 interface MarkerProps extends Place {
   // eslint-disable-next-line react/no-unused-prop-types
@@ -87,6 +88,7 @@ interface Props {
   places: Place[];
   initialCenter?: LatLngLiteral;
   forceActiveInfoWindow?: IActiveInfoWindow;
+  setMobileNavBtnStyle: (arg0: string) => void;
 }
 
 const MapContainer = ({
@@ -94,10 +96,24 @@ const MapContainer = ({
   currentMapCenter,
   forceActiveInfoWindow = undefined,
   initialCenter = { lat: 1.339652, lng: 103.837938 },
+  setMobileNavBtnStyle,
 }: Props): JSX.Element => {
   const [activeInfoWindow, setActiveInfoWindow] = useState<
     IActiveInfoWindow | undefined
   >(forceActiveInfoWindow);
+
+  const { ref, inView, entry } = useInView({
+    threshold: [0, 1],
+  });
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (window.innerWidth >= 768 && window.innerWidth <= 1024 && inView) {
+      setMobileNavBtnStyle('text-white');
+    } else {
+      setMobileNavBtnStyle('text-red');
+    }
+  }, [inView, setMobileNavBtnStyle]);
 
   useEffect(() => {
     setActiveInfoWindow(forceActiveInfoWindow);
@@ -105,7 +121,7 @@ const MapContainer = ({
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '';
   return (
-    <div className="w-full h-screen-border-1/2-10 lg:h-screen-border-60">
+    <div ref={ref} className="w-full h-screen-border-1/2-10 lg:h-screen-border-60">
       <GoogleMapReact
         defaultCenter={initialCenter}
         center={currentMapCenter}

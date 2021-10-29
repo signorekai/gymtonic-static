@@ -957,7 +957,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                   <label
                                     key={location.id}
                                     htmlFor={location.id}
-                                    className="w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3">
+                                    className="w-1/2 md:w-1/3">
                                     <input
                                       className="hidden"
                                       id={location.id}
@@ -986,7 +986,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                         // clickHandler(location);
                                       }}
                                       borderColor="pink"
-                                      className="w-full md:pb-8 hover:cursor-generic"
+                                      className="w-full md:pb-8 hover:cursor-generic border-pink"
                                       subTitleClassName="text-center text-xs"
                                       titleClassName="text-sm md:text-base text-center"
                                       comingSoon={
