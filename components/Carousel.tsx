@@ -44,12 +44,26 @@ const Carousel: React.FunctionComponent<CarouselProps> = ({
   rightNavBtnStyle = {},
   leftNavBtnStyle = {},
 }: CarouselProps) => {
-  const [currentIndex, setCurrentIndex] = useState(children.length * 3);
+  const [currentIndex, setCurrentIndex] = useState(children.length * 10);
   const container = useRef<HTMLDivElement>(null);
   const slidesContainer = useRef<HTMLDivElement>(null);
   const carouselAnimationControls = useAnimation();
 
   const infiniteChildren = [
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
+    ...children,
     ...children,
     ...children,
     ...children,
