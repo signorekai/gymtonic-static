@@ -60,6 +60,9 @@ const query = gql`
             file {
               mediaItemUrl
             }
+            articlePhoto {
+              sourceUrl(size: MEDIUM_LARGE)
+            }
           }
         }
       }
@@ -80,6 +83,9 @@ interface QueryData {
                 url: string;
                 file: {
                   mediaItemUrl: string;
+                };
+                articlePhoto: {
+                  sourceUrl: string;
                 };
               };
             };
@@ -107,6 +113,9 @@ interface Media {
     showPhoto?: boolean;
     file: {
       mediaItemUrl: string;
+    };
+    articlePhoto: {
+      sourceUrl: string;
     };
   };
   featuredImage: {
@@ -392,7 +401,8 @@ const Page: React.FunctionComponent<any> = ({
                 className="font-black text-lg md:text-2xl mt-3 leading-none">
                 {selected.title}
               </motion.h2>
-              {selected.featuredImage !== null &&
+              {(selected.featuredImage !== null ||
+                selected.moreDetails.articlePhoto?.sourceUrl !== null) &&
                 selected.moreDetails.showPhoto !== null && (
                   <motion.div
                     variants={selectedChildVariant}
@@ -405,7 +415,12 @@ const Page: React.FunctionComponent<any> = ({
                       quality={90}
                       placeholder="blur"
                       blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mOUkpA4CAABqwENo/rLPQAAAABJRU5ErkJggg=="
-                      src={selected.featuredImage.node.largeSourceUrl}
+                      src={
+                        selected.moreDetails.articlePhoto !== null &&
+                        selected.moreDetails.articlePhoto?.sourceUrl !== null
+                          ? selected.moreDetails.articlePhoto.sourceUrl
+                          : selected.featuredImage.node.largeSourceUrl
+                      }
                     />
                   </motion.div>
                 )}
