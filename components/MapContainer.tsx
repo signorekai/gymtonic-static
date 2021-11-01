@@ -121,7 +121,9 @@ const MapContainer = ({
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || '';
   return (
-    <div ref={ref} className="w-full h-screen-border-1/2-10 lg:h-screen-border-60">
+    <div
+      ref={ref}
+      className="w-full h-screen-border-1/2-10 lg:h-screen-border-60">
       <GoogleMapReact
         defaultCenter={initialCenter}
         center={currentMapCenter}
