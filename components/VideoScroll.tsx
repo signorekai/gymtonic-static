@@ -11,6 +11,7 @@ interface Props {
   children?: JSX.Element;
   videoPath: string;
   onEnter?(): void;
+  onExit?(): void;
   container: React.RefObject<HTMLDivElement>;
 }
 
@@ -88,6 +89,7 @@ export default function VideoScroller({
   container,
   height,
   onEnter = () => {},
+  onExit = () => {},
 }: Props & WithLoaderProps): JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
@@ -100,16 +102,21 @@ export default function VideoScroller({
   const borderWidth = window.innerWidth >= 768 ? 60 : 10;
 
   const { ref, inView, entry } = useInView({
-    threshold: 0.39,
+    threshold: [0.1, 0.2, 0.3, 0.4],
   });
 
   useEffect(() => {
-    if (inView) {
-      console.log('in view', entry?.intersectionRatio);
+    console.log('in view', entry?.intersectionRatio, entry?.isIntersecting);
+    if (inView && entry?.isIntersecting && entry.intersectionRatio > 0.3) {
       onEnter();
+    } else if (
+      entry?.isIntersecting === false &&
+      entry.intersectionRatio < 0.1
+    ) {
+      onExit();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView]);
+  }, [entry?.intersectionRatio, inView]);
 
   useEffect(() => {
     const videoFrames: Array<HTMLImageElement> = [];
