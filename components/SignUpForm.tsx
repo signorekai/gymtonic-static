@@ -16,8 +16,6 @@ import SuccessZh from 'assets/images/SignUpComplete-Mandarin.png';
 import ShareBtn from 'assets/images/share.png';
 import TelegramBtn from 'assets/images/telegram.png';
 import LinkBtn from 'assets/images/link.png';
-import SignalBtn from 'assets/images/signal.png';
-import WeChatBtn from 'assets/images/wechat.png';
 import FacebookBtn from 'assets/images/facebook.png';
 import WhatsAppBtn from 'assets/images/whatsapp.png';
 

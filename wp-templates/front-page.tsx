@@ -262,7 +262,7 @@ const Page: React.FunctionComponent<any> = ({
           className="lg:w-1/2 snap-end"
           headerTitle="Ka-Ching!"
           videoSrc="/videos/Thematic-2-KaChing.mp4"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-3/5 lg:mt-24"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-24"
           paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know growing old can be expensive. Here’s a cheaper way."
           href="/about"
           link="What is Gym Tonic?"
@@ -278,7 +278,7 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-3/5 lg:mt-20"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-20"
           videoSrc="/videos/Thematic-4-Boleh.mp4"
           headerTitle="Boleh"
           paragraph="To continue doing the things you love, you have to stay physically strong."
@@ -287,7 +287,7 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-3/5 lg:mt-26"
+          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5 lg:mt-26"
           videoSrc="/videos/Thematic-5-Huat.mp4"
           headerTitle="Huat!"
           paragraph="4,000 seniors at almost 30 eldercare facilities have become stronger. See how they did it."
