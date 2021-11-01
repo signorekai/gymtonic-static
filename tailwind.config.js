@@ -151,6 +151,8 @@ module.exports = {
         22: '5.5rem',
         26: '6.5rem',
         34: '8.5rem',
+        '1/10': '10%',
+        '1/20': '5%',
         screen: 'calc(var(--vh) * 100)',
         'screen-1/2': 'calc(var(--vh) * 50)',
         'screen-1/20': '5vh',
