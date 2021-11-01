@@ -77,8 +77,8 @@ const Page: React.FunctionComponent<any> = ({
           className="content-container-px">
           <h2 className="page-title">Coaches</h2>
           <h4 className={h4Classes}>
-            They’re exercise trainers, physiotherapists and occupational
-            therapists and fitness instructors trained overseas.
+            They’re exercise trainers, physiotherapists, occupational therapists
+            and fitness instructors trained overseas.
           </h4>
           <h4 className={h4Classes}>
             While they are professionals, the uncles and aunties at our gyms
@@ -127,7 +127,7 @@ const Page: React.FunctionComponent<any> = ({
                 <h2 className="font-bold uppercase text-center text-xs mt-3">
                   Looi Yuan Hui,
                   <br />
-                  Bishan Community Clubb
+                  Bishan Community Club
                 </h2>
               </div>
               <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
@@ -144,7 +144,8 @@ const Page: React.FunctionComponent<any> = ({
                 <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-[28rem]">
                   “Improved fitness created new possibilities for many seniors.
                   Some picked up a new sport or rekindled the love of a sport
-                  they in their younger days, making new friends as a result.”
+                  they played in their younger days, making new friends as a
+                  result.”
                 </blockquote>
                 <h2 className="font-bold uppercase text-center text-xs mt-3">
                   Andrew Yeo,

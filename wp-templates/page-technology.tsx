@@ -292,11 +292,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Go Jalan Jalan"
               text="These equipment help you walk faster and climb stairs with more confidence."
               mainCardSrc={FREIEQ2}
-              mainCardTitle="FREI<br />Knee Flexor - Extensor"
+              mainCardTitle="FREI<br />Knee Flexor — Extensor"
               subCards={[
                 {
                   src: HUREQ2,
-                  title: 'HUR<BR />Leg Extension - Curl Rehab',
+                  title: 'HUR<BR />Leg Extension — Curl Rehab',
                 },
               ]}>
               <div className="text-center">
@@ -314,7 +314,7 @@ const Page: React.FunctionComponent<any> = ({
               title="Shop at NTUC"
               text="These equipment strengthen your upper body, so you can carry those heavy grocery bags home."
               mainCardSrc={FREIEQ3}
-              mainCardTitle="FREI<br />Rowing Machine - Chest Press"
+              mainCardTitle="FREI<br />Rowing Machine — Chest Press"
               subCards={[
                 {
                   src: HUREQ3b,
@@ -346,7 +346,7 @@ const Page: React.FunctionComponent<any> = ({
               subCards={[
                 {
                   src: HUREQ4,
-                  title: 'HUR<BR />Abdomen - Back Easy Access',
+                  title: 'HUR<BR />Abdomen — Back Easy Access',
                 },
               ]}>
               <div className="text-center">
@@ -364,11 +364,11 @@ const Page: React.FunctionComponent<any> = ({
               title="Balance on the MRT"
               text="These equipment strengthen the muscles on the sides of your legs that help you keep your balance."
               mainCardSrc={FREIEQ5}
-              mainCardTitle="FREI<br />Abductor - Adductor"
+              mainCardTitle="FREI<br />Abductor — Adductor"
               subCards={[
                 {
                   src: HUREQ5,
-                  title: 'HUR<BR />Adduction - Abduction Rehab',
+                  title: 'HUR<BR />Adduction — Abduction Rehab',
                 },
               ]}>
               <div className="text-center">

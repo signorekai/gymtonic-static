@@ -18,7 +18,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
         </h1>
         <h5 className="mb-6 md:mb-12 text-center text-2xl md:text-5xl leading-tighter font-black">
           Gym Tonic is known affectionately as the “Uncle Auntie Gym” – designed
-          specially for our Merdeka and Pioneer Generations.
+          specially for our Pioneer and Merdeka Generations.
         </h5>
         <h5 className="text-center text-2xl md:text-5xl leading-tighter font-black">
           It is{' '}

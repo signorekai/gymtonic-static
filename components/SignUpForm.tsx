@@ -71,7 +71,7 @@ const defaults: Translation = {
   seniorAge: `Senior's Age`,
   seniorAddress: `Senior's Home Address`,
   warning:
-    'Please note that transportation is not provided. Seniors will have to travel to the Gym Tonic location on their own.',
+    'Please note that transportation is not provided.<br />Seniors will have to travel to the Gym Tonic location on their own.',
   selectGym: 'Select preferred gym',
   signUpForMyself: 'I am signing up for myself',
   signUpForSomeoneElse: 'I am signing up for someone else',

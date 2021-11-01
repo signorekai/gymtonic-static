@@ -547,7 +547,7 @@ const Page: React.FunctionComponent<any> = ({
                       enter: { y: 0, opacity: 1 },
                     }}
                     className="font-bold text-lg lg:text-xl mt-4 leading-none">
-                    Locations open to public
+                    Open to public
                   </motion.h2>
                 </header>
                 <motion.section

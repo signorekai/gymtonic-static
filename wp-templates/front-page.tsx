@@ -290,7 +290,7 @@ const Page: React.FunctionComponent<any> = ({
           videoClassName="max-h-3/5 lg:max-h-none lg:max-w-3/5 lg:mt-26"
           videoSrc="/videos/Thematic-5-Huat.mp4"
           headerTitle="Huat!"
-          paragraph="4,000 seniors at 26 eldercare facilities have become stronger. See how they did it."
+          paragraph="4,000 seniors at almost 30 eldercare facilities have become stronger. See how they did it."
           href="/stories"
           link="Read their stories"
         />
