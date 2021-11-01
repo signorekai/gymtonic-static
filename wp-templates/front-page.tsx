@@ -310,7 +310,7 @@ const Page: React.FunctionComponent<any> = ({
           videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5 lg:mt-20"
           videoSrc="/videos/Thematic-6-Kilat.mp4"
           headerTitle="Kilat!"
-          paragraph="State-of-the-art pneumatic and hydraulic equipment from Germany and Finland."
+          paragraph="State-of-the-art hydraulic and pneumatic equipment from Germany and Finland."
           href="/technology"
           link="Understand the process"
         />
