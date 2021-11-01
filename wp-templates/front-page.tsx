@@ -88,6 +88,7 @@ const Page: React.FunctionComponent<any> = ({
   const container = useRef<HTMLDivElement>(null);
   const leftViewport = useRef<HTMLDivElement>(null);
   const currentSlide = useRef(-1);
+  const [showMenuBtn, setShowMenuBtn] = useState(true);
   const [showBtn, setShowBtn] = useState(true);
   const [showFooterBtn, setShowFooterBtn] = useState(false);
   const [showReminder, setShowReminder] = useState(true);
@@ -120,6 +121,7 @@ const Page: React.FunctionComponent<any> = ({
           if (showBtn === true) setShowBtn(false);
           if (showFooterBtn === true) setShowFooterBtn(false);
           setScrolledHeader(true);
+          setShowMenuBtn(false);
 
           if (isMobile()) {
             container.current?.classList.add('snap-container');
@@ -145,11 +147,13 @@ const Page: React.FunctionComponent<any> = ({
           }%, 0)`;
         } else if (scrollYProgress > parallaxUpperBound) {
           // in footer
-          setScrolledHeader(true);
+          setScrolledHeader(false);
           setShowBtn(true);
           setShowFooterBtn(true);
           setShowReminder(false);
+          setShowMenuBtn(true);
         } else {
+          setShowMenuBtn(true);
           setShowReminder(true);
           collapsed.current = false;
           container.current?.classList.remove('snap-container');
@@ -177,18 +181,25 @@ const Page: React.FunctionComponent<any> = ({
       style={{
         scrollbarWidth: 'none',
       }}>
-      <div className="absolute top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-40">
-        <MobileNavBtn
-          setShowMobileNav={setShowMobileNav}
-          barStyle="text-white md:text-red"
-        />
+      <div className="fixed top-6 right-6 text-white md:text-red md:top-20 md:right-20 z-30">
+        {showMenuBtn && (
+          <MobileNavBtn
+            setShowMobileNav={setShowMobileNav}
+            barStyle="text-white md:text-red"
+          />
+        )}
       </div>
       <VideoScroll
         onEnter={() => {
           container.current?.classList.remove('snap-container');
           setScrolledHeader(false);
+          setShowMenuBtn(true);
           setShowBtn(true);
           currentSlide.current = -1;
+        }}
+        onExit={() => {
+          setScrolledHeader(true);
+          setShowMenuBtn(false);
         }}
         container={container}
         setShowLoader={setShowLoader}
@@ -211,7 +222,7 @@ const Page: React.FunctionComponent<any> = ({
         </AnimatePresence>
       </VideoScroll>
       <div className="flex-wrap flex flex-row">
-        <div className="sticky top-0 left-0 inline-block z-20 w-full lg:w-1/2 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
+        <div className="sticky top-0 left-0 inline-block z-[35] w-full lg:w-1/2 h-screen-1/2 lg:h-screen overflow-hidden bg-red">
           <motion.div
             id="left"
             ref={leftViewport}
