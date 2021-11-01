@@ -55,14 +55,13 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
             alt=""
           />{' '}
           equipment and coaches{' '}
-          <span className="align-top">
-            <Image
-              src="/images/coach-animated.gif"
-              width={window.innerWidth < 768 ? 40 : 70}
-              height={window.innerWidth < 768 ? 73.5 : 128.625}
-              alt=""
-            />
-          </span>{' '}
+          <img
+            className="inline-block align-text-top"
+            src="/images/coach-animated.gif"
+            width={window.innerWidth < 768 ? 40 : 70}
+            height={window.innerWidth < 768 ? 73.5 : 128.625}
+            alt=""
+          />
           who{' '}
           <Link href="/coaches" scroll={false}>
             <a className="about-link">
