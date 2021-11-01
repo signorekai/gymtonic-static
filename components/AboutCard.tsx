@@ -30,7 +30,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           to help seniors get stronger even as they get
           <span className="float-left align-top -mr-2 lg:-mr-4 translate-x-0 md:translate-x-8 lg:translate-x-12 leading-0">
             <Image
-              src="/images/steps.jpg"
+              src="/images/steps.gif"
               width={window.innerWidth < 768 ? 24.5 : 41}
               height={window.innerWidth < 768 ? 52 : 87}
               alt=""
