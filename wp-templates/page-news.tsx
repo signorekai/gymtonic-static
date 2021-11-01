@@ -385,7 +385,13 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="show"
               exit="exit"
-              className="flex flex-col justify-center lg:min-h-screen lg:pt-22 lg:pb-12">
+              className={`flex flex-col lg:min-h-screen lg:pt-22 lg:pb-12 ${
+                (selected.featuredImage === null &&
+                  selected.moreDetails.articlePhoto?.sourceUrl === null) ||
+                selected.moreDetails.showPhoto === null
+                  ? `justify-start lg:mt-32`
+                  : `justify-center`
+              }`}>
               <motion.h3
                 variants={selectedChildVariant}
                 className="font-bold uppercase text-xs lg:pt-0 pt-6 md:pt-8">
