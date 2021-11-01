@@ -137,7 +137,7 @@ function Header({
               duration: noAnimation ? 0 : 0.35,
               ease: [0.175, 0.85, 0.42, 0.96],
             }}
-            className="fixed top-0 l-0 w-full z-40 text-white"
+            className="fixed top-0 l-0 w-full z-30 text-white"
             ref={selfRef}>
             <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
               <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
