@@ -51,7 +51,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
   return (
     <motion.article
       className={`w-full transition-all duration-200 ${
-        isExpanded ? 'lg:w-7/10 lg:pt-24' : 'lg:w-1/2 lg:pt-48'
+        isExpanded ? 'lg:w-7/10 lg:pt-24' : 'lg:w-1/2 lg:pt-30'
       } order-1 lg:order-2 lg:min-h-screen content-container-bg content-container-px content-container-positioning pt-36`}>
       <Head>
         <title>{title} - GymTonic</title>
@@ -62,7 +62,8 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
           variants={parentVariants}
           initial="beforeEnter"
           animate="enter"
-          exit="exit">
+          exit="exit"
+          className="lg:mx-1/20 wide:mx-auto max-w-5xl">
           <h1 className="font-bold uppercase text-xs">{title}</h1>
           <div className="flex flex-col md:flex-row md:justify-between">
             <h2 className="font-black text-lg md:text-2xl mt-1 md:mt-0 leading-none">
