@@ -189,6 +189,8 @@ const Page: React.FunctionComponent<any> = ({
           width: window.innerWidth >= 1366 ? '70%' : '60%',
           transition: { delay: 0.2, duration: 0.4 },
         });
+
+        window.scrollTo(0, 0);
       }
 
       setShowInfo(true);
