@@ -24,7 +24,7 @@ module.exports = {
       pink: '#F4D3CD',
       black: {
         DEFAULT: '#000000',
-        opaque: 'rgba(0,0,0,0.4)',
+        opaque: 'rgba(0,0,0,0.6)',
       },
       white: '#ffffff',
     },
