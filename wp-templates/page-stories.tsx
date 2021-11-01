@@ -197,7 +197,9 @@ const Page: React.FunctionComponent<any> = ({
               }}
               borderColor={selectedStory?.id === story.id ? 'red' : 'white'}
               className={
-                expanded ? 'md:w-1/3 lg:w-full' : 'md:w-1/3 lg:w-1/2 xl:w-1/3'
+                expanded
+                  ? 'w-full md:w-1/3 lg:w-full'
+                  : 'w-full md:w-1/3 lg:w-1/2 xl:w-1/3'
               }
               titleClassName={`${expanded ? 'md:max-w-1/2' : ''} text-base`}
               title={story.storyFields.videoTitle}
