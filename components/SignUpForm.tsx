@@ -907,9 +907,10 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                           {...register('note')}
                         />
                       </div>
-                      <h6 className="text-red text-xs py-4 text-center">
-                        {text[lang].warning}
-                      </h6>
+                      <h6
+                        className="text-red text-xs py-4 text-center"
+                        dangerouslySetInnerHTML={{ __html: text[lang].warning }}
+                      />
 
                       <button
                         type="button"
