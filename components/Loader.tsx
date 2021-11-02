@@ -22,7 +22,13 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
   const handleStart = (url: string) => {
     // if (url.match(/about/).length === 0) {
     console.log('>>> start routechange', url);
-    setShowLoader(true);
+    console.log(router.asPath);
+
+    // eslint-disable-next-line no-empty
+    if (/location/.exec(url) && /location/.exec(router.asPath)) {
+    } else {
+      setShowLoader(true);
+    }
     // }
   };
 

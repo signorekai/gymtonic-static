@@ -183,7 +183,10 @@ const Page: React.FunctionComponent<any> = ({
   const uriInfo = useUriInfo();
 
   const clickHandler = useCallback(
-    (selectedLocation: ILocation) => {
+    (selectedLocation: ILocation, evt: Event = new Event('null')) => {
+      if (evt.type !== 'null') {
+        evt?.preventDefault();
+      }
       if (window && window.innerWidth >= 1024) {
         void mapContainerControls.start({
           width: window.innerWidth >= 1366 ? '70%' : '60%',
@@ -192,6 +195,12 @@ const Page: React.FunctionComponent<any> = ({
 
         window.scrollTo(0, 0);
       }
+
+      window.history.pushState(
+        {},
+        '',
+        `${window.location.origin}${selectedLocation.uri}`,
+      );
 
       setShowInfo(true);
       setSelected(selectedLocation);
@@ -396,25 +405,21 @@ const Page: React.FunctionComponent<any> = ({
                     className="ml-auto md:ml-0 md:mr-auto lg:mr-0 lg:ml-auto block"
                     type="button"
                     onClick={() => {
-                      if (
-                        uriInfo?.uriPath === 'gymtonic/locations' ||
-                        uriInfo?.uriPath === 'locations'
-                      ) {
-                        void mapContainerControls.start({
-                          width:
-                            window && window.innerWidth >= 1024
-                              ? '50%'
-                              : '100%',
-                          transition: { duration: 0.4 },
-                        });
-                        setTimeout(() => {
-                          setSelected(undefined);
-                          setActiveInfoWindow(undefined);
-                          setShowInfo(false);
-                        }, 100);
-                      } else {
-                        void router.push('/locations');
-                      }
+                      void mapContainerControls.start({
+                        width:
+                          window && window.innerWidth >= 1024 ? '50%' : '100%',
+                        transition: { duration: 0.4 },
+                      });
+                      setTimeout(() => {
+                        setSelected(undefined);
+                        setActiveInfoWindow(undefined);
+                        setShowInfo(false);
+                        window.history.pushState(
+                          {},
+                          '',
+                          `${window.location.origin}/locations`,
+                        );
+                      }, 100);
                     }}>
                     <h2 className="font-bold text-sm md:text-base mt-10 lg:mt-16 leading-none text-right">
                       {'<'} Where to find us
@@ -576,9 +581,10 @@ const Page: React.FunctionComponent<any> = ({
                           exit: { y: 0, opacity: 1 },
                           enter: { y: 0, opacity: 1 },
                         }}
-                        handler={() => {
+                        href={location.uri}
+                        handler={(evt) => {
                           window.dispatchEvent(new Event('resize'));
-                          clickHandler(location);
+                          clickHandler(location, evt);
                         }}
                         className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
                           location.locationFields.openingSoon === true
