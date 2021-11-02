@@ -368,7 +368,7 @@ const Page: React.FunctionComponent<any> = ({
             style={{
               translateX: '-50%',
             }}
-            className="fixed left-1/2 text-sm z-30 bottom-3 text-white flex flex-row justify-center">
+            className="fixed left-1/2 text-sm z-40 bottom-3 text-white flex flex-row justify-center">
             <motion.div
               className="flex flex-col items-center"
               initial={{ translateY: 0 }}
