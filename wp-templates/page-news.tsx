@@ -338,7 +338,7 @@ const Page: React.FunctionComponent<any> = ({
                   thumbnail={
                     item.featuredImage
                       ? item.featuredImage.node.sourceUrl
-                      : '/images/map-no-icon.png'
+                      : '/images/news-no-icon.png'
                   }
                 />
               );
