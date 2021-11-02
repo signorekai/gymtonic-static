@@ -24,11 +24,7 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
     console.log('>>> start routechange', url);
     console.log(router.asPath);
 
-    // eslint-disable-next-line no-empty
-    if (/location/.exec(url) && /location/.exec(router.asPath)) {
-    } else {
-      setShowLoader(true);
-    }
+    setShowLoader(true);
     // }
   };
 

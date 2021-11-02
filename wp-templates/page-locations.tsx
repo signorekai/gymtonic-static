@@ -183,7 +183,11 @@ const Page: React.FunctionComponent<any> = ({
   const uriInfo = useUriInfo();
 
   const clickHandler = useCallback(
-    (selectedLocation: ILocation, evt: Event = new Event('null')) => {
+    (
+      selectedLocation: ILocation,
+      evt: Event = new Event('null'),
+      pushState = true,
+    ) => {
       if (evt.type !== 'null') {
         evt?.preventDefault();
       }
@@ -196,11 +200,13 @@ const Page: React.FunctionComponent<any> = ({
         window.scrollTo(0, 0);
       }
 
-      window.history.pushState(
-        {},
-        '',
-        `${window.location.origin}${selectedLocation.uri}`,
-      );
+      if (pushState) {
+        window.history.pushState(
+          {},
+          '',
+          `${window.location.origin}${selectedLocation.uri}`,
+        );
+      }
 
       setShowInfo(true);
       setSelected(selectedLocation);
@@ -221,6 +227,42 @@ const Page: React.FunctionComponent<any> = ({
     },
     [mapContainerControls],
   );
+
+  useEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+
+    const listener = (evt: Event) => {
+      if (/\/location\//.exec(window.location.pathname)) {
+        const inOpenToPublic = find(locationsOpenToPublic, (location) => {
+          return location.node.uri === window.location.pathname;
+        });
+        if (
+          inOpenToPublic &&
+          inOpenToPublic.node.locationFields.openingSoon === null
+        ) {
+          clickHandler(inOpenToPublic.node, new Event('null'), false);
+        }
+      } else if (/locations/.exec(window.location.pathname)) {
+        void mapContainerControls.start({
+          width: window && window.innerWidth >= 1024 ? '50%' : '100%',
+          transition: { duration: 0.4 },
+        });
+        setTimeout(() => {
+          setSelected(undefined);
+          setActiveInfoWindow(undefined);
+          setShowInfo(false);
+        }, 100);
+      }
+    };
+
+    window.addEventListener('popstate', listener);
+
+    return () => {
+      window.removeEventListener('popstate', listener);
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (
@@ -306,10 +348,6 @@ const Page: React.FunctionComponent<any> = ({
       window.removeEventListener('resize', resizeHandler);
     };
   }, [mapContainerControls, setMobileNavBtnStyle, showInfo]);
-
-  useEffect(() => {
-    window.dispatchEvent(new Event('resize'));
-  }, []);
 
   const markers = useMemo(() => {
     const allMarkers: Place[] = [];
