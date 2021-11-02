@@ -255,8 +255,8 @@ const Page: React.FunctionComponent<any> = ({
             />
             <LeftCard
               src={Gym5}
-              url="/location/peacehaven-day-centre/"
-              linkText="The Salvation Army,<br/>Peacehaven Bedok Arena"
+              url="/location/blossom-seeds/"
+              linkText="Blossom Seeds"
             />
             <LeftCard
               src={Gym6}
