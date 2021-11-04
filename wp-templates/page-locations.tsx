@@ -140,6 +140,7 @@ const query = gql`
               }
               openingHours
               openingSoon
+              visibility
             }
             terms {
               nodes {
@@ -612,43 +613,50 @@ const Page: React.FunctionComponent<any> = ({
                   exit="exit"
                   className="w-full max-w-2xl mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
                   {locationsOpenToPublic?.map(({ node: location }) => {
-                    return (
-                      <Bubble
-                        variants={{
-                          initial: { y: -20, opacity: 0 },
-                          exit: { y: 0, opacity: 1 },
-                          enter: { y: 0, opacity: 1 },
-                        }}
-                        href={location.uri}
-                        handler={(evt) => {
-                          window.dispatchEvent(new Event('resize'));
-                          clickHandler(location, evt);
-                        }}
-                        className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
-                          location.locationFields.openingSoon === true
-                            ? 'pointer-events-none'
-                            : ''
-                        }`}
-                        titleClassName="text-sm md:text-base"
-                        imageWrapperClassName={`${
-                          location.id === selected?.id
-                            ? 'border-red'
-                            : 'border-white'
-                        } ${
-                          location.locationFields.openingSoon === true
-                            ? 'group-hover:border-0'
-                            : ''
-                        }`}
-                        comingSoon={location.locationFields.openingSoon}
-                        title={location.title}
-                        subtitle={location.locationFields.area}
-                        thumbnail={
-                          location.featuredImage
-                            ? location.featuredImage.node.sourceUrl
-                            : '/images/map-no-icon.png'
-                        }
-                      />
-                    );
+                    if (
+                      location.locationFields.visibility === true ||
+                      typeof location.locationFields.visibility === 'undefined'
+                    ) {
+                      return (
+                        <Bubble
+                          variants={{
+                            initial: { y: -20, opacity: 0 },
+                            exit: { y: 0, opacity: 1 },
+                            enter: { y: 0, opacity: 1 },
+                          }}
+                          href={location.uri}
+                          handler={(evt) => {
+                            window.dispatchEvent(new Event('resize'));
+                            clickHandler(location, evt);
+                          }}
+                          className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
+                            location.locationFields.openingSoon === true
+                              ? 'pointer-events-none'
+                              : ''
+                          }`}
+                          titleClassName="text-sm md:text-base"
+                          imageWrapperClassName={`${
+                            location.id === selected?.id
+                              ? 'border-red'
+                              : 'border-white'
+                          } ${
+                            location.locationFields.openingSoon === true
+                              ? 'group-hover:border-0'
+                              : ''
+                          }`}
+                          comingSoon={location.locationFields.openingSoon}
+                          title={location.title}
+                          subtitle={location.locationFields.area}
+                          thumbnail={
+                            location.featuredImage
+                              ? location.featuredImage.node.sourceUrl
+                              : '/images/map-no-icon.png'
+                          }
+                        />
+                      );
+                    }
+
+                    return <></>;
                   })}
                 </motion.section>
                 <motion.h2
@@ -674,34 +682,40 @@ const Page: React.FunctionComponent<any> = ({
                   exit="exit"
                   className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
                   {locationsNotOpenToPublic?.map(({ node: item }) => {
-                    return (
-                      <motion.article
-                        variants={{
-                          initial: { y: -20, opacity: 0 },
-                          exit: { y: 0, opacity: 1 },
-                          enter: { y: 0, opacity: 1 },
-                        }}
-                        className="px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 w-1/3 lg:w-1/4 xl:w-1/4">
-                        <div className="text-center">
-                          <Image
-                            layout="fixed"
-                            src={
-                              item.id === selected?.id
-                                ? '/images/map-icon-active.png'
-                                : '/images/map-icon-inactive.png'
-                            }
-                            width={31}
-                            height={36}
-                            quality={100}
-                            objectFit="cover"
-                            alt={item.title}
-                          />
-                          <h1 className="leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 text-sm md:text-base">
-                            {item.title}
-                          </h1>
-                        </div>
-                      </motion.article>
-                    );
+                    if (
+                      item.locationFields.visibility === true ||
+                      typeof item.locationFields.visibility === 'undefined'
+                    ) {
+                      return (
+                        <motion.article
+                          variants={{
+                            initial: { y: -20, opacity: 0 },
+                            exit: { y: 0, opacity: 1 },
+                            enter: { y: 0, opacity: 1 },
+                          }}
+                          className="px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 w-1/3 lg:w-1/4 xl:w-1/4">
+                          <div className="text-center">
+                            <Image
+                              layout="fixed"
+                              src={
+                                item.id === selected?.id
+                                  ? '/images/map-icon-active.png'
+                                  : '/images/map-icon-inactive.png'
+                              }
+                              width={31}
+                              height={36}
+                              quality={100}
+                              objectFit="cover"
+                              alt={item.title}
+                            />
+                            <h1 className="leading-none transition-all duration-200 mx-auto mx-au text-black font-black group-hover:opacity-80 text-sm md:text-base">
+                              {item.title}
+                            </h1>
+                          </div>
+                        </motion.article>
+                      );
+                    }
+                    return <></>;
                   })}
                 </motion.section>
               </motion.section>
