@@ -131,6 +131,7 @@ interface LocationFields {
   };
   openingHours: string;
   openingSoon: null;
+  visibility: boolean;
 }
 
 interface LatLngLiteral {
