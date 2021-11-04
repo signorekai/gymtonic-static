@@ -86,105 +86,102 @@ const Page: React.FunctionComponent<any> = ({
             filled with encouragement and laughter.
           </h4>
         </motion.div>
-        <div>
-          <motion.h5
-            variants={{
-              initial: { y: -20, opacity: 0 },
-              show: { y: 0, opacity: 1 },
-              exit: { y: -20, opacity: 0 },
-            }}
-            className="font-bold uppercase text-xs mt-8 mb-4 text-center">
-            What they say
-          </motion.h5>
-          <Carousel navBtnPosition="top" navBtnStyle={{}}>
-            <CarouselCard>
-              <div>
-                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                  “One of my clients used to take 6 painkiller pills everyday
-                  for body aches. Now, she takes just 1.”
-                </blockquote>
-                <h2 className="font-bold uppercase text-center text-xs mt-3">
-                  Jason Tan,
-                  <br />
-                  Ageility Lab, PulseSync
-                </h2>
-              </div>
-              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
-                <Image
-                  loading="eager"
-                  src={Coach1}
-                  alt="Coach Jason Tan"
-                  sizes="(min-width: 768px) 360px, 220px"
-                />
-              </div>
-            </CarouselCard>
-            <CarouselCard>
-              <div>
-                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                  “Many seniors worry about getting injured. That’s why we are
-                  here to guide them on the correct techniques.”
-                </blockquote>
-                <h2 className="font-bold uppercase text-center text-xs mt-3">
-                  Looi Yuan Hui,
-                  <br />
-                  Bishan Community Club
-                </h2>
-              </div>
-              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
-                <Image
-                  loading="eager"
-                  src={Coach2}
-                  alt="Coach Looi Yuan Hui"
-                  sizes="(min-width: 768px) 360px, 220px"
-                />
-              </div>
-            </CarouselCard>
-            <CarouselCard>
-              <div>
-                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-[28rem]">
-                  “Improved fitness created new possibilities for many seniors.
-                  Some picked up a new sport or rekindled the love of a sport
-                  they played in their younger days, making new friends as a
-                  result.”
-                </blockquote>
-                <h2 className="font-bold uppercase text-center text-xs mt-3">
-                  Andrew Yeo,
-                  <br />
-                  Peacehaven Bedok Arena
-                </h2>
-              </div>
-              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
-                <Image
-                  loading="eager"
-                  src={Coach3}
-                  alt="Coach Andrew Yeo"
-                  sizes="(min-width: 768px) 360px, 220px"
-                />
-              </div>
-            </CarouselCard>
-            <CarouselCard>
-              <div>
-                <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
-                  “Exercise helps reduce challenging behaviours from seniors
-                  with dementia.”
-                </blockquote>
-                <h2 className="font-bold uppercase text-center text-xs mt-3">
-                  Joseph Chan
-                  <br />
-                  Bishan Community Club
-                </h2>
-              </div>
-              <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
-                <Image
-                  loading="eager"
-                  src={Coach4}
-                  alt="Coach Joseph Chan"
-                  sizes="(min-width: 768px) 360px, 220px"
-                />
-              </div>
-            </CarouselCard>
-          </Carousel>
-        </div>
+        <motion.h5
+          variants={{
+            initial: { y: -20, opacity: 0 },
+            show: { y: 0, opacity: 1 },
+            exit: { y: -20, opacity: 0 },
+          }}
+          className="font-bold uppercase text-xs mt-8 mb-4 text-center">
+          What they say
+        </motion.h5>
+        <Carousel navBtnPosition="top" navBtnStyle={{}}>
+          <CarouselCard>
+            <div>
+              <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “One of my clients used to take 6 painkiller pills everyday for
+                body aches. Now, she takes just 1.”
+              </blockquote>
+              <h2 className="font-bold uppercase text-center text-xs mt-3">
+                Jason Tan,
+                <br />
+                Ageility Lab, PulseSync
+              </h2>
+            </div>
+            <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+              <Image
+                loading="eager"
+                src={Coach1}
+                alt="Coach Jason Tan"
+                sizes="(min-width: 768px) 360px, 220px"
+              />
+            </div>
+          </CarouselCard>
+          <CarouselCard>
+            <div>
+              <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “Many seniors worry about getting injured. That’s why we are
+                here to guide them on the correct techniques.”
+              </blockquote>
+              <h2 className="font-bold uppercase text-center text-xs mt-3">
+                Looi Yuan Hui,
+                <br />
+                Bishan Community Club
+              </h2>
+            </div>
+            <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+              <Image
+                loading="eager"
+                src={Coach2}
+                alt="Coach Looi Yuan Hui"
+                sizes="(min-width: 768px) 360px, 220px"
+              />
+            </div>
+          </CarouselCard>
+          <CarouselCard>
+            <div>
+              <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-[28rem]">
+                “Improved fitness created new possibilities for many seniors.
+                Some picked up a new sport or rekindled the love of a sport they
+                played in their younger days, making new friends as a result.”
+              </blockquote>
+              <h2 className="font-bold uppercase text-center text-xs mt-3">
+                Andrew Yeo,
+                <br />
+                Peacehaven Bedok Arena
+              </h2>
+            </div>
+            <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+              <Image
+                loading="eager"
+                src={Coach3}
+                alt="Coach Andrew Yeo"
+                sizes="(min-width: 768px) 360px, 220px"
+              />
+            </div>
+          </CarouselCard>
+          <CarouselCard>
+            <div>
+              <blockquote className="text-center text-sm leading-none md:text-lg md:leading-tight mx-auto max-w-xs md:max-w-sm">
+                “Exercise helps reduce challenging behaviours from seniors with
+                dementia.”
+              </blockquote>
+              <h2 className="font-bold uppercase text-center text-xs mt-3">
+                Joseph Chan
+                <br />
+                Bishan Community Club
+              </h2>
+            </div>
+            <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
+              <Image
+                loading="eager"
+                src={Coach4}
+                alt="Coach Joseph Chan"
+                sizes="(min-width: 768px) 360px, 220px"
+              />
+            </div>
+          </CarouselCard>
+        </Carousel>
       </motion.section>
       <div className="fixed bottom-5 right-5 z-40">
         <SignUpBtn
