@@ -261,8 +261,8 @@ const Page: React.FunctionComponent<any> = ({
             Equipment that can help you
           </motion.h2>
         </div>
-        <Carousel navBtnPosition="center" className="mb-6">
-          <CarouselCard className="lg:pt-12">
+        <Carousel repeat={0} navBtnPosition="center" className="mb-6">
+          <CarouselCard>
             <TechCard
               headerSrc={TechHeader1}
               title="Stand up for Singapore"
