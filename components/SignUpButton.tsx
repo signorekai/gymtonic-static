@@ -53,6 +53,7 @@ const SignUpBtn = ({
         <div
           className={`${btnStyle !== 'default' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
+            className="scale-[1.05] origin-center"
             unoptimized
             loading="eager"
             src={src}
@@ -63,6 +64,7 @@ const SignUpBtn = ({
         <div
           className={`${btnStyle !== 'mobile' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
+            className="scale-[1.05] origin-center"
             unoptimized
             loading="eager"
             src={mobileSrc}
@@ -72,6 +74,7 @@ const SignUpBtn = ({
         </div>
         <div className={`${btnStyle !== 'hover' ? 'hidden' : ''} bg-no-repeat`}>
           <Image
+            className="scale-[1.05] origin-center"
             loading="eager"
             unoptimized
             src={hoverSrc}
