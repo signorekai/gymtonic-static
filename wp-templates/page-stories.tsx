@@ -23,12 +23,16 @@ import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
 
 const storiesQuery = gql`
   {
-    stories(where: { orderby: { field: TITLE, order: ASC } }) {
+    stories(
+      where: { orderby: { field: MENU_ORDER, order: ASC } }
+      first: 1000
+    ) {
       edges {
         node {
           id
           title
           uri
+          slug
           featuredImage {
             node {
               id

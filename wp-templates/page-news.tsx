@@ -20,7 +20,10 @@ import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
 
 const query = gql`
   {
-    pressReleases(where: { orderby: { field: DATE, order: DESC } }) {
+    pressReleases(
+      where: { orderby: { field: DATE, order: DESC } }
+      first: 1000
+    ) {
       edges {
         node {
           title
@@ -34,7 +37,10 @@ const query = gql`
         }
       }
     }
-    mediaCoverages(where: { orderby: { field: DATE, order: DESC } }) {
+    mediaCoverages(
+      where: { orderby: { field: DATE, order: DESC } }
+      first: 1000
+    ) {
       edges {
         node {
           id
