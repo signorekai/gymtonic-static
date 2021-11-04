@@ -168,7 +168,7 @@ const TechCard = ({
                 transformOrigin: 'bottom center',
               },
             }}
-            className="w-2/3 md:w-1/3 lg:w-2/3 xl:w-1/2 absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
+            className="w-2/3 md:w-1/3 lg:w-2/3 xl:w-1/3 max-w-[14rem] absolute bottom-12 rounded-md text-red bg-pink font-bold leading-none text-sm p-4 mt-3">
             {children}
           </motion.div>
         )}
