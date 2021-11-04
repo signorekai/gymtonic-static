@@ -25,7 +25,8 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
-import SignupFooterBtnSrc from 'assets/images/SignUpButtons-7.png';
+import SignupFooterBtnSrc from 'assets/images/SignUpButtons-7-1.png';
+import SignupFooterBtnHoverSrc from 'assets/images/SignUpButtons-7-2.png';
 import SignupFooterBtnMobileSrc from 'assets/images/SignUpButtons-Small-7.png';
 import SignupFooterExtraSrc from 'assets/images/signup-here.png';
 
@@ -153,6 +154,7 @@ const Page: React.FunctionComponent<any> = ({
           setShowReminder(false);
           setShowMenuBtn(true);
         } else {
+          setShowFooterBtn(false);
           setShowMenuBtn(true);
           setShowReminder(true);
           collapsed.current = false;
@@ -406,7 +408,9 @@ const Page: React.FunctionComponent<any> = ({
               mobileSrc={
                 showFooterBtn ? SignupFooterBtnMobileSrc : SignupBtnMobileSrc
               }
-              hoverSrc={showFooterBtn ? SignupFooterBtnSrc : SignupBtnHoverSrc}
+              hoverSrc={
+                showFooterBtn ? SignupFooterBtnHoverSrc : SignupBtnHoverSrc
+              }
             />
           </motion.div>
         )}
