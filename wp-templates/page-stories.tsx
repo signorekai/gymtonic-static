@@ -73,6 +73,7 @@ interface StoryNode {
   id: string;
   title: string;
   uri: string;
+  slug: string;
   featuredImage: {
     node: {
       id: string;
@@ -194,9 +195,27 @@ const Page: React.FunctionComponent<any> = ({
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
           {stories?.map(({ node: story }) => (
             <Bubble
-              handler={() => {
+              id={story.slug}
+              href={`#${story.slug}`}
+              handler={(event: MouseEvent) => {
+                event.preventDefault();
                 setSelectedStory(story);
                 setExpanded(true);
+
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                const bubble = event.currentTarget;
+
+                if (bubble instanceof Element && window.innerWidth >= 1024) {
+                  setTimeout(() => {
+                    const parent = bubble.parentElement;
+                    if (parent !== null)
+                      window.scrollTo({
+                        top: parent.offsetTop,
+                        behavior: 'smooth',
+                      });
+                  }, 250);
+                }
+
                 path.current = story.uri;
               }}
               borderColor={selectedStory?.id === story.id ? 'red' : 'white'}
