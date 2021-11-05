@@ -20,7 +20,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           Gym Tonic is known affectionately as the “Uncle Auntie Gym” – designed
           specially for our Pioneer and Merdeka Generations.
         </h5>
-        <h5 className="text-center text-2xl md:text-5xl leading-tighter font-black">
+        <h5 className="text-center text-2xl md:text-5xl leading-tighter font-black relative z-30">
           It is{' '}
           <Link href="/research" scroll={false}>
             <a className="about-link">
@@ -28,11 +28,11 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
             </a>
           </Link>{' '}
           to help seniors get stronger even as they get
-          <span className="float-left align-top -mr-2 lg:mr-12 xl:-mr-4 lg:-ml-8 xl:ml-0 translate-x-0 md:translate-x-8 lg:translate-x-12 leading-0">
+          <span className="float-left align-top -mr-2 lg:mr-12 xl:-mr-4 lg:-ml-8 xl:ml-0 translate-x-0 md:translate-x-8 lg:translate-x-12 leading-0 z-20">
             <Image
               src="/images/steps.gif"
-              width={window.innerWidth < 768 ? 24.5 : 41}
-              height={window.innerWidth < 768 ? 52 : 87}
+              width={window.innerWidth < 768 ? 24.5 : 51.5}
+              height={window.innerWidth < 768 ? 52 : 110}
               alt=""
             />
           </span>{' '}
@@ -48,7 +48,8 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
               <span>high-tech</span>
             </a>
           </Link>
-          <Image
+          <img
+            className="-ml-2"
             src="/images/screen.png"
             width={window.innerWidth < 768 ? 53 : 85}
             height={window.innerWidth < 768 ? 25 : 40}
