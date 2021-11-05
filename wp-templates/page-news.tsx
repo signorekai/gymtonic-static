@@ -391,7 +391,7 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="show"
               exit="exit"
-              className={`flex flex-col lg:min-h-screen lg:pt-22 lg:pb-12 ${
+              className={`flex flex-col lg:min-h-screen lg:pt-22 lg:pb-12 lg:mx-1/20 ${
                 (selected.featuredImage === null &&
                   selected.moreDetails.articlePhoto?.sourceUrl === null) ||
                 selected.moreDetails.showPhoto === null
