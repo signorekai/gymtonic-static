@@ -53,6 +53,9 @@ const storiesQuery = gql`
                 id
                 uri
                 title
+                locationFields {
+                  visibility
+                }
               }
             }
           }

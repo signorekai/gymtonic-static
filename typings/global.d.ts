@@ -74,6 +74,9 @@ interface Gym {
   id: string;
   uri: string;
   title: string;
+  locationFields: {
+    visibility: boolean;
+  };
 }
 
 interface ILocation {
