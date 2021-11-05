@@ -168,8 +168,8 @@ const Page: React.FunctionComponent<any> = ({
       </header>
       <section
         className={`transition-all duration-200 order-2 lg:order-1 w-full md:min-h-screen ${
-          expanded ? 'lg:w-3/10' : 'lg:w-1/2'
-        } pt-8 md:pt-14 lg:pt-14 text-center z-20 flex flex-col justify-between`}>
+          expanded ? 'lg:w-3/10 md:pt-24' : 'lg:w-1/2 md:pt-40'
+        } pt-8 lg:pt-14 text-center z-20 flex flex-col justify-between`}>
         <motion.section
           variants={{
             initial: { opacity: 0, y: -20 },
@@ -182,7 +182,7 @@ const Page: React.FunctionComponent<any> = ({
           className="relative max-w-2xl md:w-10/12 h-auto mx-auto flex flex-row flex-wrap justify-center md:justify-start lg:pt-0 md:flex-last-item-align-start">
           <button
             type="button"
-            className={`hover:cursor-pointer block w-full md:mt-20 ${
+            className={`hover:cursor-pointer hidden lg:block w-full md:mt-20 ${
               expanded ? 'mb-4 lg:mb-8' : 'mb-20 lg:mb-8'
             }`}
             onClick={() => {
