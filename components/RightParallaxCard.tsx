@@ -10,7 +10,8 @@ const RightParallaxCard = ({
   className = 'bg-red text-white',
   headerTitle,
   videoSrc,
-  videoClassName,
+  videoClassName = '',
+  videoContainerClassName = '',
   paragraph,
   link,
   href,
@@ -20,7 +21,8 @@ const RightParallaxCard = ({
   className?: string;
   headerTitle: string;
   videoSrc: string;
-  videoClassName: string;
+  videoClassName?: string;
+  videoContainerClassName?: string;
   paragraph: string;
   link: string;
   href: string;
@@ -52,7 +54,7 @@ const RightParallaxCard = ({
         {visible && (
           <>
             <div
-              className={`relative flex flex-col justify-center items-center ${videoClassName}`}>
+              className={`relative flex flex-col justify-center items-center ${videoContainerClassName}`}>
               <motion.h1
                 variants={{
                   show: {
@@ -82,7 +84,7 @@ const RightParallaxCard = ({
                 muted
                 loop
                 src={videoSrc}
-                className="w-auto h-auto max-w-full max-h-full relative z-0">
+                className={`w-auto h-auto max-w-full max-h-full relative z-0 ${videoClassName}`}>
                 <source src={videoSrc} type="video/mp4" />
               </video>
             </div>

@@ -32,17 +32,6 @@ import SignupFooterExtraSrc from 'assets/images/signup-here.png';
 
 const heightOfScroller = 4;
 
-/**
- * Example of post variables to query the first six posts in a named category.
- * @see https://github.com/wpengine/headless-framework/tree/canary/docs/queries
- */
-const firstSixInCategory = {
-  variables: {
-    first: 6,
-    where: { categoryName: 'uncategorized' }, // Omit this to get posts from all categories.
-  },
-};
-
 const LeftCard = ({
   src,
   url,
@@ -275,14 +264,15 @@ const Page: React.FunctionComponent<any> = ({
           className="lg:w-1/2 snap-end"
           headerTitle="Ka-Ching!"
           videoSrc="/videos/Thematic-2-KaChing.mp4"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-24"
+          videoContainerClassName="w-full lg:mt-28"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
           paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know growing old can be expensive. Here’s a cheaper way."
           href="/about"
           link="What is Gym Tonic?"
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4 lg:mt-12"
+          videoContainerClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4 lg:mt-12"
           videoSrc="/videos/Thematic-3-Kakis.mp4"
           headerTitle="Kakis"
           paragraph="Help Pa and Ma make new friends."
@@ -291,7 +281,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5 lg:mt-20"
+          videoContainerClassName="w-full lg:mt-16"
+          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
           videoSrc="/videos/Thematic-4-Boleh.mp4"
           headerTitle="Boleh"
           paragraph="To continue doing the things you love, you have to stay physically strong."
@@ -300,7 +291,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5 lg:mt-26"
+          videoContainerClassName="w-full lg:mt-24"
+          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
           videoSrc="/videos/Thematic-5-Huat.mp4"
           headerTitle="Huat!"
           paragraph="4,000 seniors at almost 30 eldercare facilities have become stronger. See how they did it."
@@ -309,7 +301,7 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5 lg:mt-20"
+          videoContainerClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5 lg:mt-20"
           videoSrc="/videos/Thematic-6-Kilat.mp4"
           headerTitle="Kilat!"
           paragraph="State-of-the-art hydraulic and pneumatic equipment from Germany and Finland."
@@ -318,7 +310,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5 lg:mt-20"
+          videoContainerClassName="lg:mt-20 w-full"
+          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
           videoSrc="/videos/Thematic-7-Pro.mp4"
           headerTitle="Pro"
           paragraph="Exercise trainers who will guide you every step of the way."
