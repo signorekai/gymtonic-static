@@ -86,6 +86,7 @@ const query = gql`
               }
               openingHours
               openingSoon
+              visibility
             }
             terms {
               nodes {
