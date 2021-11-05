@@ -109,7 +109,7 @@ const text: {
     signUpForMyself: '我为自己报名',
     signUpForSomeoneElse: '我为别人报名',
     submit: '发送',
-    shareText: '',
+    shareText: 'I just signed up for this gym. Who wants to join me?',
     linkCopied: '网页链接已复制',
     invite: '邀请你的朋友一起健力!',
     success: `<p>
@@ -139,7 +139,7 @@ const text: {
     signUpForMyself: 'Saya mendaftar untuk saya sendiri',
     signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
     submit: 'Hantar',
-    shareText: '',
+    shareText: 'I just signed up for this gym. Who wants to join me?',
     linkCopied: 'Pilih satu',
     invite: 'Bawa kawan-kawan anda',
     success: `<p>
@@ -168,7 +168,7 @@ const text: {
     signUpForMyself: 'நான் எனக்காக பதிவு செய்கிறேன்',
     signUpForSomeoneElse: 'நான் வேறொருவருக்காக பதிவு செய்கிறேன்',
     submit: 'சமர்ப்பிக்கவும்',
-    shareText: '',
+    shareText: 'I just signed up for this gym. Who wants to join me?',
     linkCopied: 'இணைப்பு நகலெடுக்கப்பட்டது!',
     invite: 'உங்கள்நண்பரக்ளளஅளைக்கவும்',
     success: `<p>
