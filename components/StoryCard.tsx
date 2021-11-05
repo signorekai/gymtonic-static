@@ -71,7 +71,11 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
             </h2>
             {gym && (
               <GymLink
-                href={gym.uri}
+                href={
+                  gym.locationFields.visibility === true
+                    ? gym.uri
+                    : '/locations'
+                }
                 text={gym.title}
                 linkStyle="white"
                 type="inline"
