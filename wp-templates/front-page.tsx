@@ -242,17 +242,17 @@ const Page: React.FunctionComponent<any> = ({
             <LeftCard
               src={Gym4}
               url="/location/care-corner-community-hub/"
-              linkText="Care Corner Community Hub,<br/>Woodlands"
+              linkText="Care Corner Wood Square, Woodlands"
             />
             <LeftCard
               src={Gym5}
               url="/location/blossom-seeds/"
-              linkText="Blossom Seeds"
+              linkText="Blossom Seeds, Canberra"
             />
             <LeftCard
               src={Gym6}
               url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
-              linkText="Tzu Chi Foundation Nanyang,<br/>Jurong West"
+              linkText="Tzu Chi Foundation Singapore, Seen, Jurong West"
             />
           </motion.div>
           <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
@@ -264,8 +264,8 @@ const Page: React.FunctionComponent<any> = ({
           className="lg:w-1/2 snap-end"
           headerTitle="Ka-Ching!"
           videoSrc="/videos/Thematic-2-KaChing.mp4"
-          videoContainerClassName="w-full lg:mt-28"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
+          videoContainerClassName="w-full lg:mt-28 max-h-1/2 lg:max-h-none"
+          videoClassName="lg:max-w-2/5"
           paragraph="Hospital visits. Medication. Wheelchairs and domestic helpers. We know growing old can be expensive. Here’s a cheaper way."
           href="/about"
           link="What is Gym Tonic?"
@@ -281,8 +281,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoContainerClassName="w-full lg:mt-16"
-          videoClassName="max-h-1/2 lg:max-h-none lg:max-w-2/5"
+          videoContainerClassName="w-full lg:mt-16 max-h-1/2 lg:max-h-none "
+          videoClassName="lg:max-w-2/5"
           videoSrc="/videos/Thematic-4-Boleh.mp4"
           headerTitle="Boleh"
           paragraph="To continue doing the things you love, you have to stay physically strong."
@@ -291,8 +291,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoContainerClassName="w-full lg:mt-24"
-          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+          videoContainerClassName="w-full lg:mt-24 max-h-3/5 lg:max-h-none"
+          videoClassName="lg:max-w-2/5"
           videoSrc="/videos/Thematic-5-Huat.mp4"
           headerTitle="Huat!"
           paragraph="4,000 seniors at almost 30 eldercare facilities have become stronger. See how they did it."
@@ -310,8 +310,8 @@ const Page: React.FunctionComponent<any> = ({
         />
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
-          videoContainerClassName="lg:mt-20 w-full"
-          videoClassName="max-h-3/5 lg:max-h-none lg:max-w-2/5"
+          videoContainerClassName="lg:mt-20 w-full max-h-3/5 lg:max-h-none "
+          videoClassName="lg:max-w-2/5"
           videoSrc="/videos/Thematic-7-Pro.mp4"
           headerTitle="Pro"
           paragraph="Exercise trainers who will guide you every step of the way."
