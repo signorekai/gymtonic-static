@@ -185,8 +185,37 @@ export default function VideoScroller({
     //     }
     //   };
 
+    const handleScroll = () => {
+      if (container.current) {
+        const scrollYProgress =
+          container.current.scrollTop /
+          container.current.scrollHeight /
+          (height / (height + 7));
+
+        const rawFrame = Math.round(
+          (scrollYProgress * totalFrames) / (1 / height),
+        );
+
+        let currentFrame =
+          rawFrame > totalFrames ? rawFrame % totalFrames : rawFrame;
+
+        if (rawFrame > totalFrames * (height - 1)) {
+          currentFrame = totalFrames;
+        }
+
+        if (isMobile === false) {
+          tryToFitImageOn(videoFrames[currentFrame], canvasRef);
+        }
+      }
+    };
+
+    if (container.current) {
+      container.current.addEventListener('scroll', handleScroll);
+    }
+    handleScroll();
+
     const handleResize = () => {
-      // console.log('handling resize');
+      console.log('handling resize');
       const canvasWidth =
         (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
 
@@ -218,42 +247,15 @@ export default function VideoScroller({
           },
         });
       }
-      // handleScroll();
+      handleScroll();
     };
     handleResize();
-
-    const handleScroll = () => {
-      if (container.current) {
-        const scrollYProgress =
-          container.current.scrollTop /
-          container.current.scrollHeight /
-          (height / (height + 7));
-
-        const rawFrame = Math.round(
-          (scrollYProgress * totalFrames) / (1 / height),
-        );
-
-        let currentFrame =
-          rawFrame > totalFrames ? rawFrame % totalFrames : rawFrame;
-
-        if (rawFrame > totalFrames * (height - 1)) {
-          currentFrame = totalFrames;
-        }
-
-        if (isMobile === false) {
-          tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-        }
-      }
-    };
-
-    if (container.current) {
-      container.current.addEventListener('scroll', handleScroll);
-    }
-    handleScroll();
+    window.addEventListener('resize', handleResize);
 
     const currentContainer = container.current;
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       if (currentContainer) {
         currentContainer.removeEventListener('scroll', handleScroll);
       }
