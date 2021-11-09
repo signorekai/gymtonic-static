@@ -534,6 +534,7 @@ const Page: React.FunctionComponent<any> = ({
                     enter: { y: 0, opacity: 1 },
                   }}>
                   <Carousel
+                    className="relative"
                     navBtnStyle={{
                       position: 'absolute',
                       top: '-3.25rem',
