@@ -29,9 +29,11 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
           </Link>{' '}
           to help seniors get stronger even as they get
           <span className="float-left align-top -mr-2 lg:mr-12 xl:-mr-4 lg:-ml-8 xl:ml-0 translate-x-0 md:translate-x-8 lg:translate-x-12 leading-0 z-20">
-            <Image
+            {/* .519480519 */}
+            <img
               src="/images/steps.gif"
-              width={window.innerWidth < 768 ? 24.5 : 51.5}
+              className="-mt-1"
+              width={window.innerWidth < 768 ? 24.5 : 57}
               height={window.innerWidth < 768 ? 52 : 110}
               alt=""
             />
@@ -49,18 +51,18 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
             </a>
           </Link>
           <img
-            className="-ml-2"
+            className="inline-block align-text-top"
             src="/images/screen.png"
-            width={window.innerWidth < 768 ? 53 : 85}
-            height={window.innerWidth < 768 ? 25 : 40}
+            width={window.innerWidth < 1024 ? 53 : 85}
+            height={window.innerWidth < 1024 ? 25 : 40}
             alt=""
           />{' '}
           equipment and coaches{' '}
           <img
             className="inline-block align-text-top"
             src="/images/coach-animated.gif"
-            width={window.innerWidth < 768 ? 40 : 70}
-            height={window.innerWidth < 768 ? 73.5 : 128.625}
+            width={window.innerWidth < 1024 ? 40 : 70}
+            height={window.innerWidth < 1024 ? 73.5 : 128.625}
             alt=""
           />
           who{' '}
