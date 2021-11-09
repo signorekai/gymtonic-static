@@ -123,7 +123,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
           dangerouslySetInnerHTML={{ __html: subtitle }}
         />
         <h1
-          className={`leading-none transition-all duration-200 mx-auto mx-au text-black bubble__title font-black group-hover:opacity-80 ${titleClassName}`}>
+          className={`leading-tighter transition-all duration-200 mx-auto mx-au text-black bubble__title font-black group-hover:opacity-80 ${titleClassName}`}>
           {title}
         </h1>
       </BubbleLink>
