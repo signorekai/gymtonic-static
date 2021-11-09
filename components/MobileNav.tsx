@@ -137,7 +137,7 @@ const MobileNav: React.FunctionComponent<{
                   }}
                   key={`${node.id}`}
                   className="text-5xl md:text-8xl leading-snug px-4 text-red font-black pointer-events-auto">
-                  <Link href={node.path} scroll={false}>
+                  <Link href={node.path}>
                     <a
                       role="link"
                       tabIndex={index}
