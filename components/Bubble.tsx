@@ -93,7 +93,7 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
   return (
     <article
       id={id}
-      className={`bubble px-4 pb-8 md:pb-12 flex flex-col justify-center group z-20 relative ${className}`}>
+      className={`bubble px-4 pb-8 md:pb-12 flex flex-col justify-center md:justify-start group z-20 relative ${className}`}>
       <BubbleLink href={href} clickHandler={clickHandler}>
         {thumbnail && (
           <div
