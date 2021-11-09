@@ -171,8 +171,10 @@ const Page: React.FunctionComponent<any> = ({
       </header>
       <section
         className={`transition-all duration-200 order-2 lg:order-1 w-full md:min-h-screen ${
-          expanded ? 'lg:w-3/10 md:pt-24' : 'lg:w-1/2 md:pt-40'
-        } pt-8 lg:pt-14 text-center z-20 flex flex-col justify-between`}>
+          expanded
+            ? 'lg:w-3/10 pt-8 md:pt-14 lg:pt-14'
+            : 'lg:w-1/2 pt-28 md:pt-40 lg:pt-14'
+        } text-center z-20 flex flex-col justify-between`}>
         <motion.section
           variants={{
             initial: { opacity: 0, y: -20 },
@@ -224,8 +226,8 @@ const Page: React.FunctionComponent<any> = ({
               borderColor={selectedStory?.id === story.id ? 'red' : 'white'}
               className={
                 expanded
-                  ? 'w-full md:w-1/3 lg:w-full'
-                  : 'w-full md:w-1/3 lg:w-1/2 xl:w-1/3'
+                  ? 'w-1/2 md:w-1/3 lg:w-full'
+                  : 'w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3'
               }
               titleClassName={`${expanded ? 'md:max-w-1/2' : ''} text-base`}
               title={story.storyFields.videoTitle}
