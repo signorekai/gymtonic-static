@@ -12,7 +12,7 @@ const AboutCard = ({ hideOnMobile = false }: Props): JSX.Element => {
       className={`order-2 lg:order-1 w-full lg:w-1/2 pt-8 md:pt-16 lg:pt-28 lg:min-h-screen flex flex-col justify-between ${
         hideOnMobile ? 'hidden lg:block' : ''
       }`}>
-      <div className="w-full max-w-xl xl:max-w-2xl px-8 md:px-4 lg:px-2 xl:px-8 mx-auto">
+      <div className="w-full max-w-xl xl:max-w-2xl px-8 md:px-4 lg:px-8 xl:px-8 mx-auto">
         <h1 className="text-2xl leading-none text-red font-black text-center mb-6 md:mb-12">
           About
         </h1>
