@@ -123,7 +123,7 @@ const MobileNav: React.FunctionComponent<{
                 show: { opacity: 1, x: 0 },
               }}
               className="text-5xl md:text-8xl leading-snug px-4 text-red font-black pointer-events-auto">
-              <Link href="/" scroll={false}>
+              <Link href="/">
                 <a>Home</a>
               </Link>
             </motion.li>

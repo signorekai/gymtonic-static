@@ -104,7 +104,7 @@ const RightParallaxCard = ({
               {paragraph}
             </motion.p>
             <div className="absolute flex flex-row items-start bottom-7 left-0 w-full">
-              <Link href={href} scroll={false} passHref>
+              <Link href={href} passHref>
                 <motion.a
                   variants={{
                     show: {

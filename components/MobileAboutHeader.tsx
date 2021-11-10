@@ -20,7 +20,7 @@ const AboutLink = ({
   };
 
   return (
-    <Link href={href} scroll={false}>
+    <Link href={href}>
       <a className={`about-link--mobile ${isCurrent(href) ? 'text-red' : ''}`}>
         {children}
       </a>
@@ -38,7 +38,7 @@ const MobileAboutHeader = ({
       className={`bg-white order-1 lg:hidden lg:order-1 w-full lg:w-1/2 pt-14 pb-6 mt-10 ${
         isSticky ? 'sticky z-30' : 'z-10'
       } top-0`}>
-      <Link href="/about" scroll={false}>
+      <Link href="/about">
         <h1 className="text-2xl md:text-5xl leading-none text-red font-black text-center mb-6">
           About
         </h1>

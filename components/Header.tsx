@@ -150,7 +150,7 @@ function Header({
                       <li
                         key={`${node.id}`}
                         className="px-4 font-black hidden lg:list-item xl:list-item menu-item pointer-events-auto">
-                        <Link href={node.path} scroll={false}>
+                        <Link href={node.path}>
                           <a className="after:scale-x-0">{node.label}</a>
                         </Link>
                       </li>
@@ -186,7 +186,7 @@ function Header({
                     <li
                       key={`${node.id}`}
                       className="px-4 font-black menu-item">
-                      <Link href={node.path} scroll={false}>
+                      <Link href={node.path}>
                         <a
                           className={`${
                             isCurrent(node.path.slice(0, -1))
