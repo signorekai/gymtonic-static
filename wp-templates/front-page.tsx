@@ -71,6 +71,7 @@ const Page: React.FunctionComponent<any> = ({
   setShowLoader,
   setShowSignUpForm,
   setScrolledHeader,
+  setShowHeader,
 }: WithMobileNavProps &
   WithLayoutProps &
   WithLoaderProps &
@@ -107,6 +108,7 @@ const Page: React.FunctionComponent<any> = ({
           scrollYProgress > parallaxLowerBound &&
           scrollYProgress <= parallaxUpperBound
         ) {
+          // parallax cards
           if (showReminder === false) setShowReminder(true);
           if (showBtn === true) setShowBtn(false);
           if (showFooterBtn === true) setShowFooterBtn(false);
@@ -143,6 +145,7 @@ const Page: React.FunctionComponent<any> = ({
           setShowReminder(false);
           setShowMenuBtn(true);
         } else {
+          // header
           setShowFooterBtn(false);
           setShowMenuBtn(true);
           setShowReminder(true);
@@ -242,17 +245,17 @@ const Page: React.FunctionComponent<any> = ({
             <LeftCard
               src={Gym4}
               url="/location/care-corner-community-hub/"
-              linkText="Care Corner Wood Square, Woodlands"
+              linkText="Care Corner Wood Square,<br/>Woodlands"
             />
             <LeftCard
               src={Gym5}
               url="/location/blossom-seeds/"
-              linkText="Blossom Seeds, Canberra"
+              linkText="Blossom Seeds,<br/>Canberra"
             />
             <LeftCard
               src={Gym6}
               url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
-              linkText="Tzu Chi Foundation Singapore, Seen, Jurong West"
+              linkText="Tzu Chi Foundation Singapore, Seen,<br/>Jurong West"
             />
           </motion.div>
           <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
