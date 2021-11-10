@@ -18,6 +18,7 @@ interface WithLayoutProps {
   showLoader: boolean;
   setShowLoader: (arg0: boolean) => void;
   setShowMobileNav: (arg0: boolean) => void;
+  setShowHeader: (arg0: boolean) => void;
   appRef: React.RefObject<HTMLDivElement>;
 }
 
