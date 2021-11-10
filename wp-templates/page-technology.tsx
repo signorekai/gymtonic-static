@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 
 import AboutCard from 'components/AboutCard';
@@ -242,11 +242,27 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setShowSignUpForm,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
+  const scrollProgress = useRef(0);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
-  }, [setScrolledHeader, setShowLoader]);
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [setScrolledHeader, setShowLoader, setShowHeader]);
 
   return (
     <main className="flex flex-col lg:flex-row relative items-start min-h-screen page-about">

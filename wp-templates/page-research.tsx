@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
@@ -139,13 +139,29 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setShowSignUpForm,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
+  const scrollProgress = useRef(0);
 
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

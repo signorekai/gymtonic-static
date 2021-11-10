@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
 import { getNextStaticProps } from '@wpengine/headless/next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GetStaticPropsContext } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -158,6 +158,7 @@ const Page: React.FunctionComponent<any> = ({
   setShowLoader,
   setMobileNavBtnStyle,
   setShowSignUpForm,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
@@ -166,6 +167,7 @@ const Page: React.FunctionComponent<any> = ({
   const { data }: QueryData = useQuery(query);
   const press = data?.pressReleases.edges;
   const media = data?.mediaCoverages.edges;
+  const scrollProgress = useRef(0);
 
   const mediaAnimationControl = useAnimation();
 
@@ -188,6 +190,21 @@ const Page: React.FunctionComponent<any> = ({
       const newSelected = formatSelected(media[0].node);
       setSelected(newSelected);
     }
+
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

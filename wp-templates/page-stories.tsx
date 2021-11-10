@@ -105,12 +105,14 @@ const Page: React.FunctionComponent<any> = ({
   setShowLoader,
   setShowMobileNav,
   setShowSignUpForm,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
   const { data }: { data: StoriesData | undefined } = useQuery(storiesQuery);
   const stories = data?.stories.edges;
 
   const router = useRouter();
   const path = useRef<string>(router.asPath);
+  const scrollProgress = useRef(0);
 
   const [selectedStory, setSelectedStory] = useState<StoryNode>();
   const [expanded, setExpanded] = useState(false);
@@ -131,6 +133,20 @@ const Page: React.FunctionComponent<any> = ({
         path.current = current.node.uri;
       }
     }
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

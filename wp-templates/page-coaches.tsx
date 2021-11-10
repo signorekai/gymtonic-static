@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 import withLayout from 'components/Layout';
@@ -25,10 +25,26 @@ const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
   setShowLoader,
   setShowSignUpForm,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
+  const scrollProgress = useRef(0);
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

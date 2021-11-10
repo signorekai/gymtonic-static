@@ -2,7 +2,13 @@
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
 import { getNextStaticProps, useUriInfo } from '@wpengine/headless/next';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { AnimatePresence, motion, useAnimation } from 'framer-motion';
 import { GetStaticPropsContext } from 'next';
 import { find } from 'lodash';
@@ -162,6 +168,7 @@ const Page: React.FunctionComponent<any> = ({
   setShowLoader,
   setShowSignUpForm,
   setMobileNavBtnStyle,
+  setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
   useEffect(() => {
     setShowLoader(false);
@@ -230,6 +237,7 @@ const Page: React.FunctionComponent<any> = ({
     [mapContainerControls],
   );
 
+  const scrollProgress = useRef(0);
   useEffect(() => {
     window.dispatchEvent(new Event('resize'));
 
@@ -259,7 +267,18 @@ const Page: React.FunctionComponent<any> = ({
 
     window.addEventListener('popstate', listener);
 
+    const handleScroll = () => {
+      if (scrollProgress.current < window.scrollY) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+
+      scrollProgress.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('popstate', listener);
     };
 
