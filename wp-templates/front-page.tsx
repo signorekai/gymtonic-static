@@ -364,8 +364,23 @@ const Page: React.FunctionComponent<any> = ({
               translateX: '-50%',
             }}
             className="fixed left-1/2 text-sm z-40 bottom-3 text-white flex flex-row justify-center">
-            <motion.div
+            <motion.button
               className="flex flex-col items-center"
+              onClick={() => {
+                const progress = scroll.scrollYProgress.get();
+                if (progress < 0.4) {
+                  container.current?.scrollTo({
+                    top: container.current?.offsetHeight * 4,
+                    behavior: 'smooth',
+                  });
+                } else if (progress <= 0.9) {
+                  container.current?.scrollTo({
+                    top:
+                      container.current?.offsetHeight * ((progress + 0.1) * 10),
+                    behavior: 'smooth',
+                  });
+                }
+              }}
               initial={{ translateY: 0 }}
               animate={{ translateY: [0, -5, 0] }}
               transition={{
@@ -374,7 +389,7 @@ const Page: React.FunctionComponent<any> = ({
               }}>
               <span className="hidden lg:inline">Scroll</span>
               <img src="images/down-arrow.svg" alt="" />
-            </motion.div>
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
