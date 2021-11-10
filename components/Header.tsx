@@ -41,6 +41,7 @@ interface Props {
   setShowMobileNav(arg0: boolean): void;
   mobileNavBtnstyle: string;
   mobileNavBtnInHeader: boolean;
+  showHeader?: boolean;
 }
 
 function Header({
@@ -52,6 +53,7 @@ function Header({
   setShowMobileNav,
   mobileNavBtnstyle,
   mobileNavBtnInHeader,
+  showHeader = true,
 }: Props): JSX.Element {
   const menu = useQuery(menuQuery);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
@@ -128,93 +130,102 @@ function Header({
       </Head>
       <WPHead />
       <AnimatePresence>
-        {!scrolled && (
-          <motion.header
-            initial={{ translateY: '-100%' }}
+        {showHeader && (
+          <motion.div
+            initial={{ translateY: 0 }}
             animate={{ translateY: 0 }}
-            exit={{ translateY: '-100%' }}
-            transition={{
-              duration: noAnimation ? 0 : 0.35,
-              ease: [0.175, 0.85, 0.42, 0.96],
-            }}
-            className="fixed top-0 l-0 w-full z-30 text-white"
-            ref={selfRef}>
-            <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
-              <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
-                {menuItems.map(({ node }: MenuData, index: number) => {
-                  return (
-                    <>
-                      {Math.floor(menuItems.length / 2) === index && (
-                        <Logo className="mx-3" />
+            exit={{ translateY: '-100%' }}>
+            <AnimatePresence>
+              {!scrolled && (
+                <motion.header
+                  initial={{ translateY: '-100%' }}
+                  animate={{ translateY: 0 }}
+                  exit={{ translateY: '-100%' }}
+                  transition={{
+                    duration: noAnimation ? 0 : 0.35,
+                    ease: [0.175, 0.85, 0.42, 0.96],
+                  }}
+                  className="fixed top-0 l-0 w-full z-30 text-white"
+                  ref={selfRef}>
+                  <div className="flex flex-col md:flex-row justify-center items-center mx-auto p-10 pointer-events-none">
+                    <ul className="flex flex-row text-center items-center antialiased pointer-events-none">
+                      {menuItems.map(({ node }: MenuData, index: number) => {
+                        return (
+                          <>
+                            {Math.floor(menuItems.length / 2) === index && (
+                              <Logo className="mx-3" />
+                            )}
+                            <li
+                              key={`${node.id}`}
+                              className="px-4 font-black hidden lg:list-item xl:list-item menu-item pointer-events-auto">
+                              <Link href={node.path}>
+                                <a className="after:scale-x-0">{node.label}</a>
+                              </Link>
+                            </li>
+                          </>
+                        );
+                      })}
+                      {menuItems.length % 2 === 0 ? (
+                        ''
+                      ) : (
+                        <li className="inline-block pl-4" />
                       )}
-                      <li
-                        key={`${node.id}`}
-                        className="px-4 font-black hidden lg:list-item xl:list-item menu-item pointer-events-auto">
-                        <Link href={node.path}>
-                          <a className="after:scale-x-0">{node.label}</a>
-                        </Link>
-                      </li>
-                    </>
-                  );
-                })}
-                {menuItems.length % 2 === 0 ? (
-                  ''
-                ) : (
-                  <li className="inline-block pl-4" />
-                )}
-              </ul>
-            </div>
-          </motion.header>
-        )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {scrolled && (
-          <motion.header
-            initial={{ translateY: '-100%' }}
-            animate={{ translateY: 0 }}
-            exit={{ translateY: '-100%' }}
-            transition={{
-              duration: noAnimation ? 0 : 0.35,
-              ease: [0.175, 0.85, 0.42, 0.96],
-            }}
-            className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-4 md:py-6 md:px-12">
-              <Logo />
-              <ul className="flex flex-row text-center items-center antialiased">
-                {menuItems.map(({ node }: MenuData) => {
-                  return (
-                    <li
-                      key={`${node.id}`}
-                      className="px-4 font-black menu-item">
-                      <Link href={node.path}>
-                        <a
-                          className={`${
-                            isCurrent(node.path.slice(0, -1))
-                              ? 'after:scale-x-100'
-                              : 'after:scale-x-0'
-                          } pointer-events-auto`}>
-                          {node.label}
-                        </a>
-                      </Link>
-                    </li>
-                  );
-                })}
-                {menuItems.length % 2 === 0 ? (
-                  ''
-                ) : (
-                  <li className="inline-block pl-4" />
-                )}
-              </ul>
-              {mobileNavBtnInHeader && (
-                <div className="absolute pointer-events-auto top-6 leading-0 md:-translate-y-1/2 right-4 md:top-10 md:right-7 z-40">
-                  <MobileNavBtn
-                    setShowMobileNav={setShowMobileNav}
-                    barStyle={mobileNavBtnstyle}
-                  />
-                </div>
+                    </ul>
+                  </div>
+                </motion.header>
               )}
-            </div>
-          </motion.header>
+            </AnimatePresence>
+            <AnimatePresence>
+              {scrolled && (
+                <motion.header
+                  initial={{ translateY: '-100%' }}
+                  animate={{ translateY: 0 }}
+                  exit={{ translateY: '-100%' }}
+                  transition={{
+                    duration: noAnimation ? 0 : 0.35,
+                    ease: [0.175, 0.85, 0.42, 0.96],
+                  }}
+                  className="fixed top-0 l-0 w-full z-40 text-white pointer-events-none">
+                  <div className="flex flex-col md:flex-row justify-center md:justify-between items-start mx-auto p-4 md:py-6 md:px-12">
+                    <Logo />
+                    <ul className="flex flex-row text-center items-center antialiased">
+                      {menuItems.map(({ node }: MenuData) => {
+                        return (
+                          <li
+                            key={`${node.id}`}
+                            className="px-4 font-black menu-item">
+                            <Link href={node.path}>
+                              <a
+                                className={`${
+                                  isCurrent(node.path.slice(0, -1))
+                                    ? 'after:scale-x-100'
+                                    : 'after:scale-x-0'
+                                } pointer-events-auto`}>
+                                {node.label}
+                              </a>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                      {menuItems.length % 2 === 0 ? (
+                        ''
+                      ) : (
+                        <li className="inline-block pl-4" />
+                      )}
+                    </ul>
+                    {mobileNavBtnInHeader && (
+                      <div className="absolute pointer-events-auto top-6 leading-0 md:-translate-y-1/2 right-4 md:top-10 md:right-7 z-40">
+                        <MobileNavBtn
+                          setShowMobileNav={setShowMobileNav}
+                          barStyle={mobileNavBtnstyle}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </motion.header>
+              )}
+            </AnimatePresence>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

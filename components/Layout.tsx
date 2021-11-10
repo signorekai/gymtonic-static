@@ -8,6 +8,7 @@ interface LayoutState {
   scrolledHeader: boolean;
   noAnimation: boolean;
   mobileNavBtnStyle: string;
+  showHeader: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -30,6 +31,7 @@ export default function withLayout<T extends React.Component>(
       this.setHeaderRef = this.setHeaderRef.bind(this);
       this.setScrolledHeader = this.setScrolledHeader.bind(this);
       this.setMobileNavBtnStyle = this.setMobileNavBtnStyle.bind(this);
+      this.setShowHeader = this.setShowHeader.bind(this);
       this.appRef = React.createRef<HTMLDivElement>();
 
       this.state = {
@@ -38,6 +40,7 @@ export default function withLayout<T extends React.Component>(
         scrolledHeader: false,
         mobileNavBtnStyle: 'text-red',
         noAnimation: false,
+        showHeader: true,
       };
     }
 
@@ -48,6 +51,12 @@ export default function withLayout<T extends React.Component>(
       }
       window.addEventListener('resize', handleResize);
       handleResize();
+    }
+
+    setShowHeader(arg0: boolean) {
+      const { showHeader } = this.state;
+      console.log(57, arg0);
+      if (showHeader !== arg0) this.setState({ showHeader: arg0 });
     }
 
     setScrolledHeader(scrolledHeader: boolean, noAnimation = false) {
@@ -68,6 +77,7 @@ export default function withLayout<T extends React.Component>(
       const {
         headerRef,
         showLoader,
+        showHeader,
         scrolledHeader,
         noAnimation,
         mobileNavBtnStyle,
@@ -87,6 +97,7 @@ export default function withLayout<T extends React.Component>(
             setShowMobileNav={setShowMobileNav}
             headerRef={headerRef}
             scrolledHeader={scrolledHeader}
+            showHeader={showHeader}
           />
           <Component
             {...this.props}
@@ -96,6 +107,7 @@ export default function withLayout<T extends React.Component>(
             setHeaderRef={this.setHeaderRef}
             showLoader={showLoader}
             setShowLoader={setShowLoader}
+            setShowHeader={this.setShowHeader}
           />
         </div>
       );
