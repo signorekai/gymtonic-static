@@ -20,6 +20,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
+import { useActiveHeader } from 'lib/hooks';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
@@ -27,24 +28,11 @@ const Page: React.FunctionComponent<any> = ({
   setShowSignUpForm,
   setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
-  const scrollProgress = useRef(0);
+  useActiveHeader(setShowHeader);
+
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
-    const handleScroll = () => {
-      if (scrollProgress.current < window.scrollY) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      scrollProgress.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

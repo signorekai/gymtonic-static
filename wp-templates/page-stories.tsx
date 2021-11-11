@@ -20,6 +20,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
+import { useActiveHeader } from 'lib/hooks';
 
 const storiesQuery = gql`
   {
@@ -112,10 +113,11 @@ const Page: React.FunctionComponent<any> = ({
 
   const router = useRouter();
   const path = useRef<string>(router.asPath);
-  const scrollProgress = useRef(0);
 
   const [selectedStory, setSelectedStory] = useState<StoryNode>();
   const [expanded, setExpanded] = useState(false);
+
+  useActiveHeader(setShowHeader);
 
   useEffect(() => {
     setShowLoader(false);
@@ -133,20 +135,6 @@ const Page: React.FunctionComponent<any> = ({
         path.current = current.node.uri;
       }
     }
-    const handleScroll = () => {
-      if (scrollProgress.current < window.scrollY) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      scrollProgress.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

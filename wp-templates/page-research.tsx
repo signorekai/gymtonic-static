@@ -21,6 +21,7 @@ import SignupBtnSrc from 'assets/images/SignUpButtons-3-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-3-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-3.png';
 import ArmOnRed from 'assets/images/arm-on-red.png';
+import { useActiveHeader } from 'lib/hooks';
 
 const query = gql`
   {
@@ -143,25 +144,12 @@ const Page: React.FunctionComponent<any> = ({
 }: WithLayoutProps & WithSignUpFormProps) => {
   const { data }: { data: ResearchPaperData | undefined } = useQuery(query);
   const researchPapers = data?.researchPapers.edges;
-  const scrollProgress = useRef(0);
+
+  useActiveHeader(setShowHeader);
 
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
-    const handleScroll = () => {
-      if (scrollProgress.current < window.scrollY) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      scrollProgress.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

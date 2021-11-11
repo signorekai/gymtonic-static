@@ -30,6 +30,7 @@ import SignupBtnHoverSrc from 'assets/images/SignUpButtons-4-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-4.png';
 import { useRouter } from 'next/router';
 import { useInView } from 'react-intersection-observer';
+import { useActiveHeader } from 'lib/hooks';
 
 interface QueryResult {
   data:
@@ -179,8 +180,6 @@ const Page: React.FunctionComponent<any> = ({
   const locationsOpenToPublic = data?.openToPublic.locations?.edges;
   const locationsNotOpenToPublic = data?.notOpenToPublic.locations?.edges;
 
-  const router = useRouter();
-
   const [showInfo, setShowInfo] = useState(false);
   const [selected, setSelected] = useState<ILocation>();
   const [currentMapCenter, setCurrentMapCenter] = useState<LatLngLiteral>();
@@ -190,6 +189,8 @@ const Page: React.FunctionComponent<any> = ({
 
   const mapContainerControls = useAnimation();
   const uriInfo = useUriInfo();
+
+  useActiveHeader(setShowHeader);
 
   const clickHandler = useCallback(
     (
@@ -237,7 +238,6 @@ const Page: React.FunctionComponent<any> = ({
     [mapContainerControls],
   );
 
-  const scrollProgress = useRef(0);
   useEffect(() => {
     window.dispatchEvent(new Event('resize'));
 
@@ -267,18 +267,7 @@ const Page: React.FunctionComponent<any> = ({
 
     window.addEventListener('popstate', listener);
 
-    const handleScroll = () => {
-      if (scrollProgress.current < window.scrollY) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      scrollProgress.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('popstate', listener);
     };
 

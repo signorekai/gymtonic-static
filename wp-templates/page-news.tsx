@@ -17,6 +17,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
+import { useActiveHeader } from 'lib/hooks';
 
 const query = gql`
   {
@@ -167,8 +168,6 @@ const Page: React.FunctionComponent<any> = ({
   const { data }: QueryData = useQuery(query);
   const press = data?.pressReleases.edges;
   const media = data?.mediaCoverages.edges;
-  const scrollProgress = useRef(0);
-
   const mediaAnimationControl = useAnimation();
 
   const [selected, setSelected] = useState<Media | null>(null);
@@ -182,6 +181,8 @@ const Page: React.FunctionComponent<any> = ({
     return newSelected;
   };
 
+  useActiveHeader(setShowHeader);
+
   useEffect(() => {
     setShowLoader(false);
     setScrolledHeader(true, true);
@@ -190,21 +191,6 @@ const Page: React.FunctionComponent<any> = ({
       const newSelected = formatSelected(media[0].node);
       setSelected(newSelected);
     }
-
-    const handleScroll = () => {
-      if (scrollProgress.current < window.scrollY) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      scrollProgress.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
