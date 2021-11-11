@@ -489,7 +489,7 @@ const Page: React.FunctionComponent<any> = ({
                   />
                   <Link
                     passHref
-                    href={`https://www.google.com/maps?q=place_id:${selected?.locationFields.location.placeId}`}>
+                    href={`https://www.google.com/maps/search/?api=1&query=${selected?.locationFields.location.streetAddress}&query_place_id=${selected?.locationFields.location.placeId}`}>
                     <a
                       className="font-bold text-xs text-red uppercase text-center block mt-3 underline"
                       target="_blank">
