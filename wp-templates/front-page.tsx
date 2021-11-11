@@ -137,7 +137,7 @@ const Page: React.FunctionComponent<any> = ({
           leftViewport.current!.style.transform = `translate3d(0, ${
             newLeftPosition * -100
           }%, 0)`;
-        } else if (scrollYProgress > parallaxUpperBound) {
+        } else if (scrollYProgress > 0.99) {
           // in footer
           setScrolledHeader(false);
           setShowBtn(true);
