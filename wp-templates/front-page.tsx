@@ -276,6 +276,7 @@ const Page: React.FunctionComponent<any> = ({
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
           videoContainerClassName="max-h-2/5 lg:max-h-none lg:max-w-3/4 lg:mt-12"
+          videoClassName="w-full"
           videoSrc="/videos/Thematic-3-Kakis.mp4"
           headerTitle="Kakis"
           paragraph="Help Pa and Ma make new friends."
@@ -305,6 +306,7 @@ const Page: React.FunctionComponent<any> = ({
         <RightParallaxCard
           className="lg:pl-[50vw] snap-end"
           videoContainerClassName="max-h-2/5 lg:max-h-none lg:max-w-3/5 lg:mt-20"
+          videoClassName="w-full"
           videoSrc="/videos/Thematic-6-Kilat.mp4"
           headerTitle="Kilat!"
           paragraph="State-of-the-art hydraulic and pneumatic equipment from Germany and Finland."
