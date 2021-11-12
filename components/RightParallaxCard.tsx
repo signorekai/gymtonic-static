@@ -10,7 +10,7 @@ const RightParallaxCard = ({
   className = 'bg-red text-white',
   headerTitle,
   videoSrc,
-  videoClassName = '',
+  videoClassName = 'w-auto',
   videoContainerClassName = '',
   paragraph,
   link,
@@ -84,7 +84,7 @@ const RightParallaxCard = ({
                 muted
                 loop
                 src={videoSrc}
-                className={`w-auto h-auto max-w-full max-h-full relative z-0 ${videoClassName}`}>
+                className={`h-auto max-w-full max-h-full relative z-0 ${videoClassName}`}>
                 <source src={videoSrc} type="video/mp4" />
               </video>
             </div>
