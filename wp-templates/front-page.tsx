@@ -255,7 +255,7 @@ const Page: React.FunctionComponent<any> = ({
             <LeftCard
               src={Gym6}
               url="/location/tzu-chi-foundation-seniors-engagement-enabling-node-nanyang"
-              linkText="Tzu Chi Foundation Singapore, Seen,<br/>Jurong West"
+              linkText="Tzu Chi Foundation Singapore, SEEN,<br/>Jurong West"
             />
           </motion.div>
           <h1 className="h1 absolute w-full top-1/2 -translate-y-1/2 z-10 text-red text-center">
