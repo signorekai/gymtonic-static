@@ -17,7 +17,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
-import { useActiveHeader } from 'lib/hooks';
+import { useActiveHeaderForElement } from 'lib/hooks';
 
 const query = gql`
   {
@@ -169,6 +169,7 @@ const Page: React.FunctionComponent<any> = ({
   const press = data?.pressReleases.edges;
   const media = data?.mediaCoverages.edges;
   const mediaAnimationControl = useAnimation();
+  const newsPanel = useRef<HTMLElement | null>(null);
 
   const [selected, setSelected] = useState<Media | null>(null);
 
@@ -181,7 +182,8 @@ const Page: React.FunctionComponent<any> = ({
     return newSelected;
   };
 
-  useActiveHeader(setShowHeader);
+  // useActiveHeader(setShowHeader);
+  useActiveHeaderForElement(setShowHeader, newsPanel);
 
   useEffect(() => {
     setShowLoader(false);
@@ -374,6 +376,7 @@ const Page: React.FunctionComponent<any> = ({
         News
       </h1>
       <motion.section
+        ref={newsPanel}
         animate={mediaAnimationControl}
         className={`content-container-bg bg-red content-container-size content-container-order content-container-positioning lg:h-screen lg:overflow-y-auto lg:no-scrollbar content-container-px ${
           selected ? 'order-2' : ''

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 export const useActiveHeader = (setShowHeader: (arg0: boolean) => void) => {
@@ -22,5 +22,38 @@ export const useActiveHeader = (setShowHeader: (arg0: boolean) => void) => {
 
   return () => {
     window.removeEventListener('scroll', handleScroll);
+  };
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useActiveHeaderForElement = (
+  setShowHeader: (arg0: boolean) => void,
+  elem: React.MutableRefObject<HTMLElement | null>,
+) => {
+  const scrollProgress = useRef(0);
+  const handleScroll = useDebouncedCallback(
+    () => {
+      console.log(36);
+      if (elem && elem.current) {
+        if (scrollProgress.current < elem.current.scrollTop) {
+          setShowHeader(false);
+        } else if (scrollProgress.current > elem.current.scrollTop) {
+          setShowHeader(true);
+        }
+        scrollProgress.current = elem?.current.scrollTop || 0;
+      }
+    },
+    300,
+    { leading: true },
+  );
+
+  if (elem?.current) {
+    elem.current.addEventListener('scroll', handleScroll);
+  }
+
+  return () => {
+    if (elem?.current) {
+      elem.current.removeEventListener('scroll', handleScroll);
+    }
   };
 };
