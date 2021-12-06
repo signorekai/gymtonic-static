@@ -17,7 +17,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
-import { useActiveHeaderForElement } from 'lib/hooks';
+import { useActiveHeader, useActiveHeaderForElement } from 'lib/hooks';
 
 const query = gql`
   {
@@ -182,7 +182,7 @@ const Page: React.FunctionComponent<any> = ({
     return newSelected;
   };
 
-  // useActiveHeader(setShowHeader);
+  useActiveHeader(setShowHeader);
   useActiveHeaderForElement(setShowHeader, newsPanel);
 
   useEffect(() => {

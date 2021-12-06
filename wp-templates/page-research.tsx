@@ -21,7 +21,7 @@ import SignupBtnSrc from 'assets/images/SignUpButtons-3-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-3-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-3.png';
 import ArmOnRed from 'assets/images/arm-on-red.png';
-import { useActiveHeaderForElement } from 'lib/hooks';
+import { useActiveHeader, useActiveHeaderForElement } from 'lib/hooks';
 
 const query = gql`
   {
@@ -146,7 +146,7 @@ const Page: React.FunctionComponent<any> = ({
   const researchPapers = data?.researchPapers.edges;
   const researchPanel = useRef<HTMLElement | null>(null);
 
-  // useActiveHeader(setShowHeader);
+  useActiveHeader(setShowHeader);
   useActiveHeaderForElement(setShowHeader, researchPanel);
 
   useEffect(() => {

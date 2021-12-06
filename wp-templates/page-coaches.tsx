@@ -20,7 +20,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
-import { useActiveHeaderForElement } from 'lib/hooks';
+import { useActiveHeader, useActiveHeaderForElement } from 'lib/hooks';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
@@ -29,6 +29,8 @@ const Page: React.FunctionComponent<any> = ({
   setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
   const panelRef = useRef<HTMLElement | null>(null);
+
+  useActiveHeader(setShowHeader);
   useActiveHeaderForElement(setShowHeader, panelRef);
 
   useEffect(() => {
