@@ -20,7 +20,7 @@ import SignUpBtn from 'components/SignUpButton';
 import SignupBtnSrc from 'assets/images/SignUpButtons-6-1.png';
 import SignupBtnHoverSrc from 'assets/images/SignUpButtons-6-2.png';
 import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-6.png';
-import { useActiveHeader } from 'lib/hooks';
+import { useActiveHeaderForElement } from 'lib/hooks';
 
 const Page: React.FunctionComponent<any> = ({
   setScrolledHeader,
@@ -28,7 +28,8 @@ const Page: React.FunctionComponent<any> = ({
   setShowSignUpForm,
   setShowHeader,
 }: WithLayoutProps & WithSignUpFormProps) => {
-  useActiveHeader(setShowHeader);
+  const panelRef = useRef<HTMLElement | null>(null);
+  useActiveHeaderForElement(setShowHeader, panelRef);
 
   useEffect(() => {
     setShowLoader(false);
@@ -63,6 +64,7 @@ const Page: React.FunctionComponent<any> = ({
       <AboutCard hideOnMobile />
       <MobileAboutHeader isSticky />
       <motion.section
+        ref={panelRef}
         initial="initial"
         animate="show"
         exit="exit"
