@@ -375,7 +375,7 @@ const Page: React.FunctionComponent<any> = ({
       </h1>
       <motion.section
         animate={mediaAnimationControl}
-        className={`content-container-bg content-container-size content-container-order content-container-positioning lg:min-h-screen content-container-px ${
+        className={`content-container-bg bg-red content-container-size content-container-order content-container-positioning lg:h-screen lg:overflow-y-auto lg:no-scrollbar content-container-px ${
           selected ? 'order-2' : ''
         }`}>
         <AnimatePresence exitBeforeEnter>
@@ -394,7 +394,7 @@ const Page: React.FunctionComponent<any> = ({
               initial="initial"
               animate="show"
               exit="exit"
-              className={`flex flex-col lg:min-h-screen lg:pt-22 lg:pb-12 lg:mx-1/20 ${
+              className={`flex flex-col lg:pt-22 lg:pb-12 lg:mx-1/20 ${
                 (selected.featuredImage === null &&
                   selected.moreDetails.articlePhoto?.sourceUrl === null) ||
                 selected.moreDetails.showPhoto === null
