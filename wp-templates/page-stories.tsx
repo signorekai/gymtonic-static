@@ -131,7 +131,7 @@ const Page: React.FunctionComponent<any> = ({
 
       if (current) {
         setSelectedStory(current.node);
-        setExpanded(true);
+        // setExpanded(true);
         path.current = current.node.uri;
       }
     }
@@ -209,7 +209,7 @@ const Page: React.FunctionComponent<any> = ({
               handler={(event: MouseEvent) => {
                 event.preventDefault();
                 setSelectedStory(story);
-                setExpanded(true);
+                // setExpanded(true);
 
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                 const bubble = event.currentTarget;
