@@ -166,7 +166,7 @@ const Page: React.FunctionComponent<any> = ({
           show: { opacity: 1, transition: { staggerChildren: 0.1 } },
           exit: { opacity: 1 },
         }}
-        className="content-container content-container-px pt-10 md:pt-18 lg:pt-32">
+        className="content-container content-container-px pt-10 md:pt-18 lg:pt-32 lg:no-scrollbar lg:overflow-y-auto lg:h-screen">
         <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
           <Image
             src={ArmOnRed}
