@@ -33,11 +33,17 @@ export const useActiveHeaderForElement = (
   const scrollProgress = useRef(0);
   const handleScroll = useDebouncedCallback(
     () => {
-      console.log(36);
+      console.log(elem.current?.scrollTop, scrollProgress.current);
       if (elem && elem.current) {
-        if (scrollProgress.current < elem.current.scrollTop) {
+        if (
+          scrollProgress.current < elem.current.scrollTop &&
+          elem.current.scrollTop - scrollProgress.current >= 5
+        ) {
           setShowHeader(false);
-        } else if (scrollProgress.current > elem.current.scrollTop) {
+        } else if (
+          scrollProgress.current > elem.current.scrollTop &&
+          scrollProgress.current - elem.current.scrollTop >= 5
+        ) {
           setShowHeader(true);
         }
         scrollProgress.current = elem?.current.scrollTop || 0;
