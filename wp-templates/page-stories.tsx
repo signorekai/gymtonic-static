@@ -261,7 +261,7 @@ const Page: React.FunctionComponent<any> = ({
           videoTitle={selectedStory?.storyFields.videoTitle}
           youtubeVideo={selectedStory?.storyFields.youtubeVideo}
           description={selectedStory?.storyFields.description}
-          gym={selectedStory?.storyFields.gym[0]}
+          gyms={selectedStory?.storyFields.gym}
         />
       )}
       <div className="fixed bottom-5 right-5 z-40">

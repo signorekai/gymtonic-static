@@ -10,7 +10,7 @@ interface StoryProps {
   youtubeVideo: string;
   description: string;
   key: string;
-  gym: Gym;
+  gyms?: Gym[] | null;
 }
 
 const StoryCard: React.FunctionComponent<StoryProps> = ({
@@ -20,7 +20,7 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
   youtubeVideo,
   description,
   key,
-  gym,
+  gyms,
 }: StoryProps) => {
   const [youtubeID, setYoutubeId] = useState<string>('');
 
@@ -69,14 +69,14 @@ const StoryCard: React.FunctionComponent<StoryProps> = ({
             <h2 className="font-black text-lg md:text-2xl mt-1 md:mt-0 leading-none">
               {videoTitle}
             </h2>
-            {gym && (
+            {gyms && (
               <GymLink
                 href={
-                  gym.locationFields.visibility === true
-                    ? gym.uri
+                  gyms[0].locationFields.visibility === true
+                    ? gyms[0].uri
                     : '/locations'
                 }
-                text={gym.title}
+                text={gyms[0].title}
                 linkStyle="white"
                 type="inline"
               />
