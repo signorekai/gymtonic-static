@@ -212,18 +212,18 @@ const Page: React.FunctionComponent<any> = ({
                 // setExpanded(true);
 
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                const bubble = event.currentTarget;
+                // const bubble = event.currentTarget;
 
-                if (bubble instanceof Element && window.innerWidth >= 1024) {
-                  setTimeout(() => {
-                    const parent = bubble.parentElement;
-                    if (parent !== null)
-                      window.scrollTo({
-                        top: parent.offsetTop,
-                        behavior: 'smooth',
-                      });
-                  }, 250);
-                }
+                // if (bubble instanceof Element && window.innerWidth >= 1024) {
+                //   setTimeout(() => {
+                //     const parent = bubble.parentElement;
+                //     if (parent !== null)
+                //       window.scrollTo({
+                //         top: parent.offsetTop,
+                //         behavior: 'smooth',
+                //       });
+                //   }, 250);
+                // }
 
                 path.current = story.uri;
               }}
