@@ -50,6 +50,7 @@ const LeftCard = ({
       quality="100"
       objectFit="cover"
       priority
+      unoptimized
       placeholder="blur"
     />
     <GymLink
