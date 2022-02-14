@@ -9,7 +9,7 @@ function withWPEHeadless(nextConfig = {}) {
 module.exports = withWPEHeadless({
   target: 'serverless',
   images: {
-    domains: ['gymtonic.local', 'demo.sulphur.com.sg'],
+    domains: ['gymtonic.local', 'demo.sulphur.com.sg', 'backend.gymtonic.sg'],
     deviceSizes: [360, 375, 414, 768, 1024, 1366, 1600],
     imageSizes: [64, 96, 128],
   },
