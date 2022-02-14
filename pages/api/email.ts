@@ -56,29 +56,26 @@ export default async function handler(
   }
 
   const transporter = nodemailer.createTransport({
-    host: testAccount.smtp.host,
-    port: testAccount.smtp.port,
-    secure: testAccount.smtp.secure,
+    host: process.env.CONTACT_EMAIL_HOST,
+    port: process.env.CONTACT_EMAIL_PORT,
+    secure: true,
     auth: {
-      user: testAccount.user,
-      pass: testAccount.pass,
+      user: process.env.CONTACT_EMAIL,
+      pass: process.env.CONTACT_EMAIL_PASS,
     },
   });
 
   try {
     const info = await transporter.sendMail({
-      from: `"Automated 👻" <${testAccount.user}>`, // sender address
-      to: testAccount.user, // list of receivers
-      subject: 'New Request from GymTonic', // Subject line
+      from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
+      to: 'hello@gymtonic.sg', // list of receivers
+      subject: 'Sign up', // Subject line
       text:
         data.type === 'myself'
           ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
           : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`,
     });
     console.log('Message sent: %s', info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-    // Preview only available when sending through an Ethereal account
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     res.status(200).json({ success: true });
   } catch (error: unknown) {
     res.status(400).json({ error });
