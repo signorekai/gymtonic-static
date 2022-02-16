@@ -79,6 +79,7 @@ const RightParallaxCard = ({
               <video
                 disablePictureInPicture
                 controlsList="nodownload"
+                preload="auto"
                 playsInline
                 autoPlay
                 muted
