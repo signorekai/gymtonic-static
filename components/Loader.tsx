@@ -45,8 +45,6 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
       if (showLoader !== refShowLoader.current) {
         setShowLoader(showLoader);
         refShowLoader.current = showLoader;
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        console.log(`animating loader to ${showLoader ? 1 : 0}`);
         await animControls.start({
           opacity: showLoader ? 1 : 0,
           transition,
