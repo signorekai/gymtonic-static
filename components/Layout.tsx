@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { RefObject } from 'react';
 import Header from 'components/Header';
+import Head from 'next/head';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -88,6 +89,22 @@ export default function withLayout<T extends React.Component>(
           id="appRef"
           ref={this.appRef}
           className="font-sans antialiased border-box">
+          <Head>
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-4WF6C39R6J"
+            />
+            <script
+              async
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+              
+                gtag('config', 'G-4WF6C39R6J');`
+              }}
+            />
+          </Head>
           <Header
             {...this.props}
             mobileNavBtnInHeader={opts.mobileNavBtnInHeader}
