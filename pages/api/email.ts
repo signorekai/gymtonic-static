@@ -75,7 +75,6 @@ export default async function handler(
           ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
           : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`,
     });
-    console.log('Message sent: %s', info.messageId);
     res.status(200).json({ success: true });
   } catch (error: unknown) {
     res.status(400).json({ error });

@@ -64,14 +64,12 @@ const tryToFitImageOn = (
 ) => {
   if (canvasRef.current) {
     if (actualCurrentFrame && actualCurrentFrame.complete) {
-      // console.log(`rendering frame to canvasRef`);
       fitImageOn(canvasRef.current, actualCurrentFrame);
     } else if (actualCurrentFrame) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
       actualCurrentFrame.addEventListener('load', () => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (canvasRef.current) {
-          // console.log(`[onload] rendering frame to canvasRef`);
           fitImageOn(canvasRef.current, actualCurrentFrame);
         }
       });
@@ -106,7 +104,6 @@ export default function VideoScroller({
   });
 
   useEffect(() => {
-    console.log('in view', entry?.intersectionRatio, entry?.isIntersecting);
     if (inView && entry?.isIntersecting && entry.intersectionRatio > 0.3) {
       onEnter();
     } else if (
@@ -153,38 +150,6 @@ export default function VideoScroller({
       setShowLoader(false);
     }
 
-    //   const handleScroll = () => {
-    //     if (isMobile) return;
-    //     if (container && container.current) {
-    //       if (container.current.offsetTop > 1) {
-    //         setShowReminder(false);
-    //       }
-    //       if (
-    //         container.current.clientWidth >= breakpoint &&
-    //         scrollerRef.current
-    //       ) {
-    //         // @todo eventually use framer-motion 's useElementScroll
-    //         // console.log('desktop');
-    //         intervalAnimationRef.current = false;
-    //         // desktop
-    //         const maxAmount =
-    //           scrollerRef.current?.scrollHeight -
-    //           document.documentElement.clientHeight * 1.1;
-
-    //         const currentAmount =
-    //           window.pageYOffset - scrollerRef.current?.offsetTop;
-    //         const scrollPercentage = currentAmount / maxAmount;
-    //         const currentFrame =
-    //           currentAmount < maxAmount
-    //             ? Math.round(scrollPercentage * totalFrames)
-    //             : totalFrames;
-
-    //         currentFrameRef.current = currentFrame;
-    //         tryToFitImageOn(videoFrames[currentFrame], canvasRef);
-    //       }
-    //     }
-    //   };
-
     const handleScroll = () => {
       if (container.current) {
         const scrollYProgress =
@@ -215,7 +180,6 @@ export default function VideoScroller({
     handleScroll();
 
     const handleResize = () => {
-      console.log('handling resize');
       const canvasWidth =
         (window.innerWidth - borderWidth * 2) * window.devicePixelRatio;
 

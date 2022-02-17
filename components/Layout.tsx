@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { RefObject } from 'react';
 import Header from 'components/Header';
+import ReactGA from 'react-ga';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -50,12 +51,12 @@ export default function withLayout<T extends React.Component>(
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
       window.addEventListener('resize', handleResize);
+      ReactGA.pageview(window.location.pathname + window.location.search);
       handleResize();
     }
 
     setShowHeader(arg0: boolean) {
       const { showHeader } = this.state;
-      console.log(57, arg0);
       if (showHeader !== arg0) this.setState({ showHeader: arg0 });
     }
 

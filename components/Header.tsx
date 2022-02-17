@@ -96,10 +96,8 @@ function Header({
       );
 
       observer.observe(ref);
-      console.log('checking for scroll amount now');
 
       if (typeof window !== undefined) {
-        console.log(window.scrollY, ref.clientHeight);
         if (window.scrollY >= ref.clientHeight) {
           setScrolled(true);
         }

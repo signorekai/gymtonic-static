@@ -20,16 +20,10 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
   const refShowLoader = useRef(false);
 
   const handleStart = (url: string) => {
-    // if (url.match(/about/).length === 0) {
-    console.log('>>> start routechange', url);
-    console.log(router.asPath);
-
     setShowLoader(true);
-    // }
   };
 
   const handleComplete = (url: string) => {
-    console.log('>>> complete routechange', url);
     if (url !== '/') setShowLoader(false);
   };
 
@@ -49,9 +43,6 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
   useEffect(() => {
     async function changeLoaderState() {
       if (showLoader !== refShowLoader.current) {
-        console.log('Show <motion.div>, initial opacity:', {
-          opacity: refShowLoader.current ? 1 : 0,
-        });
         setShowLoader(showLoader);
         refShowLoader.current = showLoader;
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -66,8 +57,6 @@ function Loader({ showLoader, setShowLoader }: Props): JSX.Element {
             duration: 0,
           },
         });
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        console.log(`animated loader to ${showLoader === true}`);
         // update state after this is done
       }
     }
@@ -111,7 +100,6 @@ function withLoader<T extends React.Component>(
     }
 
     setShowLoader(showLoader: boolean) {
-      console.log('CALLING', showLoader);
       this.setState({ showLoader });
     }
 
