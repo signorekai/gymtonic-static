@@ -5,6 +5,7 @@ declare global {
       CONTACT_EMAIL_PASS: string;
       CONTACT_EMAIL_HOST: string;
       CONTACT_EMAIL_PORT: number;
+      GOOGLE_ANALYTICS_KEY: string;
     }
   }
 }
