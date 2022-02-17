@@ -51,7 +51,7 @@ export default function withLayout<T extends React.Component>(
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
       window.addEventListener('resize', handleResize);
-      ReactGA.initialize(process.env.GOOGLE_ANALYTICS_KEY);
+      ReactGA.initialize(`G-4WF6C39R6J`);
       ReactGA.pageview(window.location.pathname + window.location.search);
       handleResize();
     }
