@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { RefObject } from 'react';
 import Header from 'components/Header';
-import TagManager from 'react-gtm-module';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -52,11 +51,6 @@ export default function withLayout<T extends React.Component>(
       }
       window.addEventListener('resize', handleResize);
       handleResize();
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
-      TagManager.initialize({
-        gtmId: 'G-4WF6C39R6J',
-      });
     }
 
     setShowHeader(arg0: boolean) {
