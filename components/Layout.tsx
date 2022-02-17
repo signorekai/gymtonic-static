@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { RefObject } from 'react';
 import Header from 'components/Header';
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module';
 
 interface LayoutState {
   headerRef: RefObject<HTMLElement> | null;
@@ -51,9 +51,12 @@ export default function withLayout<T extends React.Component>(
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
       window.addEventListener('resize', handleResize);
-      ReactGA.initialize(`G-4WF6C39R6J`);
-      ReactGA.pageview(window.location.pathname + window.location.search);
       handleResize();
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
+      TagManager.initialize({
+        gtmId: 'G-4WF6C39R6J',
+      });
     }
 
     setShowHeader(arg0: boolean) {
