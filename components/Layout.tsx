@@ -101,7 +101,7 @@ export default function withLayout<T extends React.Component>(
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
               
-                gtag('config', 'G-4WF6C39R6J');`
+                gtag('config', 'G-4WF6C39R6J');`,
               }}
             />
           </Head>
