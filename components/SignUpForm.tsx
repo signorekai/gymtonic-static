@@ -978,7 +978,7 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                         if (watchType) {
                                           setValue(
                                             'selectedGym',
-                                            location.title,
+                                            `${location.title} (${location.locationFields.area})`,
                                           );
                                           setShowLocationSelector(false);
                                         }
