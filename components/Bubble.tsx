@@ -83,13 +83,6 @@ const Bubble: React.FunctionComponent<BubbleProps> = ({
     }
   };
 
-  const articleVariants = {
-    initial: { y: -20, opacity: 0 },
-    exit: { y: -20, opacity: 0 },
-    enter: { y: 0, opacity: 1 },
-    ...variants,
-  };
-
   return (
     <article
       id={id}
