@@ -8,6 +8,7 @@ interface WithSignUpFormProps {
 }
 
 interface SignUpFormDefaults {
+  type?: 'myself' | 'someone else';
   selectedGym?: string;
 }
 
