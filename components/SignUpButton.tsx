@@ -6,7 +6,10 @@ interface Props {
   src: StaticImageData;
   hoverSrc: StaticImageData;
   mobileSrc: StaticImageData;
-  setShowSignUpForm: (arg0: boolean) => void;
+  setShowSignUpForm: (
+    arg0: boolean,
+    defaultValues?: Record<string, string>,
+  ) => void;
 }
 
 const SignUpBtn = ({

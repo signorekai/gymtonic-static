@@ -525,7 +525,7 @@ const Page: React.FunctionComponent<any> = ({
                     type="button"
                     onClick={() => {
                       setShowSignUpForm(true, {
-                        selectedGym: selected?.title,
+                        selectedGym: `${selected?.title} (${selected?.locationFields.area})`,
                       });
                     }}>
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">

@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { gql, useQuery } from '@apollo/client';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -282,11 +282,15 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     mode: 'onTouched',
-    defaultValues,
+    defaultValues: useMemo(() => {
+      return defaultValues;
+    }, [defaultValues]),
   });
+
   const watchSelectedGym = watch('selectedGym');
   const watchType = watch('type');
   const onSubmit = handleSubmit((data) => {
@@ -309,11 +313,13 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
   const locations = data?.openToPublic.locations?.edges;
 
   useEffect(() => {
-    if (defaultValues && defaultValues.selectedGym) {
-      setValue('selectedGym', defaultValues.selectedGym);
+    reset(defaultValues);
+    if (defaultValues.selectedGym && defaultValues.selectedGym.length > 0) {
       setShowLocationSelector(false);
+    } else {
+      setShowLocationSelector(true);
     }
-  }, [defaultValues, setValue]);
+  }, [defaultValues, reset]);
 
   useEffect(() => {
     if (showForm) {
@@ -962,8 +968,16 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                       id={location.id}
                                       type="radio"
                                       key={location.id}
-                                      disabled={!watchType}
-                                      value={location.title}
+                                      disabled={
+                                        !watchType &&
+                                        watchSelectedGym !==
+                                          `${location.title} (${location.locationFields.area})`
+                                      }
+                                      defaultChecked={
+                                        watchSelectedGym ===
+                                        `${location.title} (${location.locationFields.area})`
+                                      }
+                                      value={`${location.title} (${location.locationFields.area})`}
                                       {...register('selectedGym', {
                                         required: true,
                                       })}
@@ -987,6 +1001,12 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({
                                       borderColor="pink"
                                       className="w-full md:pb-8 hover:cursor-generic border-pink"
                                       subTitleClassName="text-center text-xs"
+                                      imageWrapperClassName={`${
+                                        watchSelectedGym ===
+                                        `${location.title} (${location.locationFields.area})`
+                                          ? '!border-red'
+                                          : ''
+                                      }`}
                                       titleClassName="text-sm md:text-base text-center"
                                       comingSoon={
                                         location.locationFields.openingSoon
@@ -1053,7 +1073,9 @@ export default function withSignUpForm<T extends React.Component>(
       this.setShowSignUpForm = this.setShowSignUpForm.bind(this);
       this.state = {
         showForm: false,
-        defaultValues: {},
+        defaultValues: {
+          selectedGym: '',
+        },
       };
     }
 
