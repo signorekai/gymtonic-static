@@ -7,17 +7,17 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Head from 'next/head';
 
-import Bubble from 'components/Bubble';
+import Bubble from '../components/Bubble';
 
-import LoadingGif from 'assets/images/loading.gif';
-import SuccessEng from 'assets/images/SignUpComplete-Eng.png';
-import SuccessMy from 'assets/images/SignUpComplete-Malay.png';
-import SuccessZh from 'assets/images/SignUpComplete-Mandarin.png';
-import ShareBtn from 'assets/images/share.png';
-import TelegramBtn from 'assets/images/telegram.png';
-import LinkBtn from 'assets/images/link.png';
-import FacebookBtn from 'assets/images/facebook.png';
-import WhatsAppBtn from 'assets/images/whatsapp.png';
+import LoadingGif from '../assets/images/loading.gif';
+import SuccessEng from '../assets/images/SignUpComplete-Eng.png';
+import SuccessMy from '../assets/images/SignUpComplete-Malay.png';
+import SuccessZh from '../assets/images/SignUpComplete-Mandarin.png';
+import ShareBtn from '../assets/images/share.png';
+import TelegramBtn from '../assets/images/telegram.png';
+import LinkBtn from '../assets/images/link.png';
+import FacebookBtn from '../assets/images/facebook.png';
+import WhatsAppBtn from '../assets/images/whatsapp.png';
 
 const defaults = {
   title: 'Sign up',

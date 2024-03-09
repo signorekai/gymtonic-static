@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 
-import loading from 'assets/images/loading.gif';
+import loading from '../assets/images/loading.gif';
 
 const transition = { duration: 0.35, ease: [0.175, 0.85, 0.42, 0.96] };
 

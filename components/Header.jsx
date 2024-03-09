@@ -8,9 +8,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 // import image assets
-import logo from 'assets/images/logo.png';
-import { menuQuery } from 'pages/[[...page]]';
-import MobileNavBtn from 'components/MobileNavBtn';
+import logo from '../assets/images/logo.png';
+import { menuQuery } from '../pages/[[...page]]';
+import MobileNavBtn from '../components/MobileNavBtn';
 
 const Logo = ({ className = '' }) => (
   <Link href="/">

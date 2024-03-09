@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { createContext, useEffect } from 'react';
 import Link from 'next/link';
 
-import { menuQuery } from 'pages/[[...page]]';
+import { menuQuery } from '../pages/[[...page]]';
 import { useQuery } from '@apollo/client';
-import SignUpBtn from 'components/SignUpButton';
-import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
-import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
-import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
+import SignUpBtn from '../components/SignUpButton';
+import SignupBtnSrc from '../assets/images/SignUpButtons-1-1.png';
+import SignupBtnHoverSrc from '../assets/images/SignUpButtons-1-2.png';
+import SignupBtnMobileSrc from '../assets/images/SignUpButtons-Small-1.png';
 
 const MobileNav = ({ showMobileNav, setShowMobileNav, setShowSignUpForm }) => {
   const menu = useQuery(menuQuery);

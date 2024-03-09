@@ -4,30 +4,30 @@ import Image from 'next/image';
 import { AnimatePresence, motion, useElementScroll } from 'framer-motion';
 import ScrollSnap from 'scroll-snap';
 
-import withMobileNav from 'components/MobileNav';
-import withLoader from 'components/Loader';
-import VideoScroll from 'components/VideoScroll';
-import withLayout from 'components/Layout';
-import RightParallaxCard from 'components/RightParallaxCard';
-import MobileNavBtn from 'components/MobileNavBtn';
-import withSignUpForm from 'components/SignUpForm';
-import GymLink from 'components/GymLink';
+import withMobileNav from '../components/MobileNav';
+import withLoader from '../components/Loader';
+import VideoScroll from '../components/VideoScroll';
+import withLayout from '../components/Layout';
+import RightParallaxCard from '../components/RightParallaxCard';
+import MobileNavBtn from '../components/MobileNavBtn';
+import withSignUpForm from '../components/SignUpForm';
+import GymLink from '../components/GymLink';
 
-import Gym1 from 'assets/images/gym1.jpg';
-import Gym2 from 'assets/images/gym2.jpg';
-import Gym3 from 'assets/images/gym3.jpg';
-import Gym4 from 'assets/images/gym4.jpg';
-import Gym5 from 'assets/images/gym5.jpg';
-import Gym6 from 'assets/images/gym6.jpg';
+import Gym1 from '../assets/images/gym1.jpg';
+import Gym2 from '../assets/images/gym2.jpg';
+import Gym3 from '../assets/images/gym3.jpg';
+import Gym4 from '../assets/images/gym4.jpg';
+import Gym5 from '../assets/images/gym5.jpg';
+import Gym6 from '../assets/images/gym6.jpg';
 
-import SignUpBtn from 'components/SignUpButton';
-import SignupBtnSrc from 'assets/images/SignUpButtons-1-1.png';
-import SignupBtnHoverSrc from 'assets/images/SignUpButtons-1-2.png';
-import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-1.png';
-import SignupFooterBtnSrc from 'assets/images/SignUpButtons-7-1.png';
-import SignupFooterBtnHoverSrc from 'assets/images/SignUpButtons-7-2.png';
-import SignupFooterBtnMobileSrc from 'assets/images/SignUpButtons-Small-7.png';
-import SignupFooterExtraSrc from 'assets/images/signup-here.png';
+import SignUpBtn from '../components/SignUpButton';
+import SignupBtnSrc from '../assets/images/SignUpButtons-1-1.png';
+import SignupBtnHoverSrc from '../assets/images/SignUpButtons-1-2.png';
+import SignupBtnMobileSrc from '../assets/images/SignUpButtons-Small-1.png';
+import SignupFooterBtnSrc from '../assets/images/SignUpButtons-7-1.png';
+import SignupFooterBtnHoverSrc from '../assets/images/SignUpButtons-7-2.png';
+import SignupFooterBtnMobileSrc from '../assets/images/SignUpButtons-Small-7.png';
+import SignupFooterExtraSrc from '../assets/images/signup-here.png';
 
 const heightOfScroller = 4;
 

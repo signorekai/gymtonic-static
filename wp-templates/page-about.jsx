@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
-import withLayout from 'components/Layout';
+import withLayout from '../components/Layout';
 
 import { motion } from 'framer-motion';
-import AboutCard from 'components/AboutCard';
-import withMobileNav from 'components/MobileNav';
-import withLoader from 'components/Loader';
-import withSignUpForm from 'components/SignUpForm';
+import AboutCard from '../components/AboutCard';
+import withMobileNav from '../components/MobileNav';
+import withLoader from '../components/Loader';
+import withSignUpForm from '../components/SignUpForm';
 
-import SignUpBtn from 'components/SignUpButton';
-import SignupBtnSrc from 'assets/images/SignUpButtons-2-1.png';
-import SignupBtnHoverSrc from 'assets/images/SignUpButtons-2-2.png';
-import SignupBtnMobileSrc from 'assets/images/SignUpButtons-Small-2.png';
-import { useActiveHeader } from 'lib/hooks';
+import SignUpBtn from '../components/SignUpButton';
+import SignupBtnSrc from '../assets/images/SignUpButtons-2-1.png';
+import SignupBtnHoverSrc from '../assets/images/SignUpButtons-2-2.png';
+import SignupBtnMobileSrc from '../assets/images/SignUpButtons-Small-2.png';
+import { useActiveHeader } from '../lib/hooks';
 
 const Page = ({
   setScrolledHeader,

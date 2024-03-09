@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePosts } from '@wpengine/headless/react';
-import Posts from 'components/Posts';
+import Posts from '../components/Posts';
 
 export default function Index() {
   const posts = usePosts();

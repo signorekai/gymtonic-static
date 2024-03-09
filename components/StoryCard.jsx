@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
-import GymLink from 'components/GymLink';
+import GymLink from '../components/GymLink';
 
 const StoryCard = ({
   title,
