@@ -6,7 +6,6 @@ function withWPEHeadless(nextConfig = {}) {
 
 module.exports = withWPEHeadless({
   generateBuildId: () => 'build',
-  target: 'serverless',
   images: {
     domains: ['gymtonic.local', 'demo.sulphur.com.sg', 'backend.gymtonic.sg'],
     deviceSizes: [360, 375, 414, 768, 1024, 1366, 1600],
