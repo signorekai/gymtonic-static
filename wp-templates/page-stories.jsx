@@ -20,7 +20,7 @@ import SignUpBtn from '../components/SignUpButton';
 import SignupBtnSrc from '../assets/images/SignUpButtons-1-1.png';
 import SignupBtnHoverSrc from '../assets/images/SignUpButtons-1-2.png';
 import SignupBtnMobileSrc from '../assets/images/SignUpButtons-Small-1.png';
-import { useActiveHeader } from 'lib/hooks';
+import { useActiveHeader } from '../lib/hooks';
 
 const storiesQuery = gql`
   {
@@ -206,7 +206,7 @@ const Page = ({
             <Bubble
               id={story.slug}
               href={`#${story.slug}`}
-              handler={(event: MouseEvent) => {
+              handler={(event) => {
                 event.preventDefault();
                 setSelectedStory(story);
                 // setExpanded(true);

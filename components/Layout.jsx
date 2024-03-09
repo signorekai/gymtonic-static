@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import Header from 'components/Header';
+import Header from './Header';
 import Head from 'next/head';
 
 export default function withLayout(Component, options) {

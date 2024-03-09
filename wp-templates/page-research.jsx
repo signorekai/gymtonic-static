@@ -21,7 +21,7 @@ import SignupBtnSrc from '../assets/images/SignUpButtons-3-1.png';
 import SignupBtnHoverSrc from '../assets/images/SignUpButtons-3-2.png';
 import SignupBtnMobileSrc from '../assets/images/SignUpButtons-Small-3.png';
 import ArmOnRed from '../assets/images/arm-on-red.png';
-import { useActiveHeader, useActiveHeaderForElement } from 'lib/hooks';
+import { useActiveHeader, useActiveHeaderForElement } from '../lib/hooks';
 
 const query = gql`
   {
@@ -195,7 +195,7 @@ const Page = ({
           }}>
           <h5 className="font-bold uppercase text-xs mt-3">Research Papers</h5>
           <section className="flex flex-wrap flex-row mb-6">
-            {researchPapers?.map(({ node: researchPaper }, index: number) => (
+            {researchPapers?.map(({ node: researchPaper }, index) => (
               <ResearchPaperCard
                 index={index}
                 key={researchPaper.id}
