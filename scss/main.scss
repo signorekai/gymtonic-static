@@ -350,7 +350,7 @@ input[type='radio']:checked + .bubble {
 }
 
 .modal--content {
-  @apply text-sm md:text-lg leading-tighter md:leading-tight mb-8 mt-3;
+  @apply text-sm md:text-lg leading-tighter md:leading-tight mt-3;
 
   p + p {
     @apply mt-[1em];
