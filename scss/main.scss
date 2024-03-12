@@ -348,3 +348,15 @@ input[type='radio']:checked + .bubble {
 .btn-sign--up {
   @apply hover:cursor-signup;
 }
+
+.modal--content {
+  @apply text-sm md:text-lg leading-tighter md:leading-tight mb-8 mt-3;
+
+  p + p {
+    @apply mt-[1em];
+  }
+
+  a {
+    @apply border-b-2 border-black hover:cursor-news hover:opacity-90;
+  }
+}

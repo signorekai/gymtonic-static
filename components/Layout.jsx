@@ -2,6 +2,7 @@
 import React from 'react';
 import Header from './Header';
 import Head from 'next/head';
+import Modal from './Modal';
 
 export default function withLayout(Component, options) {
   // compiling opts
@@ -188,6 +189,7 @@ export default function withLayout(Component, options) {
             scrolledHeader={scrolledHeader}
             showHeader={showHeader}
           />
+          <Modal />
           <Component
             {...this.props}
             setMobileNavBtnStyle={this.setMobileNavBtnStyle}
