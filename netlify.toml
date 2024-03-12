@@ -4,3 +4,5 @@
 [[redirects]]
   from = "/wp-content/*"
   to = "https://backend.gymtonic.sg/wp-content/:splat"
+  status = 200
+  force = true
