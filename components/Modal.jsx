@@ -58,7 +58,6 @@ const Modal = () => {
   }, [data]);
 
   useEffect(() => {
-    console.count(58);
     setShowModal(popups.length > 0);
   }, [popups]);
 
@@ -91,7 +90,7 @@ const Modal = () => {
           {popups.length > 0 && (
             <motion.div
               key={`popup-${popups[0].id}`}
-              className="bg-pink max-w-3xl w-full p-10 md:p-18 relative z-20"
+              className="bg-pink max-w-[47rem] w-full p-10 md:p-18 relative z-20"
               variants={{
                 initial: { y: '50%', opacity: 0 },
                 enter: { y: 0, opacity: 1 },
