@@ -87,11 +87,11 @@ const Modal = () => {
           initial="initial"
           animate="enter"
           exit="exit"
-          className="fixed bg-black-opaque z-80 top-0 left-0 w-full min-h-screen h-screen overflow-auto flex flex-col justify-center items-center p-5 lg:p-0">
+          className="fixed bg-black-opaque z-80 top-0 left-0 w-full h-[100dvh] flex flex-col overflow-auto justify-center items-center p-4 lg:p-0">
           {popups.length > 0 && (
             <motion.div
               key={`popup-${popups[0].id}`}
-              className="bg-pink max-w-3xl flex-1 lg:w-full p-10 md:p-18 absolute"
+              className="bg-pink max-w-3xl w-full p-10 md:p-18 relative z-20"
               variants={{
                 initial: { y: '50%', opacity: 0 },
                 enter: { y: 0, opacity: 1 },
@@ -148,7 +148,9 @@ const Modal = () => {
                 }}></div>
             </motion.div>
           )}
-          <div className="w-full h-full" onClick={closePopup}></div>
+          <div
+            className="w-full h-full absolute -z-10"
+            onClick={closePopup}></div>
         </motion.div>
       )}
     </AnimatePresence>
