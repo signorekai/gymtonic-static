@@ -64,7 +64,7 @@ const Modal = () => {
 
   const closePopup = () => {
     const newPopups = [...popups];
-    // Cookies.set(`popup-${popups[0].id}`, true, { expires: 7 });
+    Cookies.set(`popup-${popups[0].id}`, true, { expires: 7 });
     newPopups.shift();
     setPopups(newPopups);
   };
@@ -140,7 +140,12 @@ const Modal = () => {
               </h2>
               <div
                 className="modal--content"
-                dangerouslySetInnerHTML={{ __html: popups[0].content }}></div>
+                dangerouslySetInnerHTML={{
+                  __html: popups[0].content.replace(
+                    'https://gymtonic.sg',
+                    'https://backend.gymtonic.sg',
+                  ),
+                }}></div>
             </motion.div>
           )}
           <div className="w-full h-full" onClick={closePopup}></div>
