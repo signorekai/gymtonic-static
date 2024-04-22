@@ -1,10 +1,16 @@
-# Headless WordPress Getting Started Example
+# Gymtonic Frontend
 
 ## Setup
 
-See the [setup steps](https://github.com/wpengine/headless-framework#quick-start).
+The following environment variables are required:
 
-## Run it
+- WORDPRESS_URL / NEXT_PUBLIC_WORDPRESS_YURL
+  Either **WORDPRESS_URL** or **NEXT_PUBLIC_WORDPRESS_URL** need to be populated. Not both!
+  Setting WORDPRESS_URL instead of NEXT_PUBLIC_WORDPRESS_URL will limit requests to the WordPress backend to only come from the Node.js server.
+  Setting NEXT_PUBLIC_WORDPRESS_URL instead of WORDPRESS_URL will allow requests to come from the client-side which may reduce site performance and put extra load on the WordPress backend.
+- WP_HEADLESS_SECRET
+
+## Local development
 
 ```bash
 npm install
