@@ -64,7 +64,8 @@ const text = {
     seniorName: '长者名字',
     seniorAge: '长者年龄',
     seniorAddress: '长者地址',
-    warning: '我们不提供接送，长者须自行到健得力中心。',
+    warning:
+      '报名时，需签约24堂课，每周两次。1小时的运动，有教练引导。<br />报名者需安排自己的交通',
     selectGym: '您首选的健得力中心',
     signUpForMyself: '我为自己报名',
     signUpForSomeoneElse: '我为别人报名',
