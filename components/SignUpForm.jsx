@@ -94,8 +94,7 @@ const text = {
     seniorName: 'Nama Senior',
     seniorAge: `Umur Senior`,
     seniorAddress: `Alamat Senior`,
-    warning:
-      'Harap maklum bahawa pengangkutan tidak disediakan. Warga emas mesti pergi ke lokasi Gym Tonic sendiri.',
+    warning: '',
     selectGym: 'Pilih gim',
     signUpForMyself: 'Saya mendaftar untuk saya sendiri',
     signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
@@ -123,8 +122,7 @@ const text = {
     seniorName: 'மூத்த நபரின் பெயர்',
     seniorAge: 'மூத்த நபரின் வயது',
     seniorAddress: 'மூத்த நபரின் வீட்டு முகவரி',
-    warning:
-      'போக்குவரத்து வாகனம் வழங்கப்படவில்லை என்பதை நினைவில் கொள்க. மூத்த நபர் Gym Tonic இருப்பிடத்திற்கு சொந்தமாக பயணம் செய்ய வேண்டும்.',
+    warning: '',
     selectGym: 'விருப்பமான உடற்பயிற்சி கூடத்தைத் தேர்ந்தெடுக்கவும்',
     signUpForMyself: 'நான் எனக்காக பதிவு செய்கிறேன்',
     signUpForSomeoneElse: 'நான் வேறொருவருக்காக பதிவு செய்கிறேன்',
