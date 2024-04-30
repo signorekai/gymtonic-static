@@ -34,7 +34,7 @@ const defaults = {
   seniorAge: `Senior's Age`,
   seniorAddress: `Senior's Home Address`,
   warning:
-    'Please note that transportation is not provided.<br />Seniors will have to travel to the Gym Tonic location on their own.',
+    'Each sign-up is a commitment of 24 sessions. Twice weekly, ~1 hour/session with guidance from a trainer.<br />Please note that transportation is not provided.',
   selectGym: 'Select preferred gym',
   signUpForMyself: 'I am signing up for myself',
   signUpForSomeoneElse: 'I am signing up for someone else',
@@ -818,7 +818,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                         />
                       </div>
                       <h6
-                        className="text-red text-xs py-4 text-center"
+                        className="text-red text-xs py-4 md:-mx-1 text-center"
                         dangerouslySetInnerHTML={{ __html: text[lang].warning }}
                       />
 
