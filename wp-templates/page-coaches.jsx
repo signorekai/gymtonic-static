@@ -85,8 +85,8 @@ const Page = ({
           className="content-container-px">
           <h2 className="page-title">Coaches</h2>
           <h4 className={h4Classes}>
-            They’re exercise trainers, physiotherapists, occupational therapists
-            and fitness instructors trained overseas.
+            They are exercise trainers and fitness instructors who are trained
+            for this programme.
           </h4>
           <h4 className={h4Classes}>
             While they are professionals, the uncles and aunties at our gyms
