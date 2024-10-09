@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { GetStaticPropsContext } from 'next';
 import { getNextStaticProps } from '@wpengine/headless/next';
 import { gql, useQuery } from '@apollo/client';
 import { getApolloClient } from '@wpengine/headless';
@@ -202,8 +201,9 @@ const Page = ({
             </h1>
           </button>
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
-          {stories?.map(({ node: story }) => (
+          {stories?.map(({ node: story }, key) => (
             <Bubble
+              key={jey}
               id={story.slug}
               href={`#${story.slug}`}
               handler={(event) => {

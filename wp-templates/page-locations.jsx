@@ -66,10 +66,12 @@ const query = gql`
               address
               contactNumber
               images {
-                sourceUrl(size: CAROUSEL_MEDIUM)
-                mediaDetails {
-                  width
-                  height
+                nodes {
+                  sourceUrl(size: CAROUSEL_MEDIUM)
+                  mediaDetails {
+                    width
+                    height
+                  }
                 }
               }
               location {
@@ -126,7 +128,17 @@ const query = gql`
             title
             locationFields {
               area
+              address
               contactNumber
+              images {
+                nodes {
+                  sourceUrl(size: CAROUSEL_MEDIUM)
+                  mediaDetails {
+                    width
+                    height
+                  }
+                }
+              }
               location {
                 city
                 country
@@ -151,6 +163,16 @@ const query = gql`
                 id
                 name
                 termTaxonomyId
+              }
+            }
+            featuredImage {
+              node {
+                id
+                mediaDetails {
+                  height
+                  width
+                }
+                sourceUrl(size: MEDIUM)
               }
             }
           }
@@ -545,12 +567,9 @@ const Page = ({
                     rightNavBtnStyle={{
                       right: '3%',
                     }}>
-                    {selected.locationFields.images.map((image) => {
-                      const ratio =
-                        image.mediaDetails.width / image.mediaDetails.height;
-
+                    {selected.locationFields.images.nodes.map((image, key) => {
                       return (
-                        <CarouselCard>
+                        <CarouselCard key={key}>
                           <div
                             className="w-full relative"
                             style={{
@@ -612,13 +631,14 @@ const Page = ({
                   animate="enter"
                   exit="exit"
                   className="w-full max-w-2xl mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
-                  {locationsOpenToPublic?.map(({ node: location }) => {
+                  {locationsOpenToPublic?.map(({ node: location }, key) => {
                     if (
                       location.locationFields.visibility === true ||
                       typeof location.locationFields.visibility === 'undefined'
                     ) {
                       return (
                         <Bubble
+                          key={key}
                           variants={{
                             initial: { y: -20, opacity: 0 },
                             exit: { y: 0, opacity: 1 },
@@ -681,13 +701,14 @@ const Page = ({
                   animate="enter"
                   exit="exit"
                   className="w-full mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
-                  {locationsNotOpenToPublic?.map(({ node: item }) => {
+                  {locationsNotOpenToPublic?.map(({ node: item }, key) => {
                     if (
                       item.locationFields.visibility === true ||
                       typeof item.locationFields.visibility === 'undefined'
                     ) {
                       return (
                         <motion.article
+                          key={key}
                           variants={{
                             initial: { y: -20, opacity: 0 },
                             exit: { y: 0, opacity: 1 },
