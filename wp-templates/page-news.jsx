@@ -32,7 +32,9 @@ const query = gql`
             typeOfLink
             url
             file {
-              mediaItemUrl
+              node {
+                mediaItemUrl
+              }
             }
           }
         }
@@ -65,10 +67,14 @@ const query = gql`
             typeOfLink
             url
             file {
-              mediaItemUrl
+              node {
+                mediaItemUrl
+              }
             }
             articlePhoto {
-              sourceUrl(size: MEDIUM_LARGE)
+              node {
+                sourceUrl(size: MEDIUM_LARGE)
+              }
             }
           }
         }
@@ -265,13 +271,13 @@ const Page = ({
           className={`w-full max-w-lg md:w-5/6 lg:w-full flex flex-wrap flex-row mx-auto justify-center items-start mt-3 ${
             press && press.length > 4 ? 'flex-last-item-align-start' : ''
           }`}>
-          {press?.map(({ node: item }) => (
-            <article className="w-1/4 mb-3 group text-center">
+          {press?.map(({ node: item }, key) => (
+            <article className="w-1/4 mb-3 group text-center" key={key}>
               <Link
                 href={
                   item.moreDetails.typeOfLink === 'external_link'
                     ? item.moreDetails.url
-                    : item.moreDetails.file.mediaItemUrl
+                    : item.moreDetails.file.node.mediaItemUrl
                 }>
                 <a target="_blank">
                   <h1 className="mx-auto group-hover:opacity-90 transition-opacity font-black text-sm mt-1 md:text-base leading-none md:max-w-5/6 px-3 lg:px-0">
@@ -420,12 +426,13 @@ const Page = ({
                 {selected.title}
               </motion.h2>
               {(selected.featuredImage !== null ||
-                selected.moreDetails.articlePhoto?.sourceUrl !== null) &&
+                selected.moreDetails.articlePhoto !== null) &&
                 selected.moreDetails.showPhoto !== null && (
                   <motion.div
                     variants={selectedChildVariant}
                     className="w-full relative mt-3">
                     <Image
+                      alt=""
                       objectFit="cover"
                       width={selected.featuredImage.node.mediaDetails.width}
                       height={selected.featuredImage.node.mediaDetails.height}
@@ -449,9 +456,9 @@ const Page = ({
               </motion.p>
               <Link
                 href={
-                  selected.moreDetails.typeOfLink === 'external_link'
+                  selected.moreDetails.typeOfLink[0] === 'external_link'
                     ? selected.moreDetails.url
-                    : selected.moreDetails.file.mediaItemUrl
+                    : selected.moreDetails.file.node.mediaItemUrl
                 }>
                 <a
                   className="uppercase self-start text-xs mb-12 lg:mb-0 link"

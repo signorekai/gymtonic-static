@@ -49,12 +49,16 @@ const storiesQuery = gql`
             videoTitle
             youtubeVideo
             gym {
-              ... on Location {
-                id
-                uri
-                title
-                locationFields {
-                  visibility
+              edges {
+                node {
+                  ... on Location {
+                    id
+                    uri
+                    title
+                    locationFields {
+                      visibility
+                    }
+                  }
                 }
               }
             }
@@ -203,7 +207,7 @@ const Page = ({
           {/* <div className="hidden lg:block pointer-events-none fixed w-full top-0 h-64 z-10 bg-gradient-to-b from-white to-transparent" /> */}
           {stories?.map(({ node: story }, key) => (
             <Bubble
-              key={jey}
+              key={key}
               id={story.slug}
               href={`#${story.slug}`}
               handler={(event) => {
@@ -260,7 +264,7 @@ const Page = ({
           videoTitle={selectedStory?.storyFields.videoTitle}
           youtubeVideo={selectedStory?.storyFields.youtubeVideo}
           description={selectedStory?.storyFields.description}
-          gyms={selectedStory?.storyFields.gym}
+          gyms={selectedStory?.storyFields.gym?.edges.node}
         />
       )}
       <div className="fixed bottom-5 right-5 z-40">
