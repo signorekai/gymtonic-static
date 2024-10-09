@@ -35,7 +35,9 @@ const query = gql`
             typeOfLink
             url
             file {
-              mediaItemUrl
+              node {
+                mediaItemUrl
+              }
             }
           }
         }
@@ -206,7 +208,7 @@ const Page = ({
                 }
                 file={
                   researchPaper.moreResearchInfo.file
-                    ? researchPaper.moreResearchInfo.file.mediaItemUrl
+                    ? researchPaper.moreResearchInfo.file.node.mediaItemUrl
                     : null
                 }
                 url={researchPaper.moreResearchInfo.url}
