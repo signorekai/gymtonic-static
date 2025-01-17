@@ -17,7 +17,9 @@ const StoryCard = ({
   useEffect(() => {
     const newID =
       youtubeVideo &&
-      /youtu(?:.*\/v\/|.*v=|\.be\/)([A-Za-z0-9_-]{11})/.exec(youtubeVideo);
+      /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/.exec(youtubeVideo);
+
+    console.log(22, youtubeID, youtubeVideo)
 
     if (newID && newID.length > 1) {
       setYoutubeId(newID[1]);
