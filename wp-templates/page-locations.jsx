@@ -686,7 +686,7 @@ const Page = ({
                     enter: { y: 0, opacity: 1 },
                   }}
                   className="font-bold text-lg lg:text-xl mt-8 leading-none text-center">
-                  By referral only
+                    Not available for general public
                 </motion.h2>
                 <motion.section
                   variants={{
