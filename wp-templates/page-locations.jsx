@@ -64,6 +64,7 @@ const query = gql`
             locationFields {
               area
               address
+              openingSoon2026
               contactNumber
               images {
                 nodes {
@@ -129,6 +130,7 @@ const query = gql`
             locationFields {
               area
               address
+              openingSoon2026
               contactNumber
               images {
                 nodes {
@@ -668,9 +670,11 @@ const Page = ({
                           title={location.title}
                           subtitle={location.locationFields.area}
                           thumbnail={
-                            location.featuredImage
-                              ? location.featuredImage.node.sourceUrl
-                              : '/images/map-no-icon.png'
+                            location.locationFields.openingSoon2026 
+                              ? '/images/map-2026.jpg' 
+                              : location.featuredImage
+                                ? location.featuredImage.node.sourceUrl
+                                : '/images/map-no-icon.png'
                           }
                         />
                       );
