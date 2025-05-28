@@ -32,6 +32,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.4",
     "@wpengine/headless": "^0.6.3",
+    "cross-fetch": "^4.1.0",
     "framer-motion": "^4.1.17",
     "google-map-react": "^2.1.10",
     "graphql": "^15.4.0",
@@ -76,5 +77,8 @@
     "tailwindcss": "^2.2.2",
     "tailwindcss-pseudo-elements": "^2.0.0",
     "wait-on": "^5.2.1"
-  }
+  },
+  "trustedDependencies": [
+    "husky"
+  ]
 }
