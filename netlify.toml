@@ -1,5 +1,8 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  PUBLIC_BUILD_START_TIME = "$(date +%s)"
   
 [[redirects]]
   from = "/wp-content/*"
