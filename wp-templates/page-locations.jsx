@@ -65,6 +65,7 @@ const query = gql`
               area
               address
               openingSoon2026
+              clickable
               contactNumber
               images {
                 nodes {
@@ -647,6 +648,7 @@ const Page = ({
                             enter: { y: 0, opacity: 1 },
                           }}
                           href={location.uri}
+                          clickable={location.locationFields.clickable}
                           handler={(evt) => {
                             window.dispatchEvent(new Event('resize'));
                             clickHandler(location, evt);

@@ -2,8 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const BubbleLink = ({ href, children, clickHandler }) => {
-  if (href) {
+const BubbleLink = ({ href, children, clickHandler, clickable }) => {
+  if (href && clickable === true) {
     return (
       <Link href={href}>
         <a
@@ -44,9 +44,12 @@ const Bubble = ({
   subTitleClassName = 'text-xs',
   variants = {},
   comingSoon = false,
+  clickable = true,
 }) => {
   const clickHandler = (evt) => {
-    handler(evt);
+    if (clickable) {
+      handler(evt);
+    }
     if (window.innerWidth < 1024) {
       window.scrollTo({ left: 0, top: 0 });
     }
@@ -55,8 +58,8 @@ const Bubble = ({
   return (
     <article
       id={id}
-      className={`bubble px-4 pb-8 md:pb-12 flex flex-col justify-center md:justify-start group z-20 relative ${className}`}>
-      <BubbleLink href={href} clickHandler={clickHandler}>
+      className={`bubble px-4 pb-8 md:pb-12 flex flex-col justify-center md:justify-start group z-20 relative ${className} ${clickable === false && 'pointer-events-none'}`}>
+      <BubbleLink href={href} clickHandler={clickHandler} clickable={clickable}>
         {thumbnail && (
           <div
             className={`overflow-hidden bg-transparent border-box relative rounded-full w-screen-2/5 h-screen-w-2/5 md:w-36 md:h-36 mb-3 mx-auto border-${borderColor} hover:border-red border-4 transition-all !content-box bubble__image-wrapper ${imageWrapperClassName}`}>
