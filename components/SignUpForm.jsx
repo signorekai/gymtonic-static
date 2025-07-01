@@ -161,6 +161,8 @@ const query = gql`
             locationFields {
               area
               openingSoon
+              visibility
+              clickable
             }
             featuredImage {
               node {
@@ -219,7 +221,12 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
   });
 
   const { data } = useQuery(query);
-  const locations = data?.openToPublic.locations?.edges;
+
+  const locations = useMemo(() => {
+    return data?.openToPublic.locations?.edges.filter(({ node: location }) => {
+      return location.locationFields.visibility && location.locationFields.clickable;
+    })
+  }, [data])
 
   useEffect(() => {
     reset(defaultValues);
