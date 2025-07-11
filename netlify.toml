@@ -7,6 +7,9 @@
 
 [build.environment]
   PUBLIC_BUILD_START_TIME = "$(date +%s)"
+
+[build]
+  command = "npm install --platform=linux --arch=x64 sharp && npm run build"
   
 [[redirects]]
   from = "/wp-content/*"
