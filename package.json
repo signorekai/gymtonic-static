@@ -55,7 +55,7 @@
     "validatorjs": "^3.22.1"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^4.41.3",
+    "@netlify/plugin-nextjs": "^5.11.5",
     "@svgr/webpack": "^5.5.0",
     "autoprefixer": "^10.2.6",
     "eslint": "^7.15.0",
