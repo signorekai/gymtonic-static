@@ -9,3 +9,7 @@
   to = "https://backend.gymtonic.sg/wp-content/:splat"
   status = 200
   force = true
+
+[functions]
+  external_node_modules = ["sharp"]
+  included_files = ["node_modules/sharp/**/*"]
