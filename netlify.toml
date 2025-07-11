@@ -7,6 +7,9 @@
 
 [build.environment]
   PUBLIC_BUILD_START_TIME = "$(date +%s)"
+  npm_config_target_platform = "linux"
+  npm_config_target_arch = "x64"
+  npm_config_cache = "/opt/buildhome/.npm"
 
 [build]
   command = "yarn cache clean && yarn add sharp --ignore-engines && yarn run build"
