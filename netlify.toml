@@ -9,7 +9,7 @@
   PUBLIC_BUILD_START_TIME = "$(date +%s)"
 
 [build]
-  command = "yarn cache clean && yarn add sharp --ignore-engines && npm run build"
+  command = "yarn cache clean && yarn add sharp --ignore-engines && yarn run build"
   
 [[redirects]]
   from = "/wp-content/*"
