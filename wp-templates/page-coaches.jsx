@@ -118,6 +118,7 @@ const Page = ({
             </div>
             <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
               <Image
+                unoptimized={true}
                 loading="eager"
                 src={Coach1}
                 alt="Coach Jason Tan"
@@ -139,6 +140,7 @@ const Page = ({
             </div>
             <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
               <Image
+                unoptimized={true}                
                 loading="eager"
                 src={Coach2}
                 alt="Coach Looi Yuan Hui"
@@ -161,6 +163,7 @@ const Page = ({
             </div>
             <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
               <Image
+                unoptimized={true}
                 loading="eager"
                 src={Coach3}
                 alt="Coach Andrew Yeo"
@@ -182,6 +185,7 @@ const Page = ({
             </div>
             <div className="w-1/2 h-auto relative text-center mx-auto mt-2 pointer-events-none">
               <Image
+                unoptimized={true}
                 loading="eager"
                 src={Coach4}
                 alt="Coach Joseph Chan"

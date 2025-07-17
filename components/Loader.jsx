@@ -64,7 +64,7 @@ function Loader({ showLoader, setShowLoader }) {
         animate={animControls}
         transition={transition}
         className="fixed z-70 top-0 left-0 w-full h-full pointer-events-none bg-pink flex flex-col justify-center items-center">
-        <Image src={loading} alt="" width={126} height={222} />
+        <Image src={loading} alt="" width={126} height={222} unoptimized={true} />
       </motion.div>
     </AnimatePresence>
   );
