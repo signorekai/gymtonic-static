@@ -68,14 +68,10 @@ export default async function handler(req, res) {
     console.log(57, searchTerm)
     try {
       const query = gql`
-        query SearchLocationsByTitle($searchTerm: String!) {
-          locations(where: {search: $searchTerm}) {
-            edges {
-              node {
-                locationFields {
-                  emailTemplate
-                }
-              }
+        query SearchLocationsByTitle($searchTerm: ID!) {
+          location(id: $searchTerm) {
+            locationFields {
+              emailTemplate
             }
           }
         }
@@ -88,8 +84,8 @@ export default async function handler(req, res) {
 
       // console.log('Query and variables:', JSON.stringify({ query: query.loc.source.body, variables: { searchTerm } }));
       
-      if (data.locations.edges.length > 0) {
-        return data.locations.edges[0].node.locationFields.emailTemplate;
+      if (data.location) {
+        return data.location.locationFields.emailTemplate;
       } else {
         console.log('No locations found for:', searchTerm);
         return null;
@@ -101,7 +97,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const template = await searchLocations(data.selectedGym)
+    const template = await searchLocations(data.selectedGymId)
     let email;
     if (data.type === 'myself') {
       email = replaceTemplate(template, data)

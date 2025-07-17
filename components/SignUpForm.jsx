@@ -906,6 +906,10 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                             'selectedGym',
                                             `${location.title} (${location.locationFields.area})`,
                                           );
+                                          setValue(
+                                            'selectedGymId',
+                                            location.id
+                                          )
                                           setShowLocationSelector(false);
                                         }
                                         // clickHandler(location);
