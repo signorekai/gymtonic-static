@@ -64,7 +64,7 @@ const TechCard = ({
           enter: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
         className="w-2/3 md:w-1/3 mx-auto pointer-events-none">
-        <Image src={headerSrc} sizes="210px" alt={title} />
+        <Image unoptimized src={headerSrc} sizes="210px" alt={title} />
       </motion.div>
       <div className="flex flex-row w-full justify-center items-start md:items-center mt-2 px-2 mb-8 flex-wrap md:flex-nowrap">
         <div className="md:order-2 w-3/4 md:w-1/2 pointer-events-none">
@@ -181,7 +181,7 @@ const TechCard = ({
                 initial="initial"
                 animate="animate"
                 exit="exit">
-                <Image src={CollapseBtn} width={28} height={28} alt="" />
+                <Image unoptimized src={CollapseBtn} width={28} height={28} alt="" />
               </motion.div>
             ) : (
               <motion.div
@@ -203,7 +203,7 @@ const TechCard = ({
                 initial="initial"
                 animate="animate"
                 exit="exit">
-                <Image src={ExpandBtn} width={28} height={28} alt="" />
+                <Image unoptimized src={ExpandBtn} width={28} height={28} alt="" />
               </motion.div>
             )}
           </AnimatePresence>
@@ -267,7 +267,7 @@ const Page = ({
                 },
               ]}>
               <div className="text-center">
-                <Image src={HumanIllustration3} alt="" />
+                <Image unoptimized src={HumanIllustration3} alt="" />
               </div>
               These machines work multiple muscle groups in the legs. The
               compound exercise primarily targets the quadriceps, hamstrings,
@@ -291,7 +291,7 @@ const Page = ({
                 },
               ]}>
               <div className="text-center">
-                <Image src={HumanIllustration1} alt="" />
+                <Image unoptimized src={HumanIllustration1} alt="" />
               </div>
               These machines primarily strengthen the quadriceps and hamstrings
               via movements of leg extension and flexion. Doing so can reduce
@@ -317,7 +317,7 @@ const Page = ({
                 },
               ]}>
               <div className="text-center">
-                <Image src={HumanIllustration7} alt="" />
+                <Image unoptimized src={HumanIllustration7} alt="" />
               </div>
               These machines work the upper body muscles via push and pull
               motions. The push motion primarily targets the pectoral muscles at
@@ -341,7 +341,7 @@ const Page = ({
                 },
               ]}>
               <div className="text-center">
-                <Image src={HumanIllustration5} alt="" />
+                <Image unoptimized src={HumanIllustration5} alt="" />
               </div>
               These machines strengthen the abdominal and back extensor muscles
               through crunch and back extension movements. Doing so can improve
@@ -363,7 +363,7 @@ const Page = ({
                 },
               ]}>
               <div className="text-center">
-                <Image src={HumanIllustration6} alt="" />
+                <Image unoptimized src={HumanIllustration6} alt="" />
               </div>
               These machines primarily target the hip abductors and adductors.
               The hip abductors bring your legs away from the centre of the

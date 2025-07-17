@@ -43,6 +43,7 @@ const Page = ({
         </motion.h1>
         <div className="w-2/3 md:w-1/2 absolute bottom-0 left-0">
           <Image
+            unoptimized={true}
             src={ScreenOnRed}
             sizes="(min-width: 768px) 360px, 240px"
             quality={100}

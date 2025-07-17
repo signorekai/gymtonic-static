@@ -30,7 +30,7 @@ const Marker = ({
       }px)`,
     }}
     className={className}>
-    <Image src={icon.url} width={icon.width} height={icon.height} alt={title} />
+    <Image src={icon.url} width={icon.width} height={icon.height} alt={title} unoptimized />
   </button>
 );
 

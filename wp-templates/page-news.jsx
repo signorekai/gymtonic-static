@@ -432,6 +432,7 @@ const Page = ({
                     variants={selectedChildVariant}
                     className="w-full relative mt-3">
                     <Image
+                      unoptimized
                       alt=""
                       objectFit="cover"
                       width={selected.featuredImage.node.mediaDetails.width}
