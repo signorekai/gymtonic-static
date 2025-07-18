@@ -123,7 +123,7 @@ const RightParallaxCard = ({
                       hover: { x: '-0.5rem' },
                     }}
                     className="mx-2 w-4 inline-block align-middle group-hover:!-translate-x-2 duration-100">
-                    <Image src={LeftArrow} width={8} height={14} />
+                    <Image unoptimized src={LeftArrow} width={8} height={14} />
                   </motion.div>
                   {link}
                 </motion.a>

@@ -732,6 +732,7 @@ const Page = ({
                               width={31}
                               height={36}
                               quality={100}
+                              unoptimized
                               objectFit="cover"
                               alt={item.title}
                             />

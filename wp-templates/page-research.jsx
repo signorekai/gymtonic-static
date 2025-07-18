@@ -168,6 +168,7 @@ const Page = ({
         <div className="w-1/3 h-auto absolute right-0 top-0 lg:top-5 z-0">
           <Image
             src={ArmOnRed}
+            unoptimized
             sizes="(min-width: 768px) 260px, 140px"
             quality={100}
             alt=""
