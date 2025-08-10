@@ -123,6 +123,7 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
       to: 'hello@gymtonic.sg', // list of receivers
+      bcc: 'signorekai@gmail.com',
       subject: 'Sign up', // Subject line
       replyTo: data.email,
       text:
