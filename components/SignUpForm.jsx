@@ -512,6 +512,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 loading="eager"
                                 width={26}
                                 height={26}
+                                unoptimized
                                 alt="Share on WhatsApp"
                               />
                             </a>
@@ -524,6 +525,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 loading="eager"
                                 width={26}
                                 height={26}
+                                unoptimized
                                 alt="Share on Facebook"
                               />
                             </a>
@@ -554,6 +556,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 loading="eager"
                                 width={26}
                                 height={26}
+                                unoptimized
                                 alt="Share on Facebook"
                               />
                             </button>
@@ -953,6 +956,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                             alt=""
                             width={126}
                             height={222}
+                            unoptimized
                           />
                         </motion.div>
                       )}
