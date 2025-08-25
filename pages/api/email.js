@@ -64,9 +64,8 @@ export default async function handler(req, res) {
     return str.replace(/\s*\([^)]*\)/g, '').trim();
   }
 
-  async function sendToTelegram(error) {
+  async function sendToTelegram(message) {
     try {
-      const message = `Email API Error: ${error.message || JSON.stringify(error)}`;
       const response = await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: {
@@ -152,12 +151,13 @@ export default async function handler(req, res) {
       replyTo: data.email,
       text
     });
-    
-    await sendToTelegram({message: text})
 
+    await sendToTelegram(`New registration: \n\n${text}`)
     res.status(200).json({...data})
+
   } catch (error) {
-    await sendToTelegram(error);
+    const message = `Email API Error: ${error.message || JSON.stringify(error)}`;
+    await sendToTelegram(message);
     res.status(400).json({ error });
   }
 
