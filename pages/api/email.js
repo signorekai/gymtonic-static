@@ -64,6 +64,24 @@ export default async function handler(req, res) {
     return str.replace(/\s*\([^)]*\)/g, '').trim();
   }
 
+  async function sendToTelegram(error) {
+    try {
+      const message = `Email API Error: ${error.message || JSON.stringify(error)}`;
+      const response = await fetch(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: 177731198,
+          text: message
+        })
+      });
+    } catch (telegramError) {
+      console.error('Failed to send Telegram notification:', telegramError);
+    }
+  }
+
   async function searchLocations(searchTerm) {
     console.log(57, searchTerm)
     try {
@@ -121,21 +139,25 @@ export default async function handler(req, res) {
       });
     }
 
+    const text = 
+              data.type === 'myself'
+          ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
+          : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
+
     await transporter.sendMail({
       from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
       to: 'hello@gymtonic.sg', // list of receivers
       bcc: 'signorekai@gmail.com',
       subject: 'Sign up', // Subject line
       replyTo: data.email,
-      text:
-        data.type === 'myself'
-          ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
-          : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`,
+      text
     });
     
+    await sendToTelegram({message: text})
 
     res.status(200).json({...data})
   } catch (error) {
+    await sendToTelegram(error);
     res.status(400).json({ error });
   }
 
