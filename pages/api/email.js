@@ -34,8 +34,7 @@ export default async function handler(req, res) {
   );
 
   if (validation.fails()) {
-    res.status(400).json({ errors: validation.errors.all });
-    return false;
+    throw new Error({message: validation.errors.all})
   }
 
   const transporter = nodemailer.createTransport({
@@ -55,7 +54,12 @@ export default async function handler(req, res) {
   })
 
   function replaceTemplate(template, data) {
-    return template.replace(/{%(\w+)%}/g, (match, key) => {
+    let returnTemplate = "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nContact: {%contact%}\nSelected Gym: {%selectedGym%}"
+    if (typeof template !== undefined) {
+      returnTemplate = template;
+    }
+
+    return returnTemplate.replace(/{%(\w+)%}/g, (match, key) => {
       return data.hasOwnProperty(key) ? data[key] : match;
     });
   }
@@ -115,6 +119,10 @@ export default async function handler(req, res) {
 
   try {
     const template = await searchLocations(data.selectedGymId)
+    if (typeof template === undefined) {
+      await sendToTelegram(`Unable to find location template for: \n\n${JSON.stringify(data, null, 2)}`)
+    }
+
     let email;
     if (data.type === 'myself') {
       email = replaceTemplate(template, data)
@@ -127,6 +135,13 @@ export default async function handler(req, res) {
       })
     }
 
+    const text = 
+              data.type === 'myself'
+          ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
+          : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
+
+    await sendToTelegram(`New Email: \n\n${email}---\n\nNew registration: \n\n${text}`)
+
     if (template !== null) {
       // send acknowledgement email
       await transporter.sendMail({
@@ -138,10 +153,6 @@ export default async function handler(req, res) {
       });
     }
 
-    const text = 
-              data.type === 'myself'
-          ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
-          : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
 
     await transporter.sendMail({
       from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
@@ -152,11 +163,10 @@ export default async function handler(req, res) {
       text
     });
 
-    await sendToTelegram(`New registration: \n\n${text}`)
     res.status(200).json({...data})
 
   } catch (error) {
-    const message = `Email API Error: ${error.message || JSON.stringify(error)}`;
+    const message = `Email API Error: ${error.message || JSON.stringify(error)}\n\nFailed to send to `;
     await sendToTelegram(message);
     res.status(400).json({ error });
   }
