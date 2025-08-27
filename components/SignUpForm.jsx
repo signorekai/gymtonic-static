@@ -203,6 +203,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
   });
 
   const watchSelectedGym = watch('selectedGym');
+  const watchSelectedGymId = watch('selectedGymId')
   const watchType = watch('type');
   const onSubmit = handleSubmit((data) => {
     setLoading(true);
@@ -880,9 +881,26 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                     className="w-1/2 md:w-1/3">
                                     <input
                                       className="hidden"
-                                      id={location.id}
+                                      id={`${ location.id }-selected-id`}
                                       type="radio"
-                                      key={location.id}
+                                      key={`${ location.id }-selected-id`}
+                                      disabled={
+                                        !watchType &&
+                                        watchSelectedGymId !== location.id
+                                      }
+                                      defaultChecked={
+                                        watchSelectedGymId === location.id
+                                      }
+                                      value={`${location.title} (${location.locationFields.area})`}
+                                      {...register('selectedGymId', {
+                                        required: true,
+                                      })}
+                                    />
+                                    <input
+                                      className="hidden"
+                                      id={`${location.id}-selectedGym`}
+                                      type="radio"
+                                      key={`${location.id}-selectedGym`}
                                       disabled={
                                         !watchType &&
                                         watchSelectedGym !==
