@@ -119,6 +119,7 @@ export default async function handler(req, res) {
       }
     } catch (error) {
       console.error('Error searching locations:', error);
+      console.error(data)
       return "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nContact: {%contact%}\nSelected Gym: {%selectedGym%}";
     }
   }
@@ -148,26 +149,26 @@ export default async function handler(req, res) {
     : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
 
     
-    if (template !== null) {
-      // send acknowledgement email
-      await transporter.sendMail({
-        from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
-        to: data.email, // list of receivershello@gymtonic.sg
-        bcc: 'signorekai@gmail.com',
-        subject: 'Thank you for signing up for GymTonic', // Subject line
-        text: email
-      });
-    }
+    // if (template !== null) {
+    //   // send acknowledgement email
+    //   await transporter.sendMail({
+    //     from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
+    //     to: data.email, // list of receivershello@gymtonic.sg
+    //     bcc: 'signorekai@gmail.com',
+    //     subject: 'Thank you for signing up for GymTonic', // Subject line
+    //     text: email
+    //   });
+    // }
     
     
-    await transporter.sendMail({
-      from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
-      to: 'hello@gymtonic.sg', // list of receivers
-      bcc: 'signorekai@gmail.com',
-      subject: 'Sign up', // Subject line
-      replyTo: data.email,
-      text
-    });
+    // await transporter.sendMail({
+    //   from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
+    //   to: 'hello@gymtonic.sg', // list of receivers
+    //   bcc: 'signorekai@gmail.com',
+    //   subject: 'Sign up', // Subject line
+    //   replyTo: data.email,
+    //   text
+    // });
     await sendToTelegram(`New Email: \n\n${email}\n\n---\n\nNew registration: \n\n${text}`)
 
     res.status(200).json({...data})
