@@ -1,10 +1,10 @@
-import { gql, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
 import nodemailer from 'nodemailer';
 import Validator from 'validatorjs';
 require('cross-fetch/polyfill');
 
 export default async function handler(req, res) {
-  const testAccount = await nodemailer.createTestAccount();
+  // const testAccount = await nodemailer.createTestAccount();
 
   const rulesForSelf = {
     name: 'required|string',
@@ -65,7 +65,11 @@ export default async function handler(req, res) {
   }
 
   function removeParentheses(str) {
-    return str.replace(/\s*\([^)]*\)/g, '').trim();
+    if (typeof str === 'string') {
+      return str.replace(/\s*\([^)]*\)/g, '').trim();
+    } else {
+      return str;
+    }
   }
 
   async function sendToTelegram(message) {
@@ -98,9 +102,11 @@ export default async function handler(req, res) {
         }
       `;
 
+      const searchTerm = removeParentheses(searchTerm);
+
       const { data } = await client.query({
         query,
-        variables: { searchTerm: removeParentheses(searchTerm) }
+        variables: { searchTerm }
       });
 
       // console.log('Query and variables:', JSON.stringify({ query: query.loc.source.body, variables: { searchTerm } }));
@@ -113,14 +119,15 @@ export default async function handler(req, res) {
       }
     } catch (error) {
       console.error('Error searching locations:', error);
-      throw error;
+      return "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nContact: {%contact%}\nSelected Gym: {%selectedGym%}";
     }
   }
 
   try {
     const template = await searchLocations(data.selectedGymId)
-    if (typeof template === undefined) {
-      await sendToTelegram(`Unable to find location template for: \n\n${JSON.stringify(data, null, 2)}`)
+
+    if (template === null) {
+      await sendToTelegram(`Unable to find location template, using default`)
     }
 
     let email;
@@ -136,12 +143,11 @@ export default async function handler(req, res) {
     }
 
     const text = 
-              data.type === 'myself'
-          ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
-          : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
+      data.type === 'myself'
+    ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
+    : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
 
-    await sendToTelegram(`New Email: \n\n${email}---\n\nNew registration: \n\n${text}`)
-
+    
     if (template !== null) {
       // send acknowledgement email
       await transporter.sendMail({
@@ -152,8 +158,8 @@ export default async function handler(req, res) {
         text: email
       });
     }
-
-
+    
+    
     await transporter.sendMail({
       from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
       to: 'hello@gymtonic.sg', // list of receivers
@@ -162,11 +168,12 @@ export default async function handler(req, res) {
       replyTo: data.email,
       text
     });
+    await sendToTelegram(`New Email: \n\n${email}\n\n---\n\nNew registration: \n\n${text}`)
 
     res.status(200).json({...data})
 
   } catch (error) {
-    const message = `Email API Error: ${error.message || JSON.stringify(error)}\n\nFailed to send to `;
+    const message = `Email API Error: ${error.message || JSON.stringify(error)}\n\n${JSON.stringify(data, null, 2)}`;
     await sendToTelegram(message);
     res.status(400).json({ error });
   }
