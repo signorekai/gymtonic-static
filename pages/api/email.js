@@ -45,6 +45,9 @@ export default async function handler(req, res) {
       user: process.env.CONTACT_EMAIL,
       pass: process.env.CONTACT_EMAIL_PASS,
     },
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
   const client = new ApolloClient({
