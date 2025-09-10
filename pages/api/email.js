@@ -157,7 +157,6 @@ export default async function handler(req, res) {
       await transporter.sendMail({
         from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
         to: data.email, // list of receivershello@gymtonic.sg
-        bcc: 'signorekai@gmail.com',
         subject: 'Thank you for signing up for GymTonic', // Subject line
         text: email
       });
@@ -167,7 +166,6 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
       to: 'hello@gymtonic.sg', // list of receivers
-      bcc: 'signorekai@gmail.com',
       subject: 'Sign up', // Subject line
       replyTo: data.email,
       text
