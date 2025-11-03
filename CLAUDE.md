@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Standard Patterns
+
+- Before you propose any edits, I want you to list down the what your plan is, so that I can review it.
+
 ## Development Commands
 
 - **Start development server**: `npm run dev` (available at http://localhost:3000)
