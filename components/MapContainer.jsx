@@ -112,7 +112,7 @@ const MapContainer = ({
             {...item}
             key={item.id}
             clickHandler={(evt) => {
-              if (item.clickHandler) item.clickHandler(evt);
+              if (item.clickable && item.clickHandler) item.clickHandler(evt);
             }}
             mouseOverHandler={(evt) => {
               if (item.mouseOverHandler) item.mouseOverHandler(evt);

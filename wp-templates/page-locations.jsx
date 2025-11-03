@@ -377,6 +377,7 @@ const Page = ({
   const markers = useMemo(() => {
     const allMarkers = [];
     locationsOpenToPublic?.forEach(({ node: location }) => {
+      console.log(380, location.locationFields);
       allMarkers.push({
         position: {
           lat: location.locationFields.location.latitude,
@@ -388,25 +389,35 @@ const Page = ({
           height: 36,
         },
         title:
-          location.locationFields.openingSoon === null ||
-          location.locationFields.openingSoon === false
+          (location.locationFields.openingSoon === null ||
+          location.locationFields.openingSoon === false) && (
+            location.locationFields.openingSoon2026 === null ||
+            location.locationFields.openingSoon2026 === false 
+          )
             ? location.title
             : `${location.title} - Opening Soon`,
         id: location.id,
         uri: location.uri,
         className:
-          location.locationFields.openingSoon === null ||
-          location.locationFields.openingSoon === false
+          (location.locationFields.openingSoon === null ||
+          location.locationFields.openingSoon === false) || (
+            location.locationFields.openingSoon2026 === null ||
+            location.locationFields.openingSoon2026 === false 
+          )
             ? ''
             : 'hover:cursor-default',
         clickHandler: () => {
           if (
-            location.locationFields.openingSoon === null ||
-            location.locationFields.openingSoon === false
+            (location.locationFields.openingSoon === null ||
+            location.locationFields.openingSoon === false) || (
+              location.locationFields.openingSoon2026 === null ||
+              location.locationFields.openingSoon2026 === false 
+            )
           ) {
             clickHandler(location);
           }
         },
+        clickable: location.locationFields.openingSoon === false && location.locationFields.openingSoon2026 === false,
       });
     });
 
@@ -535,7 +546,7 @@ const Page = ({
                   </Link>
                 </div>
                 <section className="flex flex-col w-full items-center justify-end min-h-screen-1/8 overflow-hidden">
-                  <button
+                  {selected?.locationFields.openingSoon === false && selected?.locationFields.openingSoon2026 === false && <button
                     className="btn-sign--up hover:cursor-signup"
                     type="button"
                     onClick={() => {
@@ -546,7 +557,7 @@ const Page = ({
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
                       Sign Up
                     </div>
-                  </button>
+                  </button>}
                 </section>
               </section>
               {selected?.locationFields.images && (
