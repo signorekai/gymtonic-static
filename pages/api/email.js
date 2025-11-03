@@ -92,8 +92,8 @@ export default async function handler(req, res) {
     }
   }
 
-  async function searchLocations(searchTerm) {
-    console.log(57, searchTerm)
+  async function searchLocations(id) {
+    console.log('searching for', id)
     try {
       const query = gql`
         query SearchLocationsByTitle($searchTerm: ID!) {
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
         }
       `;
 
-      const searchTerm = removeParentheses(searchTerm);
+      const searchTerm = removeParentheses(id);
 
       const { data } = await client.query({
         query,
