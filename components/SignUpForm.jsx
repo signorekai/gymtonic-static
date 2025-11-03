@@ -212,8 +212,10 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then(() => {
-        setSuccess(true);
+      .then((response) => {
+        if (response.ok) {
+          setSuccess(true);
+        }
         setLoading(false);
       })
       .catch(() => {
