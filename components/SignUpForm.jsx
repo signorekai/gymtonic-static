@@ -213,9 +213,7 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
     })
       .then((res) => res.json())
       .then((response) => {
-        if (response.ok) {
-          setSuccess(true);
-        }
+        setSuccess(true);
         setLoading(false);
       })
       .catch(() => {
@@ -864,6 +862,12 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                         </svg>
                       </button>
                       <p className="text-center mb-4">{watchSelectedGym}</p>
+                      <input
+                        type="hidden"
+                        {...register('selectedGymId', {
+                          required: true,
+                        })}
+                      />
                       <AnimatePresence exitBeforeEnter>
                         {showLocationSelector && (
                           <motion.div
@@ -881,23 +885,6 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                     key={location.id}
                                     htmlFor={location.id}
                                     className="w-1/2 md:w-1/3">
-                                    <input
-                                      className="hidden"
-                                      id={`${ location.id }-selected-id`}
-                                      type="radio"
-                                      key={`${ location.id }-selected-id`}
-                                      disabled={
-                                        !watchType &&
-                                        watchSelectedGymId !== location.id
-                                      }
-                                      defaultChecked={
-                                        watchSelectedGymId === location.id
-                                      }
-                                      value={`${location.title} (${location.locationFields.area})`}
-                                      {...register('selectedGymId', {
-                                        required: true,
-                                      })}
-                                    />
                                     <input
                                       className="hidden"
                                       id={`${location.id}-selectedGym`}
@@ -1010,6 +997,7 @@ export default function withSignUpForm(Component) {
         showForm: false,
         defaultValues: {
           selectedGym: '',
+          selectedGymId: '',
         },
       };
     }
