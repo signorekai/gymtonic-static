@@ -377,7 +377,6 @@ const Page = ({
   const markers = useMemo(() => {
     const allMarkers = [];
     locationsOpenToPublic?.forEach(({ node: location }) => {
-      console.log(380, location.locationFields);
       allMarkers.push({
         position: {
           lat: location.locationFields.location.latitude,
@@ -552,6 +551,7 @@ const Page = ({
                     onClick={() => {
                       setShowSignUpForm(true, {
                         selectedGym: `${selected?.title} (${selected?.locationFields.area})`,
+                        selectedGymId: selected.id,
                       });
                     }}>
                     <div className="rounded-full uppercase text-xs pt-3 bg-red text-white w-24 h-24 -mb-16 text-center">
