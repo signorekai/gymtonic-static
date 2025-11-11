@@ -34,7 +34,7 @@ const defaults = {
   seniorAge: `Senior's Age`,
   seniorAddress: `Senior's Home Address`,
   warning:
-    'Each sign-up is a commitment of 24 sessions. Twice weekly, ~1 hour/session with guidance from a trainer.<br />Please note that transportation is not provided.',
+    'Each sign-up is a commitment of 24 sessions. Twice weekly, ~1 hour/session with guidance from a trainer. Pricing varies between centres, ranging from $10 to $20 per session. Please note that transportation is not provided.',
   selectGym: 'Select preferred gym',
   signUpForMyself: 'I am signing up for myself',
   signUpForSomeoneElse: 'I am signing up for someone else',
@@ -65,7 +65,7 @@ const text = {
     seniorAge: '长者年龄',
     seniorAddress: '长者地址',
     warning:
-      '报名时，需签约24堂课，每周两次。1小时的运动，有教练引导。<br />报名者需安排自己的交通',
+      '报名时，需签约24堂课，每周两次。1小时的运动，有教练引导。不同中心的收费不一，每次训练介于 $10 至 $20 之间。报名者需安排自己的交通。',
     selectGym: '您首选的健得力中心',
     signUpForMyself: '我为自己报名',
     signUpForSomeoneElse: '我为别人报名',
@@ -95,7 +95,7 @@ const text = {
     seniorAge: `Umur Senior`,
     seniorAddress: `Alamat Senior`,
     warning:
-      'Harap maklum bahawa pengangkutan tidak disediakan. Warga emas mesti pergi ke lokasi Gym Tonic sendiri.',
+      'Setiap pendaftaran adalah untuk 24 sesi. Dua kali seminggu, kira-kira 1 jam setiap sesi dengan bimbingan jurulatih. Harga berbeza antara pusat, dari $10 hingga $20 bagi setiap sesi. Sila ambil perhatian bahawa pengangkutan tidak disediakan.',
     selectGym: 'Pilih gim',
     signUpForMyself: 'Saya mendaftar untuk saya sendiri',
     signUpForSomeoneElse: 'Saya mendaftar untuk orang lain',
@@ -124,7 +124,7 @@ const text = {
     seniorAge: 'மூத்த நபரின் வயது',
     seniorAddress: 'மூத்த நபரின் வீட்டு முகவரி',
     warning:
-      'போக்குவரத்து வாகனம் வழங்கப்படவில்லை என்பதை நினைவில் கொள்க. மூத்த நபர் Gym Tonic இருப்பிடத்திற்கு சொந்தமாக பயணம் செய்ய வேண்டும்.',
+      'ஒவ்வொரு பதிவு 24 அமர்வுகளுக்கான உறுதிப்பாட்டாகும். வாரத்திற்கு இரு முறை, ஒரு பயிற்சியாளர் வழிகாட்டுதலுடன் ஒவ்வொரு அமர்வும் சுமார் 1 மணி நேரம் நீடிக்கும். மையங்களுக்கு இடையில் விலை மாறுபடும், ஒவ்வொரு அமர்வுக்கும் $10 முதல் $20 வரை. போக்குவரத்து வழங்கப்படாது என்பதை தயவுசெய்து கவனத்தில் கொள்ளவும்.',
     selectGym: 'விருப்பமான உடற்பயிற்சி கூடத்தைத் தேர்ந்தெடுக்கவும்',
     signUpForMyself: 'நான் எனக்காக பதிவு செய்கிறேன்',
     signUpForSomeoneElse: 'நான் வேறொருவருக்காக பதிவு செய்கிறேன்',
