@@ -694,8 +694,8 @@ const Page = ({
                     enter: { y: 0, opacity: 1 },
                   }}
                   className="font-bold text-lg lg:text-xl mt-8 leading-none text-center">
-                    Not available for general public
-                </motion.h2>
+                    Not for public registration. The following sites offer Gym Tonic for their own clients only.
+                  </motion.h2>
                 <motion.section
                   variants={{
                     initial: { y: -20, opacity: 0 },
