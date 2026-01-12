@@ -619,15 +619,6 @@ const Page = ({
                   <h1 className="page-title relative z-20 pt-2 pb-4 block">
                     Locations
                   </h1>
-                  <motion.h2
-                    variants={{
-                      initial: { y: -20, opacity: 0 },
-                      exit: { y: 0, opacity: 1 },
-                      enter: { y: 0, opacity: 1 },
-                    }}
-                    className="font-bold text-lg lg:text-xl mt-4 leading-none">
-                    Open to public
-                  </motion.h2>
                 </header>
                 <motion.section
                   variants={{
