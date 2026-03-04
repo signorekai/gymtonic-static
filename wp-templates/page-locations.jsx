@@ -377,46 +377,28 @@ const Page = ({
   const markers = useMemo(() => {
     const allMarkers = [];
     locationsOpenToPublic?.forEach(({ node: location }) => {
+      const active = location.locationFields.openingSoon === false && location.locationFields.openingSoon2026 === false;
+
       allMarkers.push({
         position: {
           lat: location.locationFields.location.latitude,
           lng: location.locationFields.location.longitude,
         },
         icon: {
-          url: '/images/map-icon.png',
+          url: active && location.locationFields.clickable ? '/images/map-icon.png' : '/images/map-icon-inactive.png',
           width: 31,
           height: 36,
         },
-        title:
-          (location.locationFields.openingSoon === null ||
-          location.locationFields.openingSoon === false) && (
-            location.locationFields.openingSoon2026 === null ||
-            location.locationFields.openingSoon2026 === false 
-          )
-            ? location.title
-            : `${location.title} - Opening Soon`,
+        title: `${location.title}${active ? '' : '- Opening Soon'}`,
         id: location.id,
         uri: location.uri,
-        className:
-          (location.locationFields.openingSoon === null ||
-          location.locationFields.openingSoon === false) || (
-            location.locationFields.openingSoon2026 === null ||
-            location.locationFields.openingSoon2026 === false 
-          )
-            ? ''
-            : 'hover:cursor-default',
+        className: `${active ? 'hover:scale-105' :  'hover:cursor-default'}`,
         clickHandler: () => {
-          if (
-            (location.locationFields.openingSoon === null ||
-            location.locationFields.openingSoon === false) || (
-              location.locationFields.openingSoon2026 === null ||
-              location.locationFields.openingSoon2026 === false 
-            )
-          ) {
+          if (active && location.locationFields.clickable) {
             clickHandler(location);
           }
         },
-        clickable: location.locationFields.openingSoon === false && location.locationFields.openingSoon2026 === false,
+        clickable: active
       });
     });
 
@@ -657,7 +639,7 @@ const Page = ({
                           }}
                           className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
                             location.locationFields.openingSoon === true
-                              ? 'pointer-events-none'
+                              ? 'pointer-events-none opening-soon'
                               : ''
                           }`}
                           titleClassName="text-sm md:text-base"
