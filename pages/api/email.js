@@ -151,11 +151,13 @@ export default async function handler(req, res) {
     ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
     : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
 
-    
+    email += '\n\nThis is an automated message, please do not reply directly to this email.\nFor enquiries, contact us at hello@gymtonic.sg or via WhatsApp at +65 9688 2388.';
+
     if (template !== null) {
       // send acknowledgement email
       await transporter.sendMail({
         from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
+        replyTo: 'hello@gymtonic.sg',
         to: data.email, // list of receivershello@gymtonic.sg
         subject: 'Thank you for signing up for GymTonic', // Subject line
         text: email
