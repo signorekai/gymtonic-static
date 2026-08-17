@@ -21,6 +21,7 @@ import withSignUpForm from '../components/SignUpForm';
 import Bubble from '../components/Bubble';
 import MapContainer from '../components/MapContainer';
 import Carousel, { CarouselCard } from '../components/Carousel';
+import RegionFilter, { ALL_REGIONS } from '../components/RegionFilter';
 
 import SignUpBtn from '../components/SignUpButton';
 import SignupBtnSrc from '../assets/images/SignUpButtons-4-1.png';
@@ -49,6 +50,13 @@ import { useActiveHeader } from '../lib/hooks';
 
 const query = gql`
   {
+    regions(first: 100, where: { hideEmpty: false }) {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
     openToPublic: status(id: "dGVybToz") {
       name
       locations(
@@ -100,6 +108,13 @@ const query = gql`
                 id
                 name
                 termTaxonomyId
+              }
+            }
+            regions {
+              nodes {
+                id
+                name
+                slug
               }
             }
             featuredImage {
@@ -168,6 +183,13 @@ const query = gql`
                 termTaxonomyId
               }
             }
+            regions {
+              nodes {
+                id
+                name
+                slug
+              }
+            }
             featuredImage {
               node {
                 id
@@ -200,11 +222,13 @@ const Page = ({
   const { data } = useQuery(query);
   const locationsOpenToPublic = data?.openToPublic.locations?.edges;
   const locationsNotOpenToPublic = data?.notOpenToPublic.locations?.edges;
+  const regions = data?.regions?.nodes;
 
   const [showInfo, setShowInfo] = useState(false);
   const [selected, setSelected] = useState();
   const [currentMapCenter, setCurrentMapCenter] = useState();
   const [activeInfoWindow, setActiveInfoWindow] = useState(undefined);
+  const [activeRegion, setActiveRegion] = useState(ALL_REGIONS);
 
   const mapContainerControls = useAnimation();
   const uriInfo = useUriInfo();
@@ -374,9 +398,40 @@ const Page = ({
     };
   }, [mapContainerControls, setMobileNavBtnStyle, showInfo]);
 
+  // A location can carry more than one region term, so this is a membership
+  // test rather than an equality check.
+  const matchesRegion = useCallback(
+    (location) => {
+      if (activeRegion === ALL_REGIONS) {
+        return true;
+      }
+
+      return (location.regions?.nodes ?? []).some(
+        (region) => region.slug === activeRegion,
+      );
+    },
+    [activeRegion],
+  );
+
+  const visibleLocations = useMemo(() => {
+    return (locationsOpenToPublic ?? [])
+      .map(({ node: location }) => location)
+      .filter((location) => {
+        return (
+          (location.locationFields.visibility === true ||
+            typeof location.locationFields.visibility === 'undefined') &&
+          matchesRegion(location)
+        );
+      });
+  }, [locationsOpenToPublic, matchesRegion]);
+
   const markers = useMemo(() => {
     const allMarkers = [];
     locationsOpenToPublic?.forEach(({ node: location }) => {
+      if (!matchesRegion(location)) {
+        return;
+      }
+
       const active = location.locationFields.openingSoon === false && location.locationFields.openingSoon2026 === false;
 
       allMarkers.push({
@@ -420,7 +475,12 @@ const Page = ({
     });
 
     return allMarkers;
-  }, [locationsOpenToPublic, locationsNotOpenToPublic, clickHandler]);
+  }, [
+    locationsOpenToPublic,
+    locationsNotOpenToPublic,
+    clickHandler,
+    matchesRegion,
+  ]);
 
   return (
     <motion.main
@@ -602,6 +662,17 @@ const Page = ({
                     Locations
                   </h1>
                 </header>
+                <RegionFilter
+                  regions={regions}
+                  activeRegion={activeRegion}
+                  setActiveRegion={setActiveRegion}
+                  variants={{
+                    initial: { y: -20, opacity: 0 },
+                    exit: { y: 0, opacity: 1 },
+                    enter: { y: 0, opacity: 1 },
+                  }}
+                  className="w-full text-center mt-1 mb-2"
+                />
                 <motion.section
                   variants={{
                     initial: { y: -20, opacity: 0 },
@@ -618,55 +689,48 @@ const Page = ({
                   animate="enter"
                   exit="exit"
                   className="w-full max-w-2xl mb-3 text-center flex flex-row flex-wrap justify-center items-start mt-4 flex-last-item-align-start mx-auto md:w-10/12">
-                  {locationsOpenToPublic?.map(({ node: location }, key) => {
-                    if (
-                      location.locationFields.visibility === true ||
-                      typeof location.locationFields.visibility === 'undefined'
-                    ) {
-                      return (
-                        <Bubble
-                          key={key}
-                          variants={{
-                            initial: { y: -20, opacity: 0 },
-                            exit: { y: 0, opacity: 1 },
-                            enter: { y: 0, opacity: 1 },
-                          }}
-                          href={location.uri}
-                          clickable={location.locationFields.clickable}
-                          handler={(evt) => {
-                            window.dispatchEvent(new Event('resize'));
-                            clickHandler(location, evt);
-                          }}
-                          className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
-                            location.locationFields.openingSoon === true
-                              ? 'pointer-events-none opening-soon'
-                              : ''
-                          }`}
-                          titleClassName="text-sm md:text-base"
-                          imageWrapperClassName={`${
-                            location.id === selected?.id
-                              ? 'border-red'
-                              : 'border-white'
-                          } ${
-                            location.locationFields.openingSoon === true
-                              ? 'group-hover:border-0'
-                              : ''
-                          }`}
-                          comingSoon={location.locationFields.openingSoon}
-                          title={location.title}
-                          subtitle={location.locationFields.area}
-                          thumbnail={
-                            location.locationFields.openingSoon2026 
-                              ? '/images/map-2026.jpg' 
-                              : location.featuredImage
-                                ? location.featuredImage.node.sourceUrl
-                                : '/images/map-no-icon.png'
-                          }
-                        />
-                      );
-                    }
-
-                    return <></>;
+                  {visibleLocations.map((location) => {
+                    return (
+                      <Bubble
+                        key={location.id}
+                        variants={{
+                          initial: { y: -20, opacity: 0 },
+                          exit: { y: 0, opacity: 1 },
+                          enter: { y: 0, opacity: 1 },
+                        }}
+                        href={location.uri}
+                        clickable={location.locationFields.clickable}
+                        handler={(evt) => {
+                          window.dispatchEvent(new Event('resize'));
+                          clickHandler(location, evt);
+                        }}
+                        className={`w-1/2 md:w-1/3 lg:w-1/2 xl:w-1/3 ${
+                          location.locationFields.openingSoon === true
+                            ? 'pointer-events-none opening-soon'
+                            : ''
+                        }`}
+                        titleClassName="text-sm md:text-base"
+                        imageWrapperClassName={`${
+                          location.id === selected?.id
+                            ? 'border-red'
+                            : 'border-white'
+                        } ${
+                          location.locationFields.openingSoon === true
+                            ? 'group-hover:border-0'
+                            : ''
+                        }`}
+                        comingSoon={location.locationFields.openingSoon}
+                        title={location.title}
+                        subtitle={location.locationFields.area}
+                        thumbnail={
+                          location.locationFields.openingSoon2026
+                            ? '/images/map-2026.jpg'
+                            : location.featuredImage
+                            ? location.featuredImage.node.sourceUrl
+                            : '/images/map-no-icon.png'
+                        }
+                      />
+                    );
                   })}
                 </motion.section>
                 <motion.h2
@@ -756,7 +820,7 @@ const Page = ({
         <MapContainer
           setMobileNavBtnStyle={setMobileNavBtnStyle}
           forceActiveInfoWindow={activeInfoWindow}
-          initialCenter={markers[0].position}
+          initialCenter={markers[0]?.position}
           currentMapCenter={currentMapCenter}
           places={markers}
         />

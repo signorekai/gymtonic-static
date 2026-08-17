@@ -117,6 +117,14 @@ footer a,
   }
 }
 
+.filter-item button {
+  @apply relative;
+
+  &:after {
+    @apply empty-content absolute h-[2px] bottom-[-1px] left-0 bg-red w-full transition-transform duration-200 origin-left;
+  }
+}
+
 .h1 {
   @apply text-6xl md:text-8xl font-black leading-none mb-0;
 }
