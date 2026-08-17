@@ -235,7 +235,15 @@ body {
 
   input,
   select {
-    @apply rounded-none w-full min-w-0;
+    @apply rounded-none;
+
+    // A form control reports its own intrinsic width (20 characters for an
+    // input, the longest option for a select) which would otherwise decide the
+    // max-content track instead of the sizer. Percentages are ignored while the
+    // track is being measured, so this contributes nothing to the measurement
+    // and then fills whatever width the sizer asked for.
+    width: 0;
+    min-width: 100%;
   }
 
   // the number spinners eat into an already narrow column
@@ -266,11 +274,20 @@ body {
   @apply hidden px-4 h-0 overflow-hidden invisible md:block;
 
   white-space: pre;
+
+  @screen md {
+    // match the divider the field itself carries (md:border-l-2), plus a couple
+    // of pixels of headroom for sub-pixel rounding
+    border-left: 2px solid transparent;
+    padding-right: calc(1rem + 2px);
+  }
 }
 
 .input-sizer--select {
   // leave room for the dropdown chevron
-  @apply pr-8;
+  @screen md {
+    padding-right: calc(2rem + 2px);
+  }
 }
 
 .input-radio {
