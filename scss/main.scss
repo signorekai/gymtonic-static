@@ -323,7 +323,10 @@ body {
 }
 
 .select-field--empty {
-  @apply opacity-40;
+  // fade only the placeholder text, the way `placeholder:opacity-40` does for
+  // the text inputs - fading the whole element would take the divider and the
+  // chevron with it
+  @apply text-red text-opacity-40;
 }
 
 .has-error {
