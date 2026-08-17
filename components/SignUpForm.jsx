@@ -26,13 +26,19 @@ const defaults = {
     "Congratulations! You're taking the first step towards a stronger, better you.",
   name: 'My Name',
   age: 'My Age',
+  gender: 'Gender',
   email: 'My Email Address',
   contact: 'My Contact No.',
   myAddress: 'My Home Address',
+  postalCode: 'Postal Code',
   note: 'Note to Us (E.g. Any health conditions?)',
   seniorName: `Senior's Name`,
   seniorAge: `Senior's Age`,
+  seniorGender: `Senior's Gender`,
   seniorAddress: `Senior's Home Address`,
+  seniorPostalCode: `Senior's Postal Code`,
+  genderMale: 'Male',
+  genderFemale: 'Female',
   warning:
     'Each sign-up is a commitment of 24 sessions. Twice weekly, ~1 hour/session with guidance from a trainer. Pricing varies between centres, ranging from $10 to $20 per session. Please note that transportation is not provided.',
   selectGym: 'Select preferred gym',
@@ -57,13 +63,19 @@ const text = {
     subtitle: '恭喜您，为更健壮的自己跨出第一步！',
     name: '我的名字',
     age: '我的年龄',
+    gender: '性别',
     email: '我的电邮',
     contact: '我的联络号码',
     myAddress: '我的地址',
+    postalCode: '邮区号码',
     note: '须注意事项（例如：任何健康状况？）',
     seniorName: '长者名字',
     seniorAge: '长者年龄',
+    seniorGender: '长者性别',
     seniorAddress: '长者地址',
+    seniorPostalCode: '长者邮区号码',
+    genderMale: '男',
+    genderFemale: '女',
     warning:
       '报名时，需签约24堂课，每周两次。1小时的运动，有教练引导。不同中心的收费不一，每次训练介于 $10 至 $20 之间。报名者需安排自己的交通。',
     selectGym: '您首选的健得力中心',
@@ -87,13 +99,19 @@ const text = {
       'Tahniah! Anda telah mengambil langkah pertama kepada anda yang lebih kuat, lebih baik.',
     name: 'Nama Saya',
     age: 'Umar Saya',
+    gender: 'Jantina',
     email: 'Alamat Emel Saya',
     contact: 'Nombor Telefon Saya',
     myAddress: 'Alamat Saya',
+    postalCode: 'Poskod',
     note: 'Catatan kepada Kami (E.g. Ada keadaan kesihatan?)',
     seniorName: 'Nama Senior',
     seniorAge: `Umur Senior`,
+    seniorGender: `Warga Emas Jantina`,
     seniorAddress: `Alamat Senior`,
+    seniorPostalCode: `Warga Emas Poskod`,
+    genderMale: 'Lelaki',
+    genderFemale: 'Perempuan',
     warning:
       'Setiap pendaftaran adalah untuk 24 sesi. Dua kali seminggu, kira-kira 1 jam setiap sesi dengan bimbingan jurulatih. Harga berbeza antara pusat, dari $10 hingga $20 bagi setiap sesi. Sila ambil perhatian bahawa pengangkutan tidak disediakan.',
     selectGym: 'Pilih gim',
@@ -116,13 +134,19 @@ const text = {
       'வாழ்த்துக்கள்! நீங்கள் ஒரு வலிமையான, சிறந்த நபராக மாறுவதற்கான முதல் அடியை எடுத்து வைக்கிறீர்கள்.',
     name: 'என் பெயர்',
     age: 'என் வயது',
+    gender: 'எனது பாலினம்',
     email: 'எனது மின்னஞ்சல் முகவரி',
     contact: 'எனது தொடர்பு எண்',
     myAddress: 'என் முகவரி',
+    postalCode: 'அஞ்சல் குறியீடு',
     note: 'எங்களுக்கான குறிப்பு (E.g. மருத்துவ நிலை?)',
     seniorName: 'மூத்த நபரின் பெயர்',
     seniorAge: 'மூத்த நபரின் வயது',
+    seniorGender: 'பாலினம்',
     seniorAddress: 'மூத்த நபரின் வீட்டு முகவரி',
+    seniorPostalCode: 'முதியவரின் அஞ்சல் குறியீடு',
+    genderMale: 'ஆண்',
+    genderFemale: 'பெண்',
     warning:
       'ஒவ்வொரு பதிவு 24 அமர்வுகளுக்கான உறுதிப்பாட்டாகும். வாரத்திற்கு இரு முறை, ஒரு பயிற்சியாளர் வழிகாட்டுதலுடன் ஒவ்வொரு அமர்வும் சுமார் 1 மணி நேரம் நீடிக்கும். மையங்களுக்கு இடையில் விலை மாறுபடும், ஒவ்வொரு அமர்வுக்கும் $10 முதல் $20 வரை. போக்குவரத்து வழங்கப்படாது என்பதை தயவுசெய்து கவனத்தில் கொள்ளவும்.',
     selectGym: 'விருப்பமான உடற்பயிற்சி கூடத்தைத் தேர்ந்தெடுக்கவும்',
@@ -205,6 +229,8 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
   const watchSelectedGym = watch('selectedGym');
   const watchSelectedGymId = watch('selectedGymId')
   const watchType = watch('type');
+  const watchGender = watch('gender');
+  const watchSeniorGender = watch('seniorGender');
   const onSubmit = handleSubmit((data) => {
     setLoading(true);
     void fetch('/api/email', {
@@ -685,9 +711,12 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                               />
                             </div>
                             <div
-                              className={`input-wrapper input-wrapper--left  ${
+                              className={`input-wrapper input-wrapper--auto  ${
                                 errors.seniorAge ? 'has-error' : ''
                               }`}>
+                              <span className="input-sizer" aria-hidden="true">
+                                {text[lang].seniorAge}
+                              </span>
                               <input
                                 type="number"
                                 placeholder={text[lang].seniorAge}
@@ -702,6 +731,37 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 })}
                               />
                             </div>
+                            <div
+                              className={`input-wrapper input-wrapper--auto  ${
+                                errors.seniorGender ? 'has-error' : ''
+                              }`}>
+                              <span
+                                className="input-sizer input-sizer--select"
+                                aria-hidden="true">
+                                {text[lang].seniorGender}
+                              </span>
+                              <select
+                                disabled={watchType !== 'someone else'}
+                                className={`text-field select-field md:border-l-2 ${
+                                  watchSeniorGender
+                                    ? ''
+                                    : 'select-field--empty'
+                                }`}
+                                {...register('seniorGender', {
+                                  required: true,
+                                  shouldUnregister: true,
+                                })}>
+                                <option value="">
+                                  {text[lang].seniorGender}
+                                </option>
+                                <option value="male">
+                                  {text[lang].genderMale}
+                                </option>
+                                <option value="female">
+                                  {text[lang].genderFemale}
+                                </option>
+                              </select>
+                            </div>
                           </div>
                           <div className="field-group">
                             <div
@@ -714,6 +774,27 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 disabled={watchType !== 'someone else'}
                                 placeholder={text[lang].seniorAddress}
                                 {...register('seniorAddress', {
+                                  required: true,
+                                  shouldUnregister: true,
+                                })}
+                              />
+                            </div>
+                            <div
+                              className={`input-wrapper input-wrapper--auto ${
+                                errors.seniorPostalCode ? 'has-error' : ''
+                              }`}>
+                              <span className="input-sizer" aria-hidden="true">
+                                {text[lang].seniorPostalCode}
+                              </span>
+                              <input
+                                type="text"
+                                disabled={watchType !== 'someone else'}
+                                placeholder={text[lang].seniorPostalCode}
+                                className="text-field md:border-l-2"
+                                inputMode="numeric"
+                                maxLength={6}
+                                {...register('seniorPostalCode', {
+                                  pattern: /^[0-9]{6}$/,
                                   required: true,
                                   shouldUnregister: true,
                                 })}
@@ -740,9 +821,12 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                               />
                             </div>
                             <div
-                              className={`input-wrapper input-wrapper--left  ${
+                              className={`input-wrapper input-wrapper--auto  ${
                                 errors.age ? 'has-error' : ''
                               }`}>
+                              <span className="input-sizer" aria-hidden="true">
+                                {text[lang].age}
+                              </span>
                               <input
                                 type="number"
                                 disabled={watchType !== 'myself'}
@@ -759,6 +843,33 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                   required: true,
                                 })}
                               />
+                            </div>
+                            <div
+                              className={`input-wrapper input-wrapper--auto  ${
+                                errors.gender ? 'has-error' : ''
+                              }`}>
+                              <span
+                                className="input-sizer input-sizer--select"
+                                aria-hidden="true">
+                                {text[lang].gender}
+                              </span>
+                              <select
+                                disabled={watchType !== 'myself'}
+                                className={`text-field select-field md:border-l-2 ${
+                                  watchGender ? '' : 'select-field--empty'
+                                }`}
+                                {...register('gender', {
+                                  required: true,
+                                  shouldUnregister: true,
+                                })}>
+                                <option value="">{text[lang].gender}</option>
+                                <option value="male">
+                                  {text[lang].genderMale}
+                                </option>
+                                <option value="female">
+                                  {text[lang].genderFemale}
+                                </option>
+                              </select>
                             </div>
                           </div>
                           <div className="field-group">
@@ -809,6 +920,27 @@ const SignUpForm = ({ showForm, setShowSignUpForm, defaultValues }) => {
                                 className="text-field"
                                 placeholder={text[lang].myAddress}
                                 {...register('myAddress', {
+                                  required: true,
+                                  shouldUnregister: true,
+                                })}
+                              />
+                            </div>
+                            <div
+                              className={`input-wrapper input-wrapper--auto ${
+                                errors.postalCode ? 'has-error' : ''
+                              }`}>
+                              <span className="input-sizer" aria-hidden="true">
+                                {text[lang].postalCode}
+                              </span>
+                              <input
+                                type="text"
+                                disabled={watchType !== 'myself'}
+                                placeholder={text[lang].postalCode}
+                                className="text-field md:border-l-2"
+                                inputMode="numeric"
+                                maxLength={6}
+                                {...register('postalCode', {
+                                  pattern: /^[0-9]{6}$/,
                                   required: true,
                                   shouldUnregister: true,
                                 })}

@@ -9,9 +9,11 @@ export default async function handler(req, res) {
   const rulesForSelf = {
     name: 'required|string',
     age: 'required|numeric',
+    gender: 'required|string',
     email: 'required|email',
     contact: 'required|string',
     myAddress: 'required|string',
+    postalCode: 'required|digits:6',
     note: 'string',
     selectedGym: 'required|string',
   };
@@ -22,12 +24,22 @@ export default async function handler(req, res) {
     contact: 'required|string',
     seniorName: 'required|string',
     seniorAge: 'required|numeric',
+    seniorGender: 'required|string',
     seniorAddress: 'required|string',
+    seniorPostalCode: 'required|digits:6',
     note: 'string',
     selectedGym: 'required|string',
   };
 
+  // Dry-run address: submissions from this email are validated and reported to
+  // Telegram as usual, but no mail is ever sent to anyone.
+  const TEST_EMAIL = 'test@example.com';
+
   const data = JSON.parse(req.body);
+  const isTestSubmission =
+    typeof data.email === 'string' &&
+    data.email.trim().toLowerCase() === TEST_EMAIL;
+
   const validation = new Validator(
     data,
     data.type === 'myself' ? rulesForSelf : rulesForSomeoneElse,
@@ -57,7 +69,7 @@ export default async function handler(req, res) {
   })
 
   function replaceTemplate(template, data) {
-    let returnTemplate = "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nContact: {%contact%}\nSelected Gym: {%selectedGym%}"
+    let returnTemplate = "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nGender: {%gender%}\nContact: {%contact%}\nPostal Code: {%postalCode%}\nSelected Gym: {%selectedGym%}"
     if (typeof template !== undefined) {
       returnTemplate = template;
     }
@@ -123,7 +135,7 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error('Error searching locations:', error);
       console.error(data)
-      return "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nContact: {%contact%}\nSelected Gym: {%selectedGym%}";
+      return "Hello, Thank you for signing up for Gym Tonic. \nWe will follow up with your enquiry within the next 7 working days. Thank you for your patience. \n\nName:  {%name%}\nAge: {%age%}\nGender: {%gender%}\nContact: {%contact%}\nPostal Code: {%postalCode%}\nSelected Gym: {%selectedGym%}";
     }
   }
 
@@ -141,38 +153,46 @@ export default async function handler(req, res) {
       email = replaceTemplate(template, {
         name: `${data.name} on behalf of ${data.seniorName}`,
         age: data.seniorAge,
+        gender: data.seniorGender,
+        postalCode: data.seniorPostalCode,
         selectedGym: data.selectedGym,
         contact: data.contact,
       })
     }
 
-    const text = 
+    const text =
       data.type === 'myself'
-    ? `Name: ${data.name}\nAge: ${data.age}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
-    : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Address: ${data.seniorAddress}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
+    ? `Name: ${data.name}\nAge: ${data.age}\nGender: ${data.gender}\nEmail: ${data.email}\nContact: ${data.contact}\nAddress: ${data.myAddress}\nPostal Code: ${data.postalCode}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`
+    : `Name: ${data.name}\nEmail: ${data.email}\nContact: ${data.contact}\nSenior's Name: ${data.seniorName}\nSenior's Age: ${data.seniorAge}\nSenior's Gender: ${data.seniorGender}\nSenior's Address: ${data.seniorAddress}\nSenior's Postal Code: ${data.seniorPostalCode}\nSelected Gym: ${data.selectedGym}\nNote: ${data.note}`;
 
     email += '\n\nThis is an automated message, please do not reply directly to this email.\nFor enquiries, contact us at hello@gymtonic.sg or via WhatsApp at +65 9688 2388.';
 
-    if (template !== null) {
-      // send acknowledgement email
+    if (!isTestSubmission) {
+      if (template !== null) {
+        // send acknowledgement email
+        await transporter.sendMail({
+          from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
+          replyTo: 'hello@gymtonic.sg',
+          to: data.email, // list of receivershello@gymtonic.sg
+          subject: 'Thank you for signing up for GymTonic', // Subject line
+          text: email
+        });
+      }
+
+
       await transporter.sendMail({
         from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
-        replyTo: 'hello@gymtonic.sg',
-        to: data.email, // list of receivershello@gymtonic.sg
-        subject: 'Thank you for signing up for GymTonic', // Subject line
-        text: email
+        to: 'hello@gymtonic.sg', // list of receivers
+        subject: 'Sign up', // Subject line
+        replyTo: data.email,
+        text
       });
     }
-    
-    
-    await transporter.sendMail({
-      from: `"Contact @ Gymtonic" <contact@gymtonic.sg>`, // sender address
-      to: 'hello@gymtonic.sg', // list of receivers
-      subject: 'Sign up', // Subject line
-      replyTo: data.email,
-      text
-    });
-    await sendToTelegram(`New Email: \n\n${email}\n\n---\n\nNew registration: \n\n${text}`)
+
+    const prefix = isTestSubmission
+      ? `TEST SUBMISSION (${TEST_EMAIL}) - no emails were sent\n\n`
+      : '';
+    await sendToTelegram(`${prefix}New Email: \n\n${email}\n\n---\n\nNew registration: \n\n${text}`)
 
     res.status(200).json({...data})
 
