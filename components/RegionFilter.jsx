@@ -1,13 +1,7 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 export const ALL_REGIONS = 'all';
-
-// The `region` taxonomy has no meaningful sort order in WordPress (TERM_ORDER
-// falls back to term_id), so the display order lives here. Terms that aren't
-// listed still render, appended alphabetically, so adding a term in WP admin
-// never makes it disappear from the filter.
-const preferredOrder = ['central', 'north', 'northeast', 'east', 'west'];
 
 const RegionFilter = ({
   regions,
@@ -16,26 +10,12 @@ const RegionFilter = ({
   variants = {},
   className = '',
 }) => {
-  const items = useMemo(() => {
-    const sorted = [...(regions ?? [])].sort((a, b) => {
-      const aIndex = preferredOrder.indexOf(a.slug);
-      const bIndex = preferredOrder.indexOf(b.slug);
-
-      if (aIndex === -1 && bIndex === -1) {
-        return a.name.localeCompare(b.name);
-      }
-      if (aIndex === -1) {
-        return 1;
-      }
-      if (bIndex === -1) {
-        return -1;
-      }
-
-      return aIndex - bIndex;
-    });
-
-    return [{ id: ALL_REGIONS, name: 'All', slug: ALL_REGIONS }, ...sorted];
-  }, [regions]);
+  // Regions arrive from WordPress already in the admin-defined order, so the
+  // only thing added here is the "All" pill, which is not a WP term.
+  const items = [
+    { id: ALL_REGIONS, name: 'All', slug: ALL_REGIONS },
+    ...(regions ?? []),
+  ];
 
   // Nothing to filter by until the taxonomy has terms.
   if (items.length <= 1) {

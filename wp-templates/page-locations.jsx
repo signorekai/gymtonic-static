@@ -50,7 +50,10 @@ import { useActiveHeader } from '../lib/hooks';
 
 const query = gql`
   {
-    regions(first: 100, where: { hideEmpty: false }) {
+    regions(
+      first: 100
+      where: { hideEmpty: false, orderby: TERM_ORDER, order: ASC }
+    ) {
       nodes {
         id
         name
